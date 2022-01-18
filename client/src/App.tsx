@@ -1,14 +1,19 @@
-import React from 'react';
-import { Routes, Route } from 'react-router';
-import SearchBar from './components/SearchBar';
+import { Routes, Route } from "react-router";
+
+import WelcomePage from "./pages/WelcomePage";
+
+import styled from "styled-components";
 
 function App() {
+  const App = styled.div`
+    margin: 20px 100px;
+  `;
   return (
-    <div className="App">
+    <App className="App">
       <Routes>
-        <Route path="/" element={<SearchBar/>}></Route>
+        <Route path="/" element={<WelcomePage />}></Route>
       </Routes>
-    </div>
+    </App>
   );
 }
 
