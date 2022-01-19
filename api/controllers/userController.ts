@@ -1,4 +1,4 @@
-import { prisma } from "../index"
+import { prisma } from "../index";
 
 module.exports = {
     create: async (req, res) => {

@@ -3,9 +3,9 @@ const userController = require("../controllers/userController")
 
 const userRouter = Router()
 
-userRouter.use("/create", userController.create)
-userRouter.use("/index", userController.index)
-userRouter.use("/update", userController.update)
-userRouter.use("/delete", userController.delete)
+userRouter.post("/create", userController.create)
+userRouter.get("/index", userController.index)
+userRouter.put("/update", userController.update)
+userRouter.delete("/delete", userController.delete)
 
 module.exports = userRouter
