@@ -32,58 +32,58 @@ datasource db {
 //PROYECTO FINAL
 
 model Role {
-  id Int @default(autoincrement()) @id
+  id   Int    @id @default(autoincrement())
   name String @unique
 }
 
 model User {
-  id Int @default(autoincrement()) @id
-  roleId Int
-  firstName String
-  lastName String
-  about String
-  phoneNumber String
-  email String @unique
-  country String
-  image String
-  showImage Boolean
-  skillTags String[]
-  experience Json[]
-  education Json[]
-  languages Json[]
+  id           Int       @id @default(autoincrement())
+  roleId       Int
+  firstName    String
+  lastName     String
+  about        String
+  phoneNumber  String
+  email        String    @unique
+  country      String
+  image        String
+  showImage    Boolean
+  skillTags    String[]
+  experience   Json[]
+  education    Json[]
+  languages    Json[]
   postulations Post[]
-  followed Company[]
+  followed     Company[]
 }
 
-model Company{
-  id Int @default(autoincrement()) @id
-  roleId Int
-  name String
-  legalName String
-  email String @unique
-  password String
-  stin String
+model Company {
+  id              Int      @id @default(autoincrement())
+  roleId          Int
+  name            String
+  legalName       String
+  email           String   @unique
+  password        String
+  stin            String
   accountManagers String[]
-  image String
-  posts Int[]
-  companyValues String
-  mission String
-  vision String
-  reviews Json[]
-  followers User[]
+  image           String
+  posts           Post[]
+  companyValues   String
+  mission         String
+  vision          String
+  reviews         Json[]
+  followers       User[]
 }
 
-model Post{
-  id Int @default(autoincrement()) @id
-  company String
-  description String
-  location String
-  modality String
+model Post {
+  id           Int      @id @default(autoincrement())
+  // company String
+  company      Company  @relation(fields: [companyId], references: [id])
+  companyId    Int
+  description  String
+  location     String
+  modality     String
   contractType String
-  salary String
-  endDate String
-  tags String[]
-  applicants User[]
+  salary       String
+  endDate      String
+  tags         String[]
+  applicants   User[]
 }
-
-

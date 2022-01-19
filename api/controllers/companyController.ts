@@ -1,7 +1,8 @@
 import { prisma } from "../index"
+import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req, res) => {
+    create: async (req:Request, res:Response) => {
         try {
             const data = req.body
             const company = await prisma.company.create({
@@ -27,6 +28,23 @@ module.exports = {
         }
     },
     index: async (req, res) => {
+        try {
+            const id = req.params
+            const getCompanyPosts= await prisma.company.findUnique(
+                {
+                    where:{
+                        id:id,
+                    },
+                    include:{
+                       posts:true,
+                    }
+                }
+             
+            )
+            res.json(getCompanyPosts)
+        } catch(error){
+            res.send(error)
+        }
 
     },
     update: async (req, res) => {

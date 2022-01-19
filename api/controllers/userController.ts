@@ -1,7 +1,8 @@
 import { prisma } from "../index"
+import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req, res) => {
+    create: async (req:Request, res:Response) => {
         try {
             const data = req.body
             const user = await prisma.user.create({
