@@ -1,4 +1,4 @@
-import SearchBar from './SearchBar'
+import SearchBar from '../components/SearchBar'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
