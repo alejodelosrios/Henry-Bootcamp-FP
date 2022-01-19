@@ -1,7 +1,8 @@
 import { prisma } from "../index"
+import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req, res) => {
+    create: async (req: Request, res: Response) => {
         try {
             const data = req.body
             const company = await prisma.company.create({
@@ -26,13 +27,13 @@ module.exports = {
             res.send(error)
         }
     },
-    index: async (req, res) => {
+    index: async (req: Request, res: Response) => {
 
     },
-    update: async (req, res) => {
+    update: async (req: Request, res: Response) => {
 
     },
-    delete: async (req, res) => {
+    delete: async (req: Request, res: Response) => {
         
     }
 }
