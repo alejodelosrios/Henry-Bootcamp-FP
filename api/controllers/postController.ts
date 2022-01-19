@@ -19,6 +19,7 @@ module.exports = {
             })
             res.json(post)
         } catch(error){
+            console.log(error)
             res.send(error)
         }
     },

@@ -15,7 +15,7 @@ module.exports = {
                     stin: data.stin,
                     accountManagers: data.accountManagers,
                     image: data.image,
-                    posts: data.posts,
+                    // posts: data.posts, lo comenté porque al crear una compañia debería crearse sin posts
                     companyValues: data.companyValues,
                     mission: data.mission,
                     vision: data.vision,
@@ -24,12 +24,13 @@ module.exports = {
             })
             res.json(company)
         } catch(error){
-            res.send(error)
+            console.log(error)
+            res.status(500).send(error)
         }
     },
     index: async (req:Request, res:Response) => {
         try {
-            const id = req.params
+            const id = req.params.id
             const getCompanyPosts= await prisma.company.findUnique(
                 {
                     where:{
@@ -43,7 +44,8 @@ module.exports = {
             )
             res.json(getCompanyPosts)
         } catch(error){
-            res.send(error)
+            console.log(error)
+            res.status(500).send(error)
         }
 
     },
