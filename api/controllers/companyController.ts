@@ -27,13 +27,13 @@ module.exports = {
             res.send(error)
         }
     },
-    index: async (req, res) => {
+    index: async (req:Request, res:Response) => {
         try {
             const id = req.params
             const getCompanyPosts= await prisma.company.findUnique(
                 {
                     where:{
-                        id:id,
+                        id:Number(id) ,
                     },
                     include:{
                        posts:true,
@@ -47,10 +47,10 @@ module.exports = {
         }
 
     },
-    update: async (req, res) => {
+    update: async (req:Request, res:Response) => {
 
     },
-    delete: async (req, res) => {
+    delete: async (req:Request, res:Response) => {
         
     }
 }

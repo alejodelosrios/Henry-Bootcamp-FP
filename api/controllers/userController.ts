@@ -29,13 +29,13 @@ module.exports = {
             res.send(error)
         }
     },
-    index: async (req, res) => {
+    index: async (req:Request, res:Response) => {
 
     },
-    update: async (req, res) => {
+    update: async (req:Request, res:Response) => {
 
     },
-    delete: async (req, res) => {
+    delete: async (req:Request, res:Response) => {
         
     }
 }
