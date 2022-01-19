@@ -1,6 +1,6 @@
 type PostArgs = {
   postId?: Number;
-  tittle: String;
+  title: String;
   description: String;
   tags: String[];
   modality: String;
@@ -16,7 +16,7 @@ type PostArgs = {
 };
 
 const Post = ({
-  tittle,
+  title,
   description,
   tags,
   modality,
@@ -31,7 +31,7 @@ const Post = ({
     <div>
       <img src="" alt="img-company-logo" />
       <div>
-        <h4>{tittle}</h4>
+        <h4>{title}</h4>
         <p>{description}</p>
         <p>Etiquetas (Keywords) </p>
         <ul>
