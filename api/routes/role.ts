@@ -3,9 +3,9 @@ const roleController = require("../controllers/roleController")
 
 const roleRouter = Router()
 
-roleRouter.use("/create", roleController.create)
-roleRouter.use("/index", roleController.index)
-roleRouter.use("/update", roleController.update)
-roleRouter.use("/delete", roleController.delete)
+roleRouter.post("/create", roleController.create)
+roleRouter.get("/index", roleController.index)
+roleRouter.put("/update", roleController.update)
+roleRouter.delete("/delete", roleController.delete)
 
 module.exports = roleRouter
