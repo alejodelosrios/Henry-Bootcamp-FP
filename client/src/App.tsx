@@ -1,21 +1,21 @@
 import { Routes, Route } from "react-router";
-
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-
-import styled from "styled-components";
 import { UserProfile } from "./pages/UserProfile";
 
+import GlobalStyles from "./styles/globalStyles";
+import { ThemeProvider } from 'styled-components';
+import light from './styles/themes/light';
+
 function App() {
-  const App = styled.div`
-    margin: 20px 100px;
-  `;
   return (
-    <App className="App">
+    <ThemeProvider theme={light}>
+      <GlobalStyles/>
       <Routes>
         <Route path="/" element={<WelcomePage />}></Route>
         <Route path='/profile' element={<UserProfile/>}></Route>
       </Routes>
-    </App>
+    </ThemeProvider>
+    
   );
 }
 

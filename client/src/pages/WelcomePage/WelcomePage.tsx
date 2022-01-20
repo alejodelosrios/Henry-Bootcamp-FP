@@ -1,22 +1,16 @@
+import React from "react";
+// import SearchBar from "../../components/SearchBar";
+// import { NavBar } from "../../components/NavBar";
 import {
-  Section,
-  Card,
-  Image,
-  Title,
-  Paragraph,
-  FlexDiv,
-  Button,
+  Section, Card, Image, Title, 
+  Paragraph, Footer, Button, HL
 } from "./styles";
 
-const WelcomePage = () => {
+const WelcomePage: React.FC = () => {
   return (
     <>
-      <nav style={{ marginBottom: "25px" }}>Nabvar</nav>
-      <input
-        type="text"
-        placeholder="Oportunidad laboral "
-        style={{ marginBottom: "50px" }}
-      />
+      {/* <NavBar />  This navbar should be position absolute */}
+
       <Section>
         <Image
           src="https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
@@ -24,28 +18,19 @@ const WelcomePage = () => {
           circle
         />
         <Card>
-          <Title>About</Title>
-          <Paragraph>
-            Amet repudiandae accusantium quaerat blanditiis dolorum Minus in
-            quasi eveniet alias iure similique ab. Quia temporibus soluta lorem
-            ratione quos, nesciunt necessitatibus Explicabo quidem debitis modi
-            delectus cupiditate? Consequatur obcaecati tenetur amet maxime quam
-            Est laudantium sunt at voluptates quos expedita Aperiam veniam quam
-            cum odio enim alias. Adipisci quia vitae tenetur deleniti
-            accusantium Magnam quod quibusdam quo ipsum quas? Debitis laboriosam
-            et ea rerum incidunt Nostrum alias ipsum cumque rerum quia
-            repudiandae Veritatis dolore commodi autem eaque nihil? Iusto harum
-            corporis vero voluptas temporibus architecto Nihil corrupti
-            blanditiis cupiditate non minima earum? Id obcaecati fuga numquam
-            non quo. Tenetur
+          <Title>Encuentra nuevas <HL>Oportunidades</HL></Title>
+          <Paragraph bold>
+            Promovemos el vínculo con el mercado laboral para que las personas trans
+            puedan acceder a un empleo registrado y digno.
           </Paragraph>
-          <Button>Click here</Button>
         </Card>
+
+        {/* <SearchBar /> Must finish the searchBar!! */}
       </Section>
-      <Section primary>
+      <Section>
         <Card>
           <Title>About</Title>
-          <Paragraph primary>
+          <Paragraph>
             lorem ipsum lorem ipsum lorem ipsum ipsum ipsum ipsum ipsum ipsum
             ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum
             ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum lorem
@@ -65,8 +50,8 @@ const WelcomePage = () => {
         />
       </Section>
       <Section>
-        <Card width>
-          <Title center>About</Title>
+        <Card>
+          <Title>About</Title>
           <Paragraph>
             lorem ipsum lorem ipsum lorem ipsum ipsum ipsum ipsum ipsum ipsum
             ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum
@@ -81,14 +66,15 @@ const WelcomePage = () => {
           <Image
             src="https://images.unsplash.com/photo-1599420186946-7b6fb4e297f0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
             alt="img-section"
-            rectangle
+            circle
           />
-          <FlexDiv>
-            <Button>Click here</Button>
-            <Button>Click here</Button>
-          </FlexDiv>
         </Card>
       </Section>
+
+      <Footer>
+        <Button>Click here</Button>
+        <Button>Click here</Button>
+      </Footer>
     </>
   );
 };
