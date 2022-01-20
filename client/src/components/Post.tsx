@@ -1,58 +1,69 @@
 type PostArgs = {
-  postId?: Number;
+  id: Number;
   title: String;
-  description: String;
-  tags: String[];
-  modality: String;
-  contractType: String;
   location: {
     country: String;
     state: String;
   };
+  experience: {
+    min: Number;
+    max: Number;
+  };
+  modality: String;
+  salary: {
+    min: Number;
+    max: Number;
+  };
   startDate: String;
-  endDate: String;
-  category: String;
-  salary: String;
 };
 
 const Post = ({
+  id,
   title,
-  description,
-  tags,
-  modality,
-  contractType,
   location,
-  startDate,
-  endDate,
+  experience,
+  modality,
   salary,
-  category,
+  startDate,
 }: PostArgs) => {
   return (
     <div>
-      <img src="" alt="img-company-logo" />
       <div>
-        <h4>{title}</h4>
-        <p>{description}</p>
-        <p>Etiquetas (Keywords) </p>
-        <ul>
-          {tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
+        <img src="" alt="img-logo-company" />
+        <div>
+          <div>
+            <h4>{title}</h4>
+            <p>
+              {location.state}, {location.country}
+            </p>
+          </div>
+          <div>
+            <div>
+              Experiencia:
+              <p>
+                {experience.min} - {experience.max}
+              </p>
+            </div>
+          </div>
+          <div>
+            <div>
+              Modalidad:
+              <p>{modality}</p>
+            </div>
+          </div>
+          <div>
+            <div>
+              Salario:
+              <p>
+                {salary.min} - {salary.max}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
-        <p>Modalidad: {modality}</p>
-        <p>Tipo de Contrato: {contractType}</p>
-        <p>
-          Ubicación: {location.state}, {location.country}
-        </p>
-      </div>
-      <div>
-        <p>
-          Publicado el: {startDate} Finaliza el: {endDate}
-        </p>
-        <p>Category: {category}</p>
-        <p>Salario: $ {salary}</p>
+        <p>{startDate}</p>
+        <button>Guardar</button>
       </div>
     </div>
   );
