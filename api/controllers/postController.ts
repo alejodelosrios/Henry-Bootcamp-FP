@@ -30,9 +30,32 @@ module.exports = {
             res.status(500).send(error)
         }
     },
-    index: async (req:Request, res:Response) => {
+
+
+    allposts: async (req:Request, res:Response) => {
+
+     try {
+        const title= req.query.title as string
+        const getAllPost = await prisma.post.findMany()
+
+        if(title){
+        const getPost= getAllPost.filter(e => e.title.toLowerCase().includes(title.toLowerCase())) 
+        getPost.length ?
+            res.status(200).send(getPost) :
+            res.status(404).send("Post not found")
+          
+        } else {
+            res.status(200).send(getAllPost)
+        }
+    } catch(error){
+        console.log(error)
+        res.status(400).send(error)
     }
-    ,
+
+    },
+
+    index: async (req:Request, res:Response) => {
+    },
     update: async (req:Request, res:Response) => {
 
     },
