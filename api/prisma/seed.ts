@@ -1,4 +1,4 @@
-import { prisma } from "./dataBase"
+import { prisma } from "../index"
 const faker = require('@faker-js/faker');
 
 const tags = ["react", "redux", "sequelize", "prisma", "javascript", "c++", "python", "UX/UI", "windows", "linux", "ubuntu", "frontend", "backend", "fullstack", "testing", "typescript", "faker", "nodejs", "css", "html", "cssmodules", "styledcomponents", "figma", "notion", "trello", "word", "office", "excel"]
