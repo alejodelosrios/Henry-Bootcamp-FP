@@ -27,12 +27,12 @@ module.exports = {
             res.json(post)
         } catch(error){
             console.log(error)
-            res.send(error)
+            res.status(500).send(error)
         }
     },
     index: async (req:Request, res:Response) => {
-
-    },
+    }
+    ,
     update: async (req:Request, res:Response) => {
 
     },
