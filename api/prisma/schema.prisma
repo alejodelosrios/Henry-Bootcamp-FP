@@ -51,8 +51,9 @@ model User {
   experience   Json[]
   education    Json[]
   languages    Json[]
-  postulations Post[]
+  postulations Post[]    @relation("_UserToPostulations")
   followed     Company[]
+  favourites   Post[]    @relation("_UserToFavourites")
 }
 
 model Company {
@@ -88,24 +89,7 @@ model Post {
   endDate      String
   tags         String[]
   category     String
-  applicants   User[]
+  applicants   User[]   @relation("_UserToPostulations")
+  favoritedBy  User[]   @relation("_UserToFavourites")
 }
 
-
-//company, companyid, aplicants
-
-//   postId: Number; 
-//   tittle: String;               OK
-//   description: String;          OK
-//   tags: String[];               OK
-//   modality: String;             OK
-//   contractType: String;         OK
-//   location: {
-//     country: String;
-//     state: String;
-//   };
-//   startDate: String;
-//   endDate: String;
-//   salary: String;
-//   category: String;
-// };
