@@ -30,8 +30,24 @@ module.exports = {
         }
     },
     index: async (req:Request, res:Response) => {
+        try {
+            const {id} = req.params
+            const getUserProfile= await prisma.user.findUnique(
+                {
+                    where:{
+                        email: id,
+                    },
+                }
+             
+            )
+            res.json(getUserProfile)
+        } catch(error){
+            console.log(error)
+            res.status(400).send(error)
+        }
 
     },
+    
     update: async (req:Request, res:Response) => {
 
     },
