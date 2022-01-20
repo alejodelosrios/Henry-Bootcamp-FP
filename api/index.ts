@@ -1,5 +1,8 @@
 import express from 'express';
 const mainRouter = require('./routes')
+import { PrismaClient } from "@prisma/client";
+
+export const prisma = new PrismaClient();
 
 const app = express();
 app.use(express.json());

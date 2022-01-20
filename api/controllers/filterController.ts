@@ -1,4 +1,4 @@
-import { prisma } from "../prisma/dataBase"
+import { prisma } from "../index"
 import {Request, Response} from "express"
 
 const ejemplo = {
