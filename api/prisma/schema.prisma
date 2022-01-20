@@ -74,16 +74,38 @@ model Company {
 }
 
 model Post {
-  id           Int      @id @default(autoincrement())
+  postId           Int      @id @default(autoincrement())
   // company String
   company      Company  @relation(fields: [companyId], references: [id])
   companyId    Int
+  tittle       String
   description  String
-  location     String
+  location     Json[]
   modality     String
   contractType String
   salary       String
+  startDate    String
   endDate      String
   tags         String[]
+  category     String
   applicants   User[]
 }
+
+
+//company, companyid, aplicants
+
+//   postId: Number; 
+//   tittle: String;               OK
+//   description: String;          OK
+//   tags: String[];               OK
+//   modality: String;             OK
+//   contractType: String;         OK
+//   location: {
+//     country: String;
+//     state: String;
+//   };
+//   startDate: String;
+//   endDate: String;
+//   salary: String;
+//   category: String;
+// };
