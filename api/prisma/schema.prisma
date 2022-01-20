@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DB_URL")
+  url      = env("DATABASE_URL")
 }
 
 //PROYECTO FINAL
@@ -21,7 +21,7 @@ model User {
   lastName     String
   about        String
   phoneNumber  String
-  email        String    @unique
+  email        String
   country      String
   image        String
   showImage    Boolean
@@ -39,8 +39,7 @@ model Company {
   roleId          Int
   name            String
   legalName       String
-  email           String   @unique
-  password        String
+  email           String
   stin            String
   accountManagers String[]
   image           String
@@ -69,4 +68,3 @@ model Post {
   applicants   User[]   @relation("_UserToPostulations")
   favoritedBy  User[]   @relation("_UserToFavourites")
 }
-
