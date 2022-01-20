@@ -27,7 +27,49 @@ async function main(){
         ]
     })
 
-    //CARGAR USERS
+    //CARGAR USERS Y ADMIN
+
+    await prisma.user.createMany({
+        data: [
+            {
+                roleId: 3,
+                firstName: "admin",
+                lastName: "",
+                about: faker.lorem.paragraph(),
+                phoneNumber: faker.phone.phoneNumber(),
+                email: "admin@test.com",
+                country: faker.address.country(),
+                image: faker.internet.avatar(),
+                showImage: true,
+                skillTags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+                experience: [
+                    {
+                        position: faker.random.word(),
+                        company: faker.random.words(2),
+                        startDate: faker.date.past(),
+                        endDate: faker.date.recent(),
+                        description: faker.lorem.paragraph()
+                    }
+                ],
+                education: [
+                    {
+                        degree: faker.random.words(2),
+                        institution: faker.random.word(),
+                        startDate: faker.date.past(),
+                        endDate: faker.date.recent(),
+                        description: faker.lorem.paragraph()
+                    }
+                ],
+                languages: [
+                    {
+                        language: faker.random.word(),
+                        level: faker.random.arrayElement(['novice', 'intermediate', 'advanced', 'bilingual'])
+                    }
+                ]
+            }
+        ]
+    })
+
     for(let i=0; i<users; i++){
         await prisma.user.createMany({
             data: [

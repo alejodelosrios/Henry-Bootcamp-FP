@@ -35,7 +35,6 @@ module.exports = {
 
         typeContract ? posts = posts.filter(post => post.contractType.toLowerCase().includes(typeContract.toLowerCase())) : null
         
-
         categories ? posts = posts.filter(post => post.tags.includes(categories.toLowerCase())) : null
 
 
