@@ -1,15 +1,14 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
 
 module.exports = {
     create: async (req:Request, res:Response) => {
-    const data = req.body
-
+        const data = req.body
         if (!req.body.company){
             res.status(404).send("Company is required")
         }
         try {
-             const post = await prisma.post.create({
+            const post = await prisma.post.create({
                 data: {
                     companyId: data.company as number,
                     description: data.description as string,
@@ -37,6 +36,6 @@ module.exports = {
 
     },
     delete: async (req:Request, res:Response) => {
-        
+
     }
 }

@@ -1,8 +1,8 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req:Request, res:Response) => {
+    create: async (req: Request, res: Response) => {
         try {
             const {roles} = req.body
             const allRoles = await prisma.role.createMany({
@@ -13,13 +13,13 @@ module.exports = {
             res.send(error)
         }
     },
-    index: async (req:Request, res:Response) => {
+    index: async (req: Request, res: Response) => {
 
     },
-    update: async (req:Request, res:Response) => {
+    update: async (req: Request, res: Response) => {
 
     },
-    delete: async (req:Request, res:Response) => {
+    delete: async (req: Request, res: Response) => {
         
     }
 }
