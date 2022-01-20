@@ -28,21 +28,43 @@ module.exports = {
             res.status(500).send(error)
         }
     },
-    index: async (req:Request, res:Response) => {
+    companyPosts: async(req:Request, res:Response)=>{
         try {
             const id = req.params.id
-            const getCompanyPosts= await prisma.company.findUnique(
+            const company= await prisma.company.findUnique(
                 {
                     where:{
-                        id:Number(id) ,
+                        id: Number(id) ,
                     },
                     include:{
-                       posts:true,
+                        posts:true,
                     }
                 }
              
             )
-            res.json(getCompanyPosts)
+           if(company){
+               res.json(company.posts)
+            }else{
+                res.status(400).send("Company doesn't exist")
+            }
+        } catch(error){
+            console.log(error)
+            res.status(500).send(error)
+        }
+
+    },
+    index: async (req:Request, res:Response) => {
+        try {
+            const id = req.params.id
+            const getCompanyProfile= await prisma.company.findUnique(
+                {
+                    where:{
+                        id:Number(id) ,
+                    },
+                }
+             
+            )
+            res.json(getCompanyProfile)
         } catch(error){
             console.log(error)
             res.status(500).send(error)
