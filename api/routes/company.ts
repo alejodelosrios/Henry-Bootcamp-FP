@@ -3,9 +3,11 @@ const companyController = require("../controllers/companyController")
 
 const companyRouter = Router()
 
-companyRouter.use("/create", companyController.create)
-companyRouter.use("/index", companyController.index)
-companyRouter.use("/update", companyController.update)
-companyRouter.use("/delete", companyController.delete)
+companyRouter.post("/create", companyController.create)
+companyRouter.get("/:id", companyController.index)
+companyRouter.get("/:id/posts", companyController.companyPosts)
+companyRouter.post("/:id/review", companyController.createReview)
+companyRouter.put("/update", companyController.update)
+companyRouter.delete("/delete", companyController.delete)
 
 module.exports = companyRouter
