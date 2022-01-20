@@ -1,7 +1,8 @@
 import { prisma } from "../index"
+import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req, res) => {
+    create: async (req:Request, res:Response) => {
         try {
             const data = req.body
             const company = await prisma.company.create({
@@ -14,7 +15,7 @@ module.exports = {
                     stin: data.stin,
                     accountManagers: data.accountManagers,
                     image: data.image,
-                    posts: data.posts,
+                    // posts: data.posts, lo comenté porque al crear una compañia debería crearse sin posts
                     companyValues: data.companyValues,
                     mission: data.mission,
                     vision: data.vision,
@@ -23,16 +24,35 @@ module.exports = {
             })
             res.json(company)
         } catch(error){
-            res.send(error)
+            console.log(error)
+            res.status(500).send(error)
         }
     },
-    index: async (req, res) => {
+    index: async (req:Request, res:Response) => {
+        try {
+            const id = req.params.id
+            const getCompanyPosts= await prisma.company.findUnique(
+                {
+                    where:{
+                        id:Number(id) ,
+                    },
+                    include:{
+                       posts:true,
+                    }
+                }
+             
+            )
+            res.json(getCompanyPosts)
+        } catch(error){
+            console.log(error)
+            res.status(500).send(error)
+        }
 
     },
-    update: async (req, res) => {
+    update: async (req:Request, res:Response) => {
 
     },
-    delete: async (req, res) => {
+    delete: async (req:Request, res:Response) => {
         
     }
 }

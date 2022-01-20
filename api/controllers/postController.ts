@@ -1,34 +1,42 @@
 import { prisma } from "../index"
+import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req, res) => {
+    create: async (req:Request, res:Response) => {
+    const data = req.body
+
+        if (!req.body.company){
+            res.status(404).send("Company is required")
+        }
         try {
-            const data = req.body
-            const post = await prisma.post.create({
+             const post = await prisma.post.create({
                 data: {
-                    company: data.company,
-                    description: data.description,
-                    location: data.location,
-                    modality: data.modality,
-                    contractType: data.contractType,
-                    salary: data.salary,
-                    endDate: data.endDate,
-                    tags: data.tags,
-                    applicants: data.applicants
+                    companyId: data.company as number,
+                    description: data.description as string,
+                    title: data.title as string,
+                    location: data.location as string,
+                    modality: data.modality as string,
+                    contractType: data.contractType as string,
+                    salary: data.salary as string,
+                    startDate: data.startDate as string,
+                    endDate: data.endDate as string,
+                    tags: data.tags as string[],
+                    category: data.category as string
                 }
             })
             res.json(post)
         } catch(error){
+            console.log(error)
             res.send(error)
         }
     },
-    index: async (req, res) => {
+    index: async (req:Request, res:Response) => {
 
     },
-    update: async (req, res) => {
+    update: async (req:Request, res:Response) => {
 
     },
-    delete: async (req, res) => {
+    delete: async (req:Request, res:Response) => {
         
     }
 }
