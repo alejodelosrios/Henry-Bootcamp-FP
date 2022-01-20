@@ -1,4 +1,4 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/dataBase"
 import {Request, Response} from "express"
 
 module.exports = {

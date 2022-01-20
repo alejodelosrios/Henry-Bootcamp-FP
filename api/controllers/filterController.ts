@@ -1,11 +1,11 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/dataBase"
 import {Request, Response} from "express"
 
 const ejemplo = {
     inputName:"", // -> full stack* (genérico)
     modality: "", // -> presencial/remote/hybrid (solo habrá estas 3 opciones)
-    typeContract: "", // -> fullTime/partTime/temporary/perHour (solo habrá estas 4 opciones)
-    Location:
+    contractType: "", // -> fullTime/partTime/temporary/perHour (solo habrá estas 4 opciones)
+    location:
         {
         country:"", // Perú/Argentina (genérico)
         state:"",  // Cuzco/Caba (genérico)
@@ -17,7 +17,31 @@ const ejemplo = {
 
 module.exports = {
     index: async (req: Request, res: Response) => {
-        const posts = await prisma.post.findMany()
+        const { 
+            inputName, 
+            modality, 
+            typeContract, 
+            location, 
+            categories, 
+            orderBy,
+            score 
+        } = req.body
+        let posts = await prisma.post.findMany()
+        
+        
+        inputName ? posts = posts.filter(post => post.description.toLowerCase().includes(inputName.toLowerCase())) : null
+
+        modality ? posts = posts.filter(post => post.modality.toLowerCase().includes(modality.toLowerCase())) : null
+
+        typeContract ? posts = posts.filter(post => post.contractType.toLowerCase().includes(typeContract.toLowerCase())) : null
+
+        location ? posts = posts.filter(post => post.location.toLowerCase().includes(location.toLowerCase())) : null
+
+        categories ? posts = posts.filter(post => post.tags.includes(categories.toLowerCase())) : null
+
+
+
+
         res.json(posts)
     }
 }

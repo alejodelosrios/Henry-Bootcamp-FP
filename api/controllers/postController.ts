@@ -1,4 +1,4 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/dataBase"
 import {Request, Response} from "express"
 
 module.exports = {
@@ -7,15 +7,14 @@ module.exports = {
             const data = req.body
             const post = await prisma.post.create({
                 data: {
-                    company: data.company,
-                    description: data.description,
-                    location: data.location,
-                    modality: data.modality,
-                    contractType: data.contractType,
-                    salary: data.salary,
-                    endDate: data.endDate,
-                    tags: data.tags,
-                    applicants: data.applicants
+                    company: data.company as string,
+                    description: data.description as string,
+                    location: data.location as string,
+                    modality: data.modality as string,
+                    contractType: data.contractType as string,
+                    salary: data.salary as string,
+                    endDate: data.endDate as string,
+                    tags: data.tags as string[]
                 }
             })
             res.json(post)
