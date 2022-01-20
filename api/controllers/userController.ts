@@ -2,7 +2,7 @@ import { prisma } from "../index"
 import {Request, Response} from "express"
 
 module.exports = {
-    create: async (req: Request, res: Response) => {
+    create: async (req:Request, res:Response) => {
         try {
             const data = req.body
             const user = await prisma.user.create({
@@ -29,14 +29,28 @@ module.exports = {
             res.send(error)
         }
     },
-    index: async (req: Request, res: Response) => {
+    index: async (req:Request, res:Response) => {
+        try {
+            const {email} = req.params
+            const userProfile = await prisma.user.findFirst({
+                    where:{
+                        email: email,
+                    },
+                }
+            )
+            res.json(userProfile)
+        } catch(error){
+            console.log(error)
+            res.status(400).send(error)
+        }
 
     },
-    update: async (req: Request, res: Response) => {
+
+    update: async (req:Request, res:Response) => {
 
     },
-    delete: async (req: Request, res: Response) => {
-        
+    delete: async (req:Request, res:Response) => {
+
     }
 }
 

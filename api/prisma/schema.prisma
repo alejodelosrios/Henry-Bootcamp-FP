@@ -4,14 +4,14 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DB_URL")
 }
 
 //PROYECTO FINAL
 
 model Role {
   id   Int    @id @default(autoincrement())
-  name String 
+  name String @unique
 }
 
 model User {
@@ -21,7 +21,7 @@ model User {
   lastName     String
   about        String
   phoneNumber  String
-  email        String    
+  email        String    @unique
   country      String
   image        String
   showImage    Boolean
@@ -29,8 +29,8 @@ model User {
   experience   Json[]
   education    Json[]
   languages    Json[]
-  followed     Company[]
   postulations Post[]    @relation("_UserToPostulations")
+  followed     Company[]
   favourites   Post[]    @relation("_UserToFavourites")
 }
 
@@ -39,20 +39,22 @@ model Company {
   roleId          Int
   name            String
   legalName       String
-  email           String   
+  email           String   @unique
+  password        String
   stin            String
   accountManagers String[]
   image           String
+  posts           Post[]
   companyValues   String
   mission         String
   vision          String
   reviews         Json[]
-  posts           Post[]
   followers       User[]
 }
 
 model Post {
-  postId       Int      @id @default(autoincrement())
+  postId           Int      @id @default(autoincrement())
+  company      Company  @relation(fields: [companyId], references: [id])
   companyId    Int
   title        String
   description  String
@@ -66,5 +68,4 @@ model Post {
   category     String
   applicants   User[]   @relation("_UserToPostulations")
   favoritedBy  User[]   @relation("_UserToFavourites")
-  company      Company  @relation(fields: [companyId], references: [id])
 }
