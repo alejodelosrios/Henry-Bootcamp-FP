@@ -1,21 +1,27 @@
-import SearchBar from '../components/SearchBar'
-import { NavBar } from '../components/NavBar'
-import { Link } from 'react-router-dom'
+import SearchBar from "../components/SearchBar";
+import { NavBar } from "../components/NavBar";
+import { Link } from "react-router-dom";
+import PostsContainer from "../components/PostsContainer";
 
 const Home = () => {
-    return (
-        <>
-            {<NavBar/>}
+  return (
+    <>
+      {<NavBar />}
+      <Link to={"/"}>
+        {" "}
+        {/* Route to Post Creater */}
+        <button>Create New Post</button>
+      </Link>
+      <SearchBar /> {/* <-- Finish SB component!! */}
+      <aside>
+        <span>{"<CompanyFilter/>"} Component</span>
+      </aside>
+      <section>
+        <span>{"<PostsContainer/>"} Component</span>
+        <PostsContainer></PostsContainer>
+      </section>
+    </>
+  );
+};
 
-            <Link to={'/'}> {/* Route to Post Creater */}
-                <button>Create New Post</button>
-            </Link>
-
-            <SearchBar /> {/* <-- Finish SB component!! */}
-            <span>{'<CompanyFilter/>'} Component</span>
-            <span>{'<PostsContainer/>'} Component</span>
-        </>
-    )
-}
-
-export default Home
+export default Home;
