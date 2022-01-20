@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
+import styled from 'styled-components';
 
-export const Login = () => {
-    const { loginWithRedirect } = useAuth0();
+interface Props {
+    contenido: string
+    estilos: string
+}
 
-    return <button onClick={() => loginWithRedirect()}>Login</button>;
+export const Login: FC<Props> = ({ contenido, estilos }) => {
+    const Button = styled.button`
+    ${estilos}
+`
+    const { loginWithPopup, loginWithRedirect } = useAuth0();
+
+    return <Button onClick={() => loginWithRedirect()}>{contenido}</Button>;
 };
