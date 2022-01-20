@@ -13,7 +13,7 @@ module.exports = {
                 data: {
                     companyId: data.company as number,
                     description: data.description as string,
-                    tittle: data.tittle as string,
+                    title: data.title as string,
                     location: data.location as string,
                     modality: data.modality as string,
                     contractType: data.contractType as string,

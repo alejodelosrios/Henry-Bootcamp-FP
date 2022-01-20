@@ -79,7 +79,7 @@ model Post {
   // company String
   company      Company  @relation(fields: [companyId], references: [id])
   companyId    Int
-  tittle       String
+  title        String
   description  String
   location     Json[]
   modality     String
