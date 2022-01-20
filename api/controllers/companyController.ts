@@ -11,7 +11,6 @@ module.exports = {
                     roleId: data.roleId,
                     legalName: data.legalName,
                     email: data.email,
-                    password: data.password,
                     stin: data.stin,
                     accountManagers: data.accountManagers,
                     image: data.image,

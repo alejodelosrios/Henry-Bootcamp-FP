@@ -8,7 +8,7 @@ const ejemplo = {
     location:
         {
         country:"", // Perú/Argentina (genérico)
-        state:"",  // Cuzco/Caba (genérico)
+        county:"",  // Cuzco/Caba (genérico)
         },
     score: "1", // -> "1"/"2"/"3"/"4"/"5" (solo habrá estas 5 opciones)
     categories: "", // -> Technology/Health/Finance/Education/Humanities/Art (rubros genéricos, inicialmente hemos puesto 6, distinto a las Tags)
@@ -34,8 +34,7 @@ module.exports = {
         modality ? posts = posts.filter(post => post.modality.toLowerCase().includes(modality.toLowerCase())) : null
 
         typeContract ? posts = posts.filter(post => post.contractType.toLowerCase().includes(typeContract.toLowerCase())) : null
-
-        location ? posts = posts.filter(post => post.location.toLowerCase().includes(location.toLowerCase())) : null
+        
 
         categories ? posts = posts.filter(post => post.tags.includes(categories.toLowerCase())) : null
 

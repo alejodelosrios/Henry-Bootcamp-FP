@@ -11,7 +11,7 @@ datasource db {
 
 model Role {
   id   Int    @id @default(autoincrement())
-  name String @unique
+  name String 
 }
 
 model User {
@@ -21,7 +21,7 @@ model User {
   lastName     String
   about        String
   phoneNumber  String
-  email        String    @unique
+  email        String    
   country      String
   image        String
   showImage    Boolean
@@ -29,8 +29,8 @@ model User {
   experience   Json[]
   education    Json[]
   languages    Json[]
-  postulations Post[]    @relation("_UserToPostulations")
   followed     Company[]
+  postulations Post[]    @relation("_UserToPostulations")
   favourites   Post[]    @relation("_UserToFavourites")
 }
 
@@ -39,29 +39,32 @@ model Company {
   roleId          Int
   name            String
   legalName       String
-  email           String   @unique
-  password        String
+  email           String   
   stin            String
   accountManagers String[]
   image           String
-  posts           Int[]
   companyValues   String
   mission         String
   vision          String
   reviews         Json[]
+  posts           Post[]
   followers       User[]
 }
 
 model Post {
-  id           Int      @id @default(autoincrement())
-  company      String
+  postId       Int      @id @default(autoincrement())
+  companyId    Int
+  title        String
   description  String
-  location     String
+  location     Json[]
   modality     String
   contractType String
   salary       String
+  startDate    String
   endDate      String
   tags         String[]
+  category     String
   applicants   User[]   @relation("_UserToPostulations")
   favoritedBy  User[]   @relation("_UserToFavourites")
+  company      Company  @relation(fields: [companyId], references: [id])
 }
