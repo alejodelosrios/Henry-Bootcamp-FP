@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
 
-import WelcomePage from "./pages/WelcomePage";
+import WelcomePage from "./pages/WelcomePage/WelcomePage";
 
 import styled from "styled-components";
 import { UserProfile } from "./pages/UserProfile";
