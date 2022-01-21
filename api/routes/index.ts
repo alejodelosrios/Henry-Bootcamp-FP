@@ -9,10 +9,10 @@ const filterRouter = require("./filters")
 
 const mainRouter = Router()
 
+mainRouter.use("/role", roleRouter)
 mainRouter.use("/user", userRouter)
 mainRouter.use("/posts", postsRouter)
 mainRouter.use("/company", companyRouter)
-mainRouter.use("/role", roleRouter)
 mainRouter.use("/filters", filterRouter)
 
 module.exports = mainRouter
