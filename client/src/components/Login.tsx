@@ -1,8 +1,18 @@
-import React from 'react'
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-export const Login = () => {
-    const { loginWithRedirect } = useAuth0();
+interface Props {
+    contenido: string
+    estilos: string
+}
 
-    return <button onClick={() => loginWithRedirect()}>Login</button>;
+export const Login: FC<Props> = ({ contenido, estilos }) => {
+    const google = () => {
+        window.open("http://localhost:3001/auth/google", "_self");
+    };
+
+    const Button = styled.button`
+    ${estilos}
+`
+    return <Button onClick={google}>{contenido}</Button>;
 };
