@@ -12,6 +12,7 @@ const A = styled.a`
     font-weight: bolder;
     margin-right: 1rem;   
     font-family: Open sans/bold;
+    padding: 0px 1rem;
 `
 const Name = styled.a`
     text-decoration: none;
