@@ -1,5 +1,13 @@
 import styled, { css } from "styled-components";
 
+export const WelcomeContainer = styled.div`
+  margin: auto;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const Section = styled.section`
   display: flex;
   flex-direction: row-reverse;
@@ -8,6 +16,15 @@ export const Section = styled.section`
   
   margin-bottom: 50px;
   background: ${props => props.theme.colors.backgrounds.white};
+`;
+
+export const CategorySec = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 3.5rem;
+  width: 80%;
+  background-color: lightblue;
 `;
 
 export const Image = styled.img<{ circle?: boolean; rectangle?: boolean }>`
@@ -36,7 +53,8 @@ export const Card = styled.div`
 export const Title = styled.h1`
   color: ${props => props.theme.colors.typography.dark};
   font-weight: bolder;
-  font-size: 120px;
+  font-family: ${props => props.theme.colors.typography.poppins};
+  font-size: 70px;
   display: flex;
   flex-wrap: wrap;
 `;

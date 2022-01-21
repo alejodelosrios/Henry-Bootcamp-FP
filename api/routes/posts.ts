@@ -1,11 +1,22 @@
 import { Router } from 'express';
-const postController = require("../controllers/postController")
+const postsController = require("../controllers/postsController")
 
-const postRouter = Router()
+const postsRouter = Router()
 
-postRouter.post("/create", postController.create)
-postRouter.get("/:id", postController.index)
-postRouter.put("/update", postController.update)
-postRouter.delete("/delete", postController.delete)
+//GET
+postsRouter.get("/index",  postsController.index)
+postsRouter.get("/:id", postsController.postById)
 
-module.exports = postRouter
+//POST
+postsRouter.post("/create", postsController.create)
+
+//PUT
+
+//DELETE
+
+
+//DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
+postsRouter.put("/update", postsController.update)
+postsRouter.delete("/delete", postsController.delete)
+
+module.exports = postsRouter

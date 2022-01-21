@@ -31,6 +31,14 @@ module.exports = {
     },
     index: async (req:Request, res:Response) => {
         try {
+            const users = await prisma.user.findMany()
+            res.send(users)
+        }catch(error){
+            res.send(error)
+        }
+    },
+    userByEmail: async (req:Request, res:Response) => {
+        try {
             const {email} = req.params
             const userProfile = await prisma.user.findFirst({
                     where:{
@@ -40,12 +48,9 @@ module.exports = {
             )
             res.json(userProfile)
         } catch(error){
-            console.log(error)
             res.status(400).send(error)
         }
-
     },
-
     update: async (req:Request, res:Response) => {
 
     },
