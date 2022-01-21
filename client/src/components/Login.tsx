@@ -7,12 +7,12 @@ interface Props {
 }
 
 export const Login: FC<Props> = ({ contenido, estilos }) => {
-    const googleLogin = () => {
-        window.open('http:localhost:3001/auth/google', '_self')
-    }
+    const google = () => {
+        window.open("http://localhost:3001/auth/google", "_self");
+    };
 
     const Button = styled.button`
     ${estilos}
 `
-    return <Button onClick={googleLogin}>{contenido}</Button>;
+    return <Button onClick={google}>{contenido}</Button>;
 };
