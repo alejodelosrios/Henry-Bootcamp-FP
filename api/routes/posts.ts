@@ -4,8 +4,9 @@ const postController = require("../controllers/postController")
 const postRouter = Router()
 
 postRouter.post("/create", postController.create)
-postRouter.get("/:id", postController.index)
+postRouter.get("/index",  postController.index)
 postRouter.put("/update", postController.update)
 postRouter.delete("/delete", postController.delete)
+postRouter.get("/:id", postController.postById)
 
 module.exports = postRouter

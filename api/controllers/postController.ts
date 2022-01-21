@@ -1,6 +1,5 @@
 import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
-import { nextTick } from "process"
 
 module.exports = {
     create: async (req:Request, res:Response) => {
