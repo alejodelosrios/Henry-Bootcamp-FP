@@ -47,14 +47,10 @@ function App() {
       <GlobalStyles />
       <NavBar userLogged={userLogged} />
       <Routes>
-        <Route path="/" element={<WelcomePage />}></Route>
-        <Route
-          path="/profile"
-          element={userLogged ? <UserProfile /> : <Navigate to="/login" />}
-        ></Route>
+        <Route path="/" element={<WelcomePage />}></Route>      
         <Route path="/home" element={<Home />}></Route>
-        <Route path="/profile" element={<UserProfile />}></Route>
-        <Route path="/postDetail" element={<PostDetailPage />}></Route>
+        <Route path="/profile" element={<UserProfile  user={userLogged} />}></Route>
+        <Route path="/postDetail" element={<PostDetailPage/>}></Route>
       </Routes>
     </ThemeProvider>
   );
