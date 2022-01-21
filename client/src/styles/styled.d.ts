@@ -14,7 +14,10 @@ declare module 'styled-components' {
                     darkest: string,
                     dark: string,
                     light: string,
-                    lighter: string
+                    lighter: string,
+                    poppins: string,
+                    openSans: string,
+                    Roboto: string
                 },
                 details: {
                     primary: string,

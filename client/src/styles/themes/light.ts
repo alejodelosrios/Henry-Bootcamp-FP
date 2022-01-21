@@ -11,7 +11,10 @@ export default {
             darkest: '#757577',
             dark: '#7A7380',
             light: '#BBBABC',
-            lighter: '#F5F5F5'
+            lighter: '#F5F5F5',
+            poppins: "'Poppins'",
+            openSans: "'Open Sans'",
+            Roboto: "'Roboto'"
         },
         details: {
             primary: '#EF5DA8',
