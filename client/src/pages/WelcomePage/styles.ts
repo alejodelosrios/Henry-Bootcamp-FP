@@ -1,17 +1,13 @@
 import styled, { css } from "styled-components";
 
-export const Section = styled.section<{ primary?: boolean }>`
+export const Section = styled.section`
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  flex-direction: row-reverse;
   align-items: center;
-  /* margin-bottom: 50px; */
-  padding: 50px 50px;
-  ${(props) =>
-    props.primary &&
-    css`
-      background: grey;
-    `};
+  justify-content: center;
+  
+  margin-bottom: 50px;
+  background: ${props => props.theme.colors.backgrounds.white};
 `;
 
 export const Image = styled.img<{ circle?: boolean; rectangle?: boolean }>`
@@ -20,7 +16,7 @@ export const Image = styled.img<{ circle?: boolean; rectangle?: boolean }>`
       ? css`
           width: 400px;
           height: 400px;
-          border-radius: 200px;
+          border-radius: 50%;
         `
       : props.rectangle
       ? css`
@@ -30,42 +26,42 @@ export const Image = styled.img<{ circle?: boolean; rectangle?: boolean }>`
         `
       : null};
 `;
-export const Card = styled.div<{ width?: boolean }>`
+
+export const Card = styled.div`
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 50%;
+`;
 
-  ${(props: any) =>
-    props.width
-      ? css`
-          width: 100%;
-        `
-      : null}
+export const Title = styled.h1`
+  color: ${props => props.theme.colors.typography.dark};
+  font-weight: bolder;
+  font-size: 120px;
+  display: flex;
+  flex-wrap: wrap;
 `;
-export const Title = styled.h3<{ center?: boolean }>`
-  color: black;
-  font-weight: bold;
-  ${(props: any) =>
-    props.center
-      ? css`
-          text-align: center;
-        `
-      : null}
+
+export const HL = styled.p`
+  color: ${props => props.theme.colors.details.primary};
+  margin: 0;
 `;
-export const Paragraph = styled.p<{ primary?: boolean }>`
+
+export const Paragraph = styled.h2<{ bold?: boolean }>`
   color: grey;
+  font-size: 35px;
   margin-top: 0px;
   margin-bottom: 22.5px;
+  font-weight: normal;
 
-  ${(props) =>
-    props.primary &&
-    css`
-      color: white;
-    `}
+  ${(props: any) => 
+    props.bold && (css`font-weight: bolder;`)
+  }
 `;
-export const FlexDiv = styled.div`
+
+export const Footer = styled.div`
   display: flex;
 `;
+
 export const Button = styled.button`
   width: 100px;
   margin-right: 10px;
