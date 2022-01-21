@@ -2,6 +2,9 @@ import SearchBar from "../components/SearchBar";
 import { NavBar } from "../components/NavBar";
 import { Link } from "react-router-dom";
 import PostsContainer from "../components/PostsContainer";
+import FilterUser from "../components/FilterUser";
+import PostsNavBar from "../components/PostsNavBar";
+
 
 const Home = () => {
   return (
@@ -14,10 +17,10 @@ const Home = () => {
       </Link>
       <SearchBar /> {/* <-- Finish SB component!! */}
       <aside>
-        <span>{"<CompanyFilter/>"} Component</span>
+        <FilterUser></FilterUser>
       </aside>
       <section>
-        <span>{"<PostsContainer/>"} Component</span>
+        <PostsNavBar></PostsNavBar>
         <PostsContainer></PostsContainer>
       </section>
     </>
