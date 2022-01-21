@@ -1,15 +1,15 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
+import { nextTick } from "process"
 
 module.exports = {
     create: async (req:Request, res:Response) => {
-    const data = req.body
-
+        const data = req.body
         if (!req.body.company){
             res.status(404).send("Company is required")
         }
         try {
-             const post = await prisma.post.create({
+            const post = await prisma.post.create({
                 data: {
                     companyId: data.company as number,
                     description: data.description as string,
@@ -31,12 +31,34 @@ module.exports = {
         }
     },
     index: async (req:Request, res:Response) => {
-    }
-    ,
+        try {
+           const title = req.query.title as string
+           const getAllPost = await prisma.post.findMany()
+           if(title){
+           const getPost= getAllPost.filter(e => e.title.toLowerCase().includes(title.toLowerCase())) 
+           getPost.length ?
+               res.status(200).send(getPost) :
+               res.status(404).send("Post not found")
+           } else {
+               res.status(200).send(getAllPost)
+           }
+       } catch(error){
+           console.log(error)
+           res.status(400).send(error)
+       }
+    },
+    postById: async (req:Request, res:Response) => {
+        const {id} = req.params
+        const post = await prisma.post.findFirst({
+            where: {
+                postId: Number(id)
+            }
+        })
+    },
     update: async (req:Request, res:Response) => {
 
     },
     delete: async (req:Request, res:Response) => {
-        
+
     }
 }
