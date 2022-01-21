@@ -5,18 +5,23 @@ const FilterUser = () => {
     <div>
       <h3>Filtros</h3>
       <div>
-        <h4>Generales</h4>
+        <h4>Ubicaciòn</h4>
         <div>
           <input
             type="checkbox"
-            id="location"
-            name="location"
-            value="LOCATION"
+            id="location1"
+            name="location1"
+            value="LOCATION1"
           />
-          <label htmlFor="location">Locación</label>
+          <label htmlFor="location1">Buenos Aires</label>
           <br />
-          <input type="checkbox" id="score" name="score" value="SCORE" />
-          <label htmlFor="score">Calificación</label>
+          <input
+            type="checkbox"
+            id="location2"
+            name="location2"
+            value="LOCATION2"
+          />
+          <label htmlFor="location2">Mendoza</label>
         </div>
       </div>
       <div>
@@ -73,7 +78,7 @@ const FilterUser = () => {
           <label htmlFor="perHour">por Hora</label>
         </div>
       </div>
-      <div>
+      {/* <div>
         <h4>Categorías</h4>
         <div>
           <input type="checkbox" id="cat1" name="cat1" value="CAT1" />
@@ -82,7 +87,7 @@ const FilterUser = () => {
           <input type="checkbox" id="cat2" name="cat2" value="CAT2" />
           <label htmlFor="cat2">Categoría 2</label>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
