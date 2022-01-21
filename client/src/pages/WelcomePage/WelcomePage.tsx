@@ -1,5 +1,5 @@
 import React from "react";
-// import SearchBar from "../../components/SearchBar";
+import SearchBar from "../../components/SearchBar";
 // import { NavBar } from "../../components/NavBar";
 import {
   Section, Card, Image, Title, 
@@ -27,7 +27,7 @@ const WelcomePage: React.FC = () => {
           </Paragraph>
         </Card>
 
-        {/* <SearchBar /> */}
+        <SearchBar />
       </Section>
 
       <CategorySec>
