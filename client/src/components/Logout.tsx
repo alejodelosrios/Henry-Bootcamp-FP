@@ -8,7 +8,7 @@ interface Props {
 
 export const Logout: FC<Props> = ({ contenido, estilos }) => {
     const logout = () => {
-        window.open('http://localhost:3001/auth/logout', '_self');
+        window.open("http://localhost:3001/auth/logout", "_self");
     };
 
     const Button = styled.button`
