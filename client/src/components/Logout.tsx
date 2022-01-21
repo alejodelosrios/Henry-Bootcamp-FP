@@ -1,11 +1,23 @@
-import React from 'react'
-import { useAuth0 } from "@auth0/auth0-react";
+import React, { FC } from 'react';
+import styled from 'styled-components';
 
-export const Logout = () => {
-    const { logout } = useAuth0();
+interface Props {
+    contenido: string
+    estilos: string
+}
+
+export const Logout: FC<Props> = ({ contenido, estilos }) => {
+    const logout = () => {
+        window.open('http://localhost:3001/auth/logout', '_self');
+    };
+
+    const Button = styled.button`
+    ${estilos}
+`
+
     return (
-        <button onClick={() => logout({ returnTo: window.location.origin })}>
-            Logout
-        </button>
+        <Button onClick={logout}>
+            {contenido}
+        </Button>
     );
 };
