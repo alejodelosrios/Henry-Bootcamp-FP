@@ -1,11 +1,11 @@
 import SearchBar from '../components/SearchBar'
-import { NavBar } from '../components/NavBar'
+// import { NavBar } from '../components/NavBar'
 import { Link } from 'react-router-dom'
 
 const Home = () => {
     return (
         <>
-            {<NavBar/>}
+            {/* {<NavBar/>} */}
 
             <Link to={'/'}> {/* Route to Post Creater */}
                 <button>Create New Post</button>
