@@ -8,14 +8,15 @@ import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
-import { ThemeProvider } from 'styled-components';
-import light from './styles/themes/light';
+import { ThemeProvider } from "styled-components";
+import light from "./styles/themes/light";
+import { PostDetailPage } from "./pages/PostDetail";
 
 function App() {
   const App = styled.div`
     margin: 20px 100px;
   `;
-  const [userLogged, setUserLogged] = useState(false)
+  const [userLogged, setUserLogged] = useState(false);
 
   useEffect(() => {
     const getUser = () => {
@@ -25,7 +26,7 @@ function App() {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
-          "Access-Control-Allow-Credentials": 'true',
+          "Access-Control-Allow-Credentials": "true",
         },
       })
         .then((response) => {
@@ -43,14 +44,17 @@ function App() {
   }, []);
   return (
     <ThemeProvider theme={light}>
-      <GlobalStyles/>
-      <NavBar userLogged={userLogged}/>
+      <GlobalStyles />
+      <NavBar userLogged={userLogged} />
       <Routes>
         <Route path="/" element={<WelcomePage />}></Route>
-        <Route path='/profile'
-          element={ userLogged ? <UserProfile /> : <Navigate to='/login'/> }
+        <Route
+          path="/profile"
+          element={userLogged ? <UserProfile /> : <Navigate to="/login" />}
         ></Route>
-        <Route path='/home' element={<Home/>}></Route>
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/profile" element={<UserProfile />}></Route>
+        <Route path="/postDetail" element={<PostDetailPage />}></Route>
       </Routes>
     </ThemeProvider>
   );
