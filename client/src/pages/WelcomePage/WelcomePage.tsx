@@ -1,14 +1,16 @@
 import React from "react";
-import SearchBar from "../../components/SearchBar";
+// import SearchBar from "../../components/SearchBar";
 // import { NavBar } from "../../components/NavBar";
 import {
   Section, Card, Image, Title, 
-  Paragraph, Footer, Button, HL
+  Paragraph, Footer, Button, HL,
+  CategorySec, WelcomeContainer
 } from "./styles";
+import CategoryCard from "../../components/CategoryCard/CategoryCard";
 
 const WelcomePage: React.FC = () => {
   return (
-    <>
+    <WelcomeContainer>
       {/* <NavBar />  This navbar should be position absolute */}
 
       <Section>
@@ -18,15 +20,21 @@ const WelcomePage: React.FC = () => {
           circle
         />
         <Card>
-          <Title>Encuentra nuevas <HL>Oportunidades</HL></Title>
+          <Title>Encuentra <br/>nuevas <HL>Oportunidades</HL></Title>
           <Paragraph bold>
             Promovemos el vínculo con el mercado laboral para que las personas trans
             puedan acceder a un empleo registrado y digno.
           </Paragraph>
         </Card>
 
-        <SearchBar />
+        {/* <SearchBar /> */}
       </Section>
+
+      <CategorySec>
+        <h2>Explora Categorías</h2>
+        <CategoryCard />
+      </CategorySec>
+
       <Section>
         <Card>
           <Title>About</Title>
@@ -75,7 +83,7 @@ const WelcomePage: React.FC = () => {
         <Button>Click here</Button>
         <Button>Click here</Button>
       </Footer>
-    </>
+    </WelcomeContainer>
   );
 };
 
