@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+//PROYECTO FINAL
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  roleId       Int
+  firstName    String
+  lastName     String
+  about        String
+  phoneNumber  String
+  email        String
+  country      String
+  image        String
+  showImage    Boolean
+  skillTags    String[]
+  experience   Json[]
+  education    Json[]
+  languages    Json[]
+  postulations Post[]    @relation("_UserToPostulations")
+  followed     Company[]
+  favourites   Post[]    @relation("_UserToFavourites")
+}
+
+model Company {
+  id              Int      @id @default(autoincrement())
+  roleId          Int
+  name            String
+  legalName       String
+  email           String
+  stin            String
+  accountManagers String[]
+  image           String
+  posts           Post[]
+  companyValues   String
+  mission         String
+  vision          String
+  reviews         Json[]
+  followers       User[]
+}
+
+model Post {
+  postId           Int      @id @default(autoincrement())
+  company      Company  @relation(fields: [companyId], references: [id])
+  companyId    Int
+  title        String
+  description  String
+  location     Json[]
+  modality     String
+  contractType String
+  salary       String
+  startDate    String
+  endDate      String
+  tags         String[]
+  category     String
+  applicants   User[]   @relation("_UserToPostulations")
+  favoritedBy  User[]   @relation("_UserToFavourites")
+}

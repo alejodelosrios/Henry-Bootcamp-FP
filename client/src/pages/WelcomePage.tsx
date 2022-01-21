@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { NavBar } from "../components/NavBar";
 
 const WelcomePage = () => {
   const Section = styled.section<{ primary?: boolean }>`
@@ -72,7 +73,7 @@ const WelcomePage = () => {
   `;
   return (
     <>
-      <nav style={{ marginBottom: "25px" }}>Nabvar</nav>
+      <nav style={{ marginBottom: "25px" }}><NavBar/></nav>
       <input
         type="text"
         placeholder="Oportunidad laboral "
