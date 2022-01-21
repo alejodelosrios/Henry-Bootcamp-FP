@@ -47,12 +47,17 @@ module.exports = {
        }
     },
     postById: async (req:Request, res:Response) => {
-        const {id} = req.params
-        const post = await prisma.post.findFirst({
-            where: {
-                postId: Number(id)
-            }
-        })
+        try {
+            const id = req.params.id
+            const post = await prisma.post.findFirst({
+                where: {
+                    postId: Number(id)
+                }
+            })
+            res.send(post)
+        }catch(error){
+            res.send(error)
+        }
     },
     update: async (req:Request, res:Response) => {
 
