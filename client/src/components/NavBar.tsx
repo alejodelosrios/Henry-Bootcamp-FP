@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Login } from './Login';
-import { useAuth0 } from '@auth0/auth0-react';
+import { Logout } from './Logout';
 
 const A = styled.a`
     text-decoration: none;
@@ -34,25 +35,43 @@ const estilos = `
     font-weight: bolder;
 `
 
-export const NavBar = () => {
-    const { isAuthenticated, user } = useAuth0();
-    return (
-        <div>
-            <FlexDiv className='flex-container'>
-                <div className='imagen-logo'>
-                    <img src="logo" alt="logo" />
-                </div>
-                <div className='multi-options'>
-                    <A href="">{'Publicar gratis! >'}</A>
-                    <A href="">{'Reclutadores >'}</A>
-                    {
-                        !isAuthenticated ?
-                            <Login contenido='Ingresar >' estilos={estilos} />
-                            :
-                            <Name>{ user?.name }</Name>
-                    }
-                </div>
-            </FlexDiv>
-        </div>
-    )
+interface Props {
+    userLogged: any
+}
+
+export const NavBar: FC<Props> = ({ userLogged }) => {
+    console.log(userLogged)
+    if (userLogged) {
+        return (
+            <div>
+                <FlexDiv className='flex-container'>
+                    <div className='imagen-logo'>
+                        <Link to='/' style={{textDecoration: 'none'}}><img src="logo" alt="logo" /></Link>
+                    </div>
+                    <div className='multi-options'>
+                        <A href="">{'Publicar gratis! >'}</A>
+                        <A href="">{'Reclutadores >'}</A>
+                        <Name>{userLogged?.displayName}</Name>
+                        <Logout contenido='Logout' estilos={estilos}/>
+                    </div>
+                </FlexDiv>
+            </div>
+        )
+    } else {
+        return (
+            <div>
+                <FlexDiv className='flex-container'>
+                    <div className='imagen-logo'>
+                        <Link to='/' style={{textDecoration: 'none'}}><img src="logo" alt="logo" /></Link>
+                    </div>
+                    <div className='multi-options'>
+                        <A href="">{'Publicar gratis! >'}</A>
+                        <A href="">{'Reclutadores >'}</A>
+                        <Login contenido='Ingresar >' estilos={estilos} />
+                    </div>
+                </FlexDiv>
+            </div>
+        )
+    }
+    
 }
