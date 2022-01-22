@@ -1,7 +1,7 @@
 import { prisma } from "../prisma/database"
 
 module.exports = {
-    getUserIfExists: async function (email){
+    getUserIfExists: async function (email:string){
         const users = await prisma.user.findMany()
         const companies = await prisma.company.findMany()
         const allUsers = [...users, ...companies]
@@ -10,7 +10,7 @@ module.exports = {
             else return "No se encontro el usuario"
         })
     },
-    checkIfEmailAvailable: async function (email){
+    checkIfEmailAvailable: async function (email:string){
         const users = await prisma.user.findMany()
         const companies = await prisma.company.findMany()
         const allUsers = [...users, ...companies]
