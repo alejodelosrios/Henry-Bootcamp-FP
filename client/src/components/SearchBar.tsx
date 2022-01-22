@@ -9,6 +9,11 @@ interface Search {
   localizacion?: string | undefined;
 }
 
+const Container = styled.div`
+  padding: 1.5rem 0;
+  z-index: 1000;
+`;
+
 const Button = styled.a`
   margin-top: 3rem;
   font-size: 20px;
@@ -122,7 +127,7 @@ const SearchBar = () => {
   };
 
   return (
-    <div>
+    <Container>
       <MainFlexDiv>
         <IndDivs>
           <Titles>Buscar trabajo</Titles>
@@ -146,7 +151,7 @@ const SearchBar = () => {
         </IndDivs>
         <Button onClick={handleClick}>Buscar</Button>
       </MainFlexDiv>
-    </div>
+    </Container>
   );
 };
 
