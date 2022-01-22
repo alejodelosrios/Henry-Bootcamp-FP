@@ -1,21 +1,21 @@
-import { Router } from 'express';
-const companyController = require("../controllers/companyController")
+import { Router } from "express";
+const companyController = require("../controllers/companyController");
 
-const companyRouter = Router()
+const companyRouter = Router();
 
 //GET
-companyRouter.get("/index", companyController.index)
-companyRouter.get("/:id", companyController.companyById)
-companyRouter.get("/posts/:id", companyController.getPosts)
+companyRouter.get("/index", companyController.index);
+companyRouter.get("/:id", companyController.companyById);
+companyRouter.get("/posts/:id", companyController.getPosts);
 //POST
-companyRouter.post("/create", companyController.create)
-companyRouter.post("/createReview/:id", companyController.createReview)
+companyRouter.post("/create", companyController.create);
+companyRouter.post("/:id/createReview", companyController.createReview);
 //PUT
 
 //DELETE
+companyRouter.delete("/delete/:id", companyController.delete)
 
 //DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
 companyRouter.put("/update", companyController.update)
-companyRouter.delete("/delete", companyController.delete)
 
-module.exports = companyRouter
+module.exports = companyRouter;

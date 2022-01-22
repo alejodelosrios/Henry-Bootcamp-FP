@@ -94,6 +94,26 @@ module.exports = {
 
     },
     delete: async (req: Request, res: Response) => {
+        try {
+            const {id} = req.params
+
+            const postsDelete = await prisma.post.deleteMany({
+                where: {
+                  companyId: Number(id),
+                },
+              }); 
+
+            const companyDelete = await prisma.company.delete({
+                    where: {
+                        id: Number(id)
+                    },
+                }
+            )
+            res.send(companyDelete) 
+        } catch(error){
+            console.log(error)
+            res.status(400).send(error)
+        }
+    },
         
     }
-}

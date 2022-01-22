@@ -14,9 +14,10 @@ postsRouter.post("/create", postsController.create)
 //PUT
 
 //DELETE
+postsRouter.delete("/delete/:id", postsController.delete)
 
 //DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
 postsRouter.put("/update", postsController.update)
-postsRouter.delete("/delete", postsController.delete)
+
 
 module.exports = postsRouter
