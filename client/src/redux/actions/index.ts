@@ -7,7 +7,10 @@ interface getPosts {
 
 interface getCurrentPosts {
   type: ActionType.GET_CURRENT_POSTS;
-  payload: Object[];
+  payload: {
+    data: Object[];
+    filters_and_sort: Object;
+  };
 }
 
 interface getPostsById {
