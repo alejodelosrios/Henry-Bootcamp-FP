@@ -12,6 +12,7 @@ interface Search {
 const Container = styled.div`
   padding: 1.5rem 0;
   z-index: 1000;
+  margin-bottom: 80px;
 `;
 
 const Button = styled.a`

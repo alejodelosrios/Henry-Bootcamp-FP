@@ -47,7 +47,7 @@ const TopBackground = styled.div`
     top: 0;
     left: 0;
     background: rgba(200, 121, 255, 0.1);
-    width: 100vw;
+    width: 100%;
     z-index: 998;
 `;
 

@@ -9,11 +9,13 @@ const Card = styled.div`
   padding: 30px;
   font-family: ${(props) => props.theme.colors.typography.light};
   border-radius: 20px;
+  width: 800px;
+  height: 300px;
   background-color: ${(props) => props.theme.colors.backgrounds.pink};
 `;
 const CardImg = styled.div`
   background-image: url(${girl});
-  background-size: 150%;
+  background-size: 200%;
   background-repeat: no-repeat;
   background-position: center;
   background-position-y: bottom;
@@ -21,13 +23,14 @@ const CardImg = styled.div`
   flex: 1;
 `;
 const TextContainter = styled.div`
+padding-top: 10px;
   flex: 2;
 `;
-const CardTitle = styled.h2`
+const CardTitle = styled.h1`
   color: white;
   font-family: ${(props) => props.theme.colors.typography.poppins};
 `;
-const CardSubtitle = styled.h3`
+const CardSubtitle = styled.h2`
   padding-top: 10px;
   font-family: ${(props) => props.theme.colors.typography.openSans};
   font-weight: normal;
@@ -69,8 +72,7 @@ const CreateProfileCard: FC = () => {
         <CardTitle>No esperes más</CardTitle>
         <CardSubtitle>Crea ya tu perfil!</CardSubtitle>
         <Paragraph>
-          Genera un nuevo ambiente diverso para todos/as y contribuye a
-          construir una sociedad más justa.
+          Sé parte del cambio que esperas que se genere en el mundo laboral, contactate con empresas que poseen espacios inclusivos y valoran tu proactividad, actitud y experiencia ante todas las cosas. Esperamos ser el puente entre la camunidad y el trabajo que siempre anhelaste.
         </Paragraph>
         <Link to="/profile">
           <Button>Crear</Button>
