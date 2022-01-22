@@ -1,13 +1,17 @@
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import rootReducers from "../redux/reducers/rootReducer";
+import { getPosts } from "../redux/actions/actionCreators";
 import Post from "./Post";
 
 const PostsContainer = () => {
   const currentPosts = useSelector(
     (state: any) => state.postsReducer.currentPosts
   );
+  const dispatch = useDispatch();
 
-  // console.log(currentPosts);
+  useEffect(() => {
+    dispatch(getPosts());
+  }, []);
 
   return (
     <div>
@@ -17,7 +21,6 @@ const PostsContainer = () => {
           id={post.id}
           title={post.title}
           location={post.location}
-          experience={post.experience}
           modality={post.modality}
           salary={post.salary}
           startDate={post.startDate}
@@ -28,3 +31,5 @@ const PostsContainer = () => {
 };
 
 export default PostsContainer;
+
+//experience={post.experience}

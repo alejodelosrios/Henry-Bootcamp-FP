@@ -28,6 +28,7 @@ const postsReducer = (state = initialState, { type, payload }: Action) => {
       return {
         ...state,
         posts: payload,
+        currentPosts: payload,
       };
     case ActionType.GET_POSTS_BY_ID:
       return {
