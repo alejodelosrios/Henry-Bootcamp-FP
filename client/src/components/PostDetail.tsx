@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getPostsById } from "../redux/actions/actionCreators";
 
 type PostArgs = {
   company: { name: String };
@@ -15,81 +18,58 @@ type PostArgs = {
   startDate: String;
   endDate: String;
   category: String;
-  salary: {
-    min: Number;
-    max: Number;
-  };
-  experience: {
-    min: Number;
-    max: Number;
-  };
+  salary: String;
+  //salary: {
+  //min: Number;
+  //max: Number;
+  //};
+  //experience: {
+  //min: Number;
+  //max: Number;
+  //};
 };
 
 const PostDetail = ({}) => {
-  const [post, setPost] = useState<PostArgs | null>(null);
-
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const post = useSelector((state: any) => state.postsReducer.postById);
   useEffect(() => {
-    setPost({
-      company: { name: "Globant" },
-      title: "full",
-      description: "Full Stack Developer",
-      modality: "full-time",
-      location: {
-        country: "Arg",
-        state: "Buenos Aires",
-      },
-      contractType: "contractor",
-      salary: {
-        min: 12000,
-        max: 23333,
-      },
-      startDate: "10/02/2022",
-      endDate: "17/05/2022",
-      tags: ["Developer", "software developer"],
-      category: "full",
-      experience: {
-        min: 1,
-        max: 2,
-      },
-    });
+    dispatch(getPostsById(id));
   }, []);
 
-  if (!post) return null;
+  if (!post.postId) return <div>Publicación no encontrada</div>;
   return (
     <div>
-      <img src="" alt="img-company-logo" />
+      <img src="" alt="company-logo-img" />
       <div>
         <h4>{post.title}</h4>
         <p>{post.description}</p>
         <p>Etiquetas (Keywords) </p>
-        <ul>
-          {post.tags.map((tag) => (
-            <li>{tag}</li>
-          ))}
-        </ul>
       </div>
       <div>
         <p>Modalidad: {post.modality}</p>
         <p>Tipo de Contrato: {post.contractType}</p>
-        <p>
-          Ubicación: {post.location.state}, {post.location.country}
-        </p>
+        <p></p>
       </div>
       <div>
         <p>
           Publicado el: {post.startDate} Finaliza el: {post.endDate}
         </p>
         <p>Category: {post.category}</p>
-        <p>
-          Salario: $ Mínimo {post.salary.min} - $ Máximo {post.salary.max}
-        </p>
-        <p>
-          Experiencia necesaria: Mínimo {post.experience.min} años - $ Máximo{" "}
-          {post.experience.max} años
-        </p>
+        <p>Salario:{post.salary}</p>
+        <p>Experiencia necesaria:</p>
       </div>
     </div>
   );
 };
 
 export default PostDetail;
+//Mínimo {post.experience.min} años - $ Máximo{" "}
+//{post.experience.max} años
+//$ Mínimo {post.salary.min} - $ Máximo {post.salary.max}
+
+//<ul>
+//{post.tags.map((tag) => (
+//<li>{tag}</li>
+//))}
+//</ul>
