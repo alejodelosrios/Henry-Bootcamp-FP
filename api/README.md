@@ -62,25 +62,30 @@ POST    /createReview/:id   (crea una nueva review para una compañia especifica
 /posts
 GET     /index              (devuelve todos los posts)                              => no recibe parametros
 GET     /:id                (devuelve un post especifico)                           => recibe id del post por params
+GET     /filter             (devuelve todos los posts que coinciden con los filtros)=> recibe objeto filtros detallado debajo
 POST    /create             (crea un nuevo post)                                    => recibe objeto post (mirar en 
                                                                                        /prisma/seed.ts para los modelos)
 
-/filters
-GET     /                   (devuelve todos los posts que coinciden con los filtros)=> recibe objeto filtros detallado debajo
-
 
 objetoFiltros = {
-    inputName:"", // -> full stack* (genérico)
-    modality: "", // -> on-site/remote/hybrid (solo habrá estas 3 opciones)
-    contractType: "", // -> fullTime/partTime/temporary/perHour (solo habrá estas 4 opciones)
-    location:
-        {
-            country:"", // Perú/Argentina (genérico)
-            county:"",  // Cuzco/Caba (genérico)
-        },
-    score: "1", // -> "1"/"2"/"3"/"4"/"5" (solo habrá estas 5 opciones)
-    categories: "", // -> observar objeto categories en /prisma/seed.ts
-    orderBy: "", // -> scoreHightToLow/ (por el momento solo se ha pensado 1 ordenamiento)
+    "inputName":"",
+    "categories": [],
+    "score": "",
+    "orderBy": "",
+    "location": {
+        "city":[]
+    },
+    "modality": {
+        "onSite": false,
+        "hybrid": false,
+        "remote": false
+    },
+    "contractType": {
+        "fullTime": false,
+        "partTime": false,
+        "temporary": false,
+        "perHour": false
+    }
 }
 
 

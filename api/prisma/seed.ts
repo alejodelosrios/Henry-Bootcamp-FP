@@ -158,13 +158,10 @@ async function main(){
         await prisma.post.createMany({
             data: [
                 {
-                    companyId: faker.datatype.number({min: 1, max: 10}),
+                    companyId: faker.datatype.number({min: 1, max: 15}),
                     title: faker.random.word(),
                     description: faker.lorem.paragraph(),
-                    location: {
-                            country: faker.address.country(),
-                            state: faker.address.county()
-                        },
+                    location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
                     modality: faker.random.arrayElement(["on-site", "remote", "hybrid"]),
                     contractType: faker.random.arrayElement(["fullTime", "partTime", "temporary", "perHour"]),
                     salary: `${faker.datatype.number()}usd`,

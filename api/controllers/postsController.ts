@@ -59,6 +59,86 @@ module.exports = {
             res.send(error)
         }
     },
+    filter: async (req: Request, res: Response) => {
+        try{
+            const { 
+                inputName,
+                categories,
+                score,
+                orderBy,
+                location,
+                modality,
+                contractType
+            } = req.body
+
+            const posts = await prisma.post.findMany()
+
+            // async function getScore(companyId: number){
+            //     const company = await prisma.company.findUnique({
+            //         where: {
+            //             id: companyId
+            //         },
+            //         select: {
+            //             reviews: true
+            //         }
+            //     })
+            //     let totalScore
+            //     company.reviews.map(review => {
+            //         review.hasOwnProperty("score") && totalScore = totalScore + review.score as number
+            //     })
+            //     return totalScore/company.reviews.length
+            // }
+
+            let formattedPosts = await posts.map(post => {
+                return ({
+                    postId: post.postId as number,
+                    companyId: post.companyId as number,
+                    title: post.title as string,
+                    location: post.location as string,
+                    modality: post.modality as string,
+                    contractType: post.contractType as string,
+                    salary: post.salary as string,
+                    startDate: post.startDate as string,
+                    endDate: post.endDate as string,
+                    tags: post.tags as object,
+                    category: post.category as string,
+                    // score: getScore(post.companyId)
+                })
+            })
+            
+            // FILTRO INPUTNAME
+            inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
+            
+            // FILTRO CATEGORY
+            categories.length ? formattedPosts = formattedPosts.filter(post => categories.join(" ").toLowerCase().includes(post.category.toLowerCase())) : null
+    
+            // FILTRO LOCATION
+            location.city.length ? formattedPosts = formattedPosts.filter(post => location.city.join(" ").toLowerCase().includes(post.location.toLowerCase())) : null
+    
+            // FILTRO MODALITY
+            let modalities = ""
+            for (let key in modality) {
+                if (modality[key] === true) {
+                    modalities += key + " "
+                }
+            }
+            modalities ? formattedPosts = formattedPosts.filter(post => modalities.includes(post.modality.toLowerCase())) : null
+            
+            // FILTRO CONTRACTTYPE
+            let contractTypes = ""
+            for (let key in contractType) {
+                if (contractType[key] === true) {
+                    contractTypes += key + " "
+                }
+            }
+            contractTypes ? formattedPosts = formattedPosts.filter(post => contractTypes.toLowerCase().includes(post.contractType.toLowerCase())) : null
+    
+    
+            formattedPosts.length ? res.send(formattedPosts) : "No se encontraron resultados"
+        }catch(error){
+            res.send(error)
+        }
+    },
     update: async (req:Request, res:Response) => {
 
     },
@@ -77,3 +157,25 @@ module.exports = {
         }
     },
     }
+}
+
+const ejemploBRYAN = {
+    inputName:"",
+    categories: ["Agriculture, Food, and Natural Resources", "Business and Finance"],
+    score: "3", // devolver todo lo que este hasta .5 por arriba o debajo
+    orderBy: "orderScoreAsc",
+    location: {
+        city:["caba", "san pedro", "baradero"]
+    },
+    modality: {
+        onSite: false,
+        hybrid: false,
+        remote: false,
+    },
+    contractType: {
+        fullTime: false,
+        partTime: false,
+        temporality: false,
+        perHour: false,
+    }
+}
