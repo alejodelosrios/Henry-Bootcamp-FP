@@ -1,9 +1,9 @@
-import SearchBar from "../components/SearchBar";
+import SearchBar from "../Components/SearchBar";
 // import { NavBar } from '../components/NavBar'
 import { Link } from "react-router-dom";
-import FilterUser from "../components/FilterUser";
-import PostsNavBar from "../components/PostsNavBar";
-import PostsContainer from "../components/PostsContainer";
+import FilterUser from "../Components/FilterUser";
+import PostsNavBar from "../Components/PostsNavBar";
+import PostsContainer from "../Components/PostsContainer";
 
 const Home = () => {
   return (
