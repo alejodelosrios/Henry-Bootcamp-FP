@@ -14,6 +14,7 @@ const Home = () => {
         {/* Route to Post Creater */}
         <button>Create New Post</button>
       </Link>
+      <SearchBar />
       <aside>
         <FilterUser></FilterUser>
       </aside>
@@ -28,5 +29,3 @@ const Home = () => {
 };
 
 export default Home;
-
-//<SearchBar /> [> <-- Finish SB component!! <]

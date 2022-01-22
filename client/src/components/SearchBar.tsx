@@ -40,7 +40,6 @@ const MainFlexDiv = styled.div`
   height: 123px;
   background: white;
   padding: 20px 40px 20px 40px;
-  position: absolute;
   justify-content: space-between;
   align-items: flex-end;
   box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);

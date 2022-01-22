@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import img from "../assets/iStock-1.jpg";
 
@@ -133,7 +134,9 @@ const Post = ({
         </Box>
         <ContenedorC>
           <div>
-            <Title>{title}</Title>
+            <Link to={`/post-detail/${id}`}>
+              <Title>{title}</Title>
+            </Link>
             <P>
               {location.state}, {location.country}
             </P>

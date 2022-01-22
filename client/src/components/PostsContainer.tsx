@@ -4,30 +4,30 @@ import { getPosts } from "../redux/actions/actionCreators";
 import Post from "./Post";
 
 const PostsContainer = () => {
-  const currentPosts = useSelector(
-    (state: any) => state.postsReducer.currentPosts
-  );
-  const dispatch = useDispatch();
+    const currentPosts = useSelector(
+        (state: any) => state.postsReducer.currentPosts
+    );
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, []);
+    useEffect(() => {
+        dispatch(getPosts());
+    }, []);
 
-  return (
-    <div>
-      {currentPosts.map((post: any) => (
-        <Post
-          key={post.id}
-          id={post.id}
-          title={post.title}
-          location={post.location}
-          modality={post.modality}
-          salary={post.salary}
-          startDate={post.startDate}
-        />
-      ))}
-    </div>
-  );
+    return (
+        <div>
+            {currentPosts.map((post: any) => (
+                <Post
+                    key={post.postId}
+                    id={post.postId}
+                    title={post.title}
+                    location={post.location}
+                    modality={post.modality}
+                    salary={post.salary}
+                    startDate={post.startDate}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default PostsContainer;
