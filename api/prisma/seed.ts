@@ -158,7 +158,7 @@ async function main(){
         await prisma.post.createMany({
             data: [
                 {
-                    companyId: faker.datatype.number({min: 1, max: 10}),
+                    companyId: faker.datatype.number({min: 1, max: 15}),
                     title: faker.random.word(),
                     description: faker.lorem.paragraph(),
                     location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,

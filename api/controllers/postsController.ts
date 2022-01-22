@@ -72,6 +72,23 @@ module.exports = {
             } = req.body
 
             const posts = await prisma.post.findMany()
+
+            // async function getScore(companyId: number){
+            //     const company = await prisma.company.findUnique({
+            //         where: {
+            //             id: companyId
+            //         },
+            //         select: {
+            //             reviews: true
+            //         }
+            //     })
+            //     let totalScore
+            //     company.reviews.map(review => {
+            //         review.hasOwnProperty("score") && totalScore = totalScore + review.score as number
+            //     })
+            //     return totalScore/company.reviews.length
+            // }
+
             let formattedPosts = await posts.map(post => {
                 return ({
                     postId: post.postId as number,
@@ -84,7 +101,8 @@ module.exports = {
                     startDate: post.startDate as string,
                     endDate: post.endDate as string,
                     tags: post.tags as object,
-                    category: post.category as string
+                    category: post.category as string,
+                    // score: getScore(post.companyId)
                 })
             })
             
