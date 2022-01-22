@@ -2,11 +2,19 @@ import React from "react";
 import SearchBar from "../../components/SearchBar";
 // import { NavBar } from "../../components/NavBar";
 import {
-  Section, Card, Image, Title, 
-  Paragraph, Footer, Button, HL,
-  CategorySec, WelcomeContainer
+  Section,
+  Card,
+  Image,
+  Title,
+  Paragraph,
+  Footer,
+  Button,
+  HL,
+  CategorySec,
+  WelcomeContainer,
 } from "./styles";
 import CategoryCard from "../../components/CategoryCard/CategoryCard";
+import CreateProfileCard from "../../components/CreateProfileCard";
 
 const WelcomePage: React.FC = () => {
   return (
@@ -20,10 +28,13 @@ const WelcomePage: React.FC = () => {
           circle
         />
         <Card>
-          <Title>Encuentra <br/>nuevas <HL>Oportunidades</HL></Title>
+          <Title>
+            Encuentra <br />
+            nuevas <HL>Oportunidades</HL>
+          </Title>
           <Paragraph bold>
-            Promovemos el vínculo con el mercado laboral para que las personas trans
-            puedan acceder a un empleo registrado y digno.
+            Promovemos el vínculo con el mercado laboral para que las personas
+            trans puedan acceder a un empleo registrado y digno.
           </Paragraph>
         </Card>
 
@@ -57,6 +68,7 @@ const WelcomePage: React.FC = () => {
           circle
         />
       </Section>
+      <CreateProfileCard />
       <Section>
         <Card>
           <Title>About</Title>
