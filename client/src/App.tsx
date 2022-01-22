@@ -14,9 +14,7 @@ import { PostDetailPage } from "./pages/PostDetail";
 import Post from './Components/Post'
 
 function App() {
-  const App = styled.div`
-    margin: 20px 100px;
-  `;
+  
   const [userLogged, setUserLogged] = useState(false);
 
   useEffect(() => {
