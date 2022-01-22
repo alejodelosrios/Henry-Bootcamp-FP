@@ -13,9 +13,6 @@ import light from "./styles/themes/light";
 import { PostDetailPage } from "./pages/PostDetail";
 
 function App() {
-  const App = styled.div`
-    margin: 20px 100px;
-  `;
   const [userLogged, setUserLogged] = useState(false);
 
   useEffect(() => {
@@ -47,10 +44,13 @@ function App() {
       <GlobalStyles />
       <NavBar userLogged={userLogged} />
       <Routes>
-        <Route path="/" element={<WelcomePage />}></Route>      
+        <Route path="/" element={<WelcomePage />}></Route>
         <Route path="/home" element={<Home />}></Route>
-        <Route path="/profile" element={<UserProfile  user={userLogged} />}></Route>
-        <Route path="/postDetail" element={<PostDetailPage/>}></Route>
+        <Route
+          path="/profile"
+          element={<UserProfile user={userLogged} />}
+        ></Route>
+        <Route path="/postDetail" element={<PostDetailPage />}></Route>
       </Routes>
     </ThemeProvider>
   );
