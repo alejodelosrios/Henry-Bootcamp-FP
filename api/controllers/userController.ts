@@ -55,7 +55,25 @@ module.exports = {
 
     },
     delete: async (req:Request, res:Response) => {
+        try {
+            const {email} = req.params
+            const userDelete = await prisma.user.deleteMany({
+                    where: {
+                        email: email, 
+                    },
+                }
+            )
+            res.send(userDelete) 
+        } catch(error){
+            res.status(400).send(error)
+        }
+    },
 
-    }
 }
+
+
+
+
+    
+
 
