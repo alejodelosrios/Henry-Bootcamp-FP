@@ -1,23 +1,22 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
+import React, { FC } from "react";
+import styled from "styled-components";
 
 interface Props {
-    contenido: string
-    estilos: string
+  contenido: string;
+  estilos: string;
 }
+const Button = styled.button<{ estilos?: String }>`
+  ${(props: any) => props.estilos}
+`;
 
 export const Logout: FC<Props> = ({ contenido, estilos }) => {
-    const logout = () => {
-        window.open("http://localhost:3001/auth/logout", "_self");
-    };
+  const logout = () => {
+    window.open("http://localhost:3001/auth/logout", "_self");
+  };
 
-    const Button = styled.button`
-    ${estilos}
-`
-
-    return (
-        <Button onClick={logout}>
-            {contenido}
-        </Button>
-    );
+  return (
+    <Button estilos={estilos} onClick={logout}>
+      {contenido}
+    </Button>
+  );
 };
