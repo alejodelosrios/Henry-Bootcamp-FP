@@ -20,6 +20,7 @@ const initialState = {
       perHour: false,
     },
   },
+  postCreateModal: { val: false, msg: "" },
 };
 
 const postsReducer = (state = initialState, { type, payload }: Action) => {
@@ -41,6 +42,11 @@ const postsReducer = (state = initialState, { type, payload }: Action) => {
         ...state,
         currentPosts: payload,
         filters_and_sort: payload,
+      };
+    case ActionType.SET_POST_CREATE_MODAL:
+      return {
+        ...state,
+        postCreateModal: payload,
       };
     default:
       return state;
