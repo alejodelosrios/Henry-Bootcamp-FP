@@ -42,10 +42,12 @@ export const filterAndSort =
 export const createPost =
   (dataPost: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      await axios.post(``, dataPost);
+      console.log(dataPost);
+
+      await axios.post(`/posts/create`, dataPost);
       console.log("CREATE POST", "Se envió la data a la API");
       return dispatch({
-        type: ActionType.SET_IS_MODAL_OPEN,
+        type: ActionType.SET_POST_CREATE_MODAL,
         payload: {
           val: true,
           msg: `The job post ${dataPost.title} was created successfully!`,
@@ -54,7 +56,7 @@ export const createPost =
     } catch (error) {
       console.log(error);
       return dispatch({
-        type: ActionType.SET_IS_MODAL_OPEN,
+        type: ActionType.SET_POST_CREATE_MODAL,
         payload: {
           val: true,
           msg: `The job post ${dataPost.title}, couldn't be created!`,
@@ -62,3 +64,6 @@ export const createPost =
       });
     }
   };
+export const setPostCreateModal = (data: any) => {
+  return { type: ActionType.SET_POST_CREATE_MODAL, payload: data };
+};

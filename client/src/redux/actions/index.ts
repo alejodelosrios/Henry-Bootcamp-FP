@@ -23,8 +23,8 @@ interface filterAndSort {
   payload: Object[];
 }
 
-interface setIsModalOpen {
-  type: ActionType.SET_IS_MODAL_OPEN;
+interface setPostCreateModal {
+  type: ActionType.SET_POST_CREATE_MODAL;
   payload: {
     val: Boolean;
     msg: String;
@@ -35,5 +35,5 @@ export type Action =
   | getPosts
   | filterAndSort
   | getPostsById
-  | setIsModalOpen
+  | setPostCreateModal
   | getCurrentPosts;
