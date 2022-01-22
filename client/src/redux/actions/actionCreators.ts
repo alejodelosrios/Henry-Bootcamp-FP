@@ -6,6 +6,7 @@ import { Action } from "./index";
 export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
     let { data } = await axios.get("/posts/index");
+    //console.log(data);
     console.log("POSTS", "Se recibe data de la API");
     return dispatch({ type: ActionType.GET_POSTS, payload: data });
   } catch (error) {
