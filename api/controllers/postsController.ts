@@ -60,70 +60,66 @@ module.exports = {
         }
     },
     filter: async (req: Request, res: Response) => {
-        const posts = await prisma.post.findMany()
-        res.send(posts)
+        try{
+            const { 
+                inputName,
+                categories,
+                score,
+                orderBy,
+                location,
+                modality,
+                contractType
+            } = req.body
 
-        // try{
-            // const { 
-            //     inputName,
-            //     categories,
-            //     score,
-            //     orderBy,
-            //     location,
-            //     modality,
-            //     contractType
-            // } = req.body
-
-            // const posts = await prisma.post.findMany()
-            // let formattedPosts = posts.map(post => {
-            //     return ({
-            //         postId: post.postId as number,
-            //         companyId: post.companyId as number,
-            //         title: post.title as string,
-            //         location: post.location as string,
-            //         modality: post.modality as string,
-            //         contractType: post.contractType as string,
-            //         salary: post.salary as string,
-            //         startDate: post.startDate as string,
-            //         endDate: post.endDate as string,
-            //         tags: post.tags as object,
-            //         category: post.category as string
-            //     })
-            // })
-            // res.send(posts)
+            const posts = await prisma.post.findMany()
+            let formattedPosts = await posts.map(post => {
+                return ({
+                    postId: post.postId as number,
+                    companyId: post.companyId as number,
+                    title: post.title as string,
+                    location: post.location as string,
+                    modality: post.modality as string,
+                    contractType: post.contractType as string,
+                    salary: post.salary as string,
+                    startDate: post.startDate as string,
+                    endDate: post.endDate as string,
+                    tags: post.tags as object,
+                    category: post.category as string
+                })
+            })
             
-            //FILTRO INPUTNAME
-            // inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
+            // FILTRO INPUTNAME
+            inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
             
-            //FILTRO CATEGORY
-            // categories.length ? formattedPosts = formattedPosts.filter(post => categories.join(" ").toLowerCase().includes(post.category.toLowerCase())) : null
+            // FILTRO CATEGORY
+            categories.length ? formattedPosts = formattedPosts.filter(post => categories.join(" ").toLowerCase().includes(post.category.toLowerCase())) : null
     
-            //FILTRO LOCATION
-            // location.city.length ? formattedPosts = formattedPosts.filter(post => location.city.join(" ").toLowerCase().includes(post.location.toLowerCase())) : null
+            // FILTRO LOCATION
+            location.city.length ? formattedPosts = formattedPosts.filter(post => location.city.join(" ").toLowerCase().includes(post.location.toLowerCase())) : null
     
-            //FILTRO MODALITY
-            // let modalities = ""
-            // for (let key in modality) {
-            //     if (modality[key] === true) {
-            //         modalities.concat(modality[key] + " ")
-            //     }
-            // }
-            // modalities ? formattedPosts = formattedPosts.filter(post => modalities.includes(post.modality.toLowerCase())) : null
+            // FILTRO MODALITY
+            let modalities = ""
+            for (let key in modality) {
+                if (modality[key] === true) {
+                    modalities += key + " "
+                }
+            }
+            modalities ? formattedPosts = formattedPosts.filter(post => modalities.includes(post.modality.toLowerCase())) : null
             
-            //FILTRO CONTRACTTYPE
-            // let contractTypes = ""
-            // for (let key in contractType) {
-            //     if (contractType[key] === true) {
-            //         contractTypes.concat(contractType[key] + " ")
-            //     }
-            // }
-            // contractType ? formattedPosts = formattedPosts.filter(post => contractTypes.includes(post.contractType.toLowerCase())) : null
+            // FILTRO CONTRACTTYPE
+            let contractTypes = ""
+            for (let key in contractType) {
+                if (contractType[key] === true) {
+                    contractTypes += key + " "
+                }
+            }
+            contractTypes ? formattedPosts = formattedPosts.filter(post => contractTypes.toLowerCase().includes(post.contractType.toLowerCase())) : null
     
     
-            // res.send(posts)
-        // }catch(error){
-        //     res.send(error)
-        // }
+            formattedPosts.length ? res.send(formattedPosts) : "No se encontraron resultados"
+        }catch(error){
+            res.send(error)
+        }
     },
     update: async (req:Request, res:Response) => {
 

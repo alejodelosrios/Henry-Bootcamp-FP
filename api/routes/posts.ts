@@ -4,9 +4,9 @@ const postsController = require("../controllers/postsController")
 const postsRouter = Router()
 
 //GET
+postsRouter.get("/filter", postsController.filter)
 postsRouter.get("/index",  postsController.index)
 postsRouter.get("/:id", postsController.postById)
-postsRouter.get("/filter", postsController.filter)
 
 //POST
 postsRouter.post("/create", postsController.create)
