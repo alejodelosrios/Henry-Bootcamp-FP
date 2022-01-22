@@ -1,5 +1,5 @@
 import React from "react";
-import PostDetail from "../components/PostDetail";
+import PostDetail from "../Components/PostDetail";
 export const PostDetailPage = () => {
   return (
     <div>
