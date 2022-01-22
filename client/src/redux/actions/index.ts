@@ -1,18 +1,39 @@
 import { ActionType } from "./actionTypes";
 
-
 interface getPosts {
-    type: ActionType.GET_POSTS
+  type: ActionType.GET_POSTS;
+  payload: Object[];
 }
 
-interface filterPosts {
-    type: ActionType.FILTER_POSTS,
-    payload: string
+interface getCurrentPosts {
+  type: ActionType.GET_CURRENT_POSTS;
+  payload: {
+    data: Object[];
+    filters_and_sort: Object;
+  };
 }
 
-interface orderPosts {
-    type: ActionType.ORDER_POSTS,
-    payload: string
+interface getPostsById {
+  type: ActionType.GET_POSTS_BY_ID;
+  payload: Object;
 }
 
-export type Action = getPosts | filterPosts | orderPosts;
+interface filterAndSort {
+  type: ActionType.FILTER_AND_SORT;
+  payload: Object[];
+}
+
+interface setIsModalOpen {
+  type: ActionType.SET_IS_MODAL_OPEN;
+  payload: {
+    val: Boolean;
+    msg: String;
+  };
+}
+
+export type Action =
+  | getPosts
+  | filterAndSort
+  | getPostsById
+  | setIsModalOpen
+  | getCurrentPosts;

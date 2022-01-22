@@ -1,16 +1,18 @@
 import { Router } from 'express';
 
 const userRouter = require("./user")
-const postRouter = require("./post")
+const postsRouter = require("./posts")
 const companyRouter = require("./company")
 const roleRouter = require("./role")
+const filterRouter = require("./filters")
 
 
 const mainRouter = Router()
 
-mainRouter.use("/user", userRouter)
-mainRouter.use("/post", postRouter)
-mainRouter.use("/company", companyRouter)
 mainRouter.use("/role", roleRouter)
+mainRouter.use("/user", userRouter)
+mainRouter.use("/posts", postsRouter)
+mainRouter.use("/company", companyRouter)
+mainRouter.use("/filters", filterRouter)
 
 module.exports = mainRouter
