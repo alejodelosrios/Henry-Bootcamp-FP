@@ -5,6 +5,11 @@ import { Login } from "./Login";
 import { Logout } from "./Logout";
 import logo from "../assets/logo.svg";
 
+const Container = styled.div`
+  width: 100vw;
+  height: 20vh;
+`;
+
 const A = styled.a`
   text-decoration: none;
   font-size: 20px;
@@ -76,7 +81,7 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
     );
   } else {
     return (
-      <div>
+      <Container>
         <MainFlexDiv className="flex-container">
           <FlexDiv className="imagen-logo">
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -93,7 +98,7 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
             <Login contenido="Ingresar" estilos={estilos} />
           </div>
         </MainFlexDiv>
-      </div>
+      </Container>
     );
   }
 };
