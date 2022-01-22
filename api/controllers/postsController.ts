@@ -59,10 +59,113 @@ module.exports = {
             res.send(error)
         }
     },
+    filter: async (req: Request, res: Response) => {
+        const posts = await prisma.post.findMany()
+        res.send(posts)
+
+        // try{
+            // const { 
+            //     inputName,
+            //     categories,
+            //     score,
+            //     orderBy,
+            //     location,
+            //     modality,
+            //     contractType
+            // } = req.body
+
+            // const posts = await prisma.post.findMany()
+            // let formattedPosts = posts.map(post => {
+            //     return ({
+            //         postId: post.postId as number,
+            //         companyId: post.companyId as number,
+            //         title: post.title as string,
+            //         location: post.location as string,
+            //         modality: post.modality as string,
+            //         contractType: post.contractType as string,
+            //         salary: post.salary as string,
+            //         startDate: post.startDate as string,
+            //         endDate: post.endDate as string,
+            //         tags: post.tags as object,
+            //         category: post.category as string
+            //     })
+            // })
+            // res.send(posts)
+            
+            //FILTRO INPUTNAME
+            // inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
+            
+            //FILTRO CATEGORY
+            // categories.length ? formattedPosts = formattedPosts.filter(post => categories.join(" ").toLowerCase().includes(post.category.toLowerCase())) : null
+    
+            //FILTRO LOCATION
+            // location.city.length ? formattedPosts = formattedPosts.filter(post => location.city.join(" ").toLowerCase().includes(post.location.toLowerCase())) : null
+    
+            //FILTRO MODALITY
+            // let modalities = ""
+            // for (let key in modality) {
+            //     if (modality[key] === true) {
+            //         modalities.concat(modality[key] + " ")
+            //     }
+            // }
+            // modalities ? formattedPosts = formattedPosts.filter(post => modalities.includes(post.modality.toLowerCase())) : null
+            
+            //FILTRO CONTRACTTYPE
+            // let contractTypes = ""
+            // for (let key in contractType) {
+            //     if (contractType[key] === true) {
+            //         contractTypes.concat(contractType[key] + " ")
+            //     }
+            // }
+            // contractType ? formattedPosts = formattedPosts.filter(post => contractTypes.includes(post.contractType.toLowerCase())) : null
+    
+    
+            // res.send(posts)
+        // }catch(error){
+        //     res.send(error)
+        // }
+    },
     update: async (req:Request, res:Response) => {
 
     },
     delete: async (req:Request, res:Response) => {
 
+    }
+}
+
+
+const ejemplo = {
+    inputName:"", // -> full stack* (genérico)
+    modality: "", // -> presencial/remote/hybrid (solo habrá estas 3 opciones)
+    contractType: "", // -> fullTime/partTime/temporary/perHour (solo habrá estas 4 opciones)
+    location: [
+        {
+            country:"", // Perú/Argentina (genérico)
+            state:"",  // Cuzco/Caba (genérico)
+        }
+    ],
+    score: "", // -> "1"/"2"/"3"/"4"/"5" (solo habrá estas 5 opciones)
+    categories: "", // -> Technology/Health/Finance/Education/Humanities/Art (rubros genéricos, inicialmente hemos puesto 6, distinto a las Tags)
+    orderBy: "", // -> scoreHightToLow/ (por el momento solo se ha pensado 1 ordenamiento)
+}
+
+const ejemploBRYAN = {
+    inputName:"",
+    categories: ["Agriculture, Food, and Natural Resources", "Business and Finance"],
+    score: "3", // devolver todo lo que este hasta .5 por arriba o debajo
+    orderBy: "orderScoreAsc",
+    location: {
+        city:["caba", "san pedro", "baradero"]
+    },
+    modality: {
+        onSite: false,
+        hybrid: false,
+        remote: false,
+    },
+    contractType: {
+        fullTime: false,
+        partTime: false,
+        temporality: false,
+        perHour: false,
     }
 }

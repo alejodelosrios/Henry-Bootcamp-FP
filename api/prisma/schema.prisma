@@ -57,7 +57,7 @@ model Post {
   companyId    Int
   title        String
   description  String
-  location     Json[]
+  location     String
   modality     String
   contractType String
   salary       String
