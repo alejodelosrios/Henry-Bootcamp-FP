@@ -12,6 +12,7 @@ import { ThemeProvider } from "styled-components";
 import light from "./styles/themes/light";
 import { PostDetailPage } from "./pages/PostDetail";
 import Post from "./components/Post";
+import CreatePostPage from "./pages/CreatePostPage";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -52,6 +53,7 @@ function App() {
           element={<UserProfile user={userLogged} />}
         ></Route>
         <Route path="/post-detail/:id" element={<PostDetailPage />}></Route>
+        <Route path="/create-post" element={<CreatePostPage />} />
       </Routes>
     </ThemeProvider>
   );
