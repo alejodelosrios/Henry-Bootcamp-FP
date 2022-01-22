@@ -66,7 +66,7 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
                         <A href="">{'Nosotros'}</A>
                     </div>
                     <div>
-                        <Name>{userLogged?.displayName}</Name>
+                        <Name href='/profile'>{userLogged?.displayName}</Name>
                         <Logout contenido='Logout' estilos={estilos}/>
                     </div>
                 </MainFlexDiv>
