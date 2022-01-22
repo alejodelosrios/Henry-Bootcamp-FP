@@ -5,13 +5,13 @@ import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import styled from "styled-components";
 import { UserProfile } from "./pages/UserProfile";
 import Home from "./pages/Home";
-import { NavBar } from "./Components/NavBar";
+import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
 import { ThemeProvider } from "styled-components";
 import light from "./styles/themes/light";
 import { PostDetailPage } from "./pages/PostDetail";
-import Post from './Components/Post'
+import Post from './components/Post'
 
 function App() {
   
