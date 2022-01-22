@@ -1,4 +1,4 @@
-import { prisma } from "../index"
+import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
 
 module.exports = {
@@ -31,28 +31,31 @@ module.exports = {
     },
     index: async (req:Request, res:Response) => {
         try {
-            const {id} = req.params
-            const getUserProfile= await prisma.user.findUnique(
-                {
+            const users = await prisma.user.findMany()
+            res.send(users)
+        }catch(error){
+            res.send(error)
+        }
+    },
+    userByEmail: async (req:Request, res:Response) => {
+        try {
+            const {email} = req.params
+            const userProfile = await prisma.user.findFirst({
                     where:{
-                        email: id,
+                        email: email,
                     },
                 }
-             
             )
-            res.json(getUserProfile)
+            res.json(userProfile)
         } catch(error){
-            console.log(error)
             res.status(400).send(error)
         }
-
     },
-    
     update: async (req:Request, res:Response) => {
 
     },
     delete: async (req:Request, res:Response) => {
-        
+
     }
 }
 

@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import { useAuth0 } from "@auth0/auth0-react";
 import styled from 'styled-components';
 
 interface Props {
@@ -8,10 +7,12 @@ interface Props {
 }
 
 export const Login: FC<Props> = ({ contenido, estilos }) => {
+    const google = () => {
+        window.open("http://localhost:3001/auth/google", "_self");
+    };
+
     const Button = styled.button`
     ${estilos}
 `
-    const { loginWithPopup, loginWithRedirect } = useAuth0();
-
-    return <Button onClick={() => loginWithRedirect()}>{contenido}</Button>;
+    return <Button onClick={google}>{contenido}</Button>;
 };
