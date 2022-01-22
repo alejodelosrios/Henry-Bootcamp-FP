@@ -13,9 +13,10 @@ companyRouter.post("/createReview/:id", companyController.createReview)
 //PUT
 
 //DELETE
+companyRouter.delete("/delete/:id", companyController.delete)
 
 //DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
 companyRouter.put("/update", companyController.update)
-companyRouter.delete("/delete", companyController.delete)
+
 
 module.exports = companyRouter
