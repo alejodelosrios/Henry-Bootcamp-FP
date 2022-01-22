@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Login } from "./Login";
@@ -7,7 +7,6 @@ import logo from "../assets/logo.svg";
 
 const Container = styled.div`
   width: 100vw;
-  height: 20vh;
 `;
 
 const A = styled.a`
@@ -18,6 +17,12 @@ const A = styled.a`
   margin-right: 1rem;
   font-family: Open sans/bold;
   padding: 0px 1rem;
+`;
+const NavLinks = styled.nav`
+  z-index: 1000;
+`;
+const LoginButton = styled.div`
+  z-index: 1000;
 `;
 const Name = styled.a`
   text-decoration: none;
@@ -33,12 +38,13 @@ const MainFlexDiv = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  padding: 20px;
+  padding: 20px 0;
 `;
 const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  z-index: 1000;
 `;
 const estilos = `
     background: #c879ff;
@@ -66,12 +72,12 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
               <img src={logo} alt="logo" />
             </Link>
           </FlexDiv>
-          <div className="multi-options">
+          <NavLinks className="multi-options">
             <A href="/">{"Inicio"}</A>
             <A href="">{"Postulantes"}</A>
             <A href="">{"Empresas"}</A>
             <A href="">{"Nosotros"}</A>
-          </div>
+          </NavLinks>
           <div>
             <Name href="/profile">{userLogged?.displayName}</Name>
             <Logout contenido="Logout" estilos={estilos} />
@@ -88,15 +94,15 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
               <img src={logo} alt="logo" />
             </Link>
           </FlexDiv>
-          <div className="multi-options">
+          <NavLinks className="multi-options">
             <A href="">{"Inicio"}</A>
             <A href="">{"Postulantes"}</A>
             <A href="">{"Empresas"}</A>
             <A href="">{"Nosotros"}</A>
-          </div>
-          <div className="login">
+          </NavLinks>
+          <LoginButton className="login">
             <Login contenido="Ingresar" estilos={estilos} />
-          </div>
+          </LoginButton>
         </MainFlexDiv>
       </Container>
     );
