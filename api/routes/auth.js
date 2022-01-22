@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const passport = require("passport");
+const userValidation = require("../controllers/userValidation")
 
 const CLIENT_URL = "http://localhost:3000/";
 
 router.get("/login/success", (req, res) => {
     if (req.user) {
+    let user = userValidation.getUserIfExists(req.user)
     res.status(200).json({
         success: true,
         message: "successfull",
