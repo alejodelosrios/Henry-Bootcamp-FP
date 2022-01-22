@@ -5,25 +5,25 @@ const initialState = {
   posts: [],
   postById: {},
   currentPosts: [],
+  filters_and_sort: {
+    postulacion: "",
+    location: ["Mendoza", "Buenos Aires"],
+    modality: {
+      onSite: false,
+      hybrid: false,
+      remote: false,
+    },
+    contractType: {
+      fullTime: false,
+      partTime: false,
+      temporality: false,
+      perHour: false,
+    },
+  },
 };
 
-//This is just Test Data, don't forget to delete it!!!
-const testData = [
-  {
-    name: "pirulo",
-    id: "pirulo",
-  },
-  {
-    name: "rosita",
-    id: "rosita",
-  },
-];
-
-const reducer = (state = initialState, { type, payload }: Action) => {
+const postsReducer = (state = initialState, { type, payload }: Action) => {
   switch (type) {
-    case ActionType.GET_POSTS:
-      return { ...state, posts: testData };
-
     case ActionType.GET_POSTS:
       return {
         ...state,
@@ -34,14 +34,16 @@ const reducer = (state = initialState, { type, payload }: Action) => {
         ...state,
         postById: payload,
       };
-    case ActionType.FILTER_AND_SORT:
+    case ActionType.GET_CURRENT_POSTS:
+      console.log(payload);
       return {
         ...state,
         currentPosts: payload,
+        filters_and_sort: payload,
       };
     default:
       return state;
   }
 };
 
-export default reducer;
+export default postsReducer;
