@@ -1,14 +1,14 @@
-import React from 'react'
-// import { Login } from '../components/Login'
-// import { NavBar } from '../components/NavBar'
+import React, { FC } from 'react';
+
 import { Profile } from '../components/Profile'
 //* navbar, info de contacto(tarjeta con info del usuario), experiencia, educacion, idiomas, similar a info de contacto, todo editable
-export const UserProfile = () => {
+interface Props {
+    user: any
+}
+export const UserProfile: FC<Props> = ({ user }) => {
     return (
         <div>
-            {/* <NavBar /> */}
-            {/* <Login contenido='Ingresar'/> */}
-            <Profile/>
+            <Profile  user={user} />
         </div>
     )
 }
