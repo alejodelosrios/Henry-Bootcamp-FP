@@ -5,11 +5,18 @@ interface Props {
   contenido: string;
   estilos: string;
 }
-const Button = styled.button``;
+const Button = styled.button<{ estilos?: String }>`
+  ${(props: any) => props.estilos}
+`;
+
 export const Login: FC<Props> = ({ contenido, estilos }) => {
   const google = () => {
     window.open("http://localhost:3001/auth/google", "_self");
   };
 
-  return <Button onClick={google}>{contenido}</Button>;
+  return (
+    <Button estilos={estilos} onClick={google}>
+      {contenido}
+    </Button>
+  );
 };
