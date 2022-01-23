@@ -15,9 +15,9 @@ export const Section = styled.section`
   align-items: center;
   justify-content: left;
   width: 100vw;
-  margin-left: 150px;
-  margin-top:50px;
-  margin-bottom: 70px;
+  margin-left: 170px;
+  margin-top:6vw;
+  margin-bottom: 13vw;
   background: rgba(0,0,0,0);
 `;
 
@@ -71,11 +71,11 @@ export const Title = styled.h1`
   color: ${props => props.theme.colors.typography.dark};
   font-weight: bolder;
   font-family: ${props => props.theme.colors.typography.poppins};
-  font-size: 70px;
+  font-size: 6vw;
   display: flex;
   flex-wrap: wrap;
-  line-height: 60px;
-  margin-bottom: 15px;
+  line-height: 5vw;
+  margin-bottom: 30px;
   margin-top: 40px;
 `;
 
@@ -86,7 +86,7 @@ export const HL = styled.p`
 
 export const Paragraph = styled.h5<{ bold?: boolean }>`
   color: grey;
-  font-size: 15px;
+  font-size: 1.5vw;
   margin-top: 0px;
   margin-bottom: 22.5px;
   font-weight: normal;

@@ -11,6 +11,7 @@ const Card = styled.div`
   border-radius: 20px;
   width: 800px;
   height: 300px;
+  overflow: hidden;
   background-color: ${(props) => props.theme.colors.backgrounds.pink};
 `;
 const CardImg = styled.div`
