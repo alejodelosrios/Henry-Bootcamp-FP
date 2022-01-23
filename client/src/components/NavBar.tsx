@@ -9,6 +9,17 @@ const Container = styled.div`
   width: 100vw;
 `;
 
+const Button = styled.button`
+  background: #9dd6fd;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  font-family: Open sans/Regular;
+`;
+
 const A = styled.a`
   text-decoration: none;
   font-size: 20px;
@@ -46,16 +57,6 @@ const FlexDiv = styled.div`
   align-items: center;
   z-index: 1000;
 `;
-const estilos = `
-    background: #c879ff;
-    border: none;
-    border-radius: 15px;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 20px;
-    color: white;
-    font-family: Open sans/Regular;
-`;
 
 interface Props {
   userLogged: any;
@@ -80,7 +81,7 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
           </NavLinks>
           <div>
             <Name href="/profile">{userLogged?.displayName}</Name>
-            <Logout contenido="Logout" estilos={estilos} />
+            <Logout contenido="Logout" estilo="logout" />
           </div>
         </MainFlexDiv>
       </div>
@@ -101,8 +102,11 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
             <A href="">{"Nosotros"}</A>
           </NavLinks>
           <LoginButton className="login">
-            <Login contenido="Ingresar" estilos={estilos} />
+            <Login contenido="Google Login" estilo="primary" />
           </LoginButton>
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
         </MainFlexDiv>
       </Container>
     );

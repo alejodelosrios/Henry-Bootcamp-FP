@@ -15,6 +15,7 @@ import Post from "./components/Post";
 import CreatePostPage from "./pages/CreatePostPage";
 import { useDispatch } from "react-redux";
 import { getPosts } from "./redux/actions/actionCreators";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -59,6 +60,7 @@ function App() {
         ></Route>
         <Route path="/post-detail/:id" element={<PostDetailPage />}></Route>
         <Route path="/create-post" element={<CreatePostPage />} />
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </ThemeProvider>
   );

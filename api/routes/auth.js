@@ -1,18 +1,20 @@
 const router = require("express").Router();
 const passport = require("passport");
-const userValidation = require("../controllers/userValidation")
+const userValidation = require("../controllers/userValidation");
 
 const CLIENT_URL = "http://localhost:3000/";
 
-router.get("/login/success", (req, res) => {
+router.get("/login/success", async (req, res) => {
     if (req.user) {
-    let user = userValidation.getUserIfExists(req.user)
-    res.status(200).json({
-        success: true,
-        message: "successfull",
-        user: req.user,
-        cookies: req.cookies
-    });
+        let userData = await userValidation.getUserIfExists(req.user);
+        console.log("Data: ", userData);
+        console.log("Google: ", req.user);
+        res.status(200).json({
+            success: true,
+            message: "successfull",
+            user: req.user,
+            cookies: req.cookies,
+        });
     }
 });
 
@@ -38,4 +40,4 @@ router.get(
     })
 );
 
-module.exports = router
+module.exports = router;

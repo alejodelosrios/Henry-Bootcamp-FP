@@ -74,3 +74,28 @@ export const createPost =
 export const setPostCreateModal = (data: any) => {
   return { type: ActionType.SET_POST_CREATE_MODAL, payload: data };
 };
+
+export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
+  console.log(data);
+  try {
+    const response = await axios.post(`/user/create`, data);
+    console.log(response);
+    console.log("CREATE USER", "Se envió la data a la API");
+    return dispatch({
+      type: ActionType.SET_POST_CREATE_MODAL,
+      payload: {
+        val: true,
+        msg: `The user ${data.email} was created successfully!`,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return dispatch({
+      type: ActionType.SET_POST_CREATE_MODAL,
+      payload: {
+        val: true,
+        msg: `The user ${data.email}, couldn't be created!`,
+      },
+    });
+  }
+};

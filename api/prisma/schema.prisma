@@ -16,15 +16,15 @@ model Role {
 
 model User {
   id           Int       @id @default(autoincrement())
-  roleId       Int
-  firstName    String
-  lastName     String
-  about        String
-  phoneNumber  String
-  email        String
-  country      String
-  image        String
-  showImage    Boolean
+  roleId       Int?
+  firstName    String?
+  lastName     String?
+  about        String?
+  phoneNumber  String?
+  email        String?
+  country      String?
+  image        String?
+  showImage    Boolean?
   skillTags    String[]
   experience   Json[]
   education    Json[]
