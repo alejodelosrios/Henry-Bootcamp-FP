@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { getPosts } from "../redux/actions/actionCreators";
 import Post from "./Post";
 
 const Container = styled.div`
@@ -18,12 +16,6 @@ const PostsContainer = () => {
     const currentPosts = useSelector(
         (state: any) => state.postsReducer.currentPosts
     );
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getPosts());
-    }, []);
-
     return (
         <Container>
             {currentPosts.map((post: any) => (
