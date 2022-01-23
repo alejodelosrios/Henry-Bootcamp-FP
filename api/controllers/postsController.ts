@@ -122,7 +122,7 @@ module.exports = {
                     modalities += key + " "
                 }
             }
-            modalities ? formattedPosts = formattedPosts.filter(post => modalities.includes(post.modality.toLowerCase())) : null
+            modalities ? formattedPosts = formattedPosts.filter(post => modalities.toLowerCase().includes(post.modality.toLowerCase())) : null
             
             // FILTRO CONTRACTTYPE
             let contractTypes = ""

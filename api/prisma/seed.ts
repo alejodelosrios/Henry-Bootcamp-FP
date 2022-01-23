@@ -162,7 +162,7 @@ async function main(){
                     title: faker.random.word(),
                     description: faker.lorem.paragraph(),
                     location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
-                    modality: faker.random.arrayElement(["on-site", "remote", "hybrid"]),
+                    modality: faker.random.arrayElement(["onSite", "remote", "hybrid"]),
                     contractType: faker.random.arrayElement(["fullTime", "partTime", "temporary", "perHour"]),
                     salary: `${faker.datatype.number()}usd`,
                     startDate: "",

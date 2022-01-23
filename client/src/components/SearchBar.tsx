@@ -3,13 +3,14 @@ import { FC } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { filterAndSort } from "../redux/actions/actionCreators";
+import { useNavigate } from "react-router";
 
 interface Search {
   postulacion?: string | undefined;
   localizacion?: string | undefined;
 }
 
-const Container = styled.form`
+const Container = styled.div`
   padding: 1.5rem 0;
   z-index: 1000;
   margin-bottom: 80px;
@@ -94,6 +95,8 @@ const Inputs = styled.input`
 `;
 
 const SearchBar: FC = () => {
+  let navigate = useNavigate();
+
   const dispatch = useDispatch();
   const filters_and_sort = useSelector(
     (state: any) => state.postsReducer.filters_and_sort
@@ -119,7 +122,7 @@ const SearchBar: FC = () => {
         filterAndSort({
           ...filters_and_sort,
           location: {
-            ...filters_and_sort,
+            ...filters_and_sort.location,
             city: [...filters_and_sort.location.city, search.localizacion],
           },
         })
@@ -137,7 +140,7 @@ const SearchBar: FC = () => {
           ...filters_and_sort,
           inputName: search.postulacion,
           location: {
-            ...filters_and_sort,
+            ...filters_and_sort.location,
             city: [...filters_and_sort.location.city, search.localizacion],
           },
         })
@@ -147,33 +150,37 @@ const SearchBar: FC = () => {
       postulacion: "",
       localizacion: "",
     });
+    navigate("/home");
   };
 
   return (
-    <Container onSubmit={handleClick}>
-      <MainFlexDiv>
-        <IndDivs>
-          <Titles>Buscar trabajo</Titles>
-          <Inputs
-            type="text"
-            name="postulacion"
-            placeholder="Ingrese palabras clave"
-            onChange={handleChange}
-            value={search?.postulacion}
-          />
-        </IndDivs>
-        <IndDivs>
-          <Titles>Localización</Titles>
-          <Inputs
-            type="text"
-            name="localizacion"
-            placeholder="Ingrese ciudad"
-            onChange={handleChange}
-            value={search?.localizacion}
-          />
-        </IndDivs>
-        <Button type="submit">Buscar</Button>
-      </MainFlexDiv>
+    <Container>
+      <form onSubmit={(e) => handleClick(e)}>
+        <MainFlexDiv>
+          <IndDivs>
+            <Titles>Buscar trabajo</Titles>
+            <Inputs
+              type="text"
+              name="postulacion"
+              placeholder="Ingrese palabras clave"
+              onChange={handleChange}
+              value={search?.postulacion}
+            />
+          </IndDivs>
+          <IndDivs>
+            <Titles>Localización</Titles>
+            <Inputs
+              type="text"
+              name="localizacion"
+              placeholder="Ingrese ciudad"
+              onChange={handleChange}
+              value={search?.localizacion}
+            />
+          </IndDivs>
+          <button type="submit"></button>
+          <Button onClick={(e) => handleClick(e)}>Buscar</Button>
+        </MainFlexDiv>
+      </form>
     </Container>
   );
 };

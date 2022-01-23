@@ -13,9 +13,12 @@ import light from "./styles/themes/light";
 import { PostDetailPage } from "./pages/PostDetail";
 import Post from "./components/Post";
 import CreatePostPage from "./pages/CreatePostPage";
+import { useDispatch } from "react-redux";
+import { getPosts } from "./redux/actions/actionCreators";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUser = () => {
@@ -40,6 +43,8 @@ function App() {
         });
     };
     getUser();
+
+    dispatch(getPosts());
   }, []);
   return (
     <ThemeProvider theme={light}>

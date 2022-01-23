@@ -9,12 +9,7 @@ const FilterContainer = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-
-  position: absolute;
-  width: 214px;
-  height: 558.2px;
-  left: 124px;
-  top: 346px;
+  width: 100%;
 `;
 
 const Types = styled.div`
