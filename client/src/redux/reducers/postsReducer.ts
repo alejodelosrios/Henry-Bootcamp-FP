@@ -42,7 +42,6 @@ const postsReducer = (state = initialState, action: Action) => {
         postById: action.payload,
       };
     case ActionType.GET_CURRENT_POSTS:
-      console.log(action.payload);
       return {
         ...state,
         currentPosts: action.payload.data,

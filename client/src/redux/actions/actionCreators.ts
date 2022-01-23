@@ -27,7 +27,6 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
 
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
-    console.log(filters_and_sort);
     try {
       let { data } = await axios({
         method: "POST",
@@ -37,7 +36,10 @@ export const filterAndSort =
       console.log("POSTS FILTRADOS", "Se recibe data de la API");
       return dispatch({
         type: ActionType.GET_CURRENT_POSTS,
-        payload: { data: data, filters_and_sort },
+        payload: {
+          data: data,
+          filters_and_sort: { ...filters_and_sort, inputName: "" },
+        },
       });
     } catch (error) {
       console.log(error);
