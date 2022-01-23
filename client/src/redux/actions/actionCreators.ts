@@ -27,6 +27,7 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
 
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
+    console.log(filters_and_sort);
     try {
       let { data } = await axios({
         method: "POST",
