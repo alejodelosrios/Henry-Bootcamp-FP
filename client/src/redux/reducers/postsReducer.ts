@@ -6,8 +6,13 @@ const initialState = {
   postById: {},
   currentPosts: [],
   filters_and_sort: {
-    postulacion: "",
-    location: ["Mendoza", "Buenos Aires"],
+    inputName: "",
+    categories: [],
+    score: "",
+    orderBy: "",
+    location: {
+      city: [],
+    },
     modality: {
       onSite: false,
       hybrid: false,
@@ -16,37 +21,37 @@ const initialState = {
     contractType: {
       fullTime: false,
       partTime: false,
-      temporality: false,
+      temporary: false,
       perHour: false,
     },
   },
   postCreateModal: { val: false, msg: "" },
 };
 
-const postsReducer = (state = initialState, { type, payload }: Action) => {
-  switch (type) {
+const postsReducer = (state = initialState, action: Action) => {
+  switch (action.type) {
     case ActionType.GET_POSTS:
       return {
         ...state,
-        posts: payload,
-        currentPosts: payload,
+        posts: action.payload,
+        currentPosts: action.payload,
       };
     case ActionType.GET_POSTS_BY_ID:
       return {
         ...state,
-        postById: payload,
+        postById: action.payload,
       };
     case ActionType.GET_CURRENT_POSTS:
-      console.log(payload);
+      console.log(action.payload);
       return {
         ...state,
-        currentPosts: payload,
-        filters_and_sort: payload,
+        currentPosts: action.payload.data,
+        filters_and_sort: action.payload.filters_and_sort,
       };
     case ActionType.SET_POST_CREATE_MODAL:
       return {
         ...state,
-        postCreateModal: payload,
+        postCreateModal: action.payload,
       };
     default:
       return state;

@@ -1,23 +1,22 @@
-import { Router } from 'express';
-const postsController = require("../controllers/postsController")
+import { Router } from "express";
+const postsController = require("../controllers/postsController");
 
-const postsRouter = Router()
+const postsRouter = Router();
 
 //GET
-postsRouter.get("/filter", postsController.filter)
-postsRouter.get("/index",  postsController.index)
-postsRouter.get("/:id", postsController.postById)
+postsRouter.get("/index", postsController.index);
+postsRouter.get("/:id", postsController.postById);
 
 //POST
-postsRouter.post("/create", postsController.create)
+postsRouter.post("/filter", postsController.filter);
+postsRouter.post("/create", postsController.create);
 
 //PUT
 
 //DELETE
-postsRouter.delete("/delete/:id", postsController.delete)
+postsRouter.delete("/delete/:id", postsController.delete);
 
 //DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
-postsRouter.put("/update", postsController.update)
+postsRouter.put("/update", postsController.update);
 
-
-module.exports = postsRouter
+module.exports = postsRouter;
