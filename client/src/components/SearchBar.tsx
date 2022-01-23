@@ -9,7 +9,7 @@ interface Search {
   localizacion?: string | undefined;
 }
 
-const Container = styled.div`
+const Container = styled.form`
   padding: 1.5rem 0;
   z-index: 1000;
   margin-bottom: 80px;
@@ -93,7 +93,7 @@ const Inputs = styled.input`
   }
 `;
 
-const SearchBar = () => {
+const SearchBar: FC = () => {
   const dispatch = useDispatch();
   const filters_and_sort = useSelector(
     (state: any) => state.postsReducer.filters_and_sort
@@ -114,13 +114,35 @@ const SearchBar = () => {
 
   const handleClick = (e: any) => {
     e.preventDefault();
-    dispatch(
-      filterAndSort({
-        ...filters_and_sort,
-        postulacion: search.postulacion,
-        location: [...filters_and_sort.location, search.localizacion],
-      })
-    );
+    if (!search.postulacion) {
+      dispatch(
+        filterAndSort({
+          ...filters_and_sort,
+          location: {
+            ...filters_and_sort,
+            city: [...filters_and_sort.location.city, search.localizacion],
+          },
+        })
+      );
+    } else if (!search.localizacion) {
+      dispatch(
+        filterAndSort({
+          ...filters_and_sort,
+          inputName: search.postulacion,
+        })
+      );
+    } else {
+      dispatch(
+        filterAndSort({
+          ...filters_and_sort,
+          inputName: search.postulacion,
+          location: {
+            ...filters_and_sort,
+            city: [...filters_and_sort.location.city, search.localizacion],
+          },
+        })
+      );
+    }
     setSearch({
       postulacion: "",
       localizacion: "",
@@ -128,7 +150,7 @@ const SearchBar = () => {
   };
 
   return (
-    <Container>
+    <Container onSubmit={handleClick}>
       <MainFlexDiv>
         <IndDivs>
           <Titles>Buscar trabajo</Titles>
@@ -150,7 +172,7 @@ const SearchBar = () => {
             value={search?.localizacion}
           />
         </IndDivs>
-        <Button onClick={handleClick}>Buscar</Button>
+        <Button type="submit">Buscar</Button>
       </MainFlexDiv>
     </Container>
   );
