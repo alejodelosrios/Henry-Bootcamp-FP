@@ -8,8 +8,8 @@ interface getPosts {
 interface getCurrentPosts {
   type: ActionType.GET_CURRENT_POSTS;
   payload: {
-    data: Object[];
-    filters_and_sort: Object;
+    data: object[];
+    filters_and_sort: object;
   };
 }
 
