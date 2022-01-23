@@ -3,19 +3,27 @@ import styled from "styled-components";
 
 interface Props {
   contenido: string;
-  estilos: string;
+  estilo: string;
 }
-const Button = styled.button<{ estilos?: String }>`
-  ${(props: any) => props.estilos}
+const Button = styled.button<{ estilo?: String }>`
+  background: ${(props: any) =>
+    props.estilo === "primary" ? "#c879ff" : "#9DD6FD"};
+  border: none;
+  border-radius: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  font-family: Open sans/Regular;
 `;
 
-export const Logout: FC<Props> = ({ contenido, estilos }) => {
+export const Logout: FC<Props> = ({ contenido, estilo }) => {
   const logout = () => {
     window.open("http://localhost:3001/auth/logout", "_self");
   };
 
   return (
-    <Button estilos={estilos} onClick={logout}>
+    <Button estilo={estilo} onClick={logout}>
       {contenido}
     </Button>
   );

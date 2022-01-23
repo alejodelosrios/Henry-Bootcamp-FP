@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getPosts, setPostCreateModal } from "../redux/actions/actionCreators";
 
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 const Modal = styled.div`
   width: 100vw;
@@ -67,7 +67,7 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
-const PostCreateModal = ({ title, setForm }: any) => {
+const PostCreateModal = ({ title, setForm, post, user }: any) => {
   const postCreateModal = useSelector(
     (state: any) => state.postsReducer.postCreateModal
   );
@@ -75,20 +75,28 @@ const PostCreateModal = ({ title, setForm }: any) => {
   const dispatch = useDispatch();
 
   const onClick = ({ target: { name } }: any) => {
-    // setForm({
-    //   location: "",
-    //   endDate: "",
-    //   category: "",
-    //   tags: [],
-    //   title: "",
-    //   description: "",
+    if (post) {
+      setForm({
+        location: "",
+        endDate: "",
+        category: "",
+        tags: [],
+        title: "",
+        description: "",
 
-    //   company: 1,
-    //   modality: "remote",
-    //   contractType: "fullTime",
-    //   startDate: "2022-01-22",
-    //   salary: "3000",
-    // });
+        company: 1,
+        modality: "remote",
+        contractType: "fullTime",
+        startDate: "2022-01-22",
+        salary: "3000",
+      });
+    } else if (user) {
+      setForm({
+        email: "",
+        password: "",
+        role: 1,
+      });
+    }
 
     dispatch(getPosts());
     dispatch(setPostCreateModal({ val: false, msg: "" }));
@@ -103,9 +111,11 @@ const PostCreateModal = ({ title, setForm }: any) => {
         <h2>{title}</h2>
         <p>{postCreateModal.msg}</p>
         <Flex>
-          <button name="create" onClick={(e) => onClick(e)}>
-            Nueva Publicación
-          </button>
+          {post && (
+            <button name="create" onClick={(e) => onClick(e)}>
+              Nueva Publicación
+            </button>
+          )}
           <button name="home" onClick={(e) => onClick(e)}>
             Home
           </button>
