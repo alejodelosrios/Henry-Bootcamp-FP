@@ -149,7 +149,7 @@ const FilterUser: FC = () => {
         <TypeTitle>Modalidad</TypeTitle>
         <Option>
           <label htmlFor="presencial">Presencial</label>
-          <Switcher id="modality" name="onSite" handleFilter={handleFilter} />
+          <Switcher id="modality" name="on-site" handleFilter={handleFilter} />
         </Option>
         <Option>
           <label htmlFor="remota">Remota</label>
