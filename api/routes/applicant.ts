@@ -10,9 +10,9 @@ applicantRouter.get("/index", applicantController.index);
 applicantRouter.post("/create", applicantController.create);
 
 //PUT
-applicantRouter.put("/:id/update", applicantController.update);
+applicantRouter.put("/update/:id", applicantController.update);
 
 //DELETE
-applicantRouter.delete("/:id/delete", applicantController.delete);
+applicantRouter.delete("/delete/:id", applicantController.delete);
 
 module.exports = applicantRouter;
