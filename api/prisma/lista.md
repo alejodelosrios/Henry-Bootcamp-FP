@@ -70,6 +70,12 @@
     /delete/:id
     /update/:id
 
+/notification/types
+    /create
+    /index
+    /delete/:id
+    /update/:id
+
 
 
 

@@ -4,18 +4,39 @@ import {Request, Response} from "express"
 module.exports = {
     create: async (req: Request, res: Response) => {
         try {
-            const userData = req.body
+            const {
+                userId,
+                name,
+                legalName,
+                stin,
+                accountManagers,
+                image,
+                companyValues,
+                mission,
+                vision
+            } = req.body
+
+            if(!userId) return res.send("Debes incluir un campo 'userId' con el id del usuario al cual esta asociado esta compañia por params")
+            if(!name) return res.send("Debes incluir un campo 'name', puede contener una string vacía")
+            if(!legalName) return res.send("Debes incluir un campo 'legalName', puede contener una string vacía")
+            if(!stin) return res.send("Debes incluir un campo 'stin' (el 'cuil' en argentina), puede contener una string vacía")
+            if(!accountManagers) return res.send("Debes incluir un campo 'accountManagers', contiene un arreglo de strings, puede estar vacío")
+            if(!image) return res.send("Debes incluir un campo 'image', puede contener una string vacía")
+            if(!companyValues) return res.send("Debes incluir un campo 'companyValues', puede contener una string vacía")
+            if(!mission) return res.send("Debes incluir un campo 'mission', puede contener una string vacía")
+            if(!vision) return res.send("Debes incluir un campo 'vision', puede contener una string vacía")
+
             const newCompany = await prisma.company.create({
                 data: {
-                    userId: userData.userId as number,
-                    name: userData.name as string,
-                    legalName: userData.legalName as string,
-                    stin: userData.stin as string,
-                    accountManagers: userData.accountManagers as string[],
-                    image: userData.image as string,
-                    companyValues: userData.companyValues as string,
-                    mission: userData.mission as string,
-                    vision: userData.vision as string
+                    userId: userId as number,
+                    name: name as string,
+                    legalName: legalName as string,
+                    stin: stin as string,
+                    accountManagers: accountManagers as string[],
+                    image: image as string,
+                    companyValues: companyValues as string,
+                    mission: mission as string,
+                    vision: vision as string
                 }
             })
             res.json(newCompany)
@@ -34,6 +55,7 @@ module.exports = {
     companyById: async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
+            if(!id) return res.send("Debes enviar el id de la compañia por params")
             const company = await prisma.company.findUnique({
                 where: {
                     id: Number(id),
@@ -47,6 +69,7 @@ module.exports = {
     getPosts: async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
+            if(!id) return res.send("Debes enviar el id de la compañia por params")
             const company = await prisma.company.findUnique({
                 where: {
                     id: Number(id),
@@ -67,7 +90,7 @@ module.exports = {
     delete: async (req: Request, res: Response) => {
         try {
             const {id} = req.params
-
+            if(!id) return res.send("Debes enviar el id de la compañia por params")
             const postsDelete = await prisma.post.deleteMany({
                 where: {
                   companyId: Number(id),

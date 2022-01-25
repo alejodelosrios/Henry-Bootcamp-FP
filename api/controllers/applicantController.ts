@@ -4,17 +4,34 @@ import { Request, Response } from "express";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const userData = req.body;
+      const {
+        userId,
+        firstName,
+        lastName,
+        about,
+        phoneNumber,
+        country,
+        image
+      } = req.body;
+
+      if(!userId) return res.send("Debes incluir un campo 'userId' con el id del usuario al cual esta asociado este applicant")
+      if(!firstName) return res.send("Debes incluir un campo 'firstName', puede contener una string vacía")
+      if(!lastName) return res.send("Debes incluir un campo 'lastName', puede contener una string vacía")
+      if(!about) return res.send("Debes incluir un campo 'about', puede contener una string vacía")
+      if(!phoneNumber) return res.send("Debes incluir un campo 'phoneNumber', puede contener una string vacía")
+      if(!country) return res.send("Debes incluir un campo 'country', puede contener una string vacía")
+      if(!image) return res.send("Debes incluir un campo 'image', puede contener una string vacía")
+
       const newApplicant = await prisma.applicant.create({
         data: {
-          userId: userData.userId,
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          about: userData.about,
-          phoneNumber: userData.phoneNumber,
-          country: userData.country,
-          image: userData.image,
-          showImage: true
+          userId: userId as number,
+          firstName: firstName as string,
+          lastName: lastName as string,
+          about: about as string,
+          phoneNumber: phoneNumber as string,
+          country: country as string,
+          image: image as string,
+          showImage: true as boolean
         },
       });
       res.send(newApplicant);

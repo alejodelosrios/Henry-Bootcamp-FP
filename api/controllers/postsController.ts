@@ -3,24 +3,46 @@ import { Request, Response } from "express";
 
 module.exports = {
     create: async (req:Request, res:Response) => {
-        const data = req.body
-        if (!req.body.companyId){
-            res.status(404).send("Company is required")
-        }
+        const {
+            companyId,
+            title,
+            description,
+            location,
+            modality,
+            contractType,
+            salary,
+            startDate,
+            endDate,
+            tags,
+            category
+        } = req.body
+
+        if (!companyId) return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post")
+        if (!title) return res.send("Debes incluir un campo 'title'")
+        if (!description) return res.send("Debes incluir un campo 'description'")
+        if (!location) return res.send("Debes incluir un campo 'location'")
+        if (!modality) return res.send("Debes incluir un campo 'modality', puede ser onSite, remote o hybrid")
+        if (!contractType) return res.send("Debes incluir un campo 'contractType', puede ser fullTime, partTime, temporary o perHour")
+        if (!salary) return res.send("Debes incluir un campo 'salary', si no hay salario enviar string vacío")
+        if (!startDate) return res.send("Debes incluir un campo 'startDate'")
+        if (!endDate) return res.send("Debes incluir un campo 'endDate'")
+        if (!tags) return res.send("Debes incluir un campo 'tags', revisar /api/prisma/seed.ts para ver ejemplos")
+        if (!category) return res.send("Debes incluir un campo 'category', revisar /api/prisma/seed.ts para ver opciones")
+
         try {
             const newPost = await prisma.post.create({
                 data: {
-                    companyId: data.companyId as number,
-                    title: data.title as string,
-                    description: data.description as string,
-                    location: data.location as string,
-                    modality: data.modality as string,
-                    contractType: data.contractType as string,
-                    salary: data.salary as string,
-                    startDate: data.startDate as string,
-                    endDate: data.endDate as string,
-                    tags: data.tags as string[],
-                    category: data.category as string
+                    companyId: companyId as number,
+                    title: title as string,
+                    description: description as string,
+                    location: location as string,
+                    modality: modality as string,
+                    contractType: contractType as string,
+                    salary: salary as string,
+                    startDate: startDate as string,
+                    endDate: endDate as string,
+                    tags: tags as string[],
+                    category: category as string
                 }
             })
             res.send(newPost)
@@ -41,6 +63,7 @@ module.exports = {
     postById: async (req:Request, res:Response) => {
         try {
             const id = req.params.id
+            if(!id) return res.send("Debes enviar el id del post por params")
             const post = await prisma.post.findFirst({
                 where: {
                     id: Number(id)
@@ -62,6 +85,14 @@ module.exports = {
                 modality,
                 contractType
             } = req.body
+
+            if(!inputName) return res.send("Debes incluir un campo 'inputName', puede contener una string vacía")
+            if(!categories) return res.send("Debes incluir un campo 'categories', puede contener una string vacía")
+            if(!score) return res.send("Debes incluir un campo 'score', puede contener una string vacía")
+            if(!orderBy) return res.send("Debes incluir un campo 'orderBy', puede contener una string vacía")
+            if(!location) return res.send("Debes incluir un campo 'location', puede contener una string vacía")
+            if(!modality) return res.send("Debes incluir un campo 'modality', puede contener una string vacía")
+            if(!contractType) return res.send("Debes incluir un campo 'contractType', puede contener una string vacía")
 
             const posts = await prisma.post.findMany()
 
@@ -141,6 +172,7 @@ module.exports = {
     delete: async (req:Request, res:Response) => {
         try {
             const {id} = req.params
+            if(!id) return res.send("Debes enviar el id del post por params")
             const deletedPost = await prisma.post.delete({
                     where: {
                         id: Number(id)

@@ -5,6 +5,9 @@ module.exports = {
   create: async (req: Request, res: Response) => {
     try {
       const userData = req.body;
+      if(!userData.email) return res.send("Falta campo 'email'")
+      if(!userData.password) return res.send("Falta campo 'contraseña'")
+      if(!userData.role) return res.send("Falta campo 'rol'")
       const user = await prisma.user.create({
         data: {
           email: userData.email as string,
@@ -27,14 +30,18 @@ module.exports = {
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { email } = req.params;
-      const { password, newPassword } = req.body;
+      const { id } = req.params;
+      const { email, newEmail = email, password, newPassword = password } = req.body;
+      if(!id) return res.send("Debes enviar el id del usuario por params")
+      if(!email) return res.send("Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo")
+      if(!password) return res.send("Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla")
       const userUpdated = await prisma.user.updateMany({
         where: {
-          email,
+          id: Number(id),
         },
         data: {
-          password: newPassword,
+          email: newEmail,
+          password: newPassword
         },
       });
       res.json(userUpdated);
@@ -45,6 +52,7 @@ module.exports = {
   delete: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
+      if(!id) return res.send("Debes enviar el id del usuario por params")
       const userDelete = await prisma.user.delete({
         where: {
           id: Number(id),
