@@ -4,28 +4,20 @@ import { Request, Response } from "express";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const data = req.body;
-      const createdApplicant = await prisma.applicant.create({
+      const userData = req.body;
+      const newApplicant = await prisma.applicant.create({
         data: {
-          user: data.user,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          about: data.about,
-          phoneNumber: data.phoneNumber,
-          country: data.country,
-          image: data.image,
-          showImage: data.showImage,
-          experience: data.experience,
-          education: data.education,
-          languages: data.languages,
-          skillTags: data.skillTags,
-          notifications: data.notification,
-          followed: data.followed,
-          postulations: data.postulations,
-          favourites: data.favourites,
+          userId: userData.userId,
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          about: userData.about,
+          phoneNumber: userData.phoneNumber,
+          country: userData.country,
+          image: userData.image,
+          showImage: true
         },
       });
-      res.json(createdApplicant);
+      res.send(newApplicant);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -33,7 +25,12 @@ module.exports = {
   },
   index: async (req: Request, res: Response) => {
     try {
-      const users = await prisma.applicant.findMany();
+      const users = await prisma.applicant.findMany({
+        include: {
+          favourites: true
+        }
+      });
+      const favourites = users[0].favourites
       res.send(users);
     } catch (error) {
       res.status(500).send(error);

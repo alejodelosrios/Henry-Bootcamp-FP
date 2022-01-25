@@ -4,30 +4,27 @@ import { Request, Response } from "express";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const data = req.body;
+      const userData = req.body;
       const user = await prisma.user.create({
         data: {
-          email: data.email,
-          password: data.password,
-          role: data.role,
+          email: userData.email as string,
+          password: userData.password as string,
+          role: userData.role as string
         },
       });
       res.json(user);
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
   index: async (req: Request, res: Response) => {
     try {
       const users = await prisma.user.findMany();
-      res.send(users);
+      res.json(users);
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
-  //recibis el email por params y que le agreguen un query nuevo email
   update: async (req: Request, res: Response) => {
     try {
       const { email } = req.params;
@@ -42,31 +39,20 @@ module.exports = {
       });
       res.json(userUpdated);
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
-
-  //por email
   delete: async (req: Request, res: Response) => {
     try {
-      const { email } = req.params;
-      const userDelete = await prisma.user.deleteMany({
+      const { id } = req.params;
+      const userDelete = await prisma.user.delete({
         where: {
-          email,
+          id: Number(id),
         },
       });
-      res.send(userDelete);
+      res.json(userDelete);
     } catch (error) {
       res.status(400).send(error);
     }
   },
-};
-function data(
-  where: any,
-  arg1: { email: string },
-  data: any,
-  arg3: { password: any; role: any }
-) {
-  throw new Error("Function not implemented.");
 }

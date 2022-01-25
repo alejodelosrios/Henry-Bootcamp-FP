@@ -1,18 +1,18 @@
 import { prisma } from "../prisma/database"
-import {Request, Response} from "express"
+import { Request, Response } from "express";
 
 module.exports = {
     create: async (req:Request, res:Response) => {
         const data = req.body
-        if (!req.body.company){
+        if (!req.body.companyId){
             res.status(404).send("Company is required")
         }
         try {
-            const post = await prisma.post.create({
+            const newPost = await prisma.post.create({
                 data: {
-                    companyId: data.company as number,
-                    description: data.description as string,
+                    companyId: data.companyId as number,
                     title: data.title as string,
+                    description: data.description as string,
                     location: data.location as string,
                     modality: data.modality as string,
                     contractType: data.contractType as string,
@@ -23,26 +23,18 @@ module.exports = {
                     category: data.category as string
                 }
             })
-            res.json(post)
+            res.send(newPost)
         } catch(error){
-            console.log(error)
-            res.status(500).send(error)
+            res.status(400).send(error)
         }
     },
     index: async (req:Request, res:Response) => {
         try {
-           const title = req.query.title as string
            const getAllPost = await prisma.post.findMany()
-           if(title){
-           const getPost= getAllPost.filter(e => e.title.toLowerCase().includes(title.toLowerCase())) 
-           getPost.length ?
-               res.status(200).send(getPost) :
-               res.status(404).send("Post not found")
-           } else {
-               res.status(200).send(getAllPost)
-           }
+           getAllPost.length ?
+               res.status(200).json(getAllPost) :
+               res.status(404).send("No posts found")
        } catch(error){
-           console.log(error)
            res.status(400).send(error)
        }
     },
@@ -51,10 +43,10 @@ module.exports = {
             const id = req.params.id
             const post = await prisma.post.findFirst({
                 where: {
-                    postId: Number(id)
+                    id: Number(id)
                 }
             })
-            res.send(post)
+            res.json(post)
         }catch(error){
             res.send(error)
         }
@@ -82,16 +74,14 @@ module.exports = {
             //             reviews: true
             //         }
             //     })
-            //     let totalScore
-            //     company.reviews.map(review => {
-            //         review.hasOwnProperty("score") && totalScore = totalScore + review.score as number
-            //     })
+            //     let totalScore = 0
+            //     company.reviews.map(review => totalScore += review.score)
             //     return totalScore/company.reviews.length
             // }
 
             let formattedPosts = await posts.map(post => {
                 return ({
-                    postId: post.postId as number,
+                    id: post.id as number,
                     companyId: post.companyId as number,
                     title: post.title as string,
                     location: post.location as string,
@@ -105,6 +95,8 @@ module.exports = {
                     // score: getScore(post.companyId)
                 })
             })
+
+            
             
             // FILTRO INPUTNAME
             inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
@@ -132,49 +124,32 @@ module.exports = {
                 }
             }
             contractTypes ? formattedPosts = formattedPosts.filter(post => contractTypes.toLowerCase().includes(post.contractType.toLowerCase())) : null
-    
+
+            //FILTRO SCORE
+            // score ? formattedPosts = formattedPosts.filter(post => post.score < score+0.5 && post.score > score-0.5) : null
+            
+            //FILTRO ORDER
+
+
+
     
             formattedPosts.length ? res.send(formattedPosts) : "No se encontraron resultados"
         }catch(error){
             res.send(error)
         }
     },
-    update: async (req:Request, res:Response) => {
-
-    },
     delete: async (req:Request, res:Response) => {
         try {
             const {id} = req.params
-            const postDelete = await prisma.post.delete({
+            const deletedPost = await prisma.post.delete({
                     where: {
-                        postId: Number(id)
+                        id: Number(id)
                     },
                 }
             )
-            res.send(postDelete) 
+            res.json(deletedPost) 
         } catch(error){
             res.status(400).send(error)
         }
     },
-}
-
-const ejemploBRYAN = {
-    inputName:"",
-    categories: ["Agriculture, Food, and Natural Resources", "Business and Finance"],
-    score: "3", // devolver todo lo que este hasta .5 por arriba o debajo
-    orderBy: "orderScoreAsc",
-    location: {
-        city:["caba", "san pedro", "baradero"]
-    },
-    modality: {
-        onSite: false,
-        hybrid: false,
-        remote: false,
-    },
-    contractType: {
-        fullTime: false,
-        partTime: false,
-        temporality: false,
-        perHour: false,
-    }
 }
