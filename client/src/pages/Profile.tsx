@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-import { Profile } from '../components/Profile'
+import { Profile } from '../components/UserProfile/Profile'
 //* navbar, info de contacto(tarjeta con info del usuario), experiencia, educacion, idiomas, similar a info de contacto, todo editable
 interface Props {
     user: any
