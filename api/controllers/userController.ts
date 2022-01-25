@@ -7,26 +7,9 @@ module.exports = {
       const data = req.body;
       const user = await prisma.user.create({
         data: {
-          id: 1,
           email: data.email,
           password: data.password,
           role: data.role,
-          applicant: data.applicant,
-          company: data.company,
-          // firstName: data.firstName,
-          // lastName: data.lastName,
-          // about: data.about,
-          // phoneNumber: data.phoneNumber,
-          // email: data.email,
-          // country: data.country,
-          // image: data.image,
-          // showImage: data.showImage,
-          // skillTags: data.skillTags,
-          // experience: data.experience,
-          // education: data.education,
-          // languages: data.languages,
-          // postulations: data.postulations,
-          // followed: data.followed
         },
       });
       res.json(user);
