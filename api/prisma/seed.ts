@@ -45,31 +45,32 @@ async function main(){
 
     
     //CREAR COMPANIES
-    for(let i=0; i<companies; i++)
-    await prisma.user.createMany({
-        data: [
-            {
-            email: faker.internet.exampleEmail(),
-            password: faker.random.alphaNumeric(15),
-            role: "company"
-            }
-        ],
-        skipDuplicates: true
-    })
+    for(let i=0; i<companies; i++){
+        await prisma.user.createMany({
+            data: [
+                {
+                email: faker.faker.internet.exampleEmail(),
+                password: faker.faker.random.alphaNumeric(15),
+                role: "company"
+                }
+            ],
+            skipDuplicates: true
+        })
+    }
     //agregarles el profile
     for(let i=admin+1; i<users-applicants; i++){
         await prisma.company.createMany({
             data: [
                 {
                     userId: i,
-                    name: faker.random.word(),
-                    legalName: faker.random.words(2),
-                    stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
-                    accountManagers: [`${faker.name.firstName()} ${faker.name.lastName()}`, `${faker.name.firstName()} ${faker.name.lastName()}`],
-                    image: faker.internet.avatar(),
-                    companyValues: faker.random.words(3),
-                    mission: faker.lorem.paragraph(),
-                    vision: faker.lorem.paragraph()
+                    name: faker.faker.random.word(),
+                    legalName: faker.faker.random.words(2),
+                    stin: `${faker.faker.datatype.number({min: 10, max: 99})}-${faker.faker.datatype.number({min: 10000000, max: 99999999})}-${faker.faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
+                    accountManagers: [`${faker.faker.name.firstName()} ${faker.faker.name.lastName()}`, `${faker.faker.name.firstName()} ${faker.faker.name.lastName()}`],
+                    image: faker.faker.internet.avatar(),
+                    companyValues: faker.faker.random.words(3),
+                    mission: faker.faker.lorem.paragraph(),
+                    vision: faker.faker.lorem.paragraph()
                 }
             ],
             skipDuplicates: true
@@ -81,27 +82,27 @@ async function main(){
         await prisma.review.createMany({
             data: [
                 {
-                    description: faker.lorem.paragraph(),
+                    description: faker.faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
                 },
                 {
-                    description: faker.lorem.paragraph(),
+                    description: faker.faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
                 },
                 {
-                    description: faker.lorem.paragraph(),
+                    description: faker.faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
                 },
                 {
-                    description: faker.lorem.paragraph(),
+                    description: faker.faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
                 },
                 {
-                    description: faker.lorem.paragraph(),
+                    description: faker.faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
                 }
@@ -115,8 +116,8 @@ async function main(){
         await prisma.user.createMany({
             data: [
                 {
-                    email: faker.internet.exampleEmail(),
-                    password: faker.random.alphaNumeric(15),
+                    email: faker.faker.internet.exampleEmail(),
+                    password: faker.faker.random.alphaNumeric(15),
                     role: "applicant"
                 }
             ],
@@ -129,12 +130,12 @@ async function main(){
             data: [
                 {
                     userId: i,
-                    firstName: faker.name.firstName(),
-                    lastName: faker.name.lastName(),
-                    about: faker.lorem.paragraph(),
-                    phoneNumber: faker.phone.phoneNumber(),
-                    country: faker.address.country(),
-                    image: faker.internet.avatar(),
+                    firstName: faker.faker.name.firstName(),
+                    lastName: faker.faker.name.lastName(),
+                    about: faker.faker.lorem.paragraph(),
+                    phoneNumber: faker.faker.phone.phoneNumber(),
+                    country: faker.faker.address.country(),
+                    image: faker.faker.internet.avatar(),
                     showImage: true
                 }
             ],
@@ -148,19 +149,19 @@ async function main(){
         await prisma.experience.createMany({
             data: [
                 {
-                    position: faker.random.word(),
-                    company: faker.random.words(2),
-                    startDate: faker.date.past(),
-                    endDate: faker.date.recent(),
-                    description: faker.lorem.paragraph(),
+                    position: faker.faker.random.word(),
+                    company: faker.faker.random.words(2),
+                    startDate: faker.faker.date.past(),
+                    endDate: faker.faker.date.recent(),
+                    description: faker.faker.lorem.paragraph(),
                     applicantId: i
                 },
                 {
-                    position: faker.random.word(),
-                    company: faker.random.words(2),
-                    startDate: faker.date.past(),
-                    endDate: faker.date.recent(),
-                    description: faker.lorem.paragraph(),
+                    position: faker.faker.random.word(),
+                    company: faker.faker.random.words(2),
+                    startDate: faker.faker.date.past(),
+                    endDate: faker.faker.date.recent(),
+                    description: faker.faker.lorem.paragraph(),
                     applicantId: i
                 }
             ]
@@ -170,19 +171,19 @@ async function main(){
         await prisma.education.createMany({
             data: [
                 {
-                    degree: faker.random.words(2),
-                    institution: faker.random.word(),
-                    startDate: faker.date.past(),
-                    endDate: faker.date.recent(),
-                    description: faker.lorem.paragraph(),
+                    degree: faker.faker.random.words(2),
+                    institution: faker.faker.random.word(),
+                    startDate: faker.faker.date.past(),
+                    endDate: faker.faker.date.recent(),
+                    description: faker.faker.lorem.paragraph(),
                     applicantId: i
                 },
                 {
-                    degree: faker.random.words(2),
-                    institution: faker.random.word(),
-                    startDate: faker.date.past(),
-                    endDate: faker.date.recent(),
-                    description: faker.lorem.paragraph(),
+                    degree: faker.faker.random.words(2),
+                    institution: faker.faker.random.word(),
+                    startDate: faker.faker.date.past(),
+                    endDate: faker.faker.date.recent(),
+                    description: faker.faker.lorem.paragraph(),
                     applicantId: i
                 }
             ]
@@ -192,13 +193,13 @@ async function main(){
         await prisma.language.createMany({
             data: [
                 {
-                    language: faker.random.word(),
-                    level: faker.random.arrayElement(['novice', 'intermediate', 'advanced', 'bilingual']),
+                    language: faker.faker.random.word(),
+                    level: faker.faker.random.arrayElement(['novice', 'intermediate', 'advanced', 'bilingual']),
                     applicantId: i
                 },
                 {
-                    language: faker.random.word(),
-                    level: faker.random.arrayElement(['novice', 'intermediate', 'advanced', 'bilingual']),
+                    language: faker.faker.random.word(),
+                    level: faker.faker.random.arrayElement(['novice', 'intermediate', 'advanced', 'bilingual']),
                     applicantId: i
                 }
             ]
@@ -212,16 +213,16 @@ async function main(){
             data: [
                 {
                     companyId: 1+Math.floor(Math.random()*(companies-1)),
-                    title: faker.random.word(),
-                    description: faker.lorem.paragraph(),
-                    location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
-                    modality: faker.random.arrayElement(["onSite", "remote", "hybrid"]),
-                    contractType: faker.random.arrayElement(["fullTime", "partTime", "temporary", "perHour"]),
-                    salary: `${faker.datatype.number()}usd`,
+                    title: faker.faker.random.word(),
+                    description: faker.faker.lorem.paragraph(),
+                    location: `${faker.faker.address.cityPrefix()} ${faker.faker.address.citySuffix()}`,
+                    modality: faker.faker.random.arrayElement(["onSite", "remote", "hybrid"]),
+                    contractType: faker.faker.random.arrayElement(["fullTime", "partTime", "temporary", "perHour"]),
+                    salary: `${faker.faker.datatype.number()}usd`,
                     startDate: "",
                     endDate: "",
-                    tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
-                    category: faker.random.arrayElement(categories)
+                    tags: [faker.faker.random.arrayElement(tags), faker.faker.random.arrayElement(tags), faker.faker.random.arrayElement(tags)],
+                    category: faker.faker.random.arrayElement(categories)
                 }
             ]
         })
