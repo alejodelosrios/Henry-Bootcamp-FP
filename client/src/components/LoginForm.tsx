@@ -27,7 +27,7 @@ const Button = styled.button`
     font-family: Open sans/Regular;
 `;
 
-function LoginForm() {
+function LoginForm({ type }: any) {
     const userCreateModal = useSelector(
         (state: any) => state.userReducer.userCreateModal
     );
@@ -76,21 +76,29 @@ function LoginForm() {
                             type="text"
                         />
                     </Item>
-                    <Item>
-                        <label htmlFor="role">Rol:</label>
-                        <select
-                            onChange={(e) => handleChange(e)}
-                            id="role"
-                            name="role"
-                        >
-                            <option value={1}>Applicant</option>
-                            <option value={2}>Recruiter</option>
-                        </select>
-                    </Item>
+                    {type === "login" && (
+                        <Item>
+                            <label htmlFor="role">Rol:</label>
+                            <select
+                                onChange={(e) => handleChange(e)}
+                                id="role"
+                                name="role"
+                            >
+                                <option value={1}>Applicant</option>
+                                <option value={2}>Recruiter</option>
+                            </select>
+                        </Item>
+                    )}
                     <button type="submit"></button>
-                    <Button onClick={(e) => handleClick(e)}>
-                        Iniciar sesión
-                    </Button>
+                    {type === "login" ? (
+                        <Button onClick={(e) => handleClick(e)}>
+                            Iniciar sesión
+                        </Button>
+                    ) : (
+                        <Button onClick={(e) => handleClick(e)}>
+                            Registrarse
+                        </Button>
+                    )}
                 </form>
             </Container>
             {userCreateModal.val && (

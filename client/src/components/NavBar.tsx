@@ -106,9 +106,14 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
             <Login contenido="Google Login" estilo="primary" />
           </LoginButton>
           {!role ? (
-            <Link to="/login">
-              <Button>Login</Button>
-            </Link>
+            <>
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Register</Button>
+              </Link>
+            </>
           ) : (
             <Button>Logout</Button>
           )}
