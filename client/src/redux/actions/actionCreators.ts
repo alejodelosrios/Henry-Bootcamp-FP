@@ -74,6 +74,9 @@ export const createPost =
 export const setPostCreateModal = (data: any) => {
   return { type: ActionType.SET_POST_CREATE_MODAL, payload: data };
 };
+export const setUserCreateModal = (data: any) => {
+  return { type: ActionType.SET_USER_CREATE_MODAL, payload: data };
+};
 
 export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
   console.log(data);
@@ -82,10 +85,13 @@ export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
     console.log(response);
     console.log("CREATE USER", "Se envió la data a la API");
     return dispatch({
-      type: ActionType.SET_POST_CREATE_MODAL,
+      type: ActionType.GET_USER,
       payload: {
-        val: true,
-        msg: `The user ${data.email} was created successfully!`,
+        data: response.data,
+        modal: {
+          val: true,
+          msg: `The user ${data.email} was created successfully!`,
+        },
       },
     });
   } catch (error) {

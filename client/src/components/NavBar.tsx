@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { Login } from "./Login";
 import { Logout } from "./Logout";
 import logo from "../assets/logo.svg";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100vw;
@@ -63,7 +64,7 @@ interface Props {
 }
 
 export const NavBar: FC<Props> = ({ userLogged }) => {
-  // console.log(userLogged)
+  const role = useSelector((state: any) => state.userReducer.roleId);
   if (userLogged) {
     return (
       <div>
@@ -104,9 +105,13 @@ export const NavBar: FC<Props> = ({ userLogged }) => {
           <LoginButton className="login">
             <Login contenido="Google Login" estilo="primary" />
           </LoginButton>
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
+          {!role ? (
+            <Link to="/login">
+              <Button>Login</Button>
+            </Link>
+          ) : (
+            <Button>Logout</Button>
+          )}
         </MainFlexDiv>
       </Container>
     );

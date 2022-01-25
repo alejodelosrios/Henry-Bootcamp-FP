@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { createUser } from "../redux/actions/actionCreators";
-import PostCreateModal from "./PostCreateModal";
+import UserCreateModal from "./UserCreateModal";
 
 const Container = styled.div`
     display: flex;
@@ -28,8 +28,8 @@ const Button = styled.button`
 `;
 
 function LoginForm() {
-    const postCreateModal = useSelector(
-        (state: any) => state.postsReducer.postCreateModal
+    const userCreateModal = useSelector(
+        (state: any) => state.userReducer.userCreateModal
     );
 
     const dispatch = useDispatch();
@@ -93,8 +93,8 @@ function LoginForm() {
                     </Button>
                 </form>
             </Container>
-            {postCreateModal.val && (
-                <PostCreateModal setForm={setFormInputs} title="Message" />
+            {userCreateModal.val && (
+                <UserCreateModal setForm={setFormInputs} title="Message" />
             )}
         </>
     );
