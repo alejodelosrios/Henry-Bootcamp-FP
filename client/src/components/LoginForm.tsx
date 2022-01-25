@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { createUser } from "../redux/actions/actionCreators";
-import PostCreateModal from "./PostCreateModal";
+import UserCreateModal from "./UserCreateModal";
 
 const Container = styled.div`
     display: flex;
@@ -27,9 +27,9 @@ const Button = styled.button`
     font-family: Open sans/Regular;
 `;
 
-function LoginForm() {
-    const postCreateModal = useSelector(
-        (state: any) => state.postsReducer.postCreateModal
+function LoginForm({ type }: any) {
+    const userCreateModal = useSelector(
+        (state: any) => state.userReducer.userCreateModal
     );
 
     const dispatch = useDispatch();
@@ -76,25 +76,33 @@ function LoginForm() {
                             type="text"
                         />
                     </Item>
-                    <Item>
-                        <label htmlFor="role">Rol:</label>
-                        <select
-                            onChange={(e) => handleChange(e)}
-                            id="role"
-                            name="role"
-                        >
-                            <option value={1}>Applicant</option>
-                            <option value={2}>Recruiter</option>
-                        </select>
-                    </Item>
+                    {type === "login" && (
+                        <Item>
+                            <label htmlFor="role">Rol:</label>
+                            <select
+                                onChange={(e) => handleChange(e)}
+                                id="role"
+                                name="role"
+                            >
+                                <option value={1}>Applicant</option>
+                                <option value={2}>Recruiter</option>
+                            </select>
+                        </Item>
+                    )}
                     <button type="submit"></button>
-                    <Button onClick={(e) => handleClick(e)}>
-                        Iniciar sesión
-                    </Button>
+                    {type === "login" ? (
+                        <Button onClick={(e) => handleClick(e)}>
+                            Iniciar sesión
+                        </Button>
+                    ) : (
+                        <Button onClick={(e) => handleClick(e)}>
+                            Registrarse
+                        </Button>
+                    )}
                 </form>
             </Container>
-            {postCreateModal.val && (
-                <PostCreateModal setForm={setFormInputs} title="Message" />
+            {userCreateModal.val && (
+                <UserCreateModal setForm={setFormInputs} title="Message" />
             )}
         </>
     );
