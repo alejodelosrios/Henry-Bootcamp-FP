@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database"
 import {Request, Response} from "express"
+import { Review } from "@prisma/client"
 
 module.exports = {
     create: async (req: Request, res: Response) => {
@@ -7,18 +8,16 @@ module.exports = {
             const data = req.body
             const company = await prisma.company.create({
                 data: {
-                    name: data.name,
-                    roleId: data.roleId,
-                    legalName: data.legalName,
-                    email: data.email,
-                    stin: data.stin,
-                    accountManagers: data.accountManagers,
-                    image: data.image,
-                    posts: data.posts,
-                    companyValues: data.companyValues,
-                    mission: data.mission,
-                    vision: data.vision,
-                    reviews: data.reviews
+                    name: data.name as string,
+                    userId: data.userId as number,
+                    legalName: data.legalName as string,
+                    stin: data.stin as string,
+                    accountManagers: data.accountManagers as string,
+                    image: data.image as string,
+                    companyValues: data.companyValues as string,
+                    mission: data.mission as string,
+                    vision: data.vision as string,
+            
                 }
             })
             res.json(company)
@@ -52,18 +51,17 @@ module.exports = {
     createReview: async (req: Request, res: Response) => {
         try {
             const id = req.params.id;
-            const { review } = req.body;
-            const updatedCompany = await prisma.company.update({
-                where: {
-                    id: Number(id),
-                },
+            const  {description, score} = req.body;
+
+            const newReview = await prisma.review.create({
                 data: {
-                    reviews: {
-                        push: review as object,
-                    },
-                },
-            });
-            res.send(updatedCompany.reviews);
+                  score: score,
+                  description: description, 
+                  companyId: Number(id)
+                }
+              })
+
+            res.send(newReview);
         } catch (error) {
             console.log(error);
             res.status(500).send(error);
@@ -99,16 +97,33 @@ module.exports = {
 
             const postsDelete = await prisma.post.deleteMany({
                 where: {
-                  companyId: Number(id),
+                    companyId: Number(id),
                 },
-              }); 
+              }) 
+
+            const notificationsDelete = await prisma.notification.delete({
+                where: {
+                    id: Number(id)
+                },
+            })
+
+            const reviewsDelete = await prisma.review.delete({
+                where: {
+                    id: Number(id)
+               },
+           })
+
+            const followersDelete = await prisma.applicant.delete({
+                where: {
+                    id: Number(id)
+               },
+           })       
 
             const companyDelete = await prisma.company.delete({
-                    where: {
-                        id: Number(id)
-                    },
-                }
-            )
+                where: {
+                    id: Number(id)
+                },
+            })
             res.send(companyDelete) 
         } catch(error){
             console.log(error)

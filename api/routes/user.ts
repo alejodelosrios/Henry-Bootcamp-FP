@@ -16,7 +16,7 @@ userRouter.post("/create", userController.create)
 userRouter.delete("/delete/:email", userController.delete)
 
 //DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
-userRouter.put("/update", userController.update)
+userRouter.put("/update/:email", userController.update)
 
 
 module.exports = userRouter

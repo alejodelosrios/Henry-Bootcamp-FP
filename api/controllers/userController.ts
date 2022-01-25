@@ -52,6 +52,7 @@ module.exports = {
         }
     },
     update: async (req:Request, res:Response) => {
+        
 
     },
     delete: async (req:Request, res:Response) => {
