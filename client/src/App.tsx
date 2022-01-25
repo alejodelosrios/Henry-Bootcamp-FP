@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 
 import styled from "styled-components";
-import { UserProfile } from "./pages/UserProfile";
+import { UserProfile } from "./pages/Profile";
 import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
