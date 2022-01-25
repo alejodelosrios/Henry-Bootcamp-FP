@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import img from "../assets/iStock-1.jpg";
+import FavouritesButton from "./FavouritesButton";
 
 type PostArgs = {
   id: Number;
@@ -111,11 +112,6 @@ const P3 = styled.p`
   font-size: 12px;
   color: #ef5da8;
 `;
-const Button = styled.button`
-  border: none;
-  background-color: rgba(0, 0, 0, 0);
-  color: #ef5da8;
-`;
 
 const Post = ({
   id,
@@ -165,7 +161,7 @@ const Post = ({
       </ContenedorB>
       <ContenedorF>
         <P3>{startDate}</P3>
-        <Button>Guardar</Button>
+        <FavouritesButton postId={id} />
       </ContenedorF>
     </ContenedorA>
   );
