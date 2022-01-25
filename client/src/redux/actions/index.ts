@@ -46,6 +46,11 @@ interface getUser {
   };
 }
 
+interface updateUser {
+  type: ActionType.UPDATE_USER;
+  payload: object;
+}
+
 export type Action =
   | getPosts
   | filterAndSort
@@ -53,4 +58,5 @@ export type Action =
   | setPostCreateModal
   | setUserCreateModal
   | getCurrentPosts
-  | getUser;
+  | getUser
+  | updateUser;
