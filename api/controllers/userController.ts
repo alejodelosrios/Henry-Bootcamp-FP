@@ -31,7 +31,13 @@ module.exports = {
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const { email, newEmail = email, password, newPassword = password } = req.body;
+      const { 
+        email, 
+        newEmail = email, 
+        password, 
+        newPassword = password 
+      } = req.body;
+
       if(!id) return res.send("Debes enviar el id del usuario por params")
       if(!email) return res.send("Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo")
       if(!password) return res.send("Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla")

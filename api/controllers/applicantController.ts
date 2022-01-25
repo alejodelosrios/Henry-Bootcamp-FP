@@ -36,37 +36,31 @@ module.exports = {
       });
       res.send(newApplicant);
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
   index: async (req: Request, res: Response) => {
     try {
-      const users = await prisma.applicant.findMany({
-        include: {
-          favourites: true
-        }
-      });
-      const favourites = users[0].favourites
-      res.send(users);
+      const applicants = await prisma.applicant.findMany();
+      res.json(applicants);
     } catch (error) {
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
-  //   userByEmail: async (req: Request, res: Response) => {
-  //     try {
-  //       const { email } = req.params;
-  //       const userProfile = await prisma.applicant.findFirst({
-  //         where: {
-  //           email: email,
-  //         },
-  //       });
-  //       res.json(userProfile);
-  //     } catch (error) {
-  //       res.status(400).send(error);
-  //     }
-  //   },
-
+  applicantById: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      if(!id) return res.send("Debes enviar el id del applicant por params")
+      const userProfile = await prisma.applicant.findFirst({
+        where: {
+          id: Number(id),
+        },
+      });
+      res.json(userProfile);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
