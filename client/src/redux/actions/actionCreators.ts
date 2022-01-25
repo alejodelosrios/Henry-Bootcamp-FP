@@ -105,3 +105,17 @@ export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
     });
   }
 };
+
+export const updateUser =
+  (userData: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userData);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER,
+        payload: userData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
