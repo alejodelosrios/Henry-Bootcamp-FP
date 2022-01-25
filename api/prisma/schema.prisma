@@ -11,9 +11,9 @@ datasource db {
 
 model User {
   id                Int             @id @default(autoincrement())
-  email             String          @unique
-  password          String
-  role              String
+  email             String          @default("")
+  password          String          @default("")
+  role              String          @default("")
   applicant         Applicant?
   company           Company?
 }
@@ -21,8 +21,8 @@ model User {
 model Applicant {
   id                Int             @id @default(autoincrement())
   //RELACION CON USER
+  userId            Int             @default(1)
   user              User            @relation(fields: [userId], references: [id])
-  userId            Int
   //=============
   firstName         String
   lastName          String
@@ -33,7 +33,7 @@ model Applicant {
   showImage         Boolean
   experience        Experience[]
   education         Education[]
-  languages         Languages[]
+  languages         Language[]
   skillTags         Tags[]
   notifications     Notification[]
   followed          Company[]
@@ -44,8 +44,8 @@ model Applicant {
 model Company {
   id                Int             @id @default(autoincrement())
   //RELACION CON USER
+  userId            Int             @default(1)
   user              User            @relation(fields: [userId], references: [id])
-  userId            Int
   //=============
   name              String
   legalName         String
@@ -64,6 +64,7 @@ model Company {
 model Post {
   postId            Int             @id @default(autoincrement())
   companyId         Int
+  company           Company         @relation(fields: [companyId], references: [id])
   title             String
   description       String
   location          String
@@ -74,7 +75,6 @@ model Post {
   endDate           String
   category          String
   tags              String[]
-  company           Company         @relation(fields: [companyId], references: [id])
   applicants        Applicant[]     @relation("_UserToPostulations")
   favoritedBy       Applicant[]     @relation("_UserToFavourites")
 }
@@ -87,8 +87,8 @@ model Experience {
     endDate         String
     description     String
     //RELACION CON APPLICANT
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
     applicantId     Int
+    applicant       Applicant       @relation(fields: [applicantId], references: [id])
 }
 
 model Education {
@@ -99,17 +99,17 @@ model Education {
     endDate         String
     description     String
     //RELACION CON APPLICANT
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
     applicantId     Int
+    applicant       Applicant       @relation(fields: [applicantId], references: [id])
 }
 
-model Languages {
+model Language {
     id              Int             @id @default(autoincrement())
     language        String
     level           String
     //RELACION CON APPLICANT
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
     applicantId     Int
+    applicant       Applicant       @relation(fields: [applicantId], references: [id])
 }
 
 model Review {
@@ -117,8 +117,8 @@ model Review {
     description     String
     score           Int
     //RELACION REVIEWS CON COMPANIA
-    company         Company         @relation(fields: [companyId], references: [id])
     companyId       Int
+    company         Company         @relation(fields: [companyId], references: [id])
     //=============
 }
 
@@ -137,11 +137,11 @@ model Notification {
     id              Int             @id @default(autoincrement())
     message         String
     //RELACION NOTIFICACIONES Y APPLICANT
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
     applicantId     Int
+    applicant       Applicant       @relation(fields: [applicantId], references: [id])
     //RELACION NOTIFICACIONES Y COMPANY
-    company         Company         @relation(fields: [companyId], references: [id])
     companyId       Int
+    company         Company         @relation(fields: [companyId], references: [id])
 }
 
 model News {
