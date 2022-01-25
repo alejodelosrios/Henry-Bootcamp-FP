@@ -33,6 +33,7 @@ const initialState = {
   followings: [],
   favs: [],
   notifications: [],
+  postulations:[],
   userCreateModal: { val: false, msg: "" },
 };
 
