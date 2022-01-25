@@ -5,7 +5,7 @@ const userRouter = Router();
 
 //GET
 userRouter.get("/index", userController.index);
-userRouter.get("/:email", userController.userByEmail);
+// userRouter.get("/:email", userController.userByEmail);
 
 //POST
 userRouter.post("/create", userController.create);
