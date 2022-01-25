@@ -20,6 +20,7 @@ import LoginPage from "./pages/LoginPage";
 function App() {
   const [userLogged, setUserLogged] = useState(false);
   const dispatch = useDispatch();
+  let myStorage = window.sessionStorage;
 
   useEffect(() => {
     const getUser = () => {
@@ -60,7 +61,8 @@ function App() {
         ></Route>
         <Route path="/post-detail/:id" element={<PostDetailPage />}></Route>
         <Route path="/create-post" element={<CreatePostPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage type="login" />} />
+        <Route path="/register" element={<LoginPage type="register" />} />
       </Routes>
     </ThemeProvider>
   );

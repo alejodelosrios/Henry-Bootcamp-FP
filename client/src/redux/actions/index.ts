@@ -2,7 +2,7 @@ import { ActionType } from "./actionTypes";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
-  payload: Object[];
+  payload: object[];
 }
 
 interface getCurrentPosts {
@@ -15,12 +15,12 @@ interface getCurrentPosts {
 
 interface getPostsById {
   type: ActionType.GET_POSTS_BY_ID;
-  payload: Object;
+  payload: object;
 }
 
 interface filterAndSort {
   type: ActionType.FILTER_AND_SORT;
-  payload: Object[];
+  payload: object[];
 }
 
 interface setPostCreateModal {
@@ -30,10 +30,27 @@ interface setPostCreateModal {
     msg: String;
   };
 }
+interface setUserCreateModal {
+  type: ActionType.SET_USER_CREATE_MODAL;
+  payload: {
+    val: Boolean;
+    msg: String;
+  };
+}
+
+interface getUser {
+  type: ActionType.GET_USER;
+  payload: {
+    data: object;
+    modal: object;
+  };
+}
 
 export type Action =
   | getPosts
   | filterAndSort
   | getPostsById
   | setPostCreateModal
-  | getCurrentPosts;
+  | setUserCreateModal
+  | getCurrentPosts
+  | getUser;

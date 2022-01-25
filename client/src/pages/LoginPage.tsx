@@ -1,9 +1,9 @@
 import LoginForm from "../components/LoginForm";
 
-function LoginPage() {
+function LoginPage({type}:any) {
   return (
     <div>
-      <LoginForm />
+      <LoginForm type={type} />
     </div>
   );
 }
