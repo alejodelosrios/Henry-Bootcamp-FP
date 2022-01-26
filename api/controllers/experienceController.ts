@@ -5,7 +5,7 @@ import {Request, Response} from "express"
 module.exports = {
     create: async (req:Request, res:Response) => {
         try {
-            const {id} = req.params 
+            const {id} = req.params
             const data = req.body;
             const experience = await prisma.experience.create({
               data: {
@@ -19,6 +19,7 @@ module.exports = {
             })
             res.json(experience);
           } catch (error) {
+            console.log(error)
             res.status(400).send(error)
           }
         },
@@ -63,11 +64,11 @@ module.exports = {
             res.status(400).send(error)
         }
     },
-}
+
         
 
 
 
 
-
+}
 
