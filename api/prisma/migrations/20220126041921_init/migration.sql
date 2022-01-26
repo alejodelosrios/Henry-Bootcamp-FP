@@ -51,8 +51,8 @@ CREATE TABLE "Post" (
     "salary" TEXT NOT NULL,
     "startDate" TEXT NOT NULL,
     "endDate" TEXT NOT NULL,
-    "category" TEXT NOT NULL,
     "tags" TEXT[],
+    "categoryId" INTEGER NOT NULL,
 
     CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
@@ -63,7 +63,7 @@ CREATE TABLE "Experience" (
     "position" TEXT NOT NULL,
     "company" TEXT NOT NULL,
     "startDate" TEXT NOT NULL,
-    "endDate" TEXT NOT NULL,
+    "endDate" TEXT,
     "description" TEXT NOT NULL,
     "applicantId" INTEGER NOT NULL,
 
@@ -76,7 +76,7 @@ CREATE TABLE "Education" (
     "degree" TEXT NOT NULL,
     "institution" TEXT NOT NULL,
     "startDate" TEXT NOT NULL,
-    "endDate" TEXT NOT NULL,
+    "endDate" TEXT,
     "description" TEXT NOT NULL,
     "applicantId" INTEGER NOT NULL,
 
@@ -123,10 +123,19 @@ CREATE TABLE "Tags" (
 CREATE TABLE "Notification" (
     "id" SERIAL NOT NULL,
     "message" TEXT NOT NULL,
-    "applicantId" INTEGER NOT NULL,
-    "companyId" INTEGER NOT NULL,
+    "typeId" INTEGER NOT NULL,
+    "applicantId" INTEGER,
+    "companyId" INTEGER,
 
     CONSTRAINT "Notification_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "notificationTypes" (
+    "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL,
+
+    CONSTRAINT "notificationTypes_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -203,6 +212,9 @@ ALTER TABLE "Company" ADD CONSTRAINT "Company_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Post" ADD CONSTRAINT "Post_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Post" ADD CONSTRAINT "Post_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "Experience" ADD CONSTRAINT "Experience_applicantId_fkey" FOREIGN KEY ("applicantId") REFERENCES "Applicant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -215,10 +227,13 @@ ALTER TABLE "Language" ADD CONSTRAINT "Language_applicantId_fkey" FOREIGN KEY ("
 ALTER TABLE "Review" ADD CONSTRAINT "Review_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_applicantId_fkey" FOREIGN KEY ("applicantId") REFERENCES "Applicant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_typeId_fkey" FOREIGN KEY ("typeId") REFERENCES "notificationTypes"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_applicantId_fkey" FOREIGN KEY ("applicantId") REFERENCES "Applicant"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Notification" ADD CONSTRAINT "Notification_companyId_fkey" FOREIGN KEY ("companyId") REFERENCES "Company"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_ApplicantToTags" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;

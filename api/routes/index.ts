@@ -1,18 +1,23 @@
-import { Router } from 'express';
+import { Router } from "express";
 
-const applicantRouter = require("./applicant")
-const postsRouter = require("./posts")
-const companyRouter = require("./company")
-const userRouter = require("./user")
-const experienceRouter = require("./experience")
+const applicantRouter = require("./applicant");
+const postsRouter = require("./posts");
+const companyRouter = require("./company");
+const userRouter = require("./user");
+const educationRouter = require("./education");
+const experienceRouter = require("./experience");
 
 
-const mainRouter = Router()
 
-mainRouter.use("/user", userRouter)
-mainRouter.use("/applicant", applicantRouter)
-mainRouter.use("/posts", postsRouter)
-mainRouter.use("/company", companyRouter)
-mainRouter.use("/experience", experienceRouter)
+const mainRouter = Router();
 
-module.exports = mainRouter
+mainRouter.use("/user", userRouter);
+mainRouter.use("/applicant", applicantRouter);
+mainRouter.use("/posts", postsRouter);
+mainRouter.use("/company", companyRouter);
+mainRouter.use("/education", educationRouter);
+mainRouter.use("/experience", experienceRouter);
+
+
+
+module.exports = mainRouter;

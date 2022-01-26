@@ -1,63 +1,71 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import { endianness } from "os";
 
 module.exports = {
-
   create: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
       const data = req.body;
-      const experience = await prisma.experience.create({
+      const education = await prisma.education.create({
         data: {
-          position: data.position,
-          company: data.company,
+          degree: data.degree,
+          institution: data.institution,
           startDate: data.startDate,
           endDate: data.endDate,
           description: data.description,
-          applicantId: Number(id),
+          applicantId: data.applicantId,
         },
       });
-      res.json(experience);
+      res.json(education);
     } catch (error) {
-      res.status(400).send(error);
+      console.log(error);
+      res.status(500).send(error);
     }
   },
-
+  //recibis el email por params y que le agreguen un query nuevo email
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const { position, company, startDate, endDate, description } = req.body;
-      const experienceUpdate = await prisma.experience.update({
+      const {
+        degree,
+        institution,
+        startDate,
+        endDate,
+        description,
+        applicantId,
+      } = req.body;
+      const updatedEducation = await prisma.education.update({
         where: {
           id: Number(id),
         },
         data: {
-          position,
-          company,
+          degree,
+          institution,
           startDate,
           endDate,
           description,
+          applicantId,
         },
       });
-      res.json(experienceUpdate);
+      res.json(updatedEducation);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
     }
   },
 
-
+  //por email
   delete: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-      const experienceDelete = await prisma.experience.delete({
+      const educationDelete = await prisma.education.delete({
         where: {
           id: Number(id),
         },
-      })
-      res.send(experienceDelete);
+      });
+      res.send(educationDelete);
     } catch (error) {
       res.status(400).send(error);
     }
   },
-}
+};

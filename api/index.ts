@@ -26,8 +26,9 @@ app.use(cors({
 
 app.use('/auth', authRoute)
 
-app.use("/api/v1", mainRouter)
+app.use("/api/v2", mainRouter)
 
-app.listen(3001, () => {
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
     console.log("SERVER RUNNING ON PORT 3001")
 })

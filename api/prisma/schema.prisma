@@ -10,164 +10,164 @@ datasource db {
 //PROYECTO FINAL
 
 model User {
-  id                Int             @id @default(autoincrement())
-  email             String          @default("")
-  password          String          @default("")
-  role              String          @default("")
-  applicant         Applicant?
-  company           Company?
+  id        Int        @id @default(autoincrement())
+  email     String     @default("")
+  password  String     @default("")
+  role      String     @default("")
+  applicant Applicant?
+  company   Company?
 }
 
 model Applicant {
-  id                Int             @id @default(autoincrement())
+  id            Int            @id @default(autoincrement())
   //RELACION CON USER
-  userId            Int             @default(1)
-  user              User            @relation(fields: [userId], references: [id])
+  userId        Int            @default(1)@unique
+  user          User           @relation(fields: [userId], references: [id])
   //=============
-  firstName         String
-  lastName          String
-  about             String
-  phoneNumber       String
-  country           String
-  image             String
-  showImage         Boolean
-  experience        Experience[]
-  education         Education[]
-  languages         Language[]
-  skillTags         Tags[]
-  notifications     Notification[]
-  followed          Company[]
-  postulations      Post[]          @relation("_UserToPostulations")
-  favourites        Post[]          @relation("_UserToFavourites")
+  firstName     String
+  lastName      String
+  about         String
+  phoneNumber   String
+  country       String
+  image         String
+  showImage     Boolean
+  experience    Experience[]
+  education     Education[]
+  languages     Language[]
+  skillTags     Tag[]
+  notifications Notification[]
+  followed      Company[]
+  postulations  Post[]         @relation("_UserToPostulations")
+  favourites    Post[]         @relation("_UserToFavourites")
 }
 
 model Company {
-  id                Int             @id @default(autoincrement())
+  id              Int            @id @default(autoincrement())
   //RELACION CON USER
-  userId            Int             @default(1)
-  user              User            @relation(fields: [userId], references: [id])
+  userId          Int            @default(1)@unique
+  user            User           @relation(fields: [userId], references: [id])
   //=============
-  name              String
-  legalName         String
-  stin              String
-  image             String
-  companyValues     String
-  mission           String
-  vision            String
-  accountManagers   String[]
-  notifications     Notification[]
-  reviews           Review[]
-  posts             Post[]
-  followers         Applicant[]
+  name            String
+  legalName       String
+  stin            String
+  image           String
+  companyValues   String
+  mission         String
+  vision          String
+  accountManagers String[]
+  notifications   Notification[]
+  reviews         Review[]
+  posts           Post[]
+  followers       Applicant[]
 }
 
 model Post {
-  id                Int             @id @default(autoincrement())
+  id           Int         @id @default(autoincrement())
   //RELACION CON COMPANY
-  companyId         Int
-  company           Company         @relation(fields: [companyId], references: [id])
+  companyId    Int
+  company      Company     @relation(fields: [companyId], references: [id])
   //=============
-  title             String
-  description       String
-  location          String
-  modality          String
-  contractType      String
-  salary            String
-  startDate         String
-  endDate           String
-  tags              String[]
-  applicants        Applicant[]     @relation("_UserToPostulations")
-  favoritedBy       Applicant[]     @relation("_UserToFavourites")
+  title        String
+  description  String
+  location     String
+  modality     String
+  contractType String
+  salary       String
+  startDate    String
+  endDate      String
+  tags         String[]
+  applicants   Applicant[] @relation("_UserToPostulations")
+  favoritedBy  Applicant[] @relation("_UserToFavourites")
   //RELACION CON CATEGORY
-  categoryId        Int
-  category          Category        @relation(fields: [categoryId], references: [id])
+  categoryId   Int
+  category     Category    @relation(fields: [categoryId], references: [id])
   //=============
 }
 
 model Experience {
-    id              Int             @id @default(autoincrement())
-    position        String
-    company         String
-    startDate       String
-    endDate         String?
-    description     String
-    //RELACION CON APPLICANT
-    applicantId     Int
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
-    //=============
+  id          Int       @id @default(autoincrement())
+  position    String
+  company     String
+  startDate   String
+  endDate     String?
+  description String
+  //RELACION CON APPLICANT
+  applicantId Int
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  //=============
 }
 
 model Education {
-    id              Int             @id @default(autoincrement())
-    degree          String
-    institution     String
-    startDate       String
-    endDate         String?
-    description     String
-    //RELACION CON APPLICANT
-    applicantId     Int
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
-    //=============
+  id          Int       @id @default(autoincrement())
+  degree      String
+  institution String
+  startDate   String
+  endDate     String?
+  description String
+  //RELACION CON APPLICANT
+  applicantId Int
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  //=============
 }
 
 model Language {
-    id              Int             @id @default(autoincrement())
-    language        String
-    level           String
-    //RELACION CON APPLICANT
-    applicantId     Int
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
-    //=============
+  id          Int       @id @default(autoincrement())
+  language    String
+  level       String
+  //RELACION CON APPLICANT
+  applicantId Int
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  //=============
 }
 
 model Review {
-    id              Int             @id @default(autoincrement())
-    description     String
-    score           Int
-    //RELACION REVIEWS CON COMPANIA
-    companyId       Int
-    company         Company         @relation(fields: [companyId], references: [id])
-    //=============
+  id          Int     @id @default(autoincrement())
+  description String
+  score       Int
+  //RELACION REVIEWS CON COMPANIA
+  companyId   Int
+  company     Company @relation(fields: [companyId], references: [id])
+  //=============
 }
 
 model Category {
-    id              Int             @id @default(autoincrement())
-    name            String
-    posts           Post[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  posts Post[]
 }
 
-model Tags {
-    id              Int             @id @default(autoincrement())
-    name            String
-    applicant       Applicant[]
+model Tag {
+  id        Int         @id @default(autoincrement())
+  name      String
+  applicant Applicant[]
 }
 
 model Notification {
-    id              Int             @id @default(autoincrement())
-    message         String
-    //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
-    typeId          Int
-    type            notificationTypes @relation(fields: [typeId], references: [id])
-    //=============
-    //RELACION NOTIFICACIONES Y APPLICANT
-    applicantId     Int?
-    applicant       Applicant?       @relation(fields: [applicantId], references: [id])
-    //=============
-    //RELACION NOTIFICACIONES Y COMPANY
-    companyId       Int?
-    company         Company?         @relation(fields: [companyId], references: [id])
-    //=============
+  id          Int               @id @default(autoincrement())
+  message     String
+  //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
+  typeId      Int
+  type        notificationTypes @relation(fields: [typeId], references: [id])
+  //=============
+  //RELACION NOTIFICACIONES Y APPLICANT
+  applicantId Int?
+  applicant   Applicant?        @relation(fields: [applicantId], references: [id])
+  //=============
+  //RELACION NOTIFICACIONES Y COMPANY
+  companyId   Int?
+  company     Company?          @relation(fields: [companyId], references: [id])
+  //=============
 }
 
 model notificationTypes {
-    id              Int             @id @default(autoincrement())
-    name            String
-    notification    Notification[]
+  id           Int            @id @default(autoincrement())
+  name         String
+  notification Notification[]
 }
 
 model News {
-    id              Int             @id @default(autoincrement())
-    image           String
-    title           String
-    description     String
+  id          Int    @id @default(autoincrement())
+  image       String
+  title       String
+  description String
 }
