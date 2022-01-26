@@ -12,8 +12,9 @@ companyRouter.get("/posts/:id", companyController.getPosts);
 companyRouter.post("/create", companyController.create);
 
 //PUT
+companyRouter.put("/update/:id", companyController.create);
 
 //DELETE
-companyRouter.delete("/delete/:id", companyController.delete)
+companyRouter.delete("/delete/:id", companyController.delete);
 
 module.exports = companyRouter;
