@@ -60,7 +60,7 @@ module.exports = {
           startDate: startDate as string,
           endDate: endDate as string,
           tags: tags as string[],
-          category: category as string,
+          categoryId: category as number,
         },
       });
       res.send(newPost);
@@ -161,7 +161,7 @@ module.exports = {
           startDate: post.startDate as string,
           endDate: post.endDate as string,
           tags: post.tags as object,
-          category: post.category as string,
+          categoryId: post.categoryId as number,
           // score: getScore(post.companyId)
         };
       });
@@ -176,10 +176,7 @@ module.exports = {
       // FILTRO CATEGORY
       categories.length
         ? (formattedPosts = formattedPosts.filter((post) =>
-            categories
-              .join(" ")
-              .toLowerCase()
-              .includes(post.category.toLowerCase())
+            categories.join(" ").toLowerCase().includes(post.categoryId)
           ))
         : null;
 
