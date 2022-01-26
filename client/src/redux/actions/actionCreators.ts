@@ -274,3 +274,16 @@ export const deleteUserLanguages =
       console.log(error);
     }
   };
+
+export const setUserFollows = 
+  (compId: number, userId: number)=> async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.SET_USER_FOLLOWS,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+}
