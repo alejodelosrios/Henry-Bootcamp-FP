@@ -21,8 +21,8 @@ model User {
 model Applicant {
   id            Int            @id @default(autoincrement())
   //RELACION CON USER
-  userId        Int            @default(1)@unique
-  user          User           @relation(fields: [userId], references: [id])
+  userId        Int            @unique @default(1)
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   //=============
   firstName     String
   lastName      String
@@ -44,8 +44,8 @@ model Applicant {
 model Company {
   id              Int            @id @default(autoincrement())
   //RELACION CON USER
-  userId          Int            @default(1)@unique
-  user            User           @relation(fields: [userId], references: [id])
+  userId          Int            @unique @default(1)
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   //=============
   name            String
   legalName       String
@@ -65,7 +65,7 @@ model Post {
   id           Int         @id @default(autoincrement())
   //RELACION CON COMPANY
   companyId    Int
-  company      Company     @relation(fields: [companyId], references: [id])
+  company      Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
   //=============
   title        String
   description  String
@@ -93,7 +93,7 @@ model Experience {
   description String
   //RELACION CON APPLICANT
   applicantId Int
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicant   Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
   //=============
 }
 
@@ -106,7 +106,7 @@ model Education {
   description String
   //RELACION CON APPLICANT
   applicantId Int
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicant   Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
   //=============
 }
 
@@ -116,7 +116,7 @@ model Language {
   level       String
   //RELACION CON APPLICANT
   applicantId Int
-  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicant   Applicant @relation(fields: [applicantId], references: [id], onDelete: Cascade)
   //=============
 }
 
@@ -126,7 +126,7 @@ model Review {
   score       Int
   //RELACION REVIEWS CON COMPANIA
   companyId   Int
-  company     Company @relation(fields: [companyId], references: [id])
+  company     Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
   //=============
 }
 

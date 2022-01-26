@@ -30,12 +30,12 @@ module.exports = {
   },
   userById: async (req: Request, res: Response) => {
     try {
-      const {id} = req.params
+      const { id } = req.params;
       if (!id) return res.send("Debes enviar el id del usuario por params");
       const user = await prisma.user.findMany({
         where: {
-          id: Number(id)
-        }
+          id: Number(id),
+        },
       });
       res.json(user);
     } catch (error) {
@@ -79,6 +79,7 @@ module.exports = {
     try {
       const { id } = req.params;
       if (!id) return res.send("Debes enviar el id del usuario por params");
+
       const userDelete = await prisma.user.delete({
         where: {
           id: Number(id),
