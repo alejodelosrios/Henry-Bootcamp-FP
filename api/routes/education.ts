@@ -4,12 +4,12 @@ const educationController = require("../controllers/educationController");
 const educationRouter = Router();
 
 //POST
-educationRouter.post("/create", educationController.create);
+educationRouter.post("/create/:id", educationController.create);
 
 //PUT
-educationRouter.put("/:id/update", educationController.update);
+educationRouter.put("/update/:id", educationController.update);
 
 //DELETE
-educationRouter.delete("/:id/delete", educationController.delete);
+educationRouter.delete("/delete/:id", educationController.delete);
 
 module.exports = educationRouter;

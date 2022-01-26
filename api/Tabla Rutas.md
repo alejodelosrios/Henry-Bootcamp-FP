@@ -42,21 +42,21 @@ Las rutas son las siguientes:
 
 
 /experience
->    POST    /create             (crea una nueva experience y la asocia a un applicant)      => recibe objeto experience (mirar en /prisma/seed.ts para los modelos)
+>    POST    /create/:id             (crea una nueva experience y la asocia a un applicant)      => recibe objeto experience (mirar en /prisma/seed.ts para los modelos)
 >    UPDATE  /update/:id         (actualiza la informacion de un experience)                 => recibe id por params
 >    DELETE  /delete/:id         (borra una experience especifica)                           => recibe id por params
 
 
 /education
->    POST    /create             (crea una nueva education y la asocia a un applicant)       => recibe objeto education (mirar en /prisma/seed.ts para los modelos)
+>    POST    /create/:id             (crea una nueva education y la asocia a un applicant)       => recibe objeto education (mirar en /prisma/seed.ts para los modelos)
 >    UPDATE  /update/:id         (actualiza la informacion de un education)                  => recibe id por params
 >    DELETE  /delete/:id         (borra una education especifica)                            => recibe id por params
 
 
 /languages
--    POST    /create             (crea una nueva languages y la asocia a un applicant)       => recibe objeto languages (mirar en /prisma/seed.ts para los modelos)
--    UPDATE  /update/:id         (actualiza la informacion de un languages)                  => recibe id por params
--    DELETE  /delete/:id         (borra una languages especifica)                            => recibe id por params
+>    POST    /create/:id             (crea una nueva languages y la asocia a un applicant)       => recibe objeto languages (mirar en /prisma/seed.ts para los modelos)
+>    UPDATE  /update/:id         (actualiza la informacion de un languages)                  => recibe id por params
+>    DELETE  /delete/:id         (borra una languages especifica)                            => recibe id por params
 
 
 /review

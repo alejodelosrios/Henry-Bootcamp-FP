@@ -4,7 +4,7 @@ const languageController = require("../controllers/languagesController");
 const languageRouter = Router();
 
 //POST
-languageRouter.post("/create", languageController.create);
+languageRouter.post("/create/:id", languageController.create);
 
 //UPDATE
 languageRouter.put("/update/:id", languageController.update);

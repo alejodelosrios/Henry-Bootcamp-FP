@@ -5,7 +5,7 @@ const experienceRouter = Router();
 
 
 //POST
-experienceRouter.post("/create/:applicantId", experienceController.create);  
+experienceRouter.post("/create/:id", experienceController.create);  
 
 //UPDATE
 experienceRouter.put("/update/:id", experienceController.update)  

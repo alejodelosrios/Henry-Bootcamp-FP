@@ -5,13 +5,14 @@ import { endianness } from "os";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
+      const { id } = req.params
       const data = req.body;
 
       const language = await prisma.language.create({
         data: {
           language: data.language,
           level: data.level,
-          applicantId: data.applicantId,
+          applicantId: Number(id),
         },
       });
       res.json(language);

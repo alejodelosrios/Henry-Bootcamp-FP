@@ -5,6 +5,7 @@ import { endianness } from "os";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
+      const { id } = req.params
       const data = req.body;
       const education = await prisma.education.create({
         data: {
@@ -13,7 +14,7 @@ module.exports = {
           startDate: data.startDate,
           endDate: data.endDate,
           description: data.description,
-          applicantId: data.applicantId,
+          applicantId: Number(id),
         },
       });
       res.json(education);
