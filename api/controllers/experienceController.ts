@@ -2,6 +2,7 @@ import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
 
 module.exports = {
+
   create: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
@@ -45,6 +46,7 @@ module.exports = {
     }
   },
 
+
   delete: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
@@ -52,10 +54,10 @@ module.exports = {
         where: {
           id: Number(id),
         },
-      });
+      })
       res.send(experienceDelete);
     } catch (error) {
       res.status(400).send(error);
     }
   },
-};
+}
