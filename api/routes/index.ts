@@ -8,6 +8,7 @@ const educationRouter = require("./education");
 const languageRouter = require("./language");
 const experienceRouter = require("./experience");
 const notificationRouter = require("./notification");
+const notificationTypeRouter = require("./notificationTypes");
 const mainRouter = Router();
 
 mainRouter.use("/language", languageRouter);
@@ -18,5 +19,5 @@ mainRouter.use("/company", companyRouter);
 mainRouter.use("/education", educationRouter);
 mainRouter.use("/experience", experienceRouter);
 mainRouter.use("/notification", notificationRouter);
-
+mainRouter.use("/notification/types", notificationTypeRouter);
 module.exports = mainRouter;
