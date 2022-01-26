@@ -5,7 +5,6 @@ const userRouter = Router();
 
 //GET
 userRouter.get("/index", userController.index);
-// userRouter.get("/:email", userController.userByEmail);
 
 //POST
 userRouter.post("/create", userController.create);
@@ -14,6 +13,6 @@ userRouter.post("/create", userController.create);
 userRouter.put("/update/:email", userController.update);
 
 //DELETE
-userRouter.delete("/delete/:email", userController.delete);
+userRouter.delete("/delete/:id", userController.delete);
 
 module.exports = userRouter;

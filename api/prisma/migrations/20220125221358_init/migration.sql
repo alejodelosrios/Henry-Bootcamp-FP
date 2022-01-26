@@ -41,7 +41,7 @@ CREATE TABLE "Company" (
 
 -- CreateTable
 CREATE TABLE "Post" (
-    "postId" SERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "companyId" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE "Post" (
     "category" TEXT NOT NULL,
     "tags" TEXT[],
 
-    CONSTRAINT "Post_pkey" PRIMARY KEY ("postId")
+    CONSTRAINT "Post_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -236,10 +236,10 @@ ALTER TABLE "_ApplicantToCompany" ADD FOREIGN KEY ("B") REFERENCES "Company"("id
 ALTER TABLE "__UserToPostulations" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "__UserToPostulations" ADD FOREIGN KEY ("B") REFERENCES "Post"("postId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "__UserToPostulations" ADD FOREIGN KEY ("B") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "__UserToFavourites" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "__UserToFavourites" ADD FOREIGN KEY ("B") REFERENCES "Post"("postId") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "__UserToFavourites" ADD FOREIGN KEY ("B") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
