@@ -127,7 +127,15 @@ export const setUser =
     }
   };
 
-export const updateUser =
+export const setEmail =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    return dispatch({
+      type: ActionType.SET_EMAIL,
+      payload: email,
+    });
+  };
+
+  export const updateUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
     try {
       // await axios.post(`/user/update`, userData);
@@ -141,10 +149,128 @@ export const updateUser =
     }
   };
 
-export const setEmail =
-  (email: string) => async (dispatch: Dispatch<Action>) => {
-    return dispatch({
-      type: ActionType.SET_EMAIL,
-      payload: email,
-    });
+export const updateUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
