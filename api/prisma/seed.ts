@@ -16,6 +16,24 @@ let posts = 100
 
 async function main(){
 
+    //CREAR CATEGORIES
+    categories.forEach( async category => {
+        await prisma.category.create({
+            data: {
+                name: category
+            }
+        })
+    })
+
+    //CREAR TAGS
+    tags.forEach( async tag => {
+        await prisma.tag.create({
+            data: {
+                name: tag
+            }
+        })
+    })
+
 
     //CREAR ADMIN
     await prisma.user.createMany({
@@ -222,7 +240,7 @@ async function main(){
                     startDate: "",
                     endDate: "",
                     tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
-                    category: faker.random.arrayElement(categories)
+                    categoryId: 1+Math.floor(Math.random()*(categories.length-1))
                 }
             ]
         })

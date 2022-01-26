@@ -34,7 +34,7 @@ model Applicant {
   experience    Experience[]
   education     Education[]
   languages     Language[]
-  skillTags     Tags[]
+  skillTags     Tag[]
   notifications Notification[]
   followed      Company[]
   postulations  Post[]         @relation("_UserToPostulations")
@@ -136,7 +136,7 @@ model Category {
   posts Post[]
 }
 
-model Tags {
+model Tag {
   id        Int         @id @default(autoincrement())
   name      String
   applicant Applicant[]
