@@ -7,7 +7,7 @@ module.exports = {
             const data = req.body;
             const user = await prisma.user.create({
                 data: {
-                    roleId: 1,
+                    roleId: req.body.roleId,
                     firstName: data.firstName,
                     lastName: data.lastName,
                     about: data.about,

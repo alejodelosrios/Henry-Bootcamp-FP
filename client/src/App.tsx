@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, useNavigate } from "react-router";
 
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 
@@ -10,17 +10,20 @@ import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
 import { ThemeProvider } from "styled-components";
 import light from "./styles/themes/light";
-import { PostDetailPage } from "./pages/PostDetail";
-import Post from "./components/Post";
 import CreatePostPage from "./pages/CreatePostPage";
-import { useDispatch } from "react-redux";
-import { getPosts } from "./redux/actions/actionCreators";
+import { useDispatch, useSelector } from "react-redux";
+import { getPosts, setEmail, setUser } from "./redux/actions/actionCreators";
 import LoginPage from "./pages/LoginPage";
+import { PostDetailPage } from "./pages/PostDetail";
+import ChooseRoleModal from "./components/ChooseRoleModal";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
+  let navigate = useNavigate();
   const dispatch = useDispatch();
   let myStorage = window.sessionStorage;
+  const roleId = useSelector((state: any) => state.userReducer.roleId);
+  const email = useSelector((state: any) => state.userReducer.email);
 
   useEffect(() => {
     const getUser = () => {
@@ -38,7 +41,15 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          setUserLogged(resObject.user);
+          console.log("Respuesta: ", resObject.user);
+          if (!resObject.user.hasOwnProperty("roleId")) {
+            console.log("Set Email", resObject.user);
+            setUserLogged(resObject.user);
+            dispatch(setEmail(resObject.user.emails[0].value));
+          } else {
+            console.log("SetUser");
+            dispatch(setUser(resObject.user));
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -51,15 +62,21 @@ function App() {
   return (
     <ThemeProvider theme={light}>
       <GlobalStyles />
-      <NavBar userLogged={userLogged} />
+      <NavBar />
       <Routes>
+        {!roleId && email && (
+          <>
+            <Route path="/" element={<Navigate to="/select-role" />} />
+            <Route
+              path="/select-role"
+              element={<ChooseRoleModal title="Rol" />}
+            />
+          </>
+        )}
         <Route path="/" element={<WelcomePage />}></Route>
         <Route path="/home" element={<Home />}></Route>
-        <Route
-          path="/profile"
-          element={<UserProfile user={userLogged} />}
-        ></Route>
-        <Route path="/post-detail/:id" element={<PostDetailPage />}></Route>
+        <Route path="/profile" element={<UserProfile user={userLogged} />} />
+        <Route path="/post-detail/:id" element={<PostDetailPage />} />
         <Route path="/create-post" element={<CreatePostPage />} />
         <Route path="/login" element={<LoginPage type="login" />} />
         <Route path="/register" element={<LoginPage type="register" />} />

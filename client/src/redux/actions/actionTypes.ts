@@ -7,4 +7,6 @@ export enum ActionType {
     SET_USER_CREATE_MODAL = "SET_USER_CREATE_MODAL",
     GET_USER = "GET_USER",
     UPDATE_USER = "UPDATE_USER",
+    SET_EMAIL = "SET_EMAIL",
+    SET_USER = "SET_USER",
 }
