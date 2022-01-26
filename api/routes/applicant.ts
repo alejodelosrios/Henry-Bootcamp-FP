@@ -5,14 +5,15 @@ const applicantRouter = Router();
 
 //GET
 applicantRouter.get("/index", applicantController.index);
+applicantRouter.get("/:id", applicantController.applicantById);
 
 //POST
 applicantRouter.post("/create", applicantController.create);
 
 //PUT
-applicantRouter.put("/:id/update", applicantController.update);
+applicantRouter.put("/update/:id", applicantController.update);
 
 //DELETE
-applicantRouter.delete("/:id/delete", applicantController.delete);
+applicantRouter.delete("/delete/:id", applicantController.delete);
 
 module.exports = applicantRouter;

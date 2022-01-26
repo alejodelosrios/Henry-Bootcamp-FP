@@ -62,9 +62,11 @@ model Company {
 }
 
 model Post {
-  postId            Int             @id @default(autoincrement())
+  id                Int             @id @default(autoincrement())
+  //RELACION CON COMPANY
   companyId         Int
   company           Company         @relation(fields: [companyId], references: [id])
+  //=============
   title             String
   description       String
   location          String
@@ -73,10 +75,13 @@ model Post {
   salary            String
   startDate         String
   endDate           String
-  category          String
   tags              String[]
   applicants        Applicant[]     @relation("_UserToPostulations")
   favoritedBy       Applicant[]     @relation("_UserToFavourites")
+  //RELACION CON CATEGORY
+  categoryId        Int
+  category          Category        @relation(fields: [categoryId], references: [id])
+  //=============
 }
 
 model Experience {
@@ -84,11 +89,12 @@ model Experience {
     position        String
     company         String
     startDate       String
-    endDate         String
+    endDate         String?
     description     String
     //RELACION CON APPLICANT
     applicantId     Int
     applicant       Applicant       @relation(fields: [applicantId], references: [id])
+    //=============
 }
 
 model Education {
@@ -96,11 +102,12 @@ model Education {
     degree          String
     institution     String
     startDate       String
-    endDate         String
+    endDate         String?
     description     String
     //RELACION CON APPLICANT
     applicantId     Int
     applicant       Applicant       @relation(fields: [applicantId], references: [id])
+    //=============
 }
 
 model Language {
@@ -110,6 +117,7 @@ model Language {
     //RELACION CON APPLICANT
     applicantId     Int
     applicant       Applicant       @relation(fields: [applicantId], references: [id])
+    //=============
 }
 
 model Review {
@@ -125,6 +133,7 @@ model Review {
 model Category {
     id              Int             @id @default(autoincrement())
     name            String
+    posts           Post[]
 }
 
 model Tags {
@@ -136,12 +145,24 @@ model Tags {
 model Notification {
     id              Int             @id @default(autoincrement())
     message         String
+    //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
+    typeId          Int
+    type            notificationTypes @relation(fields: [typeId], references: [id])
+    //=============
     //RELACION NOTIFICACIONES Y APPLICANT
-    applicantId     Int
-    applicant       Applicant       @relation(fields: [applicantId], references: [id])
+    applicantId     Int?
+    applicant       Applicant?       @relation(fields: [applicantId], references: [id])
+    //=============
     //RELACION NOTIFICACIONES Y COMPANY
-    companyId       Int
-    company         Company         @relation(fields: [companyId], references: [id])
+    companyId       Int?
+    company         Company?         @relation(fields: [companyId], references: [id])
+    //=============
+}
+
+model notificationTypes {
+    id              Int             @id @default(autoincrement())
+    name            String
+    notification    Notification[]
 }
 
 model News {

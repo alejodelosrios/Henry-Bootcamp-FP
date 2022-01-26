@@ -1,60 +1,75 @@
 import { prisma } from "../prisma/database"
-import {Request, Response} from "express"
+import { Request, Response } from "express";
 
 module.exports = {
     create: async (req:Request, res:Response) => {
-        const data = req.body
-        if (!req.body.company){
-            res.status(404).send("Company is required")
-        }
+        const {
+            companyId,
+            title,
+            description,
+            location,
+            modality,
+            contractType,
+            salary,
+            startDate,
+            endDate,
+            tags,
+            category
+        } = req.body
+
+        if (!companyId) return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post")
+        if (!title) return res.send("Debes incluir un campo 'title'")
+        if (!description) return res.send("Debes incluir un campo 'description'")
+        if (!location) return res.send("Debes incluir un campo 'location'")
+        if (!modality) return res.send("Debes incluir un campo 'modality', puede ser onSite, remote o hybrid")
+        if (!contractType) return res.send("Debes incluir un campo 'contractType', puede ser fullTime, partTime, temporary o perHour")
+        if (!salary) return res.send("Debes incluir un campo 'salary', si no hay salario enviar string vacío")
+        if (!startDate) return res.send("Debes incluir un campo 'startDate'")
+        if (!endDate) return res.send("Debes incluir un campo 'endDate'")
+        if (!tags) return res.send("Debes incluir un campo 'tags', revisar /api/prisma/seed.ts para ver ejemplos")
+        if (!category) return res.send("Debes incluir un campo 'category', revisar /api/prisma/seed.ts para ver opciones")
+
         try {
-            const post = await prisma.post.create({
+            const newPost = await prisma.post.create({
                 data: {
-                    companyId: data.company as number,
-                    description: data.description as string,
-                    title: data.title as string,
-                    location: data.location as string,
-                    modality: data.modality as string,
-                    contractType: data.contractType as string,
-                    salary: data.salary as string,
-                    startDate: data.startDate as string,
-                    endDate: data.endDate as string,
-                    tags: data.tags as string[],
-                    category: data.category as string
+                    companyId: companyId as number,
+                    title: title as string,
+                    description: description as string,
+                    location: location as string,
+                    modality: modality as string,
+                    contractType: contractType as string,
+                    salary: salary as string,
+                    startDate: startDate as string,
+                    endDate: endDate as string,
+                    tags: tags as string[],
+                    category: category as string
                 }
             })
-            res.json(post)
+            res.send(newPost)
         } catch(error){
-            console.log(error)
-            res.status(500).send(error)
+            res.status(400).send(error)
         }
     },
     index: async (req:Request, res:Response) => {
         try {
-           const title = req.query.title as string
            const getAllPost = await prisma.post.findMany()
-           if(title){
-           const getPost= getAllPost.filter(e => e.title.toLowerCase().includes(title.toLowerCase())) 
-           getPost.length ?
-               res.status(200).send(getPost) :
-               res.status(404).send("Post not found")
-           } else {
-               res.status(200).send(getAllPost)
-           }
+           getAllPost.length ?
+               res.status(200).json(getAllPost) :
+               res.status(404).send("No posts found")
        } catch(error){
-           console.log(error)
            res.status(400).send(error)
        }
     },
     postById: async (req:Request, res:Response) => {
         try {
             const id = req.params.id
+            if(!id) return res.send("Debes enviar el id del post por params")
             const post = await prisma.post.findFirst({
                 where: {
-                    postId: Number(id)
+                    id: Number(id)
                 }
             })
-            res.send(post)
+            res.json(post)
         }catch(error){
             res.send(error)
         }
@@ -71,6 +86,14 @@ module.exports = {
                 contractType
             } = req.body
 
+            if(!inputName) return res.send("Debes incluir un campo 'inputName', puede contener una string vacía")
+            if(!categories) return res.send("Debes incluir un campo 'categories', puede contener una string vacía")
+            if(!score) return res.send("Debes incluir un campo 'score', puede contener una string vacía")
+            if(!orderBy) return res.send("Debes incluir un campo 'orderBy', puede contener una string vacía")
+            if(!location) return res.send("Debes incluir un campo 'location', puede contener una string vacía")
+            if(!modality) return res.send("Debes incluir un campo 'modality', puede contener una string vacía")
+            if(!contractType) return res.send("Debes incluir un campo 'contractType', puede contener una string vacía")
+
             const posts = await prisma.post.findMany()
 
             // async function getScore(companyId: number){
@@ -82,16 +105,14 @@ module.exports = {
             //             reviews: true
             //         }
             //     })
-            //     let totalScore
-            //     company.reviews.map(review => {
-            //         review.hasOwnProperty("score") && totalScore = totalScore + review.score as number
-            //     })
+            //     let totalScore = 0
+            //     company.reviews.map(review => totalScore += review.score)
             //     return totalScore/company.reviews.length
             // }
 
             let formattedPosts = await posts.map(post => {
                 return ({
-                    postId: post.postId as number,
+                    id: post.id as number,
                     companyId: post.companyId as number,
                     title: post.title as string,
                     location: post.location as string,
@@ -105,6 +126,8 @@ module.exports = {
                     // score: getScore(post.companyId)
                 })
             })
+
+            
             
             // FILTRO INPUTNAME
             inputName ? formattedPosts = formattedPosts.filter(post => post.title.toLowerCase().includes(inputName.toLowerCase())) : null
@@ -132,49 +155,33 @@ module.exports = {
                 }
             }
             contractTypes ? formattedPosts = formattedPosts.filter(post => contractTypes.toLowerCase().includes(post.contractType.toLowerCase())) : null
-    
+
+            //FILTRO SCORE
+            // score ? formattedPosts = formattedPosts.filter(post => post.score < score+0.5 && post.score > score-0.5) : null
+            
+            //FILTRO ORDER
+
+
+
     
             formattedPosts.length ? res.send(formattedPosts) : "No se encontraron resultados"
         }catch(error){
             res.send(error)
         }
     },
-    update: async (req:Request, res:Response) => {
-
-    },
     delete: async (req:Request, res:Response) => {
         try {
             const {id} = req.params
-            const postDelete = await prisma.post.delete({
+            if(!id) return res.send("Debes enviar el id del post por params")
+            const deletedPost = await prisma.post.delete({
                     where: {
-                        postId: Number(id)
+                        id: Number(id)
                     },
                 }
             )
-            res.send(postDelete) 
+            res.json(deletedPost) 
         } catch(error){
             res.status(400).send(error)
         }
     },
-}
-
-const ejemploBRYAN = {
-    inputName:"",
-    categories: ["Agriculture, Food, and Natural Resources", "Business and Finance"],
-    score: "3", // devolver todo lo que este hasta .5 por arriba o debajo
-    orderBy: "orderScoreAsc",
-    location: {
-        city:["caba", "san pedro", "baradero"]
-    },
-    modality: {
-        onSite: false,
-        hybrid: false,
-        remote: false,
-    },
-    contractType: {
-        fullTime: false,
-        partTime: false,
-        temporality: false,
-        perHour: false,
-    }
 }
