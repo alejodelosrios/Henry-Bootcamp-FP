@@ -28,6 +28,20 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  userById: async (req: Request, res: Response) => {
+    try {
+      const {id} = req.params
+      if (!id) return res.send("Debes enviar el id del usuario por params");
+      const user = await prisma.user.findMany({
+        where: {
+          id: Number(id)
+        }
+      });
+      res.json(user);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
   update: async (req: Request, res: Response) => {
     try {
       const { id } = req.params;

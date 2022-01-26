@@ -108,9 +108,8 @@ module.exports = {
           email,
         },
       });
-      res.send(updatedApplicant);
+      res.send(updatedUser);
     } catch (error) {
-      console.log(error);
       res.status(400).send(error);
     }
   },

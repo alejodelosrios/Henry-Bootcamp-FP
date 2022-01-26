@@ -26,7 +26,7 @@ app.use(cors({
 
 app.use('/auth', authRoute)
 
-app.use("/api/v1", mainRouter)
+app.use("/api/v2", mainRouter)
 
 app.listen(3001, () => {
     console.log("SERVER RUNNING ON PORT 3001")

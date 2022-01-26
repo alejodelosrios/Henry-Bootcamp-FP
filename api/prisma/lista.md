@@ -1,103 +1,111 @@
 /user
-/create
-/index  
- /:id  
- /update/:id
-/delete/:id
+    /create ====> HECHA
+    /index ====> HECHA
+    /:id  
+    /delete/:id ====> HECHA
+    /update/:id ====> HECHA
 
 /applicant
-/create ====> HECHA
-/index ====> HECHA
-/:id ====> HECHA
-/delete/:id ====> HECHA
-/update/:id
+    /create ====> HECHA
+    /index ====> HECHA
+    /:id ====> HECHA
+    /delete/:id ====> HECHA
+    /update/:id ====> HECHA
 
 /company
-/create ====> HECHA
-/index ====> HECHA
-/:id ====> HECHA
-/delete/:id ====> HECHA
-/update/:id
+    /create ====> HECHA
+    /index ====> HECHA
+    /:id ====> HECHA
+    /posts/:id ====> HECHA
+    /delete/:id ====> HECHA
+    /update/:id
 
-/post
-/create ====> HECHA
-/index ====> HECHA
-/:id ====> HECHA
-/delete/:id ====> HECHA
-/update/:id
+/posts
+    /create ====> HECHA
+    /index ====> HECHA
+    /:id ====> HECHA
+    /delete/:id ====> HECHA
+    /update/:id
 
 /experience
-/create
-/delete/:id
-/update/:id
+    /create
+    /delete/:id
+    /update/:id
 
 /education
-/create
-/delete/:id
-/update/:id
+    /create
+    /delete/:id
+    /update/:id
 
 /languages
-/create
-/delete/:id
-/update/:id
+    /create
+    /delete/:id
+    /update/:id
 
 /review
-/create
+    /create
 
 /category
-/create
-/index  
- /delete/:id
-/update/:id
+    /create
+    /index  
+    /delete/:id
+    /update/:id
 
 /tags
-/create
-/index  
- /delete/:id
-/update/:id
+    /create
+    /index  
+    /delete/:id
+    /update/:id
 
 /notification
-/create
-/index  
- /:id?  
- /delete/:id
-/update/:id
-
-/news
-/create
-/index  
- /:id  
- /delete/:id
-/update/:id
+    /create
+    /index  
+    /:id?  
+    /delete/:id
+    /update/:id
 
 /notification/types
-/create
-/index
-/delete/:id
-/update/:id
+    /create
+    /index
+    /delete/:id
+    /update/:id
 
-    createReview: async (req: Request, res: Response) => {
-        try {
-            const id = req.params.id;
-            const { review } = req.body;
-            const updatedCompany = await prisma.company.update({
-                where: {
-                    id: Number(id),
+/news
+    /create
+    /index  
+    /:id  
+    /delete/:id
+    /update/:id
+
+
+
+
+
+createReview: async (req: Request, res: Response) => {
+    try {
+        const id = req.params.id;
+        const { review } = req.body;
+        const updatedCompany = await prisma.company.update({
+            where: {
+                id: Number(id),
+            },
+            data: {
+                reviews: {
+                    push: review as object,
                 },
-                data: {
-                    reviews: {
-                        push: review as object,
-                    },
-                },
-            });
-            res.send(updatedCompany.reviews);
-        } catch (error) {
-            console.log(error);
-            res.status(500).send(error);
-        }
-    },
+            },
+        });
+        res.send(updatedCompany.reviews);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send(error);
+    }
+},
+
+
 
 LO QUE LLEGA A FILTROS
+
 const ejemploBRYAN = {
 inputName:"",
 categories: ["Agriculture, Food, and Natural Resources", "Business and Finance"],
