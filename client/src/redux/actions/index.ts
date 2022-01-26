@@ -1,4 +1,4 @@
-import { ActionType } from "./actionTypes";
+import {ActionType} from "./actionTypes";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
@@ -45,6 +45,14 @@ interface getUser {
     modal: object;
   };
 }
+interface setEmail {
+  type: ActionType.SET_EMAIL;
+  payload: string;
+}
+interface setUser {
+  type: ActionType.SET_USER;
+  payload: object;
+}
 
 interface updateUser {
   type: ActionType.UPDATE_USER;
@@ -58,5 +66,7 @@ export type Action =
   | setPostCreateModal
   | setUserCreateModal
   | getCurrentPosts
-  | getUser
-  | updateUser;
+  | updateUser
+  | setEmail
+  | setUser
+  | getUser;

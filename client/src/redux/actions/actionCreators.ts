@@ -105,6 +105,27 @@ export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
     });
   }
 };
+export const getUser =
+  (userData: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let { data } = await axios.get(`/user/${userData.email}`);
+      console.log("Información actualizada");
+      console.log(data);
+      return dispatch({
+        type: ActionType.GET_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const setUser =
+  (userData: any) =>{
+    return {
+      type: ActionType.SET_USER,
+      payload: userData,
+    }
+  };
 
 export const updateUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
@@ -118,4 +139,12 @@ export const updateUser =
     } catch (error) {
       console.log(error);
     }
+  };
+
+export const setEmail =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    return dispatch({
+      type: ActionType.SET_EMAIL,
+      payload: email,
+    });
   };
