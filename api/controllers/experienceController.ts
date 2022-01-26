@@ -5,16 +5,23 @@ module.exports = {
 
   create: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const data = req.body;
+      const { applicantId } = req.params;
+      const {
+        position,
+        company,
+        startDate,
+        endDate,
+        description
+      } = req.body;
+      if(!applicantId) return res.send("Debes incluir el applicantId por params")
       const experience = await prisma.experience.create({
         data: {
-          position: data.position,
-          company: data.company,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          description: data.description,
-          applicantId: Number(id),
+          position: position,
+          company: company,
+          startDate: startDate,
+          endDate: endDate,
+          description: description,
+          applicantId: Number(applicantId),
         },
       });
       res.json(experience);
@@ -25,11 +32,12 @@ module.exports = {
 
   update: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { experienceId } = req.params;
       const { position, company, startDate, endDate, description } = req.body;
+      if(!experienceId) return res.send("Debes incluir el experienceId por params")
       const experienceUpdate = await prisma.experience.update({
         where: {
-          id: Number(id),
+          id: Number(experienceId),
         },
         data: {
           position,
@@ -49,10 +57,11 @@ module.exports = {
 
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { experienceId } = req.params;
+      if(!experienceId) return res.send("Debes incluir el experienceId por params")
       const experienceDelete = await prisma.experience.delete({
         where: {
-          id: Number(id),
+          id: Number(experienceId),
         },
       })
       res.send(experienceDelete);

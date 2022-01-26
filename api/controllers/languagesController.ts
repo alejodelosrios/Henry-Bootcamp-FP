@@ -1,21 +1,23 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-import { endianness } from "os";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params
-      const data = req.body;
-
-      const language = await prisma.language.create({
+      const { applicantId } = req.params
+      const {
+        language,
+        level
+      } = req.body;
+      if(!applicantId) return res.send("Debes incluir el applicantId por params")
+      const newLanguage = await prisma.language.create({
         data: {
-          language: data.language,
-          level: data.level,
-          applicantId: Number(id),
+          language: language,
+          level: level,
+          applicantId: Number(applicantId),
         },
       });
-      res.json(language);
+      res.json(newLanguage);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
@@ -23,11 +25,16 @@ module.exports = {
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const { language, level, applicantId } = req.body;
+      const { languageId } = req.params;
+      const { 
+        language, 
+        level, 
+        applicantId 
+      } = req.body;
+      if(!languageId) return res.send("Debes incluir el languageId por params")
       const updatedLanguage = await prisma.language.update({
         where: {
-          id: Number(id),
+          id: Number(languageId),
         },
         data: {
           language,
@@ -44,10 +51,11 @@ module.exports = {
 
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { languageId } = req.params;
+      if(!languageId) return res.send("Debes incluir el languageId por params")
       const languageDelete = await prisma.language.delete({
         where: {
-          id: Number(id),
+          id: Number(languageId),
         },
       });
       res.send(languageDelete);

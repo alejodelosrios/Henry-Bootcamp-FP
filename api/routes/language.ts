@@ -4,12 +4,12 @@ const languageController = require("../controllers/languagesController");
 const languageRouter = Router();
 
 //POST
-languageRouter.post("/create/:id", languageController.create);
+languageRouter.post("/create/:applicantId", languageController.create);
 
 //UPDATE
-languageRouter.put("/update/:id", languageController.update);
+languageRouter.put("/update/:languageId", languageController.update);
 
 //DELETE
-languageRouter.delete("/delete/:id", languageController.delete);
+languageRouter.delete("/delete/:languageId", languageController.delete);
 
 module.exports = languageRouter;

@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
+    const { companyId } = req.params
     const {
-      companyId,
       title,
       description,
       location,
@@ -19,7 +19,7 @@ module.exports = {
 
     if (!companyId)
       return res.send(
-        "Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post"
+        "Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params"
       );
     if (!title) return res.send("Debes incluir un campo 'title'");
     if (!description) return res.send("Debes incluir un campo 'description'");
@@ -50,7 +50,7 @@ module.exports = {
     try {
       const newPost = await prisma.post.create({
         data: {
-          companyId: companyId as number,
+          companyId: Number(companyId),
           title: title as string,
           description: description as string,
           location: location as string,
@@ -80,11 +80,11 @@ module.exports = {
   },
   postById: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
-      if (!id) return res.send("Debes enviar el id del post por params");
+      const { postId } = req.params;
+      if (!postId) return res.send("Debes enviar el postId por params");
       const post = await prisma.post.findFirst({
         where: {
-          id: Number(id),
+          id: Number(postId),
         },
       });
       res.json(post);
@@ -232,11 +232,11 @@ module.exports = {
   },
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      if (!id) return res.send("Debes enviar el id del post por params");
+      const { postId } = req.params;
+      if (!postId) return res.send("Debes enviar el postId por params");
       const deletedPost = await prisma.post.delete({
         where: {
-          id: Number(id),
+          id: Number(postId),
         },
       });
       res.json(deletedPost);

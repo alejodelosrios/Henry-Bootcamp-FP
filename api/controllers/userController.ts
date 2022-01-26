@@ -28,14 +28,18 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  userById: async (req: Request, res: Response) => {
+  userByEmail: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      if (!id) return res.send("Debes enviar el id del usuario por params");
+      const { email } = req.params;
+      if (!email) return res.send("Debes enviar el email del usuario por params");
       const user = await prisma.user.findMany({
         where: {
-          id: Number(id),
+          email: email,
         },
+        include: {
+          applicant: true,
+          company: true
+        }
       });
       res.json(user);
     } catch (error) {
@@ -44,7 +48,7 @@ module.exports = {
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { userId } = req.params;
       const {
         email,
         newEmail = email,
@@ -52,7 +56,7 @@ module.exports = {
         newPassword = password,
       } = req.body;
 
-      if (!id) return res.send("Debes enviar el id del usuario por params");
+      if (!userId) return res.send("Debes enviar el id del usuario por params");
       if (!email)
         return res.send(
           "Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo"
@@ -63,7 +67,7 @@ module.exports = {
         );
       const userUpdated = await prisma.user.updateMany({
         where: {
-          id: Number(id),
+          id: Number(userId),
         },
         data: {
           email: newEmail,
@@ -77,12 +81,12 @@ module.exports = {
   },
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      if (!id) return res.send("Debes enviar el id del usuario por params");
+      const { userId } = req.params;
+      if (!userId) return res.send("Debes enviar el id del usuario por params");
 
       const userDelete = await prisma.user.delete({
         where: {
-          id: Number(id),
+          id: Number(userId),
         },
       });
       res.json(userDelete);

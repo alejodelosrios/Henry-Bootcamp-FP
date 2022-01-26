@@ -5,13 +5,13 @@ const experienceRouter = Router();
 
 
 //POST
-experienceRouter.post("/create/:id", experienceController.create);  
+experienceRouter.post("/create/:applicantId", experienceController.create);  
 
 //UPDATE
-experienceRouter.put("/update/:id", experienceController.update)  
+experienceRouter.put("/update/:experienceId", experienceController.update)  
 
 //DELETE
-experienceRouter.delete("/delete/:id", experienceController.delete) 
+experienceRouter.delete("/delete/:experienceId", experienceController.delete) 
 
 
 

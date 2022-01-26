@@ -5,15 +5,15 @@ const userRouter = Router();
 
 //GET
 userRouter.get("/index", userController.index);
-userRouter.get("/:id", userController.userById);
+userRouter.get("/:email", userController.userByEmail);
 
 //POST
 userRouter.post("/create", userController.create);
 
 //PUT
-userRouter.put("/update/:id", userController.update);
+userRouter.put("/update/:userId", userController.update);
 
 //DELETE
-userRouter.delete("/delete/:id", userController.delete);
+userRouter.delete("/delete/:userId", userController.delete);
 
 module.exports = userRouter;

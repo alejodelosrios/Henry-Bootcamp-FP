@@ -4,8 +4,8 @@ import { Request, Response } from "express";
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
+      const { userId } = req.params
       const {
-        userId,
         firstName,
         lastName,
         about,
@@ -16,7 +16,7 @@ module.exports = {
 
       if (!userId)
         return res.send(
-          "Debes incluir un campo 'userId' con el id del usuario al cual esta asociado este applicant"
+          "Debes incluir un campo 'userId' con el id del usuario al cual esta asociado este applicant por params"
         );
       if (!firstName)
         return res.send(
@@ -45,7 +45,7 @@ module.exports = {
 
       const newApplicant = await prisma.applicant.create({
         data: {
-          userId: userId as number,
+          userId: Number(userId),
           firstName: firstName as string,
           lastName: lastName as string,
           about: about as string,
@@ -70,12 +70,22 @@ module.exports = {
   },
   applicantById: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      if (!id) return res.send("Debes enviar el id del applicant por params");
+      const { applicantId } = req.params;
+      if (!applicantId) return res.send("Debes enviar el id del applicant por params");
       const userProfile = await prisma.applicant.findFirst({
         where: {
-          id: Number(id),
+          id: Number(applicantId),
         },
+        include: {
+          experience:true,
+          education: true,
+          languages: true,
+          skillTags: true,
+          notifications: true,
+          followed: true,
+          postulations: true,
+          favourites: true
+        }
       });
       res.json(userProfile);
     } catch (error) {
@@ -84,12 +94,19 @@ module.exports = {
   },
   update: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      const { firstName, lastName, email, phoneNumber, country, about } =
+      const { applicantId } = req.params;
+      const { 
+        firstName, 
+        lastName, 
+        email, 
+        phoneNumber, 
+        country, 
+        about } =
         req.body;
+      if (!applicantId) return res.send("Debes enviar el id del applicant por params");
       const updatedApplicant = await prisma.applicant.update({
         where: {
-          id: Number(id),
+          id: Number(applicantId),
         },
         data: {
           firstName,
@@ -115,28 +132,28 @@ module.exports = {
   },
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-
+      const { applicantId } = req.params;
+      if (!applicantId) return res.send("Debes enviar el id del applicant por params");
       const experienceDelete = await prisma.experience.deleteMany({
         where: {
-          applicantId: Number(id),
+          applicantId: Number(applicantId),
         },
       });
 
       const educationDelete = await prisma.education.deleteMany({
         where: {
-          applicantId: Number(id),
+          applicantId: Number(applicantId),
         },
       });
 
       const languageDelete = await prisma.language.deleteMany({
         where: {
-          applicantId: Number(id),
+          applicantId: Number(applicantId),
         },
       });
       const applicantDelete = await prisma.applicant.deleteMany({
         where: {
-          id: Number(id),
+          id: Number(applicantId),
         },
       });
 

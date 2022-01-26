@@ -1,20 +1,28 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
 import { endianness } from "os";
+import { ifError } from "assert";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params
-      const data = req.body;
+      const { applicantId } = req.params
+      const {
+        degree,
+        institution,
+        startDate,
+        endDate,
+        description
+      } = req.body;
+      if(!applicantId) return res.send("Debes incluir el applicantId por params")
       const education = await prisma.education.create({
         data: {
-          degree: data.degree,
-          institution: data.institution,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          description: data.description,
-          applicantId: Number(id),
+          degree: degree,
+          institution: institution,
+          startDate: startDate,
+          endDate: endDate,
+          description: description,
+          applicantId: Number(applicantId),
         },
       });
       res.json(education);
@@ -26,7 +34,7 @@ module.exports = {
   //recibis el email por params y que le agreguen un query nuevo email
   update: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { educationId } = req.params;
       const {
         degree,
         institution,
@@ -35,9 +43,10 @@ module.exports = {
         description,
         applicantId,
       } = req.body;
+      if(!educationId) return res.send("Debes incluir el educationId por params")
       const updatedEducation = await prisma.education.update({
         where: {
-          id: Number(id),
+          id: Number(educationId),
         },
         data: {
           degree,
@@ -58,10 +67,11 @@ module.exports = {
   //por email
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
+      const { educationId } = req.params;
+      if(!educationId) return res.send("Debes incluir el educationId por params")
       const educationDelete = await prisma.education.delete({
         where: {
-          id: Number(id),
+          id: Number(educationId),
         },
       });
       res.send(educationDelete);

@@ -2,47 +2,10 @@ import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
 
 module.exports = {
-  update: async (req: Request, res: Response) => {
-    try {
-      const { id } = req.params;
-      const {
-        userId,
-        name,
-        legalName,
-        stin,
-        accountManagers,
-        image,
-        companyValues,
-        mission,
-        vision,
-      } = req.body;
-
-      const updatedCompany = await prisma.company.update({
-        where: {
-          id: Number(id),
-        },
-        data: {
-          userId,
-          name,
-          legalName,
-          stin,
-          accountManagers,
-          image,
-          companyValues,
-          mission,
-          vision,
-        },
-      });
-      res.json(updatedCompany);
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }
-  },
   create: async (req: Request, res: Response) => {
     try {
+      const { userId } = req.params
       const {
-        userId,
         name,
         legalName,
         stin,
@@ -92,7 +55,7 @@ module.exports = {
 
       const newCompany = await prisma.company.create({
         data: {
-          userId: userId as number,
+          userId: Number(userId),
           name: name as string,
           legalName: legalName as string,
           stin: stin as string,
@@ -118,12 +81,18 @@ module.exports = {
   },
   companyById: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
-      if (!id) return res.send("Debes enviar el id de la compañia por params");
+      const { companyId } = req.params;
+      if (!companyId) return res.send("Debes enviar el companyId params");
       const company = await prisma.company.findUnique({
         where: {
-          id: Number(id),
+          id: Number(companyId),
         },
+        include: {
+          notifications: true,
+          reviews: true,
+          posts: true,
+          followers: true
+        }
       });
       res.json(company);
     } catch (error) {
@@ -132,11 +101,11 @@ module.exports = {
   },
   getPosts: async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
-      if (!id) return res.send("Debes enviar el id de la compañia por params");
+      const { companyId } = req.params;
+      if (!companyId) return res.send("Debes enviar el companyId por params");
       const company = await prisma.company.findUnique({
         where: {
-          id: Number(id),
+          id: Number(companyId),
         },
         include: {
           posts: true,
@@ -151,19 +120,54 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  update: async (req: Request, res: Response) => {
+    try {
+      const { companyId } = req.params;
+      const {
+        name,
+        legalName,
+        stin,
+        accountManagers,
+        image,
+        companyValues,
+        mission,
+        vision,
+      } = req.body;
+      if (!companyId) return res.send("Debes enviar el companyId por params");
+      const updatedCompany = await prisma.company.update({
+        where: {
+          id: Number(companyId),
+        },
+        data: {
+          name,
+          legalName,
+          stin,
+          accountManagers,
+          image,
+          companyValues,
+          mission,
+          vision,
+        },
+      });
+      res.json(updatedCompany);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
   delete: async (req: Request, res: Response) => {
     try {
-      const { id } = req.params;
-      if (!id) return res.send("Debes enviar el id de la compañia por params");
+      const { companyId } = req.params;
+      if (!companyId) return res.send("Debes enviar el companyId por params");
       const postsDelete = await prisma.post.deleteMany({
         where: {
-          companyId: Number(id),
+          companyId: Number(companyId),
         },
       });
 
       const deletedCompany = await prisma.company.delete({
         where: {
-          id: Number(id),
+          id: Number(companyId),
         },
       });
       res.json(deletedCompany);
