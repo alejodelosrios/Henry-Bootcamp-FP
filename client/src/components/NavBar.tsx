@@ -1,12 +1,23 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Login } from "./Login";
-import { Logout } from "./Logout";
 import logo from "../assets/logo.svg";
+import { useSelector } from "react-redux";
+import { Logout } from "./Logout";
 
 const Container = styled.div`
   width: 100vw;
+`;
+
+const Button = styled.button`
+  background: #9dd6fd;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 20px;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  font-family: Open sans/Regular;
 `;
 
 const A = styled.a`
@@ -21,16 +32,12 @@ const A = styled.a`
 const NavLinks = styled.nav`
   z-index: 1000;
 `;
-const LoginButton = styled.div`
+const ButtonsContainer = styled.div`
   z-index: 1000;
 `;
-const Name = styled.a`
-  text-decoration: none;
-  font-size: 16px;
-  color: black;
-  font-weight: bolder;
-  cursor: pointer;
-  margin-right: 1rem;
+const Buttons = styled.div`
+  display: flex;
+  gap: 0.7rem;
 `;
 
 const MainFlexDiv = styled.div`
@@ -46,65 +53,38 @@ const FlexDiv = styled.div`
   align-items: center;
   z-index: 1000;
 `;
-const estilos = `
-    background: #c879ff;
-    border: none;
-    border-radius: 15px;
-    padding: 12px 20px;
-    cursor: pointer;
-    font-size: 20px;
-    color: white;
-    font-family: Open sans/Regular;
-`;
 
-interface Props {
-  userLogged: any;
-}
-
-export const NavBar: FC<Props> = ({ userLogged }) => {
-  // console.log(userLogged)
-  if (userLogged) {
-    return (
-      <div>
-        <MainFlexDiv className="flex-container">
-          <FlexDiv className="imagen-logo">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <img src={logo} alt="logo" />
-            </Link>
-          </FlexDiv>
-          <NavLinks className="multi-options">
-            <A href="/">{"Inicio"}</A>
-            <A href="">{"Postulantes"}</A>
-            <A href="">{"Empresas"}</A>
-            <A href="">{"Nosotros"}</A>
-          </NavLinks>
-          <div>
-            <Name href="/profile">{userLogged?.displayName}</Name>
-            <Logout contenido="Logout" estilos={estilos} />
-          </div>
-        </MainFlexDiv>
-      </div>
-    );
-  } else {
-    return (
-      <Container>
-        <MainFlexDiv className="flex-container">
-          <FlexDiv className="imagen-logo">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <img src={logo} alt="logo" />
-            </Link>
-          </FlexDiv>
-          <NavLinks className="multi-options">
-            <A href="">{"Inicio"}</A>
-            <A href="">{"Postulantes"}</A>
-            <A href="">{"Empresas"}</A>
-            <A href="">{"Nosotros"}</A>
-          </NavLinks>
-          <LoginButton className="login">
-            <Login contenido="Ingresar" estilos={estilos} />
-          </LoginButton>
-        </MainFlexDiv>
-      </Container>
-    );
-  }
+export const NavBar: FC = () => {
+  const role = useSelector((state: any) => state.userReducer.roleId);
+  return (
+    <Container>
+      <MainFlexDiv className="flex-container">
+        <FlexDiv className="imagen-logo">
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <img src={logo} alt="logo" />
+          </Link>
+        </FlexDiv>
+        <NavLinks className="multi-options">
+          <A href="">{"Inicio"}</A>
+          <A href="">{"Postulantes"}</A>
+          <A href="">{"Empresas"}</A>
+          <A href="">{"Nosotros"}</A>
+        </NavLinks>
+        <ButtonsContainer>
+          {!role ? (
+            <Buttons>
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
+              <Link to="/register">
+                <Button>Register</Button>
+              </Link>
+            </Buttons>
+          ) : (
+            <Logout contenido="Logout" estilo="primary" />
+          )}
+        </ButtonsContainer>
+      </MainFlexDiv>
+    </Container>
+  );
 };

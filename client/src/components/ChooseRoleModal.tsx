@@ -1,9 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-
-import { getPosts, setPostCreateModal } from "../redux/actions/actionCreators";
-
+import {FC} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from "react-router";
 import styled from "styled-components";
+import {createUser} from "../redux/actions/actionCreators";
+
+type Props = {
+  title: string
+}
 
 const Modal = styled.div`
   width: 100vw;
@@ -27,7 +30,8 @@ const Overlay = styled.div`
 `;
 
 const ModalContent = styled.div`
-  position: absolute;
+
+  position:absolute;
   top: 40%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -67,62 +71,45 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
-const PostCreateModal = ({ title, setForm, post, user }: any) => {
-  const postCreateModal = useSelector(
-    (state: any) => state.postsReducer.postCreateModal
-  );
+
+
+const ChooseRoleModal: FC<Props> = ({title}) => {
+
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onClick = ({ target: { name } }: any) => {
-    if (post) {
-      setForm({
-        location: "",
-        endDate: "",
-        category: "",
-        tags: [],
-        title: "",
-        description: "",
 
-        company: 1,
-        modality: "remote",
-        contractType: "fullTime",
-        startDate: "2022-01-22",
-        salary: "3000",
-      });
-    } else if (user) {
-      setForm({
-        email: "",
-        password: "",
-        role: 1,
-      });
-    }
+  const email = useSelector(
+    (state: any) => state.userReducer.email
+  );
 
-    dispatch(getPosts());
-    dispatch(setPostCreateModal({ val: false, msg: "" }));
-    if (name === "home") {
-      navigate("/home");
+  const onClick = (e: any) => {
+    const userData = {
+      email: email,
+      roleId: (e.target.name === "empresa") ? 2 : 1
     }
-  };
+    dispatch(createUser(userData))
+    navigate("/home")
+  }
+
+
   return (
     <Modal>
       <Overlay></Overlay>
       <ModalContent>
         <h2>{title}</h2>
-        <p>{postCreateModal.msg}</p>
+        <p>Escoge cual es tu rol dentro de la plataforma:</p>
         <Flex>
-          {post && (
-            <button name="create" onClick={(e) => onClick(e)}>
-              Nueva Publicación
-            </button>
-          )}
-          <button name="home" onClick={(e) => onClick(e)}>
-            Home
+          <button name="postulante" onClick={(e) => onClick(e)}>
+            Postulante
+          </button>
+          <button name="empresa" onClick={(e) => onClick(e)}>
+            Empresa
           </button>
         </Flex>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default PostCreateModal;
+export default ChooseRoleModal;

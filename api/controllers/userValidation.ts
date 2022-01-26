@@ -1,4 +1,4 @@
-import { prisma } from "../prisma/database"
+import { prisma } from "../prisma/database";
 
 module.exports = {
     getUserIfExists: async function (email:string){

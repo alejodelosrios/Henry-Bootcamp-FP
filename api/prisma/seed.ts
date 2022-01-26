@@ -1,9 +1,50 @@
 import { prisma } from "../prisma/database"
 const {faker} = require('@faker-js/faker');
 
-const tags = ["react", "redux", "sequelize", "prisma", "javascript", "c++", "python", "UX/UI", "windows", "linux", "ubuntu", "frontend", "backend", "fullstack", "testing", "typescript", "faker", "nodejs", "css", "html", "cssmodules", "styledcomponents", "figma", "notion", "trello", "word", "office", "excel"]
+const tags = [
+    "react",
+    "redux",
+    "sequelize",
+    "prisma",
+    "javascript",
+    "c++",
+    "python",
+    "UX/UI",
+    "windows",
+    "linux",
+    "ubuntu",
+    "frontend",
+    "backend",
+    "fullstack",
+    "testing",
+    "typescript",
+    "faker",
+    "nodejs",
+    "css",
+    "html",
+    "cssmodules",
+    "styledcomponents",
+    "figma",
+    "notion",
+    "trello",
+    "word",
+    "office",
+    "excel",
+];
 
-const categories = ["Agriculture, Food, and Natural Resources", "Architecture and Construction", "Arts, Audio/Video Technology, and Communication", "Business and Finance", "Education and Training", "Government and Public Administration", "Health Science", "Information Technology", "Law, Public Safety, Corrections, and Security", "Marketing", "Science, Technology, Engineering, and Math"]
+const categories = [
+    "Agriculture, Food, and Natural Resources",
+    "Architecture and Construction",
+    "Arts, Audio/Video Technology, and Communication",
+    "Business and Finance",
+    "Education and Training",
+    "Government and Public Administration",
+    "Health Science",
+    "Information Technology",
+    "Law, Public Safety, Corrections, and Security",
+    "Marketing",
+    "Science, Technology, Engineering, and Math",
+];
 
 //CAMBIAR ESTOS VALORES SEGUN CUANTOS QUIEREN DE CADA UNO EN LA DB
 let admin = 1
@@ -234,8 +275,17 @@ async function main(){
                     title: faker.random.word(),
                     description: faker.lorem.paragraph(),
                     location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
-                    modality: faker.random.arrayElement(["onSite", "remote", "hybrid"]),
-                    contractType: faker.random.arrayElement(["fullTime", "partTime", "temporary", "perHour"]),
+                    modality: faker.random.arrayElement([
+                        "onSite",
+                        "remote",
+                        "hybrid",
+                    ]),
+                    contractType: faker.random.arrayElement([
+                        "fullTime",
+                        "partTime",
+                        "temporary",
+                        "perHour",
+                    ]),
                     salary: `${faker.datatype.number()}usd`,
                     startDate: "",
                     endDate: "",
@@ -249,9 +299,9 @@ async function main(){
 
 main()
     .catch((e) => {
-        console.error(e)
-        process.exit(1)
+        console.error(e);
+        process.exit(1);
     })
     .finally(async () => {
-        await prisma.$disconnect()
-    })
+        await prisma.$disconnect();
+    });

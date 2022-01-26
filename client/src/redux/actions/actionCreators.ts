@@ -74,3 +74,203 @@ export const createPost =
 export const setPostCreateModal = (data: any) => {
   return { type: ActionType.SET_POST_CREATE_MODAL, payload: data };
 };
+export const setUserCreateModal = (data: any) => {
+  return { type: ActionType.SET_USER_CREATE_MODAL, payload: data };
+};
+
+export const createUser = (data: any) => async (dispatch: Dispatch<Action>) => {
+  console.log(data);
+  try {
+    const response = await axios.post(`/user/create`, data);
+    console.log(response);
+    console.log("CREATE USER", "Se envió la data a la API");
+    return dispatch({
+      type: ActionType.GET_USER,
+      payload: {
+        data: response.data,
+        modal: {
+          val: true,
+          msg: `The user ${data.email} was created successfully!`,
+        },
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return dispatch({
+      type: ActionType.SET_POST_CREATE_MODAL,
+      payload: {
+        val: true,
+        msg: `The user ${data.email}, couldn't be created!`,
+      },
+    });
+  }
+};
+export const getUser =
+  (userData: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let { data } = await axios.get(`/user/${userData.email}`);
+      console.log("Información actualizada");
+      console.log(data);
+      return dispatch({
+        type: ActionType.GET_USER,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const setUser =
+  (userData: any) =>{
+    return {
+      type: ActionType.SET_USER,
+      payload: userData,
+    }
+  };
+
+export const setEmail =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    return dispatch({
+      type: ActionType.SET_EMAIL,
+      payload: email,
+    });
+  };
+
+  export const updateUser =
+  (userData: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userData);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER,
+        payload: userData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.post(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.delete(`/user/update`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };

@@ -1,7 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getPosts, setPostCreateModal } from "../redux/actions/actionCreators";
+import {
+  getPosts,
+  setPostCreateModal,
+  setUserCreateModal,
+} from "../redux/actions/actionCreators";
 
 import styled from "styled-components";
 
@@ -67,39 +71,21 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
-const PostCreateModal = ({ title, setForm, post, user }: any) => {
-  const postCreateModal = useSelector(
-    (state: any) => state.postsReducer.postCreateModal
+const UserCreateModal = ({ title, setForm, post, user }: any) => {
+  const userCreateModal = useSelector(
+    (state: any) => state.userReducer.userCreateModal
   );
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
   const onClick = ({ target: { name } }: any) => {
-    if (post) {
-      setForm({
-        location: "",
-        endDate: "",
-        category: "",
-        tags: [],
-        title: "",
-        description: "",
+    setForm({
+      email: "",
+      password: "",
+      role: 1,
+    });
 
-        company: 1,
-        modality: "remote",
-        contractType: "fullTime",
-        startDate: "2022-01-22",
-        salary: "3000",
-      });
-    } else if (user) {
-      setForm({
-        email: "",
-        password: "",
-        role: 1,
-      });
-    }
-
-    dispatch(getPosts());
-    dispatch(setPostCreateModal({ val: false, msg: "" }));
+    dispatch(setUserCreateModal({ val: false, msg: "" }));
     if (name === "home") {
       navigate("/home");
     }
@@ -109,7 +95,7 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
       <Overlay></Overlay>
       <ModalContent>
         <h2>{title}</h2>
-        <p>{postCreateModal.msg}</p>
+        <p>{userCreateModal.msg}</p>
         <Flex>
           {post && (
             <button name="create" onClick={(e) => onClick(e)}>
@@ -125,4 +111,4 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
   );
 };
 
-export default PostCreateModal;
+export default UserCreateModal;

@@ -16,7 +16,7 @@ import {
   Aside,
   Section,
   Div,
-  Label
+  Label,
 } from "./styles";
 
 type Form = {
@@ -80,93 +80,95 @@ const PostCreateForm = () => {
   };
   return (
     <>
-        <TopBackground></TopBackground>
+      <TopBackground></TopBackground>
       <Container>
-          <Title> <PT>Crear</PT>  Publicación</Title>
+        <Title>
+          {" "}
+          <PT>Crear</PT> Publicación
+        </Title>
       </Container>
-        <Form>
-          <Aside>
-            <Div>
-              <Label>Ubicación</Label>
-              <Select name="location" onChange={(e) => handleInputs(e)}>
-                <option value=""></option>
-                <option value="Buenos Aires">Buenos Aires</option>
-                <option value="Mendoza">Mendoza</option>
-              </Select>
-            </Div>
-            <Div>
-              <Label>Fecha Fin</Label>
-              <Input
-                type="date"
-                name="endDate"
-                onChange={(e) => handleInputs(e)}
-                value={form.endDate}
-              />
-            </Div>
-            <Div>
-              <Label>Categoría</Label>
-              <Select name="category" onChange={(e) => handleInputs(e)}>
-                <option value=""></option>
-                <option value="technology">Tecnología</option>
-                <option value="health">Salud</option>
-              </Select>
-            </Div>
-            <Div>
-              <Label>Tags</Label>
-              <div>
-                <Input2
-                  type="text"
-                  name="tag"
-                  value={tag}
-                  onChange={(e) => handleInputs(e)}
-                />
-                <Button type="button" onClick={() => addTag()}>
-                  Agregar
-                </Button>
-              </div>
-              <div>
-                {form.tags.map((tag, i) => (
-                  <div key={i}>
-                    {tag}
-                    <Button
-                      type="button"
-                      name={tag}
-                      onClick={(e) => deleteTag(e)}
-                    >
-                      Eliminar
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </Div>
-          </Aside>
-          <Section>
-            <Div>
-              <Label>Título</Label>
-              <Input
-                type="text"
-                name="title"
-                onChange={(e) => handleInputs(e)}
-                value={form.title}
-              />
-            </Div>
-            <Label>Descripción</Label>
-            <TextArea
-              name="description"
+      <Form>
+        <Aside>
+          <Div>
+            <Label>Ubicación</Label>
+            <Select name="location" onChange={(e) => handleInputs(e)}>
+              <option value=""></option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Mendoza">Mendoza</option>
+            </Select>
+          </Div>
+          <Div>
+            <Label>Fecha Fin</Label>
+            <Input
+              type="date"
+              name="endDate"
               onChange={(e) => handleInputs(e)}
-              value={form.description}
-              cols={60}
-              rows={14}
-            ></TextArea>
-            <Button type="submit" onClick={(e) => onSubmit(e)}>
-              Crear
-            </Button>
-          </Section>
-        </Form>
-        {postCreateModal.val && (
-          <PostCreateModal setForm={setForm} title="Message" />
-        )}
-      
+              value={form.endDate}
+            />
+          </Div>
+          <Div>
+            <Label>Categoría</Label>
+            <Select name="category" onChange={(e) => handleInputs(e)}>
+              <option value=""></option>
+              <option value="technology">Tecnología</option>
+              <option value="health">Salud</option>
+            </Select>
+          </Div>
+          <Div>
+            <Label>Tags</Label>
+            <div>
+              <Input2
+                type="text"
+                name="tag"
+                value={tag}
+                onChange={(e) => handleInputs(e)}
+              />
+              <Button type="button" onClick={() => addTag()}>
+                Agregar
+              </Button>
+            </div>
+            <div>
+              {form.tags.map((tag, i) => (
+                <div key={i}>
+                  {tag}
+                  <Button
+                    type="button"
+                    name={tag}
+                    onClick={(e) => deleteTag(e)}
+                  >
+                    Eliminar
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </Div>
+        </Aside>
+        <Section>
+          <Div>
+            <Label>Título</Label>
+            <Input
+              type="text"
+              name="title"
+              onChange={(e) => handleInputs(e)}
+              value={form.title}
+            />
+          </Div>
+          <Label>Descripción</Label>
+          <TextArea
+            name="description"
+            onChange={(e) => handleInputs(e)}
+            value={form.description}
+            cols={60}
+            rows={14}
+          ></TextArea>
+          <Button type="submit" onClick={(e) => onSubmit(e)}>
+            Crear
+          </Button>
+        </Section>
+      </Form>
+      {postCreateModal.val && (
+        <PostCreateModal setForm={setForm} post={true} title="Message" />
+      )}
     </>
   );
 };
