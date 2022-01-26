@@ -3,6 +3,8 @@ const tagsController = require("../controllers/tagsController")
 
 const tagsRouter = Router();
 
+//GET
+tagsRouter.get("/index", tagsController.index);
 
 //POST
 tagsRouter.post("/create", tagsController.create);  
