@@ -7,6 +7,7 @@ const userRouter = require("./user");
 const educationRouter = require("./education");
 const languageRouter = require("./language");
 const experienceRouter = require("./experience");
+const tagsRouter = require("./tags");
 
 const mainRouter = Router();
 
@@ -17,5 +18,6 @@ mainRouter.use("/posts", postsRouter);
 mainRouter.use("/company", companyRouter);
 mainRouter.use("/education", educationRouter);
 mainRouter.use("/experience", experienceRouter);
+mainRouter.use("/tags", tagsRouter);
 
 module.exports = mainRouter;
