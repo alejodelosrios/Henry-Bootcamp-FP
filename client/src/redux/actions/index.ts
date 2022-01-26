@@ -58,6 +58,42 @@ interface updateUser {
   type: ActionType.UPDATE_USER;
   payload: object;
 }
+interface updateUserExp {
+  type: ActionType.UPDATE_USER_EXP;
+  payload: any;
+}
+interface addUserExp {
+  type: ActionType.ADD_USER_EXP;
+  payload: any;
+}
+interface DeleteUserExp {
+  type: ActionType.DELETE_USER_EXP;
+  payload: any;
+}
+interface updateUserEducation {
+  type: ActionType.UPDATE_USER_EDUCATION;
+  payload: any;
+}
+interface addUserEducation {
+  type: ActionType.ADD_USER_EDUCATION;
+  payload: any;
+}
+interface deleteUserEducation {
+  type: ActionType.DELETE_USER_EDUCATION;
+  payload: any;
+}
+interface updateUserLanguages {
+  type: ActionType.UPDATE_USER_LANGUAGES;
+  payload: any;
+}
+interface addUserLanguages {
+  type: ActionType.ADD_USER_LANGUAGES;
+  payload: any;
+}
+interface deleteUserLanguages {
+  type: ActionType.DELETE_USER_LANGUAGES;
+  payload: any;
+}
 
 export type Action =
   | getPosts
@@ -66,7 +102,16 @@ export type Action =
   | setPostCreateModal
   | setUserCreateModal
   | getCurrentPosts
-  | updateUser
   | setEmail
   | setUser
-  | getUser;
+  | getUser
+  | updateUser
+  | updateUserExp
+  | addUserExp
+  | DeleteUserExp
+  | updateUserEducation
+  | addUserEducation
+  | deleteUserEducation
+  | updateUserLanguages
+  | addUserLanguages
+  | deleteUserLanguages;
