@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { createUser } from "../redux/actions/actionCreators";
+import { createUser, getUser } from "../redux/actions/actionCreators";
 import UserCreateModal from "./UserCreateModal";
+import { Login } from "./Login";
 
 const Container = styled.div`
     display: flex;
@@ -14,6 +15,10 @@ const Item = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+`;
+
+const GoogleLogin = styled.div`
+    z-index: 1000;
 `;
 
 const Button = styled.button`
@@ -44,7 +49,18 @@ function LoginForm({ type }: any) {
             [name]: value,
         });
     };
-    const handleClick = (e: any) => {
+    const login = (e: any) => {
+        e.preventDefault();
+        dispatch(
+            getUser({ email: formInputs.email, password: formInputs.password })
+        );
+        setFormInputs({
+            email: "",
+            password: "",
+            role: 1,
+        });
+    };
+    const register = (e: any) => {
         e.preventDefault();
         dispatch(createUser(formInputs));
         setFormInputs({
@@ -57,7 +73,7 @@ function LoginForm({ type }: any) {
     return (
         <>
             <Container>
-                <form onSubmit={(e) => handleClick(e)}>
+                <form onSubmit={type === "register" ? register : login}>
                     <Item>
                         <label htmlFor="email">Correo electrónico:</label>
                         <input
@@ -76,7 +92,7 @@ function LoginForm({ type }: any) {
                             type="text"
                         />
                     </Item>
-                    {type === "login" && (
+                    {type === "register" && (
                         <Item>
                             <label htmlFor="role">Rol:</label>
                             <select
@@ -91,15 +107,19 @@ function LoginForm({ type }: any) {
                     )}
                     <button type="submit"></button>
                     {type === "login" ? (
-                        <Button onClick={(e) => handleClick(e)}>
+                        <Button onClick={(e) => login(e)}>
                             Iniciar sesión
                         </Button>
                     ) : (
-                        <Button onClick={(e) => handleClick(e)}>
+                        <Button onClick={(e) => register(e)}>
                             Registrarse
                         </Button>
                     )}
                 </form>
+
+                <GoogleLogin className="login">
+                    <Login contenido="Google" estilo="primary" />
+                </GoogleLogin>
             </Container>
             {userCreateModal.val && (
                 <UserCreateModal setForm={setFormInputs} title="Message" />

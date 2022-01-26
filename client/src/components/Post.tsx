@@ -97,7 +97,6 @@ const Title = styled.h4`
       font-size: 20px;
       font-weight: 30px;
       color: #757577;
-      }
     `;
 const P = styled.p`
   font-size: 12px;
