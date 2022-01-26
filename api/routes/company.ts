@@ -12,7 +12,7 @@ companyRouter.get("/posts/:companyId", companyController.getPosts);
 companyRouter.post("/create/:userId", companyController.create);
 
 //PUT
-companyRouter.put("/update/:companyId", companyController.create);
+companyRouter.put("/update/:companyId", companyController.update);
 
 //DELETE
 companyRouter.delete("/delete/:companyId", companyController.delete);
