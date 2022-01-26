@@ -2,6 +2,43 @@ import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
 
 module.exports = {
+  update: async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const {
+        userId,
+        name,
+        legalName,
+        stin,
+        accountManagers,
+        image,
+        companyValues,
+        mission,
+        vision,
+      } = req.body;
+
+      const updatedCompany = await prisma.company.update({
+        where: {
+          id: Number(id),
+        },
+        data: {
+          userId,
+          name,
+          legalName,
+          stin,
+          accountManagers,
+          image,
+          companyValues,
+          mission,
+          vision,
+        },
+      });
+      res.json(updatedCompany);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
   create: async (req: Request, res: Response) => {
     try {
       const {
