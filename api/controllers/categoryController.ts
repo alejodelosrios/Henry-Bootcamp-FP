@@ -7,12 +7,12 @@ module.exports = {
     try {
       const { name } = req.body;
       if(!name) return res.send("Debes colocar un name")
-      const tag = await prisma.tag.create({
+      const category = await prisma.category.create({
         data: {
           name,
         },
       });
-      res.json(tag);
+      res.json(category);
     } catch (error) {
       res.status(400).send(error);
     }
@@ -20,10 +20,10 @@ module.exports = {
 
   index: async (req: Request, res: Response) => {
     try {
-      const getAllTags = await prisma.tag.findMany();
-      getAllTags.length
-        ? res.status(200).json(getAllTags)
-        : res.status(404).send("No tags found");
+      const getAllCateg = await prisma.category.findMany();
+      getAllCateg.length
+        ? res.status(200).json(getAllCateg)
+        : res.status(404).send("No categories found");
     } catch (error) {
       res.status(400).send(error);
     }
@@ -31,18 +31,18 @@ module.exports = {
 
   update: async (req: Request, res: Response) => {
     try {
-      const { tagId } = req.params;
+      const { categoryId } = req.params;
       const { name } = req.body;
-      if(!tagId) return res.send("Debes incluir el tagId por params")
-      const tagUpdate = await prisma.tag.update({
+      if(!categoryId) return res.send("Debes incluir el categoryId por params")
+      const categoryUpdate = await prisma.category.update({
         where: {
-          id: Number(tagId),
+          id: Number(categoryId),
         },
         data: {
           name,
         },
       });
-      res.json(tagUpdate);
+      res.json(categoryUpdate);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -51,14 +51,14 @@ module.exports = {
 
   delete: async (req: Request, res: Response) => {
     try {
-      const { tagId } = req.params;
-      if(!tagId) return res.send("Debes incluir el tagId por params")
-      const tagDelete = await prisma.tag.delete({
+      const { categoryId } = req.params;
+      if(!categoryId) return res.send("Debes incluir el categoryId por params")
+      const categoryDelete = await prisma.category.delete({
         where: {
-          id: Number(tagId),
+          id: Number(categoryId),
         },
       })
-      res.send(tagDelete);
+      res.send(categoryDelete);
     } catch (error) {
       res.status(400).send(error);
     }
