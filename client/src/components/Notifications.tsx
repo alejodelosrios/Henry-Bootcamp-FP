@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Post from './Post';
 import styled, {css} from 'styled-components';
 import { getNotifications } from '../redux/actions/actionCreators';
 
@@ -10,7 +9,7 @@ type P = {
 
 const NotCont = styled.div`
     position: relative;
-`
+`;
 
 const NotBut = styled.button<{ modal?: boolean }>`
     position: relative;
@@ -80,19 +79,19 @@ const Notifications:FC<P> = ({role}) => {
 
     const [modal, setModal] = useState(false);
 
-    const handleNotif = ()=>{
+    const handleNotif = () => {
         setModal(!modal);
-    }
+    };
 
   return <NotCont>
-    
+
     <NotBut onClick={handleNotif} modal={modal} >
         {'●'}
         {notifications.length && !modal &&<Count>{notifications.length}</Count>}
     </NotBut>
 
     {modal && <Modal>
-        {notifications.map((not:any)=> 
+        {notifications.map((not:any)=>
         //Hay que modificar este Post para revisar lo que recibe!!
             <Noti key={not.id}>{not.message}</Noti>
         )}</Modal>

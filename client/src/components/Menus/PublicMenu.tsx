@@ -1,7 +1,6 @@
-import {FC} from "react";
+import { FC } from "react";
 import styled from "styled-components";
-import {Link, useLocation} from "react-router-dom";
-
+import { Link, useLocation } from "react-router-dom";
 
 const Button = styled.button`
   background: #9dd6fd;
@@ -19,11 +18,11 @@ const NavLinks = styled.nav`
 `;
 
 const A = styled.button<{ About?: boolean }>`
-  border:none;
+  border: none;
   background: transparent;
   text-decoration: none;
   font-size: 20px;
-  color: ${props => props.About ? '#FFFFFF' : 'black'};
+  color: ${(props) => (props.About ? "#FFFFFF" : "black")};
   font-weight: bolder;
   margin-right: 1rem;
   font-family: Open sans/bold;
@@ -39,24 +38,23 @@ const Buttons = styled.div`
 `;
 
 const PublicMenu: FC = () => {
-
-  let location = useLocation()
-  let isAbout=false
-  if(location.pathname === '/about-us'){
-    isAbout=true;
+  let location = useLocation();
+  let isAbout = false;
+  if (location.pathname === "/about-us") {
+    isAbout = true;
   }
 
   return (
     <>
       <NavLinks className="multi-options">
-        <Link to="/home" style={{textDecoration: "none"}}>
+        <Link to="/home" style={{ textDecoration: "none" }}>
           <A About={isAbout}>{"Inicio"}</A>
         </Link>
-        <Link to="/about-us" style={{textDecoration: "none"}}>
+        <Link to="/about-us" style={{ textDecoration: "none" }}>
           <A About={isAbout}>{"Nosotros"}</A>
         </Link>
-        <Link to="/frequent-questions" style={{textDecoration: "none"}}>
-          <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
+        <Link to="/frequent-questions" style={{ textDecoration: "none" }}>
+          <A About={isAbout}>{"Preguntas Frecuentes"}</A>
         </Link>
       </NavLinks>
       <ButtonsContainer>
@@ -71,6 +69,6 @@ const PublicMenu: FC = () => {
       </ButtonsContainer>
     </>
   );
-}
+};
 
 export default PublicMenu;
