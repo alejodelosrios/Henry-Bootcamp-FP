@@ -99,6 +99,11 @@ interface setUserFollows {
   type: ActionType.SET_USER_FOLLOWS;
 }
 
+interface getNotifications {
+  type: ActionType.GET_NOTIFICATIONS;
+  payload: object[];
+}
+
 export type Action =
   | getPosts
   | filterAndSort
@@ -119,4 +124,5 @@ export type Action =
   | updateUserLanguages
   | addUserLanguages
   | deleteUserLanguages
-  | setUserFollows;
+  | setUserFollows
+  | getNotifications;
