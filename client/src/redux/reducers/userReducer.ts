@@ -130,6 +130,11 @@ const userReducer = (state = initialState, action: Action) => {
           ...state,
           notifications: action.payload
         }
+      case ActionType.JOB_APPLICATION:
+        return {
+          ...state,
+          postulations: action.payload
+        }
     default:
       return state;
   }

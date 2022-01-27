@@ -26,9 +26,9 @@ const PostsContainer = () => {
     const ixFirstPost = ixLastPost - PostsPerPage;
     const currPost = currentPosts.slice(ixFirstPost, ixLastPost);
 
-    const paginado = (pagNum: number)=>{
+    const paginado = (pagNum: number) => {
         setCurrPage(pagNum);
-    }
+    };
 
     return (
         <>
@@ -36,7 +36,8 @@ const PostsContainer = () => {
                 {currPost.map((post: any) => (
                     <Post
                         key={post.id}
-                        id={post.id}
+                        postId={post.id}
+                        companyId={post.companyId}
                         title={post.title}
                         location={post.location}
                         modality={post.modality}
