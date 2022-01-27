@@ -26,18 +26,36 @@ module.exports = {
         },
       });
 
-      const applicant = await prisma.applicant.create({
-        data: {
-          userId: user.id,
-          firstName: "",
-          lastName: "",
-          about: "",
-          phoneNumber: "",
-          country: "",
-          image: "",
-          showImage: true,
-        }
-      })
+      if(role === "applicant" || role === "admin") {
+        const applicant = await prisma.applicant.create({
+          data: {
+            userId: user.id,
+            firstName: "",
+            lastName: "",
+            about: "",
+            phoneNumber: "",
+            country: "",
+            image: "",
+            showImage: true,
+          }
+        })
+      }
+      
+      if(role === "company") {
+        const company = await prisma.company.create({
+          data: {
+            userId: user.id,
+            name: "",
+            legalName: "",
+            stin: "",
+            accountManagers: [],
+            image: "",
+            companyValues: "",
+            mission: "",
+            vision: "",
+          },
+        });
+      }
       
       const newUser = await prisma.user.findMany({
         where: {
