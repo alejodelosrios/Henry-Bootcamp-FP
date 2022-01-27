@@ -6,7 +6,7 @@ const applicantRouter = Router();
 //GET
 applicantRouter.get("/index", applicantController.index);
 applicantRouter.get("/:applicantId", applicantController.applicantById);
-
+applicantRouter.put("/tags", applicantController.tags);
 //POST
 applicantRouter.post("/create/:userId", applicantController.create);
 
