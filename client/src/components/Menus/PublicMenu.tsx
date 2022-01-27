@@ -1,6 +1,6 @@
 import {FC} from "react";
 import styled from "styled-components";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 
 
 const Button = styled.button`
@@ -18,15 +18,16 @@ const NavLinks = styled.nav`
   z-index: 1000;
 `;
 
-const A = styled.a`
+const A = styled.a<{ About?: boolean }>`
   text-decoration: none;
   font-size: 20px;
-  color: #757577;
+  color: ${props => props.About ? '#FFFFFF' : 'black'};
   font-weight: bolder;
   margin-right: 1rem;
   font-family: Open sans/bold;
   padding: 0px 1rem;
 `;
+
 const ButtonsContainer = styled.div`
   z-index: 1000;
 `;
@@ -36,14 +37,23 @@ const Buttons = styled.div`
 `;
 
 const PublicMenu: FC = () => {
+
+  let location = useLocation()
+  console.log(location)
+  let isAbout=false
+  if(location.pathname === '/about-us'){
+    isAbout=true;
+  }
+  console.log(isAbout)
+
   return (
     <>
       <NavLinks className="multi-options">
         <Link to="/home" style={{textDecoration: "none"}}>
-          <A href="">{"Inicio"}</A>
+          <A About={isAbout} href="">{"Inicio"}</A>
         </Link>
         <Link to="/about-us" style={{textDecoration: "none"}}>
-          <A href="">{"Nosotros"}</A>
+          <A About={isAbout} href="">{"Nosotros"}</A>
         </Link>
       </NavLinks>
       <ButtonsContainer>

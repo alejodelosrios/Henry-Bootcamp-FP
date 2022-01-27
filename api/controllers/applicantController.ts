@@ -62,14 +62,9 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
-  //   para guardar las tags que tiene un applicant en su perfil
-  // PUT     /applicant/tags
-  // recibe objeto con applicantId y arreglo de tags a relacionar
   tags: async (req: Request, res: Response) => {
     try {
       const { applicantId, tagIds } = req.body;
-
       const applicantUpdate = await prisma.applicant.update({
         where: {
           id: Number(applicantId),
@@ -86,7 +81,25 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
+  apply: async (req: Request, res: Response) => {
+    try {
+      const { applicantId, postId } = req.body;
+      const applicantUpdate = await prisma.applicant.update({
+        where: {
+          id: Number(applicantId),
+        },
+        data: {
+          postulations: {
+            connect: [{ id: Number(postId) }],
+          },
+        },
+      });
+      res.json(applicantUpdate);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
   applicantById: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;

@@ -5,24 +5,15 @@ const notificationRouter = Router();
 
 //GET
 notificationRouter.get("/index", notificationController.index);
-notificationRouter.get(
-  "/:email",
-  notificationController.notificationByNotificationId
-);
+notificationRouter.get("/:email", notificationController.notificationByNotificationId);
 
 //POST
 notificationRouter.post("/create", notificationController.create);
 
 //PUT
-notificationRouter.put(
-  "/update/:notificationId",
-  notificationController.update
-);
+notificationRouter.put("/update/:notificationId", notificationController.update);
 
 //DELETE
-notificationRouter.delete(
-  "/delete/:notificationId",
-  notificationController.delete
-);
+notificationRouter.delete("/delete/:notificationId", notificationController.delete);
 
 module.exports = notificationRouter;
