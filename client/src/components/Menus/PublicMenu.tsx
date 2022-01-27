@@ -55,6 +55,9 @@ const PublicMenu: FC = () => {
         <Link to="/about-us" style={{textDecoration: "none"}}>
           <A About={isAbout} href="">{"Nosotros"}</A>
         </Link>
+        <Link to="/frequent-questions" style={{textDecoration: "none"}}>
+          <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
+        </Link>
       </NavLinks>
       <ButtonsContainer>
         <Buttons>

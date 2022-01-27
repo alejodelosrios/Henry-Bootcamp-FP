@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import {Logout} from "../Logout";
 
@@ -12,10 +12,10 @@ const NavLinks = styled.nav`
   z-index: 1000;
 `;
 
-const A = styled.a`
+const A = styled.a<{ About?: boolean }>`
   text-decoration: none;
   font-size: 20px;
-  color: #757577;
+  color: ${props => props.About ? '#FFFFFF' : 'black'};
   font-weight: bolder;
   margin-right: 1rem;
   font-family: Open sans/bold;
@@ -26,6 +26,15 @@ const ButtonsContainer = styled.div`
 `;
 
 const PrivateMenu: FC<Props> = ({roleId}) => {
+
+  let location = useLocation()
+  console.log(location)
+  let isAbout=false
+  if(location.pathname === '/about-us'){
+    isAbout=true;
+  }
+  console.log(isAbout)
+
   return (
     <>
       <NavLinks className="multi-options">
@@ -37,6 +46,9 @@ const PrivateMenu: FC<Props> = ({roleId}) => {
               </Link>
               <Link to="/about-us" style={{textDecoration: "none"}}>
                 <A href="">{"Nosotros"}</A>
+              </Link>
+              <Link to="/frequent-questions" style={{textDecoration: "none"}}>
+                  <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
               </Link>
               <Link to="/my-applications" style={{textDecoration: "none"}}>
                 <A href="">{"Mis Postulaciones"}</A>
@@ -52,6 +64,9 @@ const PrivateMenu: FC<Props> = ({roleId}) => {
                 </Link>
                 <Link to="/about-us" style={{textDecoration: "none"}}>
                   <A href="">{"Nosotros"}</A>
+                </Link>
+                <Link to="/frequent-questions" style={{textDecoration: "none"}}>
+                  <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
                 </Link>
                 <A href="">{"Empresas"}</A>
               </>
