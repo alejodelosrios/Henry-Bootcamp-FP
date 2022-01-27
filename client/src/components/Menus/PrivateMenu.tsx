@@ -12,8 +12,10 @@ const NavLinks = styled.nav`
   z-index: 1000;
 `;
 
-const A = styled.a`
+const A = styled.button`
   text-decoration: none;
+  border:none;
+  background: transparent;
   font-size: 20px;
   color: #757577;
   font-weight: bolder;
@@ -34,37 +36,37 @@ const PrivateMenu: FC<Props> = ({role}) => {
           role === "applicant" ?
             <>
               <Link to="/home" style={{textDecoration: "none"}}>
-                <A href="">{"Inicio"}</A>
+                <A>{"Inicio"}</A>
               </Link>
               <Link to="/about-us" style={{textDecoration: "none"}}>
-                <A href="">{"Nosotros"}</A>
+                <A>{"Nosotros"}</A>
               </Link>
               <Link to="/my-applications" style={{textDecoration: "none"}}>
-                <A href="">{"Mis Postulaciones"}</A>
+                <A>{"Mis Postulaciones"}</A>
               </Link>
               <Link to="/notifications" style={{textDecoration: "none"}}>
-                <A href="">{"Not"}</A>
+                <A>{"Not"}</A>
               </Link>
             </>
             : role === "company" ?
               <>
                 <Link to="/home" style={{textDecoration: "none"}}>
-                  <A href="">{"Inicio"}</A>
+                  <A>{"Inicio"}</A>
                 </Link>
                 <Link to="/about-us" style={{textDecoration: "none"}}>
-                  <A href="">{"Nosotros"}</A>
+                  <A>{"Nosotros"}</A>
                 </Link>
-                <A href="">{"Empresas"}</A>
+                <A>{"Empresas"}</A>
               </>
               :
               <>
                 <Link to="/home" style={{textDecoration: "none"}}>
-                  <A href="">{"Inicio"}</A>
+                  <A>{"Inicio"}</A>
                 </Link>
                 <Link to="/about-us" style={{textDecoration: "none"}}>
-                  <A href="">{"Nosotros"}</A>
+                  <A>{"Nosotros"}</A>
                 </Link>
-                <A href="">{"Admin"}</A>
+                <A>{"Admin"}</A>
               </>
         }
       </NavLinks>

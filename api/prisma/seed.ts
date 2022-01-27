@@ -46,6 +46,11 @@ const categories = [
     "Science, Technology, Engineering, and Math",
 ];
 
+const notificationTypes = [
+    "alert",
+    "update"
+]
+
 //CAMBIAR ESTOS VALORES SEGUN CUANTOS QUIEREN DE CADA UNO EN LA DB
 let admin = 1
 let applicants = 50
@@ -66,11 +71,22 @@ async function main(){
         })
     })
 
+
     //CREAR TAGS
     tags.forEach( async tag => {
         await prisma.tag.create({
             data: {
                 name: tag
+            }
+        })
+    })
+
+
+    //CREAR NOTIFICATION TYPES
+    notificationTypes.forEach(async type => {
+        await prisma.notificationTypes.create({
+            data: {
+                name: type
             }
         })
     })
@@ -262,6 +278,29 @@ async function main(){
                     applicantId: i
                 }
             ]
+        })
+    }
+
+    //CREAR NOTIFICATIONS
+
+    //para applicants
+    for(let i=0; i<applicants*3; i++){
+        await prisma.notification.create({
+            data: {
+                message: faker.lorem.paragraph(),
+                typeId: faker.random.arrayElement([1,2]),
+                applicantId: 1+Math.floor(Math.random()*(applicants-1))
+            }
+        })
+    }
+    //para companies
+    for(let i=0; i<companies*3; i++){
+        await prisma.notification.create({
+            data: {
+                message: faker.lorem.paragraph(),
+                typeId: faker.random.arrayElement([1,2]),
+                companyId: 1+Math.floor(Math.random()*(companies-1))
+            }
         })
     }
 

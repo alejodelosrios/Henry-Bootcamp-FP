@@ -18,7 +18,9 @@ const NavLinks = styled.nav`
   z-index: 1000;
 `;
 
-const A = styled.a<{ About?: boolean }>`
+const A = styled.button<{ About?: boolean }>`
+  border:none;
+  background: transparent;
   text-decoration: none;
   font-size: 20px;
   color: ${props => props.About ? '#FFFFFF' : 'black'};
@@ -48,10 +50,10 @@ const PublicMenu: FC = () => {
     <>
       <NavLinks className="multi-options">
         <Link to="/home" style={{textDecoration: "none"}}>
-          <A About={isAbout} href="">{"Inicio"}</A>
+          <A About={isAbout}>{"Inicio"}</A>
         </Link>
         <Link to="/about-us" style={{textDecoration: "none"}}>
-          <A About={isAbout} href="">{"Nosotros"}</A>
+          <A About={isAbout}>{"Nosotros"}</A>
         </Link>
       </NavLinks>
       <ButtonsContainer>
