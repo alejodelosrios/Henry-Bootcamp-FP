@@ -81,6 +81,7 @@ function App() {
         <Route path="/create-post" element={<CreatePostPage />} />
         <Route path="/login" element={<LoginPage type="login" />} />
         <Route path="/register" element={<LoginPage type="register" />} />
+        <Route path="/about-us" element={<AboutUs/>} />
       </Routes>
     </ThemeProvider>
   );

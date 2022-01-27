@@ -1,43 +1,60 @@
 import {FC} from 'react';
-import { AboutCont, Header, Logo, Section, 
-  Description, Aside, Graphic, Info, Foot, Us } from './styles';
+import { AboutCont, Header, Img, ImgTwo, Title, SubTitle, Section, Div, SpanPink,
+  Description, Aside, AsideTitle, MiniTitle, Span, TL } from './styles';
+import CardContainer from './CardContainer'
+import Footer from '../../components/Footer'
 
-import companyLogo from '../../assets/logo.svg';
-import photos from '../../assets/restaurantes.svg';
-import graphic from '../../assets/finanzas.svg';
+import image from '../../assets/About3.jpg';
+import imageUs from '../../assets/Us1.jpg';
 
 const AboutUs: FC = () => {
-  return <AboutCont>
+  return (
+  <>
     <Header>
-      <Logo src={companyLogo}/>
+      <Img src={image}/>
     </Header>
+  <AboutCont>
+    <Title>SOMOS <TL>TRANSFORMA</TL></Title>
 
     <Section>
-
+      <Div>
+        <SubTitle>Sobre Nosotros</SubTitle>
       <Description>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis voluptatem libero cumque quod eligendi architecto reprehenderit, cum quaerat ab distinctio saepe quis deleniti eius, perferendis voluptatibus laborum nam praesentium eum ex sed aut veniam accusamus animi facere. Nam ducimus nostrum quo, dolorum autem ex officiis tempore aperiam, architecto accusamus placeat odio, praesentium animi nulla quod optio saepe repellendus! Dolorem nulla obcaecati quisquam, consequatur velit in blanditiis id corporis libero nam alias, ab deleniti aspernatur nihil est! Exercitationem, sed ad facilis ducimus voluptate quibusdam consectetur explicabo nostrum expedita illo maiores cupiditate necessitatibus mollitia sint alias assumenda. Eum ratione quos beatae cum. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi hic maiores qui totam sunt tenetur debitis ad neque aut nisi consequuntur vitae repellat, quasi ut accusantium illum, fuga perspiciatis inventore rem? Illo impedit aliquam debitis, commodi quasi itaque sequi molestiae ullam odio inventore, maiores possimus asperiores rerum accusamus deleniti nisi, magnam ab expedita laudantium labore necessitatibus? Perferendis accusantium dolorum magnam saepe minus dignissimos, ab ex assumenda. Ullam minus dolor omnis perspiciatis quisquam, quasi sapiente porro voluptatem illo sint? Velit iusto sit provident similique aliquam a facilis, odio temporibus vitae officia nam sint placeat corrupti tempora eos, modi quod, molestias id?
+      <SpanPink>Transforma</SpanPink> es una plataforma que busca generar un sistema de contratación inclusivo donde todas las personas que formen parte de esta comunidad puedan encontrar un mejor trabajo, con todas las prestaciones que corresponden, favoreciendo el crecimiento profesional. A su vez ayuda a las empresas a encontrar al profesional que mejor encaje con sus necesidades siempre desde un ambiente de mutuo respeto. Con este objetivo ofrece también soluciones innovadoras para la gestión del talento y la digitalización del reclutamiento.
       </Description>
 
+      <SubTitle>Misión</SubTitle>
+      <Description>
+      <SpanPink>Generar un impacto directo en la sociedad actual</SpanPink>, donde todos y todas puedan acceder a sus derechos sin importar la identidad de género, la raza o la orientación sexual. Así como contribuir al enriquesimiento de las empresas con talentos y mejorando la interacción entre el trabajador o la trabajadora para con su entorno laboral.
+      </Description>
+
+      <SubTitle>Visión</SubTitle>
+      <Description>
+      <SpanPink>Marcar el camino</SpanPink> para seguir el rumbo hacia una sociedad mas justa e inclusiva.
+      </Description>
+      </Div>
+
       <Aside>
-        <Graphic src={graphic} />
-        <Info>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime similique odio non voluptatibus, inventore soluta id expedita asperiores amet voluptate quidem nam impedit perspiciatis. Mollitia molestiae labore dolor doloribus consectetur vitae repellat distinctio itaque nulla eos. Totam impedit quis, sapiente, aliquid earum modi perspiciatis molestias sit doloremque, ratione maiores officia!
-        </Info>
+      <MiniTitle>NUESTRAS BASES <br /> COMO EQUIPO</MiniTitle>
+      <AsideTitle>Decí lo que Pensás</AsideTitle>
+        <Description>
+          <Span>"</Span>
+         Nos expresamos con transparencia y asertividad. Compartimos la información correcta en el momento que la necesitamos. Esto nos permite avanzar con mayor agilidad y nos deja disfrutar de un ambiente de trabajo saludable donde podemos ser quienes realmente somos.
+        </Description>
+        <AsideTitle>Compromiso Siempre</AsideTitle>
+        <Description>
+          <Span>"</Span>
+          Somos perseverantes y nos mantenemos enfocados a pesar de las dificultades, superamos cada obstáculo y buscamos superarnos a nosotros mismos cada día. Estamos cada vez que nuestro equipo nos necesita, porque el compromiso entre nosotros es total.
+        </Description>
       </Aside>
 
     </Section>
 
-    <Foot>
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-      <Us src={photos} />
-    </Foot>
-  </AboutCont>;
-};
+    <ImgTwo src={imageUs} alt="OurTeam" />
+    <CardContainer />
+
+    <Footer/>
+  </AboutCont>
+  </>)};
 
 export default AboutUs;
