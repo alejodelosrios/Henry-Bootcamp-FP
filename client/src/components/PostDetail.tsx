@@ -148,7 +148,7 @@ const PostDetail = ({}) => {
     dispatch(getPostsById(id));
   }, []);
 
-  if (!post.postId) return <div>Publicación no encontrada</div>;
+  if (!post.id) return <div>Publicación no encontrada</div>;
   return (
     <Container>
       <TopBackground></TopBackground>

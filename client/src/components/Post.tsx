@@ -133,7 +133,7 @@ const Post = ({
               <Title>{title}</Title>
             </Link>
             <P>
-              {location.state}, {location.country}
+              {location}
             </P>
           </div>
           <ContenedorB2>
