@@ -55,7 +55,7 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         ...action.payload,
