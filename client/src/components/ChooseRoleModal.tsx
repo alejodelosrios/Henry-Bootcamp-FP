@@ -82,11 +82,17 @@ const ChooseRoleModal: FC<Props> = ({title}) => {
   const email = useSelector(
     (state: any) => state.userReducer.email
   );
+  const password = useSelector(
+    (state: any) => state.userReducer.password
+  );
+
+
 
   const onClick = (e: any) => {
     const userData = {
       email: email,
-      roleId: (e.target.name === "empresa") ? 2 : 1
+      role: e.target.name,
+      password: password
     }
     dispatch(createUser(userData))
     navigate("/home")
@@ -100,10 +106,10 @@ const ChooseRoleModal: FC<Props> = ({title}) => {
         <h2>{title}</h2>
         <p>Escoge cual es tu rol dentro de la plataforma:</p>
         <Flex>
-          <button name="postulante" onClick={(e) => onClick(e)}>
+          <button name="applicant" onClick={(e) => onClick(e)}>
             Postulante
           </button>
-          <button name="empresa" onClick={(e) => onClick(e)}>
+          <button name="company" onClick={(e) => onClick(e)}>
             Empresa
           </button>
         </Flex>

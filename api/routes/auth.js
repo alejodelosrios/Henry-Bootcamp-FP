@@ -9,8 +9,8 @@ router.get("/login/success", async (req, res) => {
         let userData = await userValidation.getUserIfExists(
             req.user.emails[0].value
         );
-        if (userData) {
-            console.log("userData: ", userData);
+        //console.log("userData: ", userData);
+        if (userData !== "No se encontro el usuario") {
             res.status(200).json({
                 success: true,
                 message: "successfull",
