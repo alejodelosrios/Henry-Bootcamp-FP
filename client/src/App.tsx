@@ -39,7 +39,7 @@ function App() {
                                         throw new Error("authentication has been failed!");
                                 })
                                 .then((resObject) => {
-                                        console.log("Respuesta: ", resObject);
+                                        //console.log("Respuesta: ", resObject);
                                         if (!resObject.user.role) {
                                                 //console.log("Set Email", resObject.user);
                                                 setUserLogged(resObject.user);
@@ -49,7 +49,7 @@ function App() {
                                                 }
                                                 dispatch(setUser(userData));
                                         } else {
-                                                console.log("SetUser");
+                                                //console.log("SetUser");
                                                 dispatch(setUser(resObject.user));
                                         }
                                 })
