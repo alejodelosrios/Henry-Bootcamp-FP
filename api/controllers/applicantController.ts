@@ -93,8 +93,12 @@ module.exports = {
             connect: [{ id: Number(postId) }],
           },
         },
+        include: {
+          postulations:true
+        }
       });
-      res.json(applicantUpdate);
+      const postulations = applicantUpdate.postulations
+      res.json(postulations);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
