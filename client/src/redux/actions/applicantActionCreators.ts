@@ -8,10 +8,10 @@ export const jobApplication =
     try {
       const { data } = await axios.post(`/applicant/apply`, obj);
       console.log("Informaciónctualizada");
-      //return dispatch({
-      //type: ActionType.JOB_APPLICATION,
-      //payload: data,
-      //});
+      return dispatch({
+        type: ActionType.JOB_APPLICATION,
+        payload: data,
+      });
     } catch (error) {
       console.log(error);
     }
