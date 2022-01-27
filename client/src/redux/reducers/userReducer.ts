@@ -3,12 +3,15 @@ import { ActionType } from "../actions/actionTypes";
 
 const initialState = {
   id: null,
-  roleId: null,
+  role: "",
+  email: "",
+  company:null,
+  applicant: null,
+
   firstName: "",
   lastName: "",
   about: "",
   phoneNumber: "",
-  email: "",
   country: "",
   image: "",
   showImage: false,
@@ -27,12 +30,13 @@ const initialState = {
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_USER:
-      console.log(action.payload.data);
+      //console.log("Reducer: ",action.payload);
       if (action.payload.modal) {
         return {
           ...state,
           ...action.payload.data,
           userCreateModal: action.payload.modal,
+
         };
       }
       return {
@@ -51,7 +55,7 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         ...action.payload,

@@ -5,15 +5,18 @@ import {Logout} from "../Logout";
 
 
 type Props = {
-  roleId: number;
+  role: string;
 }
 
 const NavLinks = styled.nav`
   z-index: 1000;
 `;
 
-const A = styled.a<{ About?: boolean }>`
+
+const A = styled.button<{ About?: boolean }>`
   text-decoration: none;
+  border:none;
+  background: transparent;
   font-size: 20px;
   color: ${props => props.About ? '#FFFFFF' : 'black'};
   font-weight: bolder;
@@ -25,7 +28,8 @@ const ButtonsContainer = styled.div`
   z-index: 1000;
 `;
 
-const PrivateMenu: FC<Props> = ({roleId}) => {
+
+const PrivateMenu: FC<Props> = ({role}) => {
 
   let location = useLocation()
   console.log(location)
@@ -39,46 +43,47 @@ const PrivateMenu: FC<Props> = ({roleId}) => {
     <>
       <NavLinks className="multi-options">
         {
-          roleId === 1 ?
+          role === "applicant" ?
             <>
               <Link to="/home" style={{textDecoration: "none"}}>
-                <A href="">{"Inicio"}</A>
+                <A>{"Inicio"}</A>
               </Link>
               <Link to="/about-us" style={{textDecoration: "none"}}>
-                <A href="">{"Nosotros"}</A>
+                <A>{"Nosotros"}</A>
               </Link>
               <Link to="/frequent-questions" style={{textDecoration: "none"}}>
                   <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
               </Link>
               <Link to="/my-applications" style={{textDecoration: "none"}}>
-                <A href="">{"Mis Postulaciones"}</A>
+                <A>{"Mis Postulaciones"}</A>
               </Link>
               <Link to="/notifications" style={{textDecoration: "none"}}>
-                <A href="">{"Not"}</A>
+                <A>{"Not"}</A>
               </Link>
             </>
-            : roleId === 2 ?
+            : role === "company" ?
               <>
                 <Link to="/home" style={{textDecoration: "none"}}>
-                  <A href="">{"Inicio"}</A>
+                  <A>{"Inicio"}</A>
                 </Link>
                 <Link to="/about-us" style={{textDecoration: "none"}}>
-                  <A href="">{"Nosotros"}</A>
+                  <A>{"Nosotros"}</A>
                 </Link>
                 <Link to="/frequent-questions" style={{textDecoration: "none"}}>
                   <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
                 </Link>
-                <A href="">{"Empresas"}</A>
+                <A>{"Empresas"}</A>
+
               </>
               :
               <>
                 <Link to="/home" style={{textDecoration: "none"}}>
-                  <A href="">{"Inicio"}</A>
+                  <A>{"Inicio"}</A>
                 </Link>
                 <Link to="/about-us" style={{textDecoration: "none"}}>
-                  <A href="">{"Nosotros"}</A>
+                  <A>{"Nosotros"}</A>
                 </Link>
-                <A href="">{"Admin"}</A>
+                <A>{"Admin"}</A>
               </>
         }
       </NavLinks>
