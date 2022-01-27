@@ -12,8 +12,7 @@ module.exports = {
       } = req.body;
       if (!message) return res.send("Falta campo 'mensaje ");
       if (!typeId) return res.send("Falta campo 'typeId'");
-      if (!applicantId) return res.send("Falta campo 'applicantId'");
-      if (!companyId) return res.send("Falta campo 'companyId'");
+      if (!applicantId && !companyId) return res.send("Falta campo 'applicantId' o 'companyId', cual sea el que corresponda");
 
       const notification = await prisma.notification.create({
         data: {
