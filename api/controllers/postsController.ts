@@ -17,35 +17,17 @@ module.exports = {
       category,
     } = req.body;
 
-    if (!companyId)
-      return res.send(
-        "Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params"
-      );
+    if (!companyId) return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params");
     if (!title) return res.send("Debes incluir un campo 'title'");
     if (!description) return res.send("Debes incluir un campo 'description'");
     if (!location) return res.send("Debes incluir un campo 'location'");
-    if (!modality)
-      return res.send(
-        "Debes incluir un campo 'modality', puede ser onSite, remote o hybrid"
-      );
-    if (!contractType)
-      return res.send(
-        "Debes incluir un campo 'contractType', puede ser fullTime, partTime, temporary o perHour"
-      );
-    if (!salary)
-      return res.send(
-        "Debes incluir un campo 'salary', si no hay salario enviar string vacío"
-      );
+    if (!modality) return res.send("Debes incluir un campo 'modality', puede ser onSite, remote o hybrid");
+    if (!contractType) return res.send("Debes incluir un campo 'contractType', puede ser fullTime, partTime, temporary o perHour");
+    if (!salary) return res.send("Debes incluir un campo 'salary', si no hay salario enviar string vacío");
     if (!startDate) return res.send("Debes incluir un campo 'startDate'");
     if (!endDate) return res.send("Debes incluir un campo 'endDate'");
-    if (!tags)
-      return res.send(
-        "Debes incluir un campo 'tags', revisar /api/prisma/seed.ts para ver ejemplos"
-      );
-    if (!category)
-      return res.send(
-        "Debes incluir un campo 'category', revisar /api/prisma/seed.ts para ver opciones"
-      );
+    if (!tags) return res.send("Debes incluir un campo 'tags', revisar /api/prisma/seed.ts para ver ejemplos");
+    if (!category) return res.send("Debes incluir un campo 'category', revisar /api/prisma/seed.ts para ver opciones");
 
     try {
       const newPost = await prisma.post.create({
@@ -65,6 +47,7 @@ module.exports = {
       });
       res.send(newPost);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
@@ -75,6 +58,7 @@ module.exports = {
         ? res.status(200).json(getAllPost)
         : res.status(404).send("No posts found");
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
@@ -89,6 +73,7 @@ module.exports = {
       });
       res.json(post);
     } catch (error) {
+      console.log(error);
       res.send(error);
     }
   },
@@ -104,34 +89,13 @@ module.exports = {
         contractType,
       } = req.body;
 
-      if (!inputName)
-        return res.send(
-          "Debes incluir un campo 'inputName', puede contener una string vacía"
-        );
-      if (!categories)
-        return res.send(
-          "Debes incluir un campo 'categories', puede contener una string vacía"
-        );
-      if (!score)
-        return res.send(
-          "Debes incluir un campo 'score', puede contener una string vacía"
-        );
-      if (!orderBy)
-        return res.send(
-          "Debes incluir un campo 'orderBy', puede contener una string vacía"
-        );
-      if (!location)
-        return res.send(
-          "Debes incluir un campo 'location', puede contener una string vacía"
-        );
-      if (!modality)
-        return res.send(
-          "Debes incluir un campo 'modality', puede contener una string vacía"
-        );
-      if (!contractType)
-        return res.send(
-          "Debes incluir un campo 'contractType', puede contener una string vacía"
-        );
+      if (!inputName) return res.send("Debes incluir un campo 'inputName', puede contener una string vacía");
+      if (!categories) return res.send("Debes incluir un campo 'categories', puede contener una string vacía");
+      if (!score) return res.send("Debes incluir un campo 'score', puede contener una string vacía");
+      if (!orderBy) return res.send("Debes incluir un campo 'orderBy', puede contener una string vacía");
+      if (!location) return res.send("Debes incluir un campo 'location', puede contener una string vacía");
+      if (!modality) return res.send("Debes incluir un campo 'modality', puede contener una string vacía");
+      if (!contractType) return res.send("Debes incluir un campo 'contractType', puede contener una string vacía");
 
       const posts = await prisma.post.findMany();
 
@@ -160,7 +124,7 @@ module.exports = {
           salary: post.salary as string,
           startDate: post.startDate as string,
           endDate: post.endDate as string,
-          tags: post.tags as object,
+          tags: post.tags as string[],
           categoryId: post.categoryId as number,
           // score: getScore(post.companyId)
         };
@@ -225,8 +189,9 @@ module.exports = {
 
       formattedPosts.length
         ? res.send(formattedPosts)
-        : "No se encontraron resultados";
+        : res.send("No se encontraron resultados");
     } catch (error) {
+      console.log(error);
       res.send(error);
     }
   },
@@ -241,6 +206,7 @@ module.exports = {
       });
       res.json(deletedPost);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },

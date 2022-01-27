@@ -9,22 +9,24 @@ module.exports = {
       if(!name) return res.send("Debes colocar un name")
       const category = await prisma.category.create({
         data: {
-          name,
+          name: name as string,
         },
       });
       res.json(category);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
 
   index: async (req: Request, res: Response) => {
     try {
-      const getAllCateg = await prisma.category.findMany();
-      getAllCateg.length
-        ? res.status(200).json(getAllCateg)
+      const getAllCategories = await prisma.category.findMany();
+      getAllCategories.length
+        ? res.status(200).json(getAllCategories)
         : res.status(404).send("No categories found");
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
@@ -34,15 +36,15 @@ module.exports = {
       const { categoryId } = req.params;
       const { name } = req.body;
       if(!categoryId) return res.send("Debes incluir el categoryId por params")
-      const categoryUpdate = await prisma.category.update({
+      const updatedCategory = await prisma.category.update({
         where: {
           id: Number(categoryId),
         },
         data: {
-          name,
+          name: name as string,
         },
       });
-      res.json(categoryUpdate);
+      res.json(updatedCategory);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -60,6 +62,7 @@ module.exports = {
       })
       res.send(categoryDelete);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },

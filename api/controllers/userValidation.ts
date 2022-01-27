@@ -11,8 +11,8 @@ module.exports = {
     checkIfEmailAvailable: async function (email:string){
         const users = await prisma.user.findMany()
         users.forEach(user => {
-            if(user.email === email) return "Email en uso"
-            else return "Email disponible"
+            if(user.email === email) return false
+            else return true
         })
     }
 }
