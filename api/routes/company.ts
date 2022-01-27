@@ -5,17 +5,16 @@ const companyRouter = Router();
 
 //GET
 companyRouter.get("/index", companyController.index);
-companyRouter.get("/:id", companyController.companyById);
-companyRouter.get("/posts/:id", companyController.getPosts);
+companyRouter.get("/:companyId", companyController.companyById);
+companyRouter.get("/posts/:companyId", companyController.getPosts);
+
 //POST
-companyRouter.post("/create", companyController.create);
-companyRouter.post("/:id/createReview", companyController.createReview);
+companyRouter.post("/create/:userId", companyController.create);
+
 //PUT
+companyRouter.put("/update/:companyId", companyController.update);
 
 //DELETE
-companyRouter.delete("/delete/:id", companyController.delete)
-
-//DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
-companyRouter.put("/update", companyController.update)
+companyRouter.delete("/delete/:companyId", companyController.delete);
 
 module.exports = companyRouter;

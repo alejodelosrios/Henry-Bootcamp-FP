@@ -1,8 +1,5 @@
 import { Routes, Route, Navigate, useNavigate } from "react-router";
-
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-
-import styled from "styled-components";
 import { UserProfile } from "./pages/Profile";
 import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
@@ -18,12 +15,11 @@ import { PostDetailPage } from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./components/UserPostulations";
+import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
-  let navigate = useNavigate();
   const dispatch = useDispatch();
-  let myStorage = window.sessionStorage;
   const roleId = useSelector((state: any) => state.userReducer.roleId);
   const email = useSelector((state: any) => state.userReducer.email);
 
@@ -78,6 +74,7 @@ function App() {
         <Route path="/" element={<WelcomePage />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/my-applications" element={<UserPostulations />} />
+        <Route path="/company-profile" element={<CompanyProfile/>}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/profile" element={<UserProfile user={userLogged} />} />
         <Route path="/post-detail/:id" element={<PostDetailPage />} />

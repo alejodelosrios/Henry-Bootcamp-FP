@@ -1,22 +1,19 @@
-import { Router } from 'express';
-const userController = require("../controllers/userController")
+import { Router } from "express";
+const userController = require("../controllers/userController");
 
-const userRouter = Router()
+const userRouter = Router();
 
 //GET
-userRouter.get("/index", userController.index)
-userRouter.get("/:email", userController.userByEmail)
+userRouter.get("/index", userController.index);
+userRouter.get("/:email", userController.userByEmail);
 
 //POST
-userRouter.post("/create", userController.create)
+userRouter.post("/create", userController.create);
 
 //PUT
+userRouter.put("/update/:userId", userController.update);
 
 //DELETE
-userRouter.delete("/delete/:email", userController.delete)
+userRouter.delete("/delete/:userId", userController.delete);
 
-//DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
-userRouter.put("/update", userController.update)
-
-
-module.exports = userRouter
+module.exports = userRouter;

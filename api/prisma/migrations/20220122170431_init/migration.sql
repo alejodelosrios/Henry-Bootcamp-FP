@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Post" ALTER COLUMN "location" SET NOT NULL,
-ALTER COLUMN "location" SET DATA TYPE TEXT;

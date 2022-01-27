@@ -95,6 +95,10 @@ interface deleteUserLanguages {
   payload: any;
 }
 
+interface setUserFollows {
+  type: ActionType.SET_USER_FOLLOWS;
+}
+
 export type Action =
   | getPosts
   | filterAndSort
@@ -114,4 +118,5 @@ export type Action =
   | deleteUserEducation
   | updateUserLanguages
   | addUserLanguages
-  | deleteUserLanguages;
+  | deleteUserLanguages
+  | setUserFollows;

@@ -5,18 +5,15 @@ const postsRouter = Router();
 
 //GET
 postsRouter.get("/index", postsController.index);
-postsRouter.get("/:id", postsController.postById);
+postsRouter.get("/:postId", postsController.postById);
 
 //POST
 postsRouter.post("/filter", postsController.filter);
-postsRouter.post("/create", postsController.create);
+postsRouter.post("/create/:companyId", postsController.create);
 
 //PUT
 
 //DELETE
-postsRouter.delete("/delete/:id", postsController.delete);
-
-//DEBAJO LAS QUE AUN NO ESTAN COMPLETADAS
-postsRouter.put("/update", postsController.update);
+postsRouter.delete("/delete/:postId", postsController.delete);
 
 module.exports = postsRouter;

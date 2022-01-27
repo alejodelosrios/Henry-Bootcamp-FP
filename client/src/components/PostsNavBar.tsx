@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Paginated from "./Paginated/Paginated";
 import SortBar from "./SortBar";
 
 const Container = styled.div`
@@ -15,9 +14,6 @@ const PostsNavBar = () => {
   return (
     <Container>
       <SortBar></SortBar>
-      {/*
-      <Paginated />
-      */}
     </Container>
   );
 };
