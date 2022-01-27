@@ -12,15 +12,15 @@ module.exports = {
       if(!applicantId) return res.send("Debes incluir el applicantId por params")
       const newLanguage = await prisma.language.create({
         data: {
-          language: language,
-          level: level,
+          language: language as string,
+          level: level as string,
           applicantId: Number(applicantId),
         },
       });
       res.json(newLanguage);
     } catch (error) {
       console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
   update: async (req: Request, res: Response) => {
@@ -37,9 +37,9 @@ module.exports = {
           id: Number(languageId),
         },
         data: {
-          language,
-          level,
-          applicantId,
+          language: language as string,
+          level: level as string,
+          applicantId: applicantId as number,
         },
       });
       res.json(updatedLanguage);
@@ -60,6 +60,7 @@ module.exports = {
       });
       res.send(languageDelete);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },

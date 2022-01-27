@@ -126,3 +126,20 @@ temporality: false,
 perHour: false,
 }
 }
+
+
+ver json web tokens
+
+que la ruta user cree tambien applicant o company segun rol provisto
+
+
+
+CREAR RUTAS
+
+para guardar las postulaciones a las cuales se subscribio un applicant
+
+para guardar las postulaciones que el applicant marco como favourites
+
+para guardar las empresas que sigue un applicant
+
+para guardar los followers que tiene una empresa

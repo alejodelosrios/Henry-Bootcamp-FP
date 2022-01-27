@@ -29,22 +29,27 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
   update: async (req: Request, res: Response) => {
     try {
       const { experienceId } = req.params;
-      const { position, company, startDate, endDate, description } = req.body;
+      const { 
+        position, 
+        company, 
+        startDate, 
+        endDate, 
+        description 
+      } = req.body;
       if(!experienceId) return res.send("Debes incluir el experienceId por params")
       const experienceUpdate = await prisma.experience.update({
         where: {
           id: Number(experienceId),
         },
         data: {
-          position,
-          company,
-          startDate,
-          endDate,
-          description,
+          position: position as string,
+          company: company as string,
+          startDate: startDate as string,
+          endDate: endDate as string,
+          description: description as string,
         },
       });
       res.json(experienceUpdate);
@@ -53,8 +58,6 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
-
   delete: async (req: Request, res: Response) => {
     try {
       const { experienceId } = req.params;
@@ -66,6 +69,7 @@ module.exports = {
       })
       res.send(experienceDelete);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
