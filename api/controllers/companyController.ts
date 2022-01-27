@@ -16,42 +16,15 @@ module.exports = {
         vision,
       } = req.body;
 
-      if (!userId)
-        return res.send(
-          "Debes incluir un campo 'userId' con el id del usuario al cual esta asociado esta compañia por params"
-        );
-      if (!name)
-        return res.send(
-          "Debes incluir un campo 'name', puede contener una string vacía"
-        );
-      if (!legalName)
-        return res.send(
-          "Debes incluir un campo 'legalName', puede contener una string vacía"
-        );
-      if (!stin)
-        return res.send(
-          "Debes incluir un campo 'stin' (el 'cuil' en argentina), puede contener una string vacía"
-        );
-      if (!accountManagers)
-        return res.send(
-          "Debes incluir un campo 'accountManagers', contiene un arreglo de strings, puede estar vacío"
-        );
-      if (!image)
-        return res.send(
-          "Debes incluir un campo 'image', puede contener una string vacía"
-        );
-      if (!companyValues)
-        return res.send(
-          "Debes incluir un campo 'companyValues', puede contener una string vacía"
-        );
-      if (!mission)
-        return res.send(
-          "Debes incluir un campo 'mission', puede contener una string vacía"
-        );
-      if (!vision)
-        return res.send(
-          "Debes incluir un campo 'vision', puede contener una string vacía"
-        );
+      if (!userId) return res.send("Debes incluir un campo 'userId' con el id del usuario al cual esta asociado esta compañia por params");
+      if (!name) return res.send("Debes incluir un campo 'name', puede contener una string vacía");
+      if (!legalName) return res.send("Debes incluir un campo 'legalName', puede contener una string vacía");
+      if (!stin) return res.send("Debes incluir un campo 'stin' (el 'cuil' en argentina), puede contener una string vacía");
+      if (!accountManagers) return res.send("Debes incluir un campo 'accountManagers', contiene un arreglo de strings, puede estar vacío");
+      if (!image) return res.send("Debes incluir un campo 'image', puede contener una string vacía");
+      if (!companyValues) return res.send("Debes incluir un campo 'companyValues', puede contener una string vacía");
+      if (!mission) return res.send("Debes incluir un campo 'mission', puede contener una string vacía");
+      if (!vision) return res.send("Debes incluir un campo 'vision', puede contener una string vacía");
 
       const newCompany = await prisma.company.create({
         data: {
@@ -139,14 +112,14 @@ module.exports = {
           id: Number(companyId),
         },
         data: {
-          name,
-          legalName,
-          stin,
-          accountManagers,
-          image,
-          companyValues,
-          mission,
-          vision,
+          name: name as string,
+          legalName: legalName as string,
+          stin: stin as string,
+          accountManagers: accountManagers as string[],
+          image: image as string,
+          companyValues: companyValues as string,
+          mission: mission as string,
+          vision: vision as string,
         },
       });
       res.json(updatedCompany);

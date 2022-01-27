@@ -1,7 +1,5 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-import { endianness } from "os";
-import { ifError } from "assert";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -17,21 +15,20 @@ module.exports = {
       if(!applicantId) return res.send("Debes incluir el applicantId por params")
       const education = await prisma.education.create({
         data: {
-          degree: degree,
-          institution: institution,
-          startDate: startDate,
-          endDate: endDate,
-          description: description,
+          degree: degree as string,
+          institution: institution as string,
+          startDate: startDate as string,
+          endDate: endDate as string,
+          description: description as string,
           applicantId: Number(applicantId),
         },
       });
       res.json(education);
     } catch (error) {
       console.log(error);
-      res.status(500).send(error);
+      res.status(400).send(error);
     }
   },
-  //recibis el email por params y que le agreguen un query nuevo email
   update: async (req: Request, res: Response) => {
     try {
       const { educationId } = req.params;
@@ -49,12 +46,12 @@ module.exports = {
           id: Number(educationId),
         },
         data: {
-          degree,
-          institution,
-          startDate,
-          endDate,
-          description,
-          applicantId,
+          degree: degree as string,
+          institution: institution as string,
+          startDate: startDate as string,
+          endDate: endDate as string,
+          description: description as string,
+          applicantId: applicantId as number,
         },
       });
       res.json(updatedEducation);
@@ -63,8 +60,6 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
-  //por email
   delete: async (req: Request, res: Response) => {
     try {
       const { educationId } = req.params;

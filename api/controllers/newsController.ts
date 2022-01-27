@@ -7,17 +7,15 @@ module.exports = {
       const { image, title, description } = req.body;
       if (!image) return res.send("Debes incluir la image por body");
       if (!title) return res.send("Debes incluir el title por body");
-      if (!description)
-        return res.send("Debes incluir la description por body");
+      if (!description) return res.send("Debes incluir la description por body");
 
       const newNews = await prisma.news.create({
         data: {
-          image,
-          title,
-          description,
+          image: image as string,
+          title: title as string,
+          description: description as string,
         },
       });
-
       res.json(newNews);
     } catch (error) {
       console.log(error);
@@ -39,6 +37,7 @@ module.exports = {
   newsByNewsId: async (req: Request, res: Response) => {
     try {
       const { newsId } = req.params;
+      if (!newsId) return res.send("Debes enviar el newsId por params");
       const getAllNews = await prisma.news.findMany({
         where: {
           id: Number(newsId),
@@ -48,27 +47,31 @@ module.exports = {
         ? res.status(200).json(getAllNews)
         : res.status(404).send("No news found");
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
   update: async (req: Request, res: Response) => {
     try {
       const { newsId } = req.params;
-      const { image, title, description } = req.body;
+      const { 
+        image, 
+        title, 
+        description 
+      } = req.body;
       if (!newsId) return res.send("Debes incluir el newsId por params");
       if (!image) return res.send("Debes incluir la image por body");
       if (!title) return res.send("Debes incluir el title por body");
-      if (!description)
-        return res.send("Debes incluir la description por body");
+      if (!description) return res.send("Debes incluir la description por body");
 
       const updatedLanguage = await prisma.news.update({
         where: {
           id: Number(newsId),
         },
         data: {
-          image,
-          title,
-          description,
+          image: image as string,
+          title: title as string,
+          description: description as string,
         },
       });
       res.json(updatedLanguage);
@@ -89,6 +92,7 @@ module.exports = {
       });
       res.send(newsDelete);
     } catch (error) {
+      console.log(error)
       res.status(400).send(error);
     }
   },
