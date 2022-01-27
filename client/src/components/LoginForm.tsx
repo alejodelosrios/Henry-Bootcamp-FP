@@ -35,8 +35,8 @@ const Button = styled.button`
 
 function LoginForm({type}: any) {
 
-    const roleId = useSelector(
-        (state: any) => state.userReducer.roleId
+    const role = useSelector(
+        (state: any) => state.userReducer.role
     );
     const userCreateModal = useSelector(
         (state: any) => state.userReducer.userCreateModal
@@ -46,11 +46,11 @@ function LoginForm({type}: any) {
     const [formInputs, setFormInputs] = useState({
         email: "",
         password: "",
-        role: 1,
+        role: "applicant",
     });
 
     const navigate = useNavigate()
-    if (roleId) {
+    if (role) {
         navigate("/home");
     }
 
@@ -68,7 +68,7 @@ function LoginForm({type}: any) {
         setFormInputs({
             email: "",
             password: "",
-            role: 1,
+            role: "applicant",
         });
 
     };
@@ -78,7 +78,7 @@ function LoginForm({type}: any) {
         setFormInputs({
             email: "",
             password: "",
-            role: 1,
+            role: "applicant",
         });
     };
 
@@ -112,8 +112,8 @@ function LoginForm({type}: any) {
                                 id="role"
                                 name="role"
                             >
-                                <option value={1}>Applicant</option>
-                                <option value={2}>Recruiter</option>
+                                <option value="applicant">Postulante</option>
+                                <option value="company">Reclutador</option>
                             </select>
                         </Item>
                     )}

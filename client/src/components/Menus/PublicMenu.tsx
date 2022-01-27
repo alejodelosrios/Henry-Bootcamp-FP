@@ -39,12 +39,10 @@ const Buttons = styled.div`
 const PublicMenu: FC = () => {
 
   let location = useLocation()
-  console.log(location)
   let isAbout=false
   if(location.pathname === '/about-us'){
     isAbout=true;
   }
-  console.log(isAbout)
 
   return (
     <>

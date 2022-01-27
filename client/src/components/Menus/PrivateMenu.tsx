@@ -5,7 +5,7 @@ import {Logout} from "../Logout";
 
 
 type Props = {
-  roleId: number;
+  role: string;
 }
 
 const NavLinks = styled.nav`
@@ -25,12 +25,13 @@ const ButtonsContainer = styled.div`
   z-index: 1000;
 `;
 
-const PrivateMenu: FC<Props> = ({roleId}) => {
+const PrivateMenu: FC<Props> = ({role}) => {
+  //console.log(role);
   return (
     <>
       <NavLinks className="multi-options">
         {
-          roleId === 1 ?
+          role === "applicant" ?
             <>
               <Link to="/home" style={{textDecoration: "none"}}>
                 <A href="">{"Inicio"}</A>
@@ -45,7 +46,7 @@ const PrivateMenu: FC<Props> = ({roleId}) => {
                 <A href="">{"Not"}</A>
               </Link>
             </>
-            : roleId === 2 ?
+            : role === "company" ?
               <>
                 <Link to="/home" style={{textDecoration: "none"}}>
                   <A href="">{"Inicio"}</A>

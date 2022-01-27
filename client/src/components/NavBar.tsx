@@ -25,7 +25,7 @@ const FlexDiv = styled.div`
 `;
 
 export const NavBar: FC = () => {
-  const roleId = useSelector((state: any) => state.userReducer.roleId);
+  const role = useSelector((state: any) => state.userReducer.role);
   return (
     <Container>
       <MainFlexDiv className="flex-container">
@@ -34,7 +34,7 @@ export const NavBar: FC = () => {
             <img src={logo} alt="logo" />
           </Link>
         </FlexDiv>
-        {roleId ? <PrivateMenu roleId={roleId} /> : <PublicMenu />}
+        {role ? <PrivateMenu role={role} /> : <PublicMenu />}
       </MainFlexDiv>
     </Container>
   );
