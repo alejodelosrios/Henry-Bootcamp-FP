@@ -1,68 +1,66 @@
 /user
-    /create ====> HECHA
-    /index ====> HECHA
-    /:id  
-    /delete/:id ====> HECHA
-    /update/:id ====> HECHA
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /:id                ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /applicant
-    /create ====> HECHA
-    /index ====> HECHA
-    /:id ====> HECHA
-    /delete/:id ====> HECHA
-    /update/:id ====> HECHA
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /:id                ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /company
-    /create ====> HECHA
-    /index ====> HECHA
-    /:id ====> HECHA
-    /posts/:id ====> HECHA
-    /delete/:id ====> HECHA
-    /update/:id
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /:id                ====> HECHA
+    /posts/:id          ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
+    /review/:companyId  ====> HECHA
 
 /posts
-    /create ====> HECHA
-    /index ====> HECHA
-    /:id ====> HECHA
-    /delete/:id ====> HECHA
-    /update/:id
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /:id                ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /experience
-    /create
-    /delete/:id
-    /update/:id
+    /create             ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /education
-    /create
-    /delete/:id
-    /update/:id
+    /create             ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /languages
-    /create
-    /delete/:id
-    /update/:id
-
-/review
-    /create
+    /create             ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /category
-    /create
-    /index  
-    /delete/:id
-    /update/:id
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /tags
-    /create
-    /index  
-    /delete/:id
-    /update/:id
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /notification
-    /create
-    /index  
-    /:id?  
-    /delete/:id
-    /update/:id
+    /create             ====> HECHA
+    /index              ====> HECHA
+    /:id                ====> HECHA
+    /delete/:id         ====> HECHA
+    /update/:id         ====> HECHA
 
 /notification/types
     /create
@@ -77,30 +75,6 @@
     /delete/:id
     /update/:id
 
-
-
-
-
-createReview: async (req: Request, res: Response) => {
-    try {
-        const id = req.params.id;
-        const { review } = req.body;
-        const updatedCompany = await prisma.company.update({
-            where: {
-                id: Number(id),
-            },
-            data: {
-                reviews: {
-                    push: review as object,
-                },
-            },
-        });
-        res.send(updatedCompany.reviews);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(error);
-    }
-},
 
 
 
@@ -130,16 +104,22 @@ perHour: false,
 
 ver json web tokens
 
-que la ruta user cree tambien applicant o company segun rol provisto
-
-
 
 CREAR RUTAS
 
 para guardar las postulaciones a las cuales se subscribio un applicant
+PUT     /applicant/apply
+recibe objeto con applicantId y postId
 
 para guardar las postulaciones que el applicant marco como favourites
+PUT     /applicant/addfavourite
+recibe objeto con applicantId y postId
 
 para guardar las empresas que sigue un applicant
+PUT     /applicant/follow
+recibe objeto con applicantId y companyId
 
-para guardar los followers que tiene una empresa
+para guardar las tags que tiene un applicant en su perfil
+PUT     /applicant/tags
+recibe objeto con applicantId y arreglo de tags a relacionar
+
