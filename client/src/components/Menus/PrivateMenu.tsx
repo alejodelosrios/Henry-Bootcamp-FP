@@ -2,6 +2,7 @@ import {FC} from "react";
 import {Link, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import {Logout} from "../Logout";
+import Notifications from "../Notifications";
 
 
 type Props = {
@@ -10,6 +11,8 @@ type Props = {
 
 const NavLinks = styled.nav`
   z-index: 1000;
+  display: flex;
+  align-items: center;
 `;
 
 
@@ -86,6 +89,7 @@ const PrivateMenu: FC<Props> = ({role}) => {
                 <A>{"Admin"}</A>
               </>
         }
+        <Notifications role={role}/>
       </NavLinks>
       <ButtonsContainer>
         <Logout contenido="Logout" estilo="primary" />
