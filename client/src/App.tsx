@@ -16,6 +16,7 @@ import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./components/UserPostulations";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
+import QandA from "./pages/Q&A/QandA";
 
 function App() {
         const [userLogged, setUserLogged] = useState(false);
@@ -58,7 +59,6 @@ function App() {
                                 });
                 };
                 getUser();
-
                 dispatch(getPosts());
         }, []);
         return (
@@ -86,6 +86,7 @@ function App() {
                                 <Route path="/login" element={<LoginPage type="login" />} />
                                 <Route path="/register" element={<LoginPage type="register" />} />
                                 <Route path="/about-us" element={<AboutUs />} />
+                                <Route path="/frequent-questions" element={<QandA />} />
                         </Routes>
                 </ThemeProvider>
         );
