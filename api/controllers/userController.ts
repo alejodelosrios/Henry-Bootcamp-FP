@@ -62,8 +62,16 @@ module.exports = {
           email: email,
         },
         include: {
-          applicant: true,
-          company: true
+          applicant: {
+            include: {
+              notifications: true
+            }
+          },
+          company: {
+            include: {
+              notifications: true
+            }
+          }
         }
       });
       res.json(newUser);

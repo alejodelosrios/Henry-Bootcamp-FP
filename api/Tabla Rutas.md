@@ -24,9 +24,9 @@ Las rutas son las siguientes:
 >   GET     /:applicantId           (devuelve un applicant especifico con TODA su info)       => recibe applicantId por params
 >   PUT     /update/:applicantId    (actualiza la informacion de un applicant)                => recibe applicantId por params y objeto con todas las propiedades a actualizar
 >   PUT     /apply                  (postula a un applicant para un post)                     => recibe objeto con applicantId y postId
--   PUT     /addfavourite           (añade un post a los favoritos de un applicant)           => recibe objeto con applicantId y postId
--   PUT     /follow                 (añade una compañia a los followed de un applicant)       => recibe objeto con applicantId y companyId
-*   PUT     /tags                   (añade tags al perfil de un applicant)                    => recibe objeto con applicantId y arreglo de tags a relacionar
+>   PUT     /addfavourite           (añade un post a los favoritos de un applicant)           => recibe objeto con applicantId y postId
+>   PUT     /follow                 (añade una compañia a los followed de un applicant)       => recibe objeto con applicantId y companyId
+>   PUT     /tags                   (añade tags al perfil de un applicant)                    => recibe objeto con applicantId y arreglo de tags a relacionar
 >   DELETE  /delete/:applicantId    (borra un applicant especifico)                           => recibe applicantId por params
 
 
