@@ -86,6 +86,49 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
+  addfavourite: async (req: Request, res: Response) => {
+    try {
+      const { applicantId, postId } = req.body;
+
+      const favouriteUpdate = await prisma.applicant.update({
+        where: {
+          id: Number(applicantId),
+        },
+        data: {
+          favourites: {
+            connect: [{ id: Number(postId) }],
+          },
+        },
+      });
+      res.json(favouriteUpdate);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
+  follow: async (req: Request, res: Response) => {
+    try {
+      const { applicantId, companyId } = req.body;
+
+      const followUpdate = await prisma.applicant.update({
+        where: {
+          id: Number(applicantId),
+        },
+        data: {
+          followed: {
+            connect: [{ id: Number(companyId) }],
+          },
+        },
+      });
+      res.json(followUpdate);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
   applicantById: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;
