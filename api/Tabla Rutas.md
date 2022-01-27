@@ -34,6 +34,7 @@ Las rutas son las siguientes:
 >   GET     /posts/:companyId       (devuelve todos los posts de una company)                 => recibe companyId por params
 >   PUT     /update/:companyId      (actualiza la informacion de una company)                 => recibe companyId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:companyId      (borra una company especifica)                            => recibe companyId por params
+-   POST    /review/:companyId      (crea una nueva review para una compañia especifica)      => recibe companyId por params y objeto review (mirar en /prisma/seed.ts para los modelos) 
 
 
 /posts
@@ -66,51 +67,46 @@ Las rutas son las siguientes:
 >   DELETE  /delete/:languageId     (borra una languages especifica)                          => recibe languageId por params
 
 
-/review
-
--   POST    /create/:companyId      (crea una nueva review para una compañia especifica)      => recibe companyId por params y objeto review (mirar en /prisma/seed.ts para los modelos)
-
-
 /category
 
--   POST    /create                 (crea una category)                                       => recibe objeto category (mirar en /prisma/seed.ts para los modelos)
--   GET     /index                  (devuelve todas las categorias existentes)                => no recibe parametros
--   UPDATE  /update/:categoryId     (actualiza una category)                                  => recibe categoryId por params y objeto con todas las propiedades a actualizar
--   DELETE  /delete/:categoryId     (borra una category especifica)                           => recibe categoryId por params
+>   POST    /create                 (crea una category)                                       => recibe objeto category (mirar en /prisma/seed.ts para los modelos)
+>   GET     /index                  (devuelve todas las categorias existentes)                => no recibe parametros
+>   UPDATE  /update/:categoryId     (actualiza una category)                                  => recibe categoryId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:categoryId     (borra una category especifica)                           => recibe categoryId por params
 
 
 /tag
 
--   POST    /create                 (crea una tags)                                           => recibe objeto tags (mirar en /prisma/seed.ts para los modelos)
--   GET     /index                  (devuelve todas las tags existentes)                      => no recibe parametros
--   UPDATE  /update/:tagId          (actualiza una tags)                                      => recibe id por params y objeto con todas las propiedades a actualizar
--   DELETE  /delete/:tagId          (borra una tags especifica)                               => recibe id por params
+>   POST    /create                 (crea una tags)                                           => recibe objeto tags (mirar en /prisma/seed.ts para los modelos)
+>   GET     /index                  (devuelve todas las tags existentes)                      => no recibe parametros
+>   UPDATE  /update/:tagId          (actualiza una tags)                                      => recibe id por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:tagId          (borra una tags especifica)                               => recibe id por params
 
 
 /notification
 
--   POST    /create                 (crea una notification)                                   => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
--   GET     /index                  (devuelve todas las notification existentes)              => no recibe parametros
--   GET     /:notificationId        (devuelve una notification especifica)                    => recibe notificationId por params
--   UPDATE  /update/:notificationId (actualiza una notification)                              => recibe notificationId por params y objeto con todas las propiedades a actualizar
--   DELETE  /delete/:notificationId (borra una notification especifica)                       => recibe notificationId por params
+>   POST    /create                 (crea una notification)                                   => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
+>   GET     /index                  (devuelve todas las notification existentes)              => no recibe parametros
+>   GET     /:notificationId        (devuelve una notification especifica)                    => recibe notificationId por params
+>   UPDATE  /update/:notificationId (actualiza una notification)                              => recibe notificationId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:notificationId (borra una notification especifica)                       => recibe notificationId por params
 
 
 /notification/types
 
--   POST    /create                 (crea un notification-type)                               => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
--   GET     /index                  (devuelve todos los notification-types existentes)        => no recibe parametros
--   UPDATE  /update/:typeId         (actualiza un notification-type)                          => recibe id por params y objeto con todas las propiedades a actualizar
--   DELETE  /delete/:typeId         (borra un notification-type especifico)                   => recibe id por params 
+>   POST    /create                 (crea un notification-type)                               => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
+>   GET     /index                  (devuelve todos los notification-types existentes)        => no recibe parametros
+>   UPDATE  /update/:typeId         (actualiza un notification-type)                          => recibe id por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:typeId         (borra un notification-type especifico)                   => recibe id por params 
 
 
 /news
 
--   POST    /create                 (crea una news)                                           => recibe objeto news (mirar en /prisma/seed.ts para los modelos)
--   GET     /index                  (devuelve todas las news existentes)                      => no recibe parametros
--   GET     /:newsId                (devuelve una news especifica)                            => recibe newsId por params
--   UPDATE  /update/:newsId         (actualiza una news)                                      => recibe newsId por params y objeto con todas las propiedades a actualizar
--   DELETE  /delete/:newsId         (borra una news especifica)                               => recibe newsId por params
+>   POST    /create                 (crea una news)                                           => recibe objeto news (mirar en /prisma/seed.ts para los modelos)
+>   GET     /index                  (devuelve todas las news existentes)                      => no recibe parametros
+>   GET     /:newsId                (devuelve una news especifica)                            => recibe newsId por params
+>   UPDATE  /update/:newsId         (actualiza una news)                                      => recibe newsId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:newsId         (borra una news especifica)                               => recibe newsId por params
 
 
 Esas son las rutas que hay gente, si necesitan cualquier otra avisen y los de back se las hacemos al toque :D
