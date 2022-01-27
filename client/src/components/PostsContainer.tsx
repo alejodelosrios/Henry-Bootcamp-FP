@@ -20,7 +20,7 @@ const PostsContainer = () => {
     );
 
     //PAGINADO ////////////////////////////////////////////
-    const [currPage, setCurrPage] = useState(1);    
+    const [currPage, setCurrPage] = useState(1);
     const PostsPerPage = 4;
     const ixLastPost = currPage * PostsPerPage;
     const ixFirstPost = ixLastPost - PostsPerPage;
@@ -35,8 +35,8 @@ const PostsContainer = () => {
             <Container>
                 {currPost.map((post: any) => (
                     <Post
-                        key={post.postId}
-                        id={post.postId}
+                        key={post.id}
+                        id={post.id}
                         title={post.title}
                         location={post.location}
                         modality={post.modality}
@@ -45,8 +45,8 @@ const PostsContainer = () => {
                     />
                 ))}
             </Container>
-            
-            <Paginated 
+
+            <Paginated
                 PostsPerPage={PostsPerPage}
                 AllPostsLength={currentPosts.length}
                 paginado={paginado}

@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
-import { createUser, getUser } from "../redux/actions/actionCreators";
+import {createUser, getUser} from "../redux/actions/actionCreators";
 import UserCreateModal from "./UserCreateModal";
-import { Login } from "./Login";
+import {Login} from "./Login";
+import {useNavigate} from "react-router";
 
 const Container = styled.div`
     display: flex;
@@ -32,7 +33,11 @@ const Button = styled.button`
     font-family: Open sans/Regular;
 `;
 
-function LoginForm({ type }: any) {
+function LoginForm({type}: any) {
+
+    const roleId = useSelector(
+        (state: any) => state.userReducer.roleId
+    );
     const userCreateModal = useSelector(
         (state: any) => state.userReducer.userCreateModal
     );
@@ -43,7 +48,13 @@ function LoginForm({ type }: any) {
         password: "",
         role: 1,
     });
-    const handleChange = ({ target: { name, value } }: any) => {
+
+    const navigate = useNavigate()
+    if (roleId) {
+        navigate("/home");
+    }
+
+    const handleChange = ({target: {name, value}}: any) => {
         setFormInputs({
             ...formInputs,
             [name]: value,
@@ -52,13 +63,14 @@ function LoginForm({ type }: any) {
     const login = (e: any) => {
         e.preventDefault();
         dispatch(
-            getUser({ email: formInputs.email, password: formInputs.password })
+            getUser({email: formInputs.email, password: formInputs.password})
         );
         setFormInputs({
             email: "",
             password: "",
             role: 1,
         });
+
     };
     const register = (e: any) => {
         e.preventDefault();

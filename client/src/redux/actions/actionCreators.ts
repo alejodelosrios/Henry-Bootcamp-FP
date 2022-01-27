@@ -7,7 +7,7 @@ export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
     let { data } = await axios.get("/posts/index");
     //console.log(data);
-    console.log("POSTS", "Se recibe data de la API");
+    //console.log("POSTS", "Se recibe data de la API");
     return dispatch({ type: ActionType.GET_POSTS, payload: data });
   } catch (error) {
     console.log(error);
@@ -27,12 +27,14 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
 
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
+    console.log("Data enviada: ",filters_and_sort);
     try {
       let { data } = await axios({
         method: "POST",
         url: `/posts/filter`,
         data: filters_and_sort,
       });
+      console.log("Data recibida: ",data);
       console.log("POSTS FILTRADOS", "Se recibe data de la API");
       return dispatch({
         type: ActionType.GET_CURRENT_POSTS,
@@ -49,9 +51,10 @@ export const filterAndSort =
 export const createPost =
   (dataPost: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      console.log(dataPost);
+      console.log("Data enviada: ",dataPost);
 
-      await axios.post(`/posts/create`, dataPost);
+      let {data} = await axios.post(`/posts/create/${dataPost.company}`, dataPost);
+      console.log("Data recibida:", data);
       console.log("CREATE POST", "Se envió la data a la API");
       return dispatch({
         type: ActionType.SET_POST_CREATE_MODAL,
@@ -275,7 +278,7 @@ export const deleteUserLanguages =
     }
   };
 
-export const setUserFollows = 
+export const setUserFollows =
   (compId: number, userId: number)=> async (dispatch: Dispatch<Action>) => {
     try {
       // await axios.delete(`/user/update`, userExp);

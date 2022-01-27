@@ -22,7 +22,7 @@ import {
 type Form = {
   location: string;
   endDate: string;
-  category: string;
+  category: number;
   tags: string[];
   title: string;
   description: string;
@@ -43,7 +43,7 @@ const PostCreateForm = () => {
   const [form, setForm] = useState<Form>({
     location: "",
     endDate: "",
-    category: "",
+    category: 1,
     tags: [],
     title: "",
     description: "",
@@ -109,9 +109,8 @@ const PostCreateForm = () => {
           <Div>
             <Label>Categoría</Label>
             <Select name="category" onChange={(e) => handleInputs(e)}>
-              <option value=""></option>
-              <option value="technology">Tecnología</option>
-              <option value="health">Salud</option>
+              <option value={1}>Tecnología</option>
+              <option value={2}>Salud</option>
             </Select>
           </Div>
           <Div>
