@@ -39,9 +39,9 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          console.log("Respuesta: ", resObject.user);
+          //console.log("Respuesta: ", resObject.user);
           if (!resObject.user.hasOwnProperty("roleId")) {
-            console.log("Set Email", resObject.user);
+            //console.log("Set Email", resObject.user);
             setUserLogged(resObject.user);
             dispatch(setEmail(resObject.user.emails[0].value));
           } else {

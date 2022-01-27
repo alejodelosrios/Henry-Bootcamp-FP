@@ -3,7 +3,8 @@ import { Request, Response } from "express";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
-    const { companyId } = req.params
+    console.log(req.params);
+    const { companyId } = req.params;
     const {
       title,
       description,
@@ -42,7 +43,7 @@ module.exports = {
           startDate: startDate as string,
           endDate: endDate as string,
           tags: tags as string[],
-          categoryId: category as number,
+          categoryId: +category as number,
         },
       });
       res.send(newPost);
@@ -89,10 +90,19 @@ module.exports = {
         contractType,
       } = req.body;
 
-      if (!inputName) return res.send("Debes incluir un campo 'inputName', puede contener una string vacía");
+      if (typeof inputName !== "string")
+        return res.send(
+          "Debes incluir un campo 'inputName', puede contener una string vacía"
+        );
       if (!categories) return res.send("Debes incluir un campo 'categories', puede contener una string vacía");
-      if (!score) return res.send("Debes incluir un campo 'score', puede contener una string vacía");
-      if (!orderBy) return res.send("Debes incluir un campo 'orderBy', puede contener una string vacía");
+      if (typeof score !== "string")
+        return res.send(
+          "Debes incluir un campo 'score', puede contener una string vacía"
+        );
+      if (typeof orderBy !== "string")
+        return res.send(
+          "Debes incluir un campo 'orderBy', puede contener una string vacía"
+        );
       if (!location) return res.send("Debes incluir un campo 'location', puede contener una string vacía");
       if (!modality) return res.send("Debes incluir un campo 'modality', puede contener una string vacía");
       if (!contractType) return res.send("Debes incluir un campo 'contractType', puede contener una string vacía");
@@ -113,7 +123,7 @@ module.exports = {
       //     return totalScore/company.reviews.length
       // }
 
-      let formattedPosts = await posts.map((post) => {
+      let formattedPosts = posts.map((post) => {
         return {
           id: post.id as number,
           companyId: post.companyId as number,
