@@ -16,6 +16,7 @@ import { getPosts, setEmail, setUser } from "./redux/actions/actionCreators";
 import LoginPage from "./pages/LoginPage";
 import { PostDetailPage } from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
+import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -74,6 +75,7 @@ function App() {
           </>
         )}
         <Route path="/" element={<WelcomePage />}></Route>
+        <Route path="/company-profile" element={<CompanyProfile/>}></Route>
         <Route path="/home" element={<Home />}></Route>
         <Route path="/profile" element={<UserProfile user={userLogged} />} />
         <Route path="/post-detail/:id" element={<PostDetailPage />} />
