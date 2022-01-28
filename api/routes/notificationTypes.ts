@@ -1,24 +1,24 @@
-import { Router } from "express";
-const notificationTypeController = require("../controllers/notificationTypeController");
+// import { Router } from "express";
+// const notificationTypeController = require("../controllers/notificationTypeController");
 
-const notificationTypeRouter = Router();
+// const notificationTypeRouter = Router();
 
-//GET
-notificationTypeRouter.get("/index", notificationTypeController.index);
+// //GET
+// notificationTypeRouter.get("/index", notificationTypeController.index);
 
-//POST
-notificationTypeRouter.post("/create", notificationTypeController.create);
+// //POST
+// notificationTypeRouter.post("/create", notificationTypeController.create);
 
-//PUT
-notificationTypeRouter.put(
-  "/update/:typeId",
-  notificationTypeController.update
-);
+// //PUT
+// notificationTypeRouter.put(
+//   "/update/:typeId",
+//   notificationTypeController.update
+// );
 
-//DELETE
-notificationTypeRouter.delete(
-  "/delete/:typeId",
-  notificationTypeController.delete
-);
+// //DELETE
+// notificationTypeRouter.delete(
+//   "/delete/:typeId",
+//   notificationTypeController.delete
+// );
 
-module.exports = notificationTypeRouter;
+// module.exports = notificationTypeRouter;
