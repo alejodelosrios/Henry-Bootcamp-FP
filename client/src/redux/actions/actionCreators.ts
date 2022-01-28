@@ -122,7 +122,7 @@ export const getUser =
       return dispatch({
         type: ActionType.GET_USER,
         payload:{
-          data:data[0],
+          data:data,
           modal: false
         }
       });

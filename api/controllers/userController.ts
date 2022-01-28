@@ -120,29 +120,29 @@ module.exports = {
           }
         }
       });
-      let formattedPackageForFront
-      if(user){
-        if(user.applicant && "admin applicant".includes(user.role)){
-          let {id, userId, ...rest} = user.applicant
-          formattedPackageForFront = {
-            userId: user.id,
-            applicantId: id,
-            email: user.email,
-            role: user.role,
-            ...rest,
-          }
-        } else if(user.company && "company".includes(user.role)){
-          let {id, userId, ...rest} = user.company
-          formattedPackageForFront = {
-            userId: user.id,
-            companyId: id,
-            email: user.email,
-            role: user.role,
-            ...rest,
-          }
-        }
-      }
-      res.json(formattedPackageForFront);
+      // let formattedPackageForFront
+      // if(user){
+      //   if(user.applicant && "admin applicant".includes(user.role)){
+      //     let {id, userId, ...rest} = user.applicant
+      //     formattedPackageForFront = {
+      //       userId: user.id,
+      //       applicantId: id,
+      //       email: user.email,
+      //       role: user.role,
+      //       ...rest,
+      //     }
+      //   } else if(user.company && "company".includes(user.role)){
+      //     let {id, userId, ...rest} = user.company
+      //     formattedPackageForFront = {
+      //       userId: user.id,
+      //       companyId: id,
+      //       email: user.email,
+      //       role: user.role,
+      //       ...rest,
+      //     }
+      //   }
+      // }
+      res.json(user);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
