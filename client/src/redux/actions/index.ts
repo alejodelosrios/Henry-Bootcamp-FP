@@ -1,5 +1,4 @@
 import {ActionType} from "./actionTypes";
-import {jobApplication} from "./applicantActionCreators";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
