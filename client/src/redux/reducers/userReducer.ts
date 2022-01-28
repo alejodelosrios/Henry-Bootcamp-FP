@@ -1,5 +1,5 @@
-import {Action} from "../actions";
-import {ActionType} from "../actions/actionTypes";
+import { Action } from "../actions";
+import { ActionType } from "../actions/actionTypes";
 
 const initialState = {
   id: null,
@@ -39,11 +39,11 @@ const initialState = {
     languages: [],
 
     followings: [],
-    favs: [],
+    favorites: [],
     notifications: [],
     postulations: [],
   },
-  userCreateModal: {val: false, msg: ""},
+  userCreateModal: { val: false, msg: "" },
 };
 
 const userReducer = (state = initialState, action: Action) => {
@@ -206,20 +206,25 @@ const userReducer = (state = initialState, action: Action) => {
         return {
           ...state,
           applicant: {
-            ...state.applicant, 
+            ...state.applicant,
             notifications: action.payload.notifications
           },
         }
-      }else if(action.payload.role === 'company'){
+      } else if (action.payload.role === 'company') {
         return {
           ...state,
           company: {
-            ...state.company, 
+            ...state.company,
             notifications: action.payload.notifications
           },
         }
-      }else{return state}
-      
+      } else { return state }
+    case ActionType.GET_FAVORITES:
+      return {
+        ...state,
+        applicant: { ...state.applicant, favourites: action.payload },
+      };
+
     case ActionType.JOB_APPLICATION:
       return {
         ...state,

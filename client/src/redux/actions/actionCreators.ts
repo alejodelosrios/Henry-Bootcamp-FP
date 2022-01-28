@@ -328,4 +328,19 @@ export const getNotifications =
       console.log("Ups! algo salió mal");
       console.log(error);
     }
-  };
+  }
+
+  export const getFavorite = 
+  (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let {data}:any = await axios.get(`/${role}/${applicantId}`);
+      console.log("Favoritos actualizados");
+      return dispatch({
+        type: ActionType.GET_FAVORITES,
+        payload: data.favorites
+      });
+    } catch (error) {
+      console.log('Ups! algo salió mal');
+      console.log(error);
+    }
+  }
