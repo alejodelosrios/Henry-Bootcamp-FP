@@ -1,14 +1,15 @@
-import { FC, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import styled, {css} from 'styled-components';
-import { getNotifications } from '../redux/actions/actionCreators';
+import { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import styled, { css } from "styled-components";
+import { getNotifications } from "../redux/actions/actionCreators";
 
 type P = {
-    role: string
-}
+    role: string;
+};
 
 const NotCont = styled.div`
     position: relative;
+    z-index: 1000;
 `;
 
 const NotBut = styled.button<{ modal?: boolean }>`
@@ -21,14 +22,16 @@ const NotBut = styled.button<{ modal?: boolean }>`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: ${p => p.theme.colors.details.secondary1};
-    color: ${p => p.theme.colors.details.secondary2};
+    background-color: ${(p) => p.theme.colors.details.secondary1};
+    color: ${(p) => p.theme.colors.details.secondary2};
 
-    ${prop => prop.modal && (
-        css`background-color: ${p => p.theme.colors.details.secondary2};
-        color: ${p => p.theme.colors.details.secondary1};`
-    )}
-`
+    ${(prop) =>
+        prop.modal &&
+        css`
+            background-color: ${(p) => p.theme.colors.details.secondary2};
+            color: ${(p) => p.theme.colors.details.secondary1};
+        `}
+`;
 
 const Count = styled.div`
     position: absolute;
@@ -41,9 +44,9 @@ const Count = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background-color: ${p => p.theme.colors.backgrounds.pink};
-    color: ${p => p.theme.colors.typography.lighter};
-`
+    background-color: ${(p) => p.theme.colors.backgrounds.pink};
+    color: ${(p) => p.theme.colors.typography.lighter};
+`;
 
 const Modal = styled.div`
     position: absolute;
@@ -56,35 +59,40 @@ const Modal = styled.div`
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-`
+`;
 
-const Noti = styled.li<{ viewed?:boolean }>`
+const Noti = styled.li<{ viewed?: boolean }>`
     width: 100%;
     height: 50px;
     margin: 2px 0;
-    background-color: ${p => p.theme.colors.details.secondary1};
+    background-color: ${(p) => p.theme.colors.details.secondary1};
     border-radius: 10px;
     cursor: pointer;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    &:hover{
+    &:hover {
         background-color: #c779ff32;
     }
-    
-    ${p => p.viewed && css`background-color:white`}
-`
 
-const Notifications:FC<P> = ({role}) => {
+    ${(p) =>
+        p.viewed &&
+        css`
+            background-color: white;
+        `}
+`;
 
-    const {notifications, applicant, company} = useSelector((state:any)=> state.userReducer);
-    const dispatch = useDispatch()
+const Notifications: FC<P> = ({ role }) => {
+    const { notifications, applicant, company } = useSelector(
+        (state: any) => state.userReducer
+    );
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        if(role === 'applicant'){
-            dispatch(getNotifications(role, applicant.id))
-        }else if(role === 'company'){
-            dispatch(getNotifications(role, company.id))
+        if (role === "applicant") {
+            dispatch(getNotifications(role, applicant.id));
+        } else if (role === "company") {
+            dispatch(getNotifications(role, company.id));
         }
     }, []);
 
@@ -94,19 +102,26 @@ const Notifications:FC<P> = ({role}) => {
         setModal(!modal);
     };
 
-  return <NotCont>
+    return (
+        <NotCont>
+            <NotBut onClick={handleNotif} modal={modal}>
+                {"●"}
+                {notifications.length && !modal && (
+                    <Count>{notifications.length}</Count>
+                )}
+            </NotBut>
 
-    <NotBut onClick={handleNotif} modal={modal} >
-        {'●'}
-        {notifications.length && !modal &&<Count>{notifications.length}</Count>}
-    </NotBut>
-
-    {modal && <Modal>
-        {notifications.map((not:any)=>
-            <Noti key={not.id} viewed={not.viewed}>{not.message}</Noti>
-        )}</Modal>
-    }
-  </NotCont>;
+            {modal && (
+                <Modal>
+                    {notifications.map((not: any) => (
+                        <Noti key={not.id} viewed={not.viewed}>
+                            {not.message}
+                        </Noti>
+                    ))}
+                </Modal>
+            )}
+        </NotCont>
+    );
 };
 
 export default Notifications;

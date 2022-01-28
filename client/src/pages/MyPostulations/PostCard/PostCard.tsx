@@ -1,48 +1,65 @@
-import { FC, useState } from 'react';
+import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import FavouritesButton from "../../../components/FavouritesButton";
-import img from '../../../assets/cocacola-logo.jpg'
+import img from "../../../assets/cocacola-logo.jpg";
 
 import {
-    ContenedorA, ContenedorB, Box, Img, ContenedorC, Title, P, ContenedorB2,
-    ContenedorF, P3,
-} from './styles'
-import PostulationState from '../PostulationState/PostulationState';
+    ContenedorA,
+    ContenedorB,
+    Box,
+    Img,
+    ContenedorC,
+    Title,
+    P,
+    ContenedorB2,
+    ContenedorF,
+    P3,
+} from "./styles";
+import PostulationState from "../PostulationState/PostulationState";
 
 type PostArgs = {
-    postId: number,
-    applicantId: number,
-    state: string,
-    created_at: string,
+    postId: number;
+    applicantId: number;
+    state: string;
+    created_at: string;
     post: {
-        id: number,
-        companyId: number,
-        title: string,
-        location: string,
-    }
+        id: number;
+        companyId: number;
+        title: string;
+        location: string;
+    };
 };
 
-const PostCard = ({ postId, applicantId, state, created_at, post }: PostArgs) => {
+const PostCard = ({
+    postId,
+    applicantId,
+    state,
+    created_at,
+    post,
+}: PostArgs) => {
     return (
         <>
             <ContenedorA>
                 <ContenedorB>
                     <Box>
-                        <Link to={`/company-profile/${post.companyId}`}> {/* Hay rutas que lleven a una empresa en especifico?? */}
+                        <Link to={`/company/${post.companyId}`}>
+                            {" "}
+                            {/* Hay rutas que lleven a una empresa en especifico?? */}
                             <Img src={img} alt="img-logo-company" />
                         </Link>
                     </Box>
                     <ContenedorC>
                         <div>
                             <Title>{post.title}</Title>
-                            <P>
-                                {post.location}
-                            </P>
+                            <P>{post.location}</P>
                         </div>
-
                     </ContenedorC>
                     <ContenedorB2>
-                        <PostulationState postId={postId} state={state} />
+                        <PostulationState
+                            postId={postId}
+                            state={state}
+                            companyId={post.companyId}
+                        />
                     </ContenedorB2>
                 </ContenedorB>
                 <ContenedorF>
@@ -51,7 +68,7 @@ const PostCard = ({ postId, applicantId, state, created_at, post }: PostArgs) =>
                 </ContenedorF>
             </ContenedorA>
         </>
-    )
+    );
 };
 
 export default PostCard;
