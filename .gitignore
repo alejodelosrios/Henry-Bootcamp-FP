@@ -103,9 +103,6 @@ dist
 # TernJS port file
 .tern-port
 
-# package-lock.json
-package-lock.json
-
 # mac-config-files
 .DS_Store
 api/prisma/migrations/migration_lock.toml
