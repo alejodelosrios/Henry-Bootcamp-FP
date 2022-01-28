@@ -11,17 +11,9 @@ interface Props {
     user: any
 };
 
-export const Profile: FC<Props> = ({ user }) => {
-    console.log(user)
+export const Profile: FC<Props> = ({ user }) => {    
     user = true;
-    let educationFlag = false;
-    let languageFlag = false;
-
-    // const isLoading = user === false;
-    const isLoading = false;
-    if (isLoading) {
-    return <div>Loading...</div>;
-    } else if (user) {
+    if (user) {
     return (
         <MainDiv>
             <ContactInfoComp/>

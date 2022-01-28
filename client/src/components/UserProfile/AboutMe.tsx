@@ -17,7 +17,7 @@ import {
 export const AboutMe = () => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.userReducer);
+    const user = useSelector((state: any) => state.userReducer.applicant);
     console.log(user)
     const [userInfo, setUserInfo] = useState({
         about: user.about,

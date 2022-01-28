@@ -23,7 +23,8 @@ import {
 export const ContactInfoComp = () => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.userReducer);
+    const user = useSelector((state: any) => state.userReducer.applicant);
+    const mail = useSelector((state: any) => state.userReducer);
     console.log(user)
     const [userInfo, setUserInfo] = useState({
         // firstName: user.firstName,
@@ -66,7 +67,7 @@ export const ContactInfoComp = () => {
                 </Header>
                     <EachContainer>
                         <SubTitles>Mail:</SubTitles>
-                        <ParagraphStyle>{user.email}</ParagraphStyle>
+                        <ParagraphStyle>{mail.email}</ParagraphStyle>
                     </EachContainer>
                     <EachContainer>
                         <SubTitles>Teléfono:</SubTitles>

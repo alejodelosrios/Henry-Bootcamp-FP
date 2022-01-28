@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Logout } from "../Logout";
@@ -7,6 +8,7 @@ import Notifications from "../Notifications";
 type Props = {
   role: string;
 };
+
 
 const NavLinks = styled.nav`
   z-index: 1000;
@@ -46,6 +48,8 @@ const PrivateMenu: FC<Props> = ({ role }) => {
     isAbout = true;
   }
   console.log(isAbout);
+  
+  const user = useSelector((state: any) => state.userReducer.applicant);
 
   return (
     <>
@@ -63,6 +67,9 @@ const PrivateMenu: FC<Props> = ({ role }) => {
             </Link>
             <Link to="/my-applications" style={{ textDecoration: "none", cursor:"default"  }}>
               <A>{"Mis Postulaciones"}</A>
+            </Link>
+            <Link to='/profile'>
+              {user.firstName + ' ' + user.lastName}
             </Link>
           </>
         ) : role === "company" ? (
