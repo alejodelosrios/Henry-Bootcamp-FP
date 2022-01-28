@@ -84,17 +84,26 @@ module.exports = {
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
-      const applicantUpdate = await prisma.applicant.update({
+      const applicantPool = await prisma.applicantPool.create({
+        data: {
+          applicantId: applicantId,
+          postId: postId
+        }
+      })
+      const applicantUpdate = await prisma.applicant.findFirst({
         where: {
           id: Number(applicantId),
         },
-        data: {
+        include: {
           postulations: {
-            connect: [{ id: Number(postId) }],
-          },
-        },
+            include: {
+              post: true
+            }
+          }
+        }
       });
-      res.json(applicantUpdate);
+      const postulations = applicantUpdate && applicantUpdate.postulations
+      res.json(postulations);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);

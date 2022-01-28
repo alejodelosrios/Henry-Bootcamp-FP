@@ -4,7 +4,8 @@ import img from "../assets/iStock-1.jpg";
 import FavouritesButton from "./FavouritesButton";
 
 type PostArgs = {
-  id: Number;
+  postId: number;
+  companyId: number;
   title: String;
   location: {
     country: String;
@@ -93,11 +94,11 @@ const ContenedorF = styled.div`
 `;
 
 const Title = styled.h4`
-      margin: 0px;
-      font-size: 20px;
-      font-weight: 30px;
-      color: #757577;
-    `;
+  margin: 0px;
+  font-size: 20px;
+  font-weight: 30px;
+  color: #757577;
+`;
 const P = styled.p`
   font-size: 12px;
   color: #757577;
@@ -113,7 +114,8 @@ const P3 = styled.p`
 `;
 
 const Post = ({
-  id,
+  postId,
+  companyId,
   title,
   location,
   //experience,
@@ -129,12 +131,10 @@ const Post = ({
         </Box>
         <ContenedorC>
           <div>
-            <Link to={`/post-detail/${id}`}>
+            <Link to={`/company/${companyId}/post/${postId}`}>
               <Title>{title}</Title>
             </Link>
-            <P>
-              {location}
-            </P>
+            <P>{location}</P>
           </div>
           <ContenedorB2>
             <ContenedorD>
@@ -160,7 +160,7 @@ const Post = ({
       </ContenedorB>
       <ContenedorF>
         <P3>{startDate}</P3>
-        <FavouritesButton postId={id} />
+        <FavouritesButton postId={postId} />
       </ContenedorF>
     </ContenedorA>
   );

@@ -125,6 +125,16 @@ const userReducer = (state = initialState, action: Action) => {
           ...state,
           languages: state.languages.filter((exp: any) => exp.id !== action.payload)
         }
+      case ActionType.GET_NOTIFICATIONS:
+        return {
+          ...state,
+          notifications: action.payload
+        }
+      case ActionType.JOB_APPLICATION:
+        return {
+          ...state,
+          postulations: action.payload
+        }
     default:
       return state;
   }

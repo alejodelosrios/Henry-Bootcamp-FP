@@ -37,7 +37,7 @@ model Applicant {
   skillTags     Tag[]
   notifications Notification[]
   followed      Company[]
-  postulations  Post[]         @relation("_UserToPostulations")
+  postulations  ApplicantPool[]
   favourites    Post[]         @relation("_UserToFavourites")
 }
 
@@ -76,12 +76,21 @@ model Post {
   startDate    String
   endDate      String
   tags         String[]
-  applicants   Applicant[] @relation("_UserToPostulations")
+  applicants   ApplicantPool[]
   favoritedBy  Applicant[] @relation("_UserToFavourites")
   //RELACION CON CATEGORY
   categoryId   Int
   category     Category    @relation(fields: [categoryId], references: [id])
   //=============
+}
+
+model ApplicantPool {
+  id            Int           @id @default(autoincrement())
+  status        String?       @default("inProcess")
+  applicant     Applicant     @relation(fields: [applicantId], references: [id])
+  applicantId   Int
+  post          Post          @relation(fields: [postId], references: [id])
+  postId        Int
 }
 
 model Experience {
@@ -145,7 +154,6 @@ model Tag {
 model Notification {
   id          Int               @id @default(autoincrement())
   message     String
-  viewed      Boolean?          @default(false)
   //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
   typeId      Int
   type        notificationTypes @relation(fields: [typeId], references: [id])
