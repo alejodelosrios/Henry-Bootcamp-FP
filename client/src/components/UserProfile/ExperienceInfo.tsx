@@ -8,8 +8,9 @@ export const ExperienceInfoComp = () => {
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
-    const expArray = useSelector((state: any) => state.userReducer.experience);
-    
+    const expArray = useSelector((state: any) => state.userReducer.applicant.experience);
+    console.log(expArray);
+
     const [userExperience, setUserExperience] = useState(
         {
             id: '',
@@ -20,7 +21,7 @@ export const ExperienceInfoComp = () => {
             description: ''
         }
     );
-    
+
         function editFunction(exp: any) {
             flag === 0 ? setFlag(100) : setFlag(0);
             overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
@@ -34,13 +35,13 @@ export const ExperienceInfoComp = () => {
                 description: exp.description
             });
     }
-    
+
     function updateFunction() {
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         dispatch(updateUserExp(userExperience));
-        
+
     }
 
     function closeModal() {
@@ -48,13 +49,13 @@ export const ExperienceInfoComp = () => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         addDisplayFlag === 'none' ? setAddDisplayFlag('flex') : setAddDisplayFlag('none');
     }
-    
+
     function handleChange(e: any) {
         setUserExperience({...userExperience, [e.target.name]: e.target.value})
     }
-    
+
     const [addDisplayFlag, setAddDisplayFlag] = useState('none');
-    
+
     function addExperience() {
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
@@ -78,7 +79,7 @@ export const ExperienceInfoComp = () => {
             description: ''
         }
         );
-        
+
     function saveExperience() {
         setId(id + 1);
         flag === 0 ? setFlag(100) : setFlag(0);
@@ -101,12 +102,12 @@ export const ExperienceInfoComp = () => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
     }
-    
+
     return (
         <Experience>
             <Header>
                 <Titles>Experiencia</Titles>
-            </Header>                    
+            </Header>
             {expArray.map((exp: any) => (
                 <ExperienceCard className='experience-card' key={exp.id}>
                     <Header>
@@ -123,7 +124,7 @@ export const ExperienceInfoComp = () => {
                     </EachContainer>
                     <EachContainer>
                         <SubTitles>Desde:</SubTitles>
-                        <ParagraphStyle>{exp.startDate}</ParagraphStyle> 
+                        <ParagraphStyle>{exp.startDate}</ParagraphStyle>
                     </EachContainer>
                     <EachContainer>
                         <SubTitles>Hasta:</SubTitles>
@@ -155,7 +156,7 @@ export const ExperienceInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                    <EachContainer>                    
+                    <EachContainer>
                         <SubTitles>Empresa:</SubTitles>
                         <EditInput
                             value={userExperience.company}
@@ -190,7 +191,7 @@ export const ExperienceInfoComp = () => {
                         ></EditInput>
                     </EachContainer>
                     <EachContainer>
-                        <SubTitles>Descripción:</SubTitles>                    
+                        <SubTitles>Descripción:</SubTitles>
                         <EditTextArea
                             value={userExperience.description}
                             name="description"
@@ -199,7 +200,7 @@ export const ExperienceInfoComp = () => {
                 </EachContainer>
                 <Header>
                     <Edit onClick={() => deleteFunction(userExperience.id)}>Borrar</Edit>
-                    <Edit onClick={() => updateFunction()}>Guardar</Edit>                
+                    <Edit onClick={() => updateFunction()}>Guardar</Edit>
                 </Header>
             </div>
             <div className='overlay' style={{
@@ -218,7 +219,7 @@ export const ExperienceInfoComp = () => {
 
             {
                 (expArray.length >= 0 && expArray.length < 4) ?
-                    
+
                     <NoExperience className='experience-card'>
                         <Edit onClick={() => addExperience()}>Añadir experiencia</Edit>
                     </NoExperience>
@@ -244,7 +245,7 @@ export const ExperienceInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                <EachContainer>                    
+                <EachContainer>
                         <SubTitles>Empresa:</SubTitles>
                         <EditInput
                             value={addUserExperience.company}
@@ -279,7 +280,7 @@ export const ExperienceInfoComp = () => {
                         ></DateInput>
                     </EachContainer>
                     <EachContainer>
-                        <SubTitles>Descripción:</SubTitles>                    
+                        <SubTitles>Descripción:</SubTitles>
                         <EditTextArea
                             value={addUserExperience.description}
                             name="description"

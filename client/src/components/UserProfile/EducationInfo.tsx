@@ -9,8 +9,8 @@ export const EducationInfoComp = () => {
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
-    const educationArray = useSelector((state: any) => state.userReducer.education);
-    
+    const educationArray = useSelector((state: any) => state.userReducer.applicant.education);
+
     const [userEducation, setUserEducation] = useState(
         {
             id: '',
@@ -78,7 +78,7 @@ export const EducationInfoComp = () => {
             institution: ''
         }
     );
-    
+
     function saveEducation() {
         setId(id + 1);
         flag === 0 ? setFlag(100) : setFlag(0);
@@ -99,7 +99,7 @@ export const EducationInfoComp = () => {
         dispatch(deleteUserEducation(id))
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
-        displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none'); 
+        displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
     }
 
     return (
@@ -155,7 +155,7 @@ export const EducationInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                <EachContainer>                    
+                <EachContainer>
                         <SubTitles>Carrera:</SubTitles>
                         <EditInput
                             value={userEducation.degree}
@@ -190,7 +190,7 @@ export const EducationInfoComp = () => {
                         ></EditInput>
                     </EachContainer>
                     <EachContainer>
-                        <SubTitles>Descripción:</SubTitles>                    
+                        <SubTitles>Descripción:</SubTitles>
                         <EditTextArea
                             value={userEducation.description}
                             name="description"
@@ -199,7 +199,7 @@ export const EducationInfoComp = () => {
                 </EachContainer>
                 <Header>
                     <Edit onClick={() => deleteFunction(userEducation.id)}>Borrar</Edit>
-                    <Edit onClick={() => updateFunction()}>Guardar</Edit>                
+                    <Edit onClick={() => updateFunction()}>Guardar</Edit>
                 </Header>
             </div>
             <div className='overlay' style={{
@@ -218,7 +218,7 @@ export const EducationInfoComp = () => {
 
             {
                 (educationArray.length >= 0 && educationArray.length < 4) ?
-                    
+
                     <NoExperience className='experience-card'>
                         <Edit onClick={() => addEducation()}>Añadir educación</Edit>
                     </NoExperience>
@@ -245,7 +245,7 @@ export const EducationInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                <EachContainer>                    
+                <EachContainer>
                         <SubTitles>Carrera:</SubTitles>
                         <EditInput
                             value={addUserEducationState.degree}
@@ -280,7 +280,7 @@ export const EducationInfoComp = () => {
                         ></DateInput>
                     </EachContainer>
                     <EachContainer>
-                        <SubTitles>Descripción:</SubTitles>                    
+                        <SubTitles>Descripción:</SubTitles>
                         <EditTextArea
                             value={addUserEducationState.description}
                             name="description"
