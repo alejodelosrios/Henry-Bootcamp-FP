@@ -4,7 +4,8 @@ import { EducationInfoComp } from './EducationInfo';
 import { ExperienceInfoComp } from './ExperienceInfo';
 import { LanguagesInfoComp } from './LanguagesInfo';
 import { AboutMe } from './AboutMe';
-import { MainDiv } from './Styles';
+import { LangTagsBox, MainDiv } from './Styles';
+import { SkillTagsComp } from './SkillTags';
 
 interface Props {
     user: any
@@ -26,8 +27,11 @@ export const Profile: FC<Props> = ({ user }) => {
             <ContactInfoComp/>
             <AboutMe/>
             <ExperienceInfoComp />
-            <EducationInfoComp/>
-            <LanguagesInfoComp/>
+            <EducationInfoComp />
+            <LangTagsBox>
+                <LanguagesInfoComp />
+                <SkillTagsComp/>
+            </LangTagsBox>
         </MainDiv>
     );
     } else {
