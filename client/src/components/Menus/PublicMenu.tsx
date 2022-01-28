@@ -24,9 +24,9 @@ const A = styled.button<{ About?: boolean }>`
   font-size: 20px;
   color: ${(props) => (props.About ? "#FFFFFF" : "black")};
   font-weight: bolder;
-  margin-right: 1rem;
+  margin: 0 2rem;
   font-family: Open sans/bold;
-  padding: 0px 1rem;
+  cursor: pointer;
 `;
 
 const ButtonsContainer = styled.div`
@@ -47,13 +47,13 @@ const PublicMenu: FC = () => {
   return (
     <>
       <NavLinks className="multi-options">
-        <Link to="/home" style={{ textDecoration: "none" }}>
+        <Link to="/home" style={{ textDecoration: "none", cursor:"default" }}>
           <A About={isAbout}>{"Inicio"}</A>
         </Link>
-        <Link to="/about-us" style={{ textDecoration: "none" }}>
+        <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
           <A About={isAbout}>{"Nosotros"}</A>
         </Link>
-        <Link to="/frequent-questions" style={{ textDecoration: "none" }}>
+        <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
           <A About={isAbout}>{"Preguntas Frecuentes"}</A>
         </Link>
       </NavLinks>
