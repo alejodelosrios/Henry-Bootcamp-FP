@@ -83,13 +83,13 @@ async function main(){
 
 
     //CREAR NOTIFICATION TYPES
-    notificationTypes.forEach(async type => {
-        await prisma.notificationTypes.create({
-            data: {
-                name: type
-            }
-        })
-    })
+    // notificationTypes.forEach(async type => {
+    //     await prisma.notificationTypes.create({
+    //         data: {
+    //             name: type
+    //         }
+    //     })
+    // })
 
 
     //CREAR ADMIN
@@ -288,7 +288,7 @@ async function main(){
         await prisma.notification.create({
             data: {
                 message: faker.lorem.paragraph(),
-                typeId: faker.random.arrayElement([1,2]),
+                type: faker.random.arrayElement(["alert","update", "application"]),
                 applicantId: 1+Math.floor(Math.random()*(applicants-1))
             }
         })
@@ -298,7 +298,7 @@ async function main(){
         await prisma.notification.create({
             data: {
                 message: faker.lorem.paragraph(),
-                typeId: faker.random.arrayElement([1,2]),
+                type: faker.random.arrayElement(["alert","update", "application"]),
                 companyId: 1+Math.floor(Math.random()*(companies-1))
             }
         })
