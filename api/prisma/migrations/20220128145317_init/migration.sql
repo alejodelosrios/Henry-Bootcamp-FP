@@ -58,6 +58,16 @@ CREATE TABLE "Post" (
 );
 
 -- CreateTable
+CREATE TABLE "ApplicantPool" (
+    "id" SERIAL NOT NULL,
+    "status" TEXT DEFAULT E'inProcess',
+    "applicantId" INTEGER NOT NULL,
+    "postId" INTEGER NOT NULL,
+
+    CONSTRAINT "ApplicantPool_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Experience" (
     "id" SERIAL NOT NULL,
     "position" TEXT NOT NULL,
@@ -161,12 +171,6 @@ CREATE TABLE "_ApplicantToCompany" (
 );
 
 -- CreateTable
-CREATE TABLE "__UserToPostulations" (
-    "A" INTEGER NOT NULL,
-    "B" INTEGER NOT NULL
-);
-
--- CreateTable
 CREATE TABLE "__UserToFavourites" (
     "A" INTEGER NOT NULL,
     "B" INTEGER NOT NULL
@@ -191,12 +195,6 @@ CREATE UNIQUE INDEX "_ApplicantToCompany_AB_unique" ON "_ApplicantToCompany"("A"
 CREATE INDEX "_ApplicantToCompany_B_index" ON "_ApplicantToCompany"("B");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "__UserToPostulations_AB_unique" ON "__UserToPostulations"("A", "B");
-
--- CreateIndex
-CREATE INDEX "__UserToPostulations_B_index" ON "__UserToPostulations"("B");
-
--- CreateIndex
 CREATE UNIQUE INDEX "__UserToFavourites_AB_unique" ON "__UserToFavourites"("A", "B");
 
 -- CreateIndex
@@ -213,6 +211,12 @@ ALTER TABLE "Post" ADD CONSTRAINT "Post_companyId_fkey" FOREIGN KEY ("companyId"
 
 -- AddForeignKey
 ALTER TABLE "Post" ADD CONSTRAINT "Post_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "Category"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ApplicantPool" ADD CONSTRAINT "ApplicantPool_applicantId_fkey" FOREIGN KEY ("applicantId") REFERENCES "Applicant"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ApplicantPool" ADD CONSTRAINT "ApplicantPool_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Experience" ADD CONSTRAINT "Experience_applicantId_fkey" FOREIGN KEY ("applicantId") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -246,12 +250,6 @@ ALTER TABLE "_ApplicantToCompany" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("
 
 -- AddForeignKey
 ALTER TABLE "_ApplicantToCompany" ADD FOREIGN KEY ("B") REFERENCES "Company"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "__UserToPostulations" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "__UserToPostulations" ADD FOREIGN KEY ("B") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "__UserToFavourites" ADD FOREIGN KEY ("A") REFERENCES "Applicant"("id") ON DELETE CASCADE ON UPDATE CASCADE;
