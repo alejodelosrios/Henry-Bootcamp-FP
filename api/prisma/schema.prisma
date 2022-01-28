@@ -154,9 +154,11 @@ model Tag {
 model Notification {
   id          Int               @id @default(autoincrement())
   message     String
-  //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
-  typeId      Int
-  type        notificationTypes @relation(fields: [typeId], references: [id])
+  viewed      Boolean?          @default(false)
+  type        String
+
+  // typeId      Int    //la relacion esta debajo por si despues queremos agregarla de nuevo
+
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?
@@ -168,11 +170,11 @@ model Notification {
   //=============
 }
 
-model notificationTypes {
-  id           Int            @id @default(autoincrement())
-  name         String
-  notification Notification[]
-}
+// model notificationTypes {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   notification Notification[]
+// }
 
 model News {
   id          Int    @id @default(autoincrement())
