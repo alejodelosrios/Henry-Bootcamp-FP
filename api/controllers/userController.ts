@@ -107,7 +107,7 @@ module.exports = {
               notifications: true,
               followed: true,
               postulations: true,
-              favourites: true
+              favorites: true
             }
           },
           company: {
