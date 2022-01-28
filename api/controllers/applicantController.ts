@@ -90,7 +90,7 @@ module.exports = {
           postId: Number(postId)
         }
       })
-      if(!checkIfApplicantPoolExists.hasOwnProperty("status")){
+      if(checkIfApplicantPoolExists && !checkIfApplicantPoolExists.hasOwnProperty("status")){
         const applicantPool = await prisma.applicantPool.create({
           data: {
             applicantId: applicantId,
@@ -132,7 +132,7 @@ module.exports = {
         }
       })
 
-      const isAlreadyFavourite = applicant.favourites.find(favourite => favourite.id === postId)
+      const isAlreadyFavourite = applicant && applicant.favourites.find(favourite => favourite.id === postId)
 
       if(isAlreadyFavourite) {
         const favouriteUpdate = await prisma.applicant.update({

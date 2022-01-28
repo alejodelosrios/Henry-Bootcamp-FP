@@ -11,7 +11,7 @@ const tagsRouter = require("./tags");
 const categoryRouter = require("./category");
 const newsRouter = require("./news");
 const notificationRouter = require("./notification");
-const notificationTypeRouter = require("./notificationTypes");
+// const notificationTypeRouter = require("./notificationTypes");
 const reviewRouter = require("./review");
 
 
@@ -29,7 +29,7 @@ mainRouter.use("/tags", tagsRouter);
 mainRouter.use("/category", categoryRouter);
 mainRouter.use("/news", newsRouter);
 mainRouter.use("/notification", notificationRouter);
-mainRouter.use("/notification/types", notificationTypeRouter);
+// mainRouter.use("/notification/types", notificationTypeRouter);
 mainRouter.use("/review", reviewRouter);
 
 
