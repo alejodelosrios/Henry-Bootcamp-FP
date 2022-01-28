@@ -8,9 +8,8 @@ newsRouter.post("/create", newsController.create);
 
 //GET
 newsRouter.get("/index", newsController.index);
-
-//GET NEWS BY ID
 newsRouter.get("/:newsId", newsController.newsByNewsId);
+
 //UPDATE
 newsRouter.put("/update/:newsId", newsController.update);
 

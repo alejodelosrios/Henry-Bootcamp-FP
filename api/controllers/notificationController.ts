@@ -28,6 +28,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   index: async (req: Request, res: Response) => {
     try {
       const notification = await prisma.notification.findMany();
@@ -82,6 +83,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   delete: async (req: Request, res: Response) => {
     try {
       const { notificationId } = req.params;

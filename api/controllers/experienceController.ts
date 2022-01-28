@@ -29,6 +29,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   update: async (req: Request, res: Response) => {
     try {
       const { experienceId } = req.params;
@@ -58,6 +59,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   delete: async (req: Request, res: Response) => {
     try {
       const { experienceId } = req.params;

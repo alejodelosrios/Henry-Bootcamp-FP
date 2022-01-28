@@ -12,7 +12,6 @@ const categoryRouter = require("./category");
 const newsRouter = require("./news");
 const notificationRouter = require("./notification");
 // const notificationTypeRouter = require("./notificationTypes");
-const reviewRouter = require("./review");
 
 
 
@@ -30,7 +29,6 @@ mainRouter.use("/category", categoryRouter);
 mainRouter.use("/news", newsRouter);
 mainRouter.use("/notification", notificationRouter);
 // mainRouter.use("/notification/types", notificationTypeRouter);
-mainRouter.use("/review", reviewRouter);
 
 
 module.exports = mainRouter;

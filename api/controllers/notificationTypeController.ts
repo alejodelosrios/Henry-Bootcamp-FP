@@ -17,6 +17,7 @@
 //       res.status(400).send(error);
 //     }
 //   },
+
 //   index: async (req: Request, res: Response) => {
 //     try {
 //       const notificationType = await prisma.notificationTypes.findMany();
@@ -51,6 +52,7 @@
 //       res.status(400).send(error);
 //     }
 //   },
+
 //   delete: async (req: Request, res: Response) => {
 //     try {
 //       const { typeId } = req.params;

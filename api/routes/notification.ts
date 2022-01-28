@@ -3,12 +3,12 @@ const notificationController = require("../controllers/notificationController");
 
 const notificationRouter = Router();
 
+//POST
+notificationRouter.post("/create", notificationController.create);
+
 //GET
 notificationRouter.get("/index", notificationController.index);
 notificationRouter.get("/:email", notificationController.notificationByNotificationId);
-
-//POST
-notificationRouter.post("/create", notificationController.create);
 
 //PUT
 notificationRouter.put("/update/:notificationId", notificationController.update);

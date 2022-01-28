@@ -3,13 +3,13 @@ const postsController = require("../controllers/postsController");
 
 const postsRouter = Router();
 
-//GET
-postsRouter.get("/index", postsController.index);
-postsRouter.get("/:postId", postsController.postById);
-
 //POST
 postsRouter.post("/filter", postsController.filter);
 postsRouter.post("/create/:companyId", postsController.create);
+
+//GET
+postsRouter.get("/index", postsController.index);
+postsRouter.get("/:postId", postsController.postById);
 
 //PUT
 

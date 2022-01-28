@@ -51,6 +51,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   update: async (req: Request, res: Response) => {
     try {
       const { newsId } = req.params;

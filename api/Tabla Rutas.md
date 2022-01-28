@@ -22,11 +22,11 @@ Las rutas son las siguientes:
 >   POST    /create/:userId         (crea un nuevo applicant)                                 => recibe userId por params y objeto applicant (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todos los applicants)                           => no recibe parametros
 >   GET     /:applicantId           (devuelve un applicant especifico con TODA su info)       => recibe applicantId por params
->   PUT     /update/:applicantId    (actualiza la informacion de un applicant)                => recibe applicantId por params y objeto con todas las propiedades a actualizar
 >   PUT     /apply                  (postula a un applicant para un post)                     => recibe objeto con applicantId y postId
->   PUT     /addfavourite           (añade un post a los favoritos de un applicant)           => recibe objeto con applicantId y postId
+>   PUT     /favorite		        (añade o elimina un post a los favoritos de un applicant) => recibe objeto con applicantId y postId
 >   PUT     /follow                 (añade una compañia a los followed de un applicant)       => recibe objeto con applicantId y companyId
 >   PUT     /tags                   (añade tags al perfil de un applicant)                    => recibe objeto con applicantId y arreglo de tags a relacionar
+>   PUT     /update/:applicantId    (actualiza la informacion de un applicant)                => recibe applicantId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:applicantId    (borra un applicant especifico)                           => recibe applicantId por params
 
 
@@ -37,6 +37,7 @@ Las rutas son las siguientes:
 >   GET     /index                  (devuelve todas las company)                              => no recibe parametros
 >   GET     /:companyId             (devuelve una company especifica con TODA su info)        => recibe companyId por params
 >   GET     /posts/:companyId       (devuelve todos los posts de una company)                 => recibe companyId por params
+>   PUT     /application            (actualiza el estado de un aplicante de una postulacion)  => recibe objeto con applicantId, postId y newStatus
 >   PUT     /update/:companyId      (actualiza la informacion de una company)                 => recibe companyId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:companyId      (borra una company especifica)                            => recibe companyId por params
 
@@ -53,21 +54,21 @@ Las rutas son las siguientes:
 /experience
 
 >   POST    /create/:applicantId    (crea una nueva experience y la asocia a un applicant)    => recibe applicantId por params y objeto experience (mirar en /prisma/seed.ts para los modelos)
->   UPDATE  /update/:experienceId   (actualiza la informacion de un experience)               => recibe experienceId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:experienceId   (actualiza la informacion de un experience)               => recibe experienceId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:experienceId   (borra una experience especifica)                         => recibe experienceId por params
 
 
 /education
 
 >   POST    /create/:applicantId    (crea una nueva education y la asocia a un applicant)     => recibe applicantId por params y objeto education (mirar en /prisma/seed.ts para los modelos)
->   UPDATE  /update/:educationId    (actualiza la informacion de un education)                => recibe educationId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:educationId    (actualiza la informacion de un education)                => recibe educationId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:educationId    (borra una education especifica)                          => recibe educationId por params
 
 
 /language
 
 >   POST    /create/:applicantId    (crea una nueva languages y la asocia a un applicant)     => recibe applicantId por params objeto languages (mirar en /prisma/seed.ts para los modelos)
->   UPDATE  /update/:languageId     (actualiza la informacion de un languages)                => recibe languageId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:languageId     (actualiza la informacion de un languages)                => recibe languageId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:languageId     (borra una languages especifica)                          => recibe languageId por params
 
 
@@ -75,7 +76,7 @@ Las rutas son las siguientes:
 
 >   POST    /create                 (crea una category)                                       => recibe objeto category (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todas las categorias existentes)                => no recibe parametros
->   UPDATE  /update/:categoryId     (actualiza una category)                                  => recibe categoryId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:categoryId     (actualiza una category)                                  => recibe categoryId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:categoryId     (borra una category especifica)                           => recibe categoryId por params
 
 
@@ -83,7 +84,8 @@ Las rutas son las siguientes:
 
 >   POST    /create                 (crea una tags)                                           => recibe objeto tags (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todas las tags existentes)                      => no recibe parametros
->   UPDATE  /update/:tagId          (actualiza una tags)                                      => recibe id por params y objeto con todas las propiedades a actualizar
+>   GET     /:tagId                 (devuelve una tag especifica)                             => recibe el tagId por params
+>   PUT     /update/:tagId          (actualiza una tags)                                      => recibe id por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:tagId          (borra una tags especifica)                               => recibe id por params
 
 
@@ -92,16 +94,16 @@ Las rutas son las siguientes:
 >   POST    /create                 (crea una notification)                                   => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todas las notification existentes)              => no recibe parametros
 >   GET     /:notificationId        (devuelve una notification especifica)                    => recibe notificationId por params
->   UPDATE  /update/:notificationId (actualiza una notification)                              => recibe notificationId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:notificationId (actualiza una notification)                              => recibe notificationId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:notificationId (borra una notification especifica)                       => recibe notificationId por params
 
 
-/notification/types
+<!-- /notification/types
 
 >   POST    /create                 (crea un notification-type)                               => recibe objeto notification (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todos los notification-types existentes)        => no recibe parametros
->   UPDATE  /update/:typeId         (actualiza un notification-type)                          => recibe id por params y objeto con todas las propiedades a actualizar
->   DELETE  /delete/:typeId         (borra un notification-type especifico)                   => recibe id por params 
+>   PUT     /update/:typeId         (actualiza un notification-type)                          => recibe id por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:typeId         (borra un notification-type especifico)                   => recibe id por params  -->
 
 
 /news
@@ -109,7 +111,7 @@ Las rutas son las siguientes:
 >   POST    /create                 (crea una news)                                           => recibe objeto news (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todas las news existentes)                      => no recibe parametros
 >   GET     /:newsId                (devuelve una news especifica)                            => recibe newsId por params
->   UPDATE  /update/:newsId         (actualiza una news)                                      => recibe newsId por params y objeto con todas las propiedades a actualizar
+>   PUT     /update/:newsId         (actualiza una news)                                      => recibe newsId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:newsId         (borra una news especifica)                               => recibe newsId por params
 
 
