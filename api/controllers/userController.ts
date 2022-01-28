@@ -93,15 +93,55 @@ module.exports = {
     try {
       const { email } = req.params;
       if (!email) return res.send("Debes enviar el email del usuario por params");
-      const user = await prisma.user.findMany({
+      const user = await prisma.user.findFirst({
         where: {
           email: email,
         },
         include: {
-          applicant: true,
-          company: true
+          applicant: {
+            include: {
+              experience: true,
+              education: true,
+              languages: true,
+              skillTags: true,
+              notifications: true,
+              followed: true,
+              postulations: true,
+              favorites: true
+            }
+          },
+          company: {
+            include: {
+              notifications: true,
+              reviews: true,
+              posts: true,
+              followers: true
+            }
+          }
         }
       });
+      // let formattedPackageForFront
+      // if(user){
+      //   if(user.applicant && "admin applicant".includes(user.role)){
+      //     let {id, userId, ...rest} = user.applicant
+      //     formattedPackageForFront = {
+      //       userId: user.id,
+      //       applicantId: id,
+      //       email: user.email,
+      //       role: user.role,
+      //       ...rest,
+      //     }
+      //   } else if(user.company && "company".includes(user.role)){
+      //     let {id, userId, ...rest} = user.company
+      //     formattedPackageForFront = {
+      //       userId: user.id,
+      //       companyId: id,
+      //       email: user.email,
+      //       role: user.role,
+      //       ...rest,
+      //     }
+      //   }
+      // }
       res.json(user);
     } catch (error) {
       console.log(error);

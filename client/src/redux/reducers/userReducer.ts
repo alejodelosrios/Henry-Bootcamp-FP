@@ -202,10 +202,24 @@ const userReducer = (state = initialState, action: Action) => {
         }
       };
     case ActionType.GET_NOTIFICATIONS:
-      return {
-        ...state,
-        notifications: action.payload,
-      };
+      if (action.payload.role === 'applicant') {
+        return {
+          ...state,
+          applicant: {
+            ...state.applicant, 
+            notifications: action.payload.notifications
+          },
+        }
+      }else if(action.payload.role === 'company'){
+        return {
+          ...state,
+          company: {
+            ...state.company, 
+            notifications: action.payload.notifications
+          },
+        }
+      }else{return state}
+      
     case ActionType.JOB_APPLICATION:
       return {
         ...state,

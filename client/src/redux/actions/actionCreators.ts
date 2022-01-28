@@ -122,7 +122,7 @@ export const getUser =
       return dispatch({
         type: ActionType.GET_USER,
         payload:{
-          data:data[0],
+          data:data,
           modal: false
         }
       });
@@ -319,7 +319,10 @@ export const getNotifications =
       console.log("Notifications actualizadas");
       return dispatch({
         type: ActionType.GET_NOTIFICATIONS,
-        payload: data.notifications,
+        payload: {
+          notifications: data.notifications, 
+          role: role
+        },
       });
     } catch (error) {
       console.log("Ups! algo salió mal");

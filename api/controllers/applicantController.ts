@@ -119,7 +119,7 @@ module.exports = {
     }
   },
 
-  addfavourite: async (req: Request, res: Response) => {
+  addfavorite: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
 
@@ -128,11 +128,11 @@ module.exports = {
           id: Number(applicantId)
         },
         include: {
-          favourites: true
+          favorites: true
         }
       })
 
-      const isAlreadyFavourite = applicant && applicant.favourites.find(favourite => favourite.id === postId)
+      const isAlreadyFavourite = applicant && applicant.favorites.find(favourite => favourite.id === postId)
 
       if(isAlreadyFavourite) {
         const favouriteUpdate = await prisma.applicant.update({
@@ -140,30 +140,30 @@ module.exports = {
             id: Number(applicantId),
           },
           data: {
-            favourites: {
+            favorites: {
               disconnect: [{ id: Number(postId) }],
             },
           },
           include: {
-            favourites: true
+            favorites: true
           }
         });
-        res.json(favouriteUpdate.favourites);
+        res.json(favouriteUpdate.favorites);
       } else {
         const favouriteUpdate = await prisma.applicant.update({
           where: {
             id: Number(applicantId),
           },
           data: {
-            favourites: {
+            favorites: {
               connect: [{ id: Number(postId) }],
             },
           },
           include: {
-            favourites: true
+            favorites: true
           }
         });
-        res.json(favouriteUpdate.favourites);
+        res.json(favouriteUpdate.favorites);
       }
     } catch (error) {
       console.log(error);
@@ -209,7 +209,7 @@ module.exports = {
           notifications: true,
           followed: true,
           postulations: true,
-          favourites: true,
+          favorites: true,
         },
       });
       res.json(userProfile);
