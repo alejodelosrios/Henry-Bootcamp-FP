@@ -83,9 +83,17 @@ const Noti = styled.li<{ viewed?: boolean }>`
 `;
 
 const Notifications: FC<P> = ({ role }) => {
-    const { notifications, applicant, company } = useSelector(
+
+    const { applicant, company } = useSelector(
         (state: any) => state.userReducer
     );
+
+    const notifications = role === 'applicant' 
+        ? applicant.notifications
+        : company.notifications;
+    
+    const viewed = notifications.filter((n:any)=> !n.viewed).length;
+    console.log(notifications);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -106,9 +114,10 @@ const Notifications: FC<P> = ({ role }) => {
         <NotCont>
             <NotBut onClick={handleNotif} modal={modal}>
                 {"●"}
-                {notifications.length && !modal && (
-                    <Count>{notifications.length}</Count>
-                )}
+                {(viewed && !modal)
+                    ? <Count>{viewed}</Count>
+                    : null
+                }
             </NotBut>
 
             {modal && (
