@@ -122,11 +122,13 @@ const Notifications: FC<P> = ({ role }) => {
 
             {modal && (
                 <Modal>
-                    {notifications?.map((not: any) => (
-                        <Noti key={not.id} viewed={not.viewed}>
-                            {not.message}
-                        </Noti>
-                    ))}
+                    {notifications.length
+                        ? (notifications.map((not: any) => (
+                            <Noti key={not.id} viewed={not.viewed}>
+                                {not.message}
+                            </Noti>)))
+                        : 'Aún no tienes notificaciones...'
+                    }
                 </Modal>
             )}
         </NotCont>
