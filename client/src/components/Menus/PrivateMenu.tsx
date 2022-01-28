@@ -52,7 +52,7 @@ const PrivateMenu: FC<Props> = ({role}) => {
                 <A>{"Nosotros"}</A>
               </Link>
               <Link to="/frequent-questions" style={{textDecoration: "none"}}>
-                  <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
+                  <A About={isAbout} >{"Preguntas Frecuentes"}</A>
               </Link>
               <Link to="/my-applications" style={{textDecoration: "none"}}>
                 <A>{"Mis Postulaciones"}</A>
@@ -70,7 +70,7 @@ const PrivateMenu: FC<Props> = ({role}) => {
                   <A>{"Nosotros"}</A>
                 </Link>
                 <Link to="/frequent-questions" style={{textDecoration: "none"}}>
-                  <A About={isAbout} href="">{"Preguntas Frecuentes"}</A>
+                  <A About={isAbout} >{"Preguntas Frecuentes"}</A>
                 </Link>
                 <A>{"Empresas"}</A>
 
