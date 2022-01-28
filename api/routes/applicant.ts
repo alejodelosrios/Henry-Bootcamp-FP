@@ -17,7 +17,7 @@ applicantRouter.put("/update/:applicantId", applicantController.update);
 applicantRouter.put("/apply", applicantController.apply);
 
 // Save the applications that the applicant marked as favorites
-applicantRouter.put("/favourite", applicantController.addfavourite);
+applicantRouter.put("/favorite", applicantController.addfavorite);
 
 // Save the companies that an applicant follows
 applicantRouter.put("/follow", applicantController.follow);
