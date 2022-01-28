@@ -77,7 +77,7 @@ const Favorites: FC<P> = ({ role })=> {
 
             {modal && (
                 <Modal>
-                    {favs.map((post: any) => (
+                    {favs?.map((post: any) => (
                         //Hay que modificar este Post para revisar lo que recibe!!
                         <FavNot>
                             <p>{post.title}</p>

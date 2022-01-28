@@ -92,7 +92,7 @@ const Notifications: FC<P> = ({ role }) => {
         ? applicant.notifications
         : company.notifications;
     
-    const viewed = notifications.filter((n:any)=> !n.viewed).length;
+    const viewed = notifications?.filter((n:any)=> !n.viewed).length;
     console.log(notifications);
     const dispatch = useDispatch();
 
@@ -122,7 +122,7 @@ const Notifications: FC<P> = ({ role }) => {
 
             {modal && (
                 <Modal>
-                    {notifications.map((not: any) => (
+                    {notifications?.map((not: any) => (
                         <Noti key={not.id} viewed={not.viewed}>
                             {not.message}
                         </Noti>
