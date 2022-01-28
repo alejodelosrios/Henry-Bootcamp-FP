@@ -52,36 +52,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  index: async (req: Request, res: Response) => {
-    try {
-      const getAllPost = await prisma.post.findMany();
-      getAllPost.length
-        ? res.status(200).json(getAllPost)
-        : res.status(404).send("No posts found");
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }
-  },
-  postById: async (req: Request, res: Response) => {
-    try {
-      const { postId } = req.params;
-      if (!postId) return res.send("Debes enviar el postId por params");
-      const post = await prisma.post.findFirst({
-        where: {
-          id: Number(postId),
-        },
-        include: {
-          applicants: true,
-          favoritedBy: true
-        }
-      });
-      res.json(post);
-    } catch (error) {
-      console.log(error);
-      res.send(error);
-    }
-  },
+
   filter: async (req: Request, res: Response) => {
     try {
       const {
@@ -210,21 +181,54 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.send(error);
+    }
+  },
+
+  index: async (req: Request, res: Response) => {
+    try {
+      const getAllPost = await prisma.post.findMany();
+      getAllPost.length
+        ? res.status(200).json(getAllPost)
+        : res.status(404).send("No posts found");
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
+  postById: async (req: Request, res: Response) => {
+    try {
+      const { postId } = req.params;
+      if (!postId) return res.send("Debes enviar el postId por params");
+      const post = await prisma.post.findFirst({
+        where: {
+          id: Number(postId),
+        },
+        include: {
+          applicants: true,
+          favoritedBy: true
         }
-    },
-    delete: async (req: Request, res: Response) => {
-      try {
-        const { postId } = req.params;
-        if (!postId) return res.send("Debes enviar el postId por params");
-        const deletedPost = await prisma.post.delete({
-          where: {
-            id: Number(postId),
-          },
-        });
-        res.json(deletedPost);
-      } catch (error) {
-        console.log(error);
-        res.status(400).send(error);
-      }
+      });
+      res.json(post);
+    } catch (error) {
+      console.log(error);
+      res.send(error);
+    }
+  },
+  
+  delete: async (req: Request, res: Response) => {
+    try {
+      const { postId } = req.params;
+      if (!postId) return res.send("Debes enviar el postId por params");
+      const deletedPost = await prisma.post.delete({
+        where: {
+          id: Number(postId),
+        },
+      });
+      res.json(deletedPost);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
   },
 };

@@ -54,6 +54,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   index: async (req: Request, res: Response) => {
     try {
       const applicants = await prisma.applicant.findMany();
@@ -62,25 +63,33 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  tags: async (req: Request, res: Response) => {
+
+  applicantById: async (req: Request, res: Response) => {
     try {
-      const { applicantId, tagIds } = req.body;
-      const applicantUpdate = await prisma.applicant.update({
+      const { applicantId } = req.params;
+      if (!applicantId)
+        return res.send("Debes enviar el applicantId por params");
+      const userProfile = await prisma.applicant.findFirst({
         where: {
           id: Number(applicantId),
         },
-        data: {
-          skillTags: {
-            connect: tagIds.map((tag: number) => ({ id: Number(tag) })),
-          },
+        include: {
+          experience: true,
+          education: true,
+          languages: true,
+          skillTags: true,
+          notifications: true,
+          followed: true,
+          postulations: true,
+          favorites: true,
         },
       });
-      res.json(applicantUpdate);
+      res.json(userProfile);
     } catch (error) {
-      console.log(error);
       res.status(400).send(error);
     }
   },
+
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
@@ -118,7 +127,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-
+  
   addfavorite: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
@@ -169,7 +178,7 @@ module.exports = {
       console.log(error);
       res.status(400).send(error);
     }
-  },
+  }, 
 
   follow: async (req: Request, res: Response) => {
     try {
@@ -192,31 +201,26 @@ module.exports = {
     }
   },
 
-  applicantById: async (req: Request, res: Response) => {
+  tags: async (req: Request, res: Response) => {
     try {
-      const { applicantId } = req.params;
-      if (!applicantId)
-        return res.send("Debes enviar el applicantId por params");
-      const userProfile = await prisma.applicant.findFirst({
+      const { applicantId, tagIds } = req.body;
+      const applicantUpdate = await prisma.applicant.update({
         where: {
           id: Number(applicantId),
         },
-        include: {
-          experience: true,
-          education: true,
-          languages: true,
-          skillTags: true,
-          notifications: true,
-          followed: true,
-          postulations: true,
-          favorites: true,
+        data: {
+          skillTags: {
+            connect: tagIds.map((tag: number) => ({ id: Number(tag) })),
+          },
         },
       });
-      res.json(userProfile);
+      res.json(applicantUpdate);
     } catch (error) {
+      console.log(error);
       res.status(400).send(error);
     }
   },
+
   update: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;
@@ -250,6 +254,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   delete: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;

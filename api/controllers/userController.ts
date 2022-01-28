@@ -80,6 +80,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   index: async (req: Request, res: Response) => {
     try {
       const users = await prisma.user.findMany();
@@ -89,6 +90,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   userByEmail: async (req: Request, res: Response) => {
     try {
       const { email } = req.params;
@@ -148,6 +150,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   update: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
@@ -176,6 +179,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
   delete: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;

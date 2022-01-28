@@ -3,11 +3,11 @@ const categoryController = require("../controllers/categoryController")
 
 const categoryRouter = Router();
 
-//GET
-categoryRouter.get("/index", categoryController.index);
-
 //POST
 categoryRouter.post("/create", categoryController.create);  
+
+//GET
+categoryRouter.get("/index", categoryController.index);
 
 //UPDATE
 categoryRouter.put("/update/:categoryId", categoryController.update)  

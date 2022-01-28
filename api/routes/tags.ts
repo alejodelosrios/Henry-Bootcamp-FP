@@ -3,12 +3,12 @@ const tagsController = require("../controllers/tagsController");
 
 const tagsRouter = Router();
 
+//POST
+tagsRouter.post("/create", tagsController.create);
+
 //GET
 tagsRouter.get("/index", tagsController.index);
 tagsRouter.get("/:tagId", tagsController.tagById);
-
-//POST
-tagsRouter.post("/create", tagsController.create);
 
 //UPDATE
 tagsRouter.put("/update/:tagId", tagsController.update);

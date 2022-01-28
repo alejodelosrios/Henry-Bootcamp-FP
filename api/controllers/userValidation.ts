@@ -22,6 +22,7 @@ module.exports = {
         //else return "No se encontro el usuario"
         //})
     },
+    
     checkIfEmailAvailable: async function (email: string) {
         const users = await prisma.user.findMany();
         users.forEach((user) => {

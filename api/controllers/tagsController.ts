@@ -17,6 +17,19 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
+  index: async (req: Request, res: Response) => {
+    try {
+      const getAllTags = await prisma.tag.findMany();
+      getAllTags.length
+        ? res.status(200).json(getAllTags)
+        : res.status(404).send("No tags found");
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
   tagById: async (req: Request, res: Response) => {
     try {
       const { tagId } = req.params;
@@ -34,18 +47,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  index: async (req: Request, res: Response) => {
-    try {
-      const getAllTags = await prisma.tag.findMany();
-      getAllTags.length
-        ? res.status(200).json(getAllTags)
-        : res.status(404).send("No tags found");
-    } catch (error) {
-      console.log(error);
-      res.status(400).send(error);
-    }
-  },
-
+  
   update: async (req: Request, res: Response) => {
     try {
       const { tagId } = req.params;

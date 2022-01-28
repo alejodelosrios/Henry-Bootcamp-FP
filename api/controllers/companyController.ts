@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import { resolveSoa } from "dns";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -71,6 +72,29 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
+  review: async (req: Request, res: Response) => {
+    try {
+      const { companyId } = req.params
+      const { description, score } = req.body;
+      if(!description) return res.send("Debes incluir un campo 'description' en el body")
+      if(!score) return res.send("Debes incluir un campo 'score' en el body")
+      if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
+
+      const review = await prisma.review.create({
+        data: {
+          description: description,
+          score: score,
+          companyId: Number(companyId),
+        },
+      });
+      res.json(review);
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error);
+    }
+  },
+
   index: async (req: Request, res: Response) => {
     try {
       const companies = await prisma.company.findMany();
@@ -79,7 +103,50 @@ module.exports = {
       res.send(error);
     }
   },
-  // /company/application
+
+  companyById: async (req: Request, res: Response) => {
+    try {
+      const { companyId } = req.params;
+      if (!companyId) return res.send("Debes enviar el companyId params");
+      const company = await prisma.company.findUnique({
+        where: {
+          id: Number(companyId),
+        },
+        include: {
+          notifications: true,
+          reviews: true,
+          posts: true,
+          followers: true,
+        },
+      });
+      res.json(company);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  getPosts: async (req: Request, res: Response) => {
+    try {
+      const { companyId } = req.params;
+      if (!companyId) return res.send("Debes enviar el companyId por params");
+      const company = await prisma.company.findUnique({
+        where: {
+          id: Number(companyId),
+        },
+        include: {
+          posts: true,
+        },
+      });
+      if (company) {
+        res.json(company.posts);
+      } else {
+        res.status(400).send("Company doesn't exist");
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
   updateStatus: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId, newStatus } = req.body;
@@ -121,47 +188,7 @@ module.exports = {
       res.send(error);
     }
   },
-  companyById: async (req: Request, res: Response) => {
-    try {
-      const { companyId } = req.params;
-      if (!companyId) return res.send("Debes enviar el companyId params");
-      const company = await prisma.company.findUnique({
-        where: {
-          id: Number(companyId),
-        },
-        include: {
-          notifications: true,
-          reviews: true,
-          posts: true,
-          followers: true,
-        },
-      });
-      res.json(company);
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  },
-  getPosts: async (req: Request, res: Response) => {
-    try {
-      const { companyId } = req.params;
-      if (!companyId) return res.send("Debes enviar el companyId por params");
-      const company = await prisma.company.findUnique({
-        where: {
-          id: Number(companyId),
-        },
-        include: {
-          posts: true,
-        },
-      });
-      if (company) {
-        res.json(company.posts);
-      } else {
-        res.status(400).send("Company doesn't exist");
-      }
-    } catch (error) {
-      res.status(400).send(error);
-    }
-  },
+
   update: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;
@@ -197,6 +224,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+  
   delete: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;
