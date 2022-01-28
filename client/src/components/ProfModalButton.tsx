@@ -80,7 +80,7 @@ const ProfModalButton: FC<P> = ({ user }) => {
                 <Modal>
                     <Link to='/profile' onClick={handleNotif}>
                         <Noti>
-                            {user.firstName || 'My' + ' ' + user.lastName + 'profile'}
+                            {(user.firstName || 'My') + ' ' + (user.lastName || 'profile')}
                         </Noti>
                     </Link>
                     <Noti onClick={handleNotif}>
