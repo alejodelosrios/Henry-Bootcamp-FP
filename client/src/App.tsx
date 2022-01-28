@@ -14,7 +14,7 @@ import LoginPage from "./pages/LoginPage";
 import { PostDetailPage } from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
-import UserPostulations from "./components/UserPostulations";
+import UserPostulations from "./pages/MyPostulations/UserPostulations";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import QandA from "./pages/Q&A/QandA";
 
