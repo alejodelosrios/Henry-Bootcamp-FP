@@ -6,19 +6,18 @@ module.exports = {
     try {
       const {
         message,
-        typeId,
+        type,
         applicantId,
         companyId
       } = req.body;
       if (!message) return res.send("Falta campo 'mensaje ");
-      if (!typeId) return res.send("Falta campo 'typeId'");
-      if (!applicantId) return res.send("Falta campo 'applicantId'");
-      if (!companyId) return res.send("Falta campo 'companyId'");
+      if (!type) return res.send("Falta campo 'typeId'");
+      if (!applicantId && !companyId) return res.send("Falta campo 'applicantId' o 'companyId', cual sea el que corresponda");
 
       const notification = await prisma.notification.create({
         data: {
           message: message as string,
-          typeId: typeId as number,
+          type: type as string,
           applicantId: applicantId as number,
           companyId: companyId as number,
         },
@@ -58,11 +57,11 @@ module.exports = {
   update: async (req: Request, res: Response) => {
     try {
       const { notificationId } = req.params;
-      const { message, typeId, applicantId, companyId } = req.body;
+      const { message, type, applicantId, companyId } = req.body;
 
       if (!notificationId) return res.send("Debes enviar el id de la notificación por params");
       if (!message) return res.send("Debes enviar el campo 'message' por body");
-      if (!typeId) return res.send("Debes enviar el campo 'typeId' por body");
+      if (!type) return res.send("Debes enviar el campo 'typeId' por body");
       if (!applicantId) return res.send("Debes enviar el campo 'applicantId' por body ");
       if (!companyId) return res.send("Debes enviar el campo 'companyId' por body ");
 
@@ -72,7 +71,7 @@ module.exports = {
         },
         data: {
           message: message as string,
-          typeId: typeId as number,
+          type: type as string,
           applicantId: applicantId as number,
           companyId: companyId as number,
         },

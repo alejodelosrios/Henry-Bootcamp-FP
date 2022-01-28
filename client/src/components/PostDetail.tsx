@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
 import { getPostsById } from "../redux/actions/actionCreators";
 import CompanyLogo from "../assets/company-logo.svg";
+import { Link } from "react-router-dom";
+import { jobApplication } from "../redux/actions/applicantActionCreators";
 
 const TopBackground = styled.div`
   position: absolute;
@@ -103,6 +105,12 @@ const PostTitle = styled.h1`
   text-transform: capitalize;
   color: ${(props) => props.theme.colors.typography.darkest};
 `;
+const TitleContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 const PostSubtitle = styled.h3`
   width: 100%;
   font-family: Poppins;
@@ -114,39 +122,39 @@ const PostSubtitle = styled.h3`
   color: ${(props) => props.theme.colors.typography.darkest};
 `;
 
-type PostArgs = {
-  company: { name: String };
-  postId?: Number;
-  title: String;
-  description: String;
-  tags: String[];
-  modality: String;
-  contractType: String;
-  location: {
-    country: String;
-    state: String;
-  };
-  startDate: String;
-  endDate: String;
-  category: String;
-  salary: String;
-  //salary: {
-  //min: Number;
-  //max: Number;
-  //};
-  //experience: {
-  //min: Number;
-  //max: Number;
-  //};
-};
-
-const PostDetail = ({}) => {
-  const { id } = useParams();
+const PostDetail: FC = ({}) => {
+  const { postId, companyId } = useParams();
   const dispatch = useDispatch();
+
   const post = useSelector((state: any) => state.postsReducer.postById);
+  const role = useSelector((state: any) => state.userReducer.role);
+  const company = useSelector((state: any) => state.userReducer.company);
+  const applicant = useSelector((state: any) => state.userReducer.applicant);
+
+  let userCompanyId: string | null;
+  let applicantId: number | null;
+
+  !company ? (userCompanyId = null) : (userCompanyId = company.id);
+  !applicant ? (applicantId = null) : (applicantId = applicant.id);
+
   useEffect(() => {
-    dispatch(getPostsById(id));
+    dispatch(getPostsById(postId));
   }, []);
+  const navigate = useNavigate();
+
+  const edit = () => {};
+  const apply = () => {
+    if (!role) {
+      return navigate("/register");
+    }
+
+    dispatch(
+      jobApplication({
+        applicantId: applicantId,
+        postId: post.id,
+      })
+    );
+  };
 
   if (!post.id) return <div>Publicación no encontrada</div>;
   return (
@@ -156,7 +164,9 @@ const PostDetail = ({}) => {
       <PageTitleTwo>Publicación</PageTitleTwo>
       <Content>
         <Sidebar>
-          <CompLogo src={CompanyLogo} alt="company-logo-img" />
+          <Link to={`/company/${companyId}`}>
+            <CompLogo src={CompanyLogo} alt="company-logo-img" />
+          </Link>
           <Group>
             <GroupTitle>Publicado el:</GroupTitle>
             <Text>{post.startDate}</Text>
@@ -187,7 +197,15 @@ const PostDetail = ({}) => {
           </Group>
         </Sidebar>
         <MainSection>
-          <PostTitle>{post.title}</PostTitle>
+          <TitleContainer>
+            <PostTitle>{post.title}</PostTitle>
+            {role === "applicant" || role === "" ? (
+              <button onClick={() => apply()}>Aplicar</button>
+            ) : null}
+            {role === "company" && companyId === userCompanyId ? (
+              <button onClick={() => edit()}>Editar</button>
+            ) : null}
+          </TitleContainer>
           <PostSubtitle>Descripción:</PostSubtitle>
           <Text>{post.description}</Text>
           <p>Etiquetas (Keywords) </p>

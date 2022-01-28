@@ -55,7 +55,7 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         ...action.payload,
@@ -124,6 +124,16 @@ const userReducer = (state = initialState, action: Action) => {
         return {
           ...state,
           languages: state.languages.filter((exp: any) => exp.id !== action.payload)
+        }
+      case ActionType.GET_NOTIFICATIONS:
+        return {
+          ...state,
+          notifications: action.payload
+        }
+      case ActionType.JOB_APPLICATION:
+        return {
+          ...state,
+          postulations: action.payload
         }
     default:
       return state;

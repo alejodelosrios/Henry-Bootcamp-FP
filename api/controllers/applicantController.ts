@@ -84,17 +84,35 @@ module.exports = {
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
-      const applicantUpdate = await prisma.applicant.update({
+      const checkIfApplicantPoolExists = await prisma.applicantPool.findFirst({
+        where: {
+          applicantId: Number(applicantId),
+          postId: Number(postId)
+        }
+      })
+      if(checkIfApplicantPoolExists && !checkIfApplicantPoolExists.hasOwnProperty("status")){
+        const applicantPool = await prisma.applicantPool.create({
+          data: {
+            applicantId: applicantId,
+            postId: postId,
+            status: "applied"
+          }
+        })  
+      }
+      const applicantUpdate = await prisma.applicant.findFirst({
         where: {
           id: Number(applicantId),
         },
-        data: {
+        include: {
           postulations: {
-            connect: [{ id: Number(postId) }],
-          },
-        },
+            include: {
+              post: true
+            }
+          }
+        }
       });
-      res.json(applicantUpdate);
+      const postulations = applicantUpdate && applicantUpdate.postulations
+      res.json(postulations);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -105,17 +123,48 @@ module.exports = {
     try {
       const { applicantId, postId } = req.body;
 
-      const favouriteUpdate = await prisma.applicant.update({
-        where: {
-          id: Number(applicantId),
+      const applicant = await prisma.applicant.findFirst({
+        where:{
+          id: Number(applicantId)
         },
-        data: {
-          favourites: {
-            connect: [{ id: Number(postId) }],
+        include: {
+          favourites: true
+        }
+      })
+
+      const isAlreadyFavourite = applicant && applicant.favourites.find(favourite => favourite.id === postId)
+
+      if(isAlreadyFavourite) {
+        const favouriteUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
           },
-        },
-      });
-      res.json(favouriteUpdate);
+          data: {
+            favourites: {
+              disconnect: [{ id: Number(postId) }],
+            },
+          },
+          include: {
+            favourites: true
+          }
+        });
+        res.json(favouriteUpdate.favourites);
+      } else {
+        const favouriteUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
+          },
+          data: {
+            favourites: {
+              connect: [{ id: Number(postId) }],
+            },
+          },
+          include: {
+            favourites: true
+          }
+        });
+        res.json(favouriteUpdate.favourites);
+      }
     } catch (error) {
       console.log(error);
       res.status(400).send(error);

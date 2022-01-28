@@ -37,7 +37,7 @@ model Applicant {
   skillTags     Tag[]
   notifications Notification[]
   followed      Company[]
-  postulations  Post[]         @relation("_UserToPostulations")
+  postulations  ApplicantPool[]
   favourites    Post[]         @relation("_UserToFavourites")
 }
 
@@ -76,12 +76,21 @@ model Post {
   startDate    String
   endDate      String
   tags         String[]
-  applicants   Applicant[] @relation("_UserToPostulations")
+  applicants   ApplicantPool[]
   favoritedBy  Applicant[] @relation("_UserToFavourites")
   //RELACION CON CATEGORY
   categoryId   Int
   category     Category    @relation(fields: [categoryId], references: [id])
   //=============
+}
+
+model ApplicantPool {
+  id            Int           @id @default(autoincrement())
+  status        String?       @default("inProcess")
+  applicant     Applicant     @relation(fields: [applicantId], references: [id])
+  applicantId   Int
+  post          Post          @relation(fields: [postId], references: [id])
+  postId        Int
 }
 
 model Experience {
@@ -145,9 +154,11 @@ model Tag {
 model Notification {
   id          Int               @id @default(autoincrement())
   message     String
-  //RELACION NOTIFICACIONES Y TIPOS DE NOTIFICACION
-  typeId      Int
-  type        notificationTypes @relation(fields: [typeId], references: [id])
+  viewed      Boolean?          @default(false)
+  type        String
+
+  // typeId      Int    //la relacion esta debajo por si despues queremos agregarla de nuevo
+
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?
@@ -159,11 +170,11 @@ model Notification {
   //=============
 }
 
-model notificationTypes {
-  id           Int            @id @default(autoincrement())
-  name         String
-  notification Notification[]
-}
+// model notificationTypes {
+//   id           Int            @id @default(autoincrement())
+//   name         String
+//   notification Notification[]
+// }
 
 model News {
   id          Int    @id @default(autoincrement())

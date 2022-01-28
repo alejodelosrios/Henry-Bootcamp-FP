@@ -292,3 +292,18 @@ export const setUserFollows =
       console.log(error);
     }
   }
+
+export const getNotifications = 
+  (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let {data}:any = await axios.get(`/${role}/${applicantId}`);
+      console.log("Notifications actualizadas");
+      return dispatch({
+        type: ActionType.GET_NOTIFICATIONS,
+        payload: data.notifications
+      });
+    } catch (error) {
+      console.log('Ups! algo salió mal');
+      console.log(error);
+    }
+  }

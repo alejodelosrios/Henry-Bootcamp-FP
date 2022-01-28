@@ -13,6 +13,7 @@ companyRouter.post("/create/:userId", companyController.create);
 
 //PUT
 companyRouter.put("/update/:companyId", companyController.update);
+companyRouter.put("/application", companyController.updateStatus);
 
 //DELETE
 companyRouter.delete("/delete/:companyId", companyController.delete);
