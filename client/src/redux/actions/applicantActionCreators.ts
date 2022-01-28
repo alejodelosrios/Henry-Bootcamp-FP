@@ -6,7 +6,7 @@ import { Action } from "./index";
 export const jobApplication =
   (obj: object) => async (dispatch: Dispatch<Action>) => {
     try {
-      const { data } = await axios.post(`/applicant/apply`, obj);
+      const { data } = await axios.put(`/applicant/apply`, obj);
       console.log("Informaciónctualizada");
       return dispatch({
         type: ActionType.JOB_APPLICATION,
