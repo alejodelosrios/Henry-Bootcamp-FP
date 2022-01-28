@@ -13,8 +13,8 @@ const NotCont = styled.div`
 
 const NotBut = styled.button<{ modal?: boolean }>`
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: none;
     display: flex;
@@ -32,8 +32,8 @@ const NotBut = styled.button<{ modal?: boolean }>`
 
 const Count = styled.div`
     position: absolute;
-    bottom: -30%;
-    right: -30%;
+    bottom: -10%;
+    left: -10%;
     font-size: 80%;
     height: 20px;
     width: 20px;
@@ -49,8 +49,7 @@ const Modal = styled.div`
     position: absolute;
     bottom: -1;
     right: 0;
-    background-color: #86868630;
-    backdrop-filter: blur(2px);
+    background-color: white;
     width: 300px;
     max-height: 500px;
     overflow: auto;
@@ -59,9 +58,21 @@ const Modal = styled.div`
     flex-direction: column;
 `
 
-const Noti = styled.li`
+const Noti = styled.li<{ viewed?:boolean }>`
     width: 100%;
-    margin: 3% 0;
+    height: 50px;
+    margin: 2px 0;
+    background-color: ${p => p.theme.colors.details.secondary1};
+    border-radius: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &:hover{
+        background-color: #c779ff32;
+    }
+    
+    ${p => p.viewed && css`background-color:white`}
 `
 
 const Notifications:FC<P> = ({role}) => {
@@ -92,8 +103,7 @@ const Notifications:FC<P> = ({role}) => {
 
     {modal && <Modal>
         {notifications.map((not:any)=>
-        //Hay que modificar este Post para revisar lo que recibe!!
-            <Noti key={not.id}>{not.message}</Noti>
+            <Noti key={not.id} viewed={not.viewed}>{not.message}</Noti>
         )}</Modal>
     }
   </NotCont>;
