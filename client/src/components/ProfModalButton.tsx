@@ -1,8 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Logout } from "./Logout";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { getNotifications } from "../redux/actions/actionCreators";
 
 type P = {
     user: any;
@@ -64,7 +63,7 @@ const Noti = styled.div`
 
 const ProfModalButton: FC<P> = ({ user }) => {
 
-
+    console.log(user);
     const [modal, setModal] = useState(false);
 
     const handleNotif = () => {
@@ -81,7 +80,7 @@ const ProfModalButton: FC<P> = ({ user }) => {
                 <Modal>
                     <Link to='/profile' onClick={handleNotif}>
                         <Noti>
-                            {user.firstName + ' ' + user.lastName}
+                            {user.firstName || 'My' + ' ' + user.lastName + 'profile'}
                         </Noti>
                     </Link>
                     <Noti onClick={handleNotif}>
