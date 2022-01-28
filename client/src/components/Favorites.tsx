@@ -12,32 +12,35 @@ const FavCont = styled.div`
 `;
 
 const FavBut = styled.button<{ modal?: boolean }>`
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    background-color: ${(p) => p.theme.colors.backgrounds.base};
+    background-color: ${(p) => p.theme.colors.details.secondary1};
     color: ${(p) => p.theme.colors.details.secondary2};
 
     ${(prop) =>
         prop.modal &&
         css`
             background-color: ${(p) => p.theme.colors.details.secondary2};
-            color: white;
+            color: ${(p) => p.theme.colors.details.secondary1};
         `}
 `;
 const Modal = styled.div`
     position: absolute;
     bottom: -1;
     right: 0;
-    background-color: lightblue;
+    background-color: white;
     width: 300px;
     height: 500px;
     overflow: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
 `;
 
 const FavNot = styled.div`
@@ -69,12 +72,12 @@ const Favorites: FC<P> = ({ role })=> {
     return (
         <FavCont>
             <FavBut onClick={handleFav} modal={modal}>
-                {modal ? "☆" : "★"}
+                {"★"}
             </FavBut>
 
             {modal && (
                 <Modal>
-                    {favs.map((post: any) => (
+                    {favs?.map((post: any) => (
                         //Hay que modificar este Post para revisar lo que recibe!!
                         <FavNot>
                             <p>{post.title}</p>

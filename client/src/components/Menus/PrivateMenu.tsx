@@ -2,8 +2,9 @@ import { FC } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
-import { Logout } from "../Logout";
+import Favorites from "../Favorites";
 import Notifications from "../Notifications";
+import ProfModalButton from "../ProfModalButton";
 
 type Props = {
   role: string;
@@ -34,8 +35,6 @@ const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  background-color: lightblue;
 `;
 
 const Options = styled.div`
@@ -45,7 +44,7 @@ const Options = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
+  margin: 0 5px;
 `
 
 const PrivateMenu: FC<Props> = ({ role }) => {
@@ -76,9 +75,6 @@ const PrivateMenu: FC<Props> = ({ role }) => {
             <Link to="/my-applications" style={{ textDecoration: "none", cursor:"default"  }}>
               <A>{"Mis Postulaciones"}</A>
             </Link>
-            <Link to='/profile'>
-              {user.firstName + ' ' + user.lastName}
-            </Link>
           </>
         ) : role === "company" ? (
           <>
@@ -106,15 +102,16 @@ const PrivateMenu: FC<Props> = ({ role }) => {
         )}
       </NavLinks>
       <ButtonsContainer>
-        {/* <Logout contenido="Logout" estilo="primary" /> */}
         <Options>
           <Notifications role={role} />
         </Options>
 
         <Options>
+          <Favorites role={role}/>
         </Options>
 
         <Options>
+          <ProfModalButton user={user}/>
         </Options>
       </ButtonsContainer>
     </>
