@@ -1,7 +1,11 @@
-import { FC, useState } from "react";
-import { useSelector } from "react-redux";
-import Post from "./Post";
+import { FC, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
+import { getFavorite } from "../redux/actions/actionCreators";
+
+type P = {
+    role: string;
+};
 
 const FavCont = styled.div`
     position: relative;
@@ -36,13 +40,31 @@ const Modal = styled.div`
     overflow: auto;
 `;
 
-const Favorites: FC = () => {
-    const favs = useSelector((state: any) => state.userReducer.favs);
+const FavNot = styled.div`
+    display:flex;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 10px;
+`
+
+const Favorites: FC<P> = ({ role })=> {
+    const favs = useSelector((state: any) => state.userReducer.applicant.favorites);
     const [modal, setModal] = useState(false);
+    const {  applicant } = useSelector(
+        (state: any) => state.userReducer
+    );
 
     const handleFav = () => {
         setModal(!modal);
     };
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (role === "applicant") {
+            dispatch(getFavorite(role, applicant.id));
+        }
+    }, []);
 
     return (
         <FavCont>
@@ -54,16 +76,10 @@ const Favorites: FC = () => {
                 <Modal>
                     {favs.map((post: any) => (
                         //Hay que modificar este Post para revisar lo que recibe!!
-                        <Post
-                            key={post.postId}
-                            postId={post.postId}
-                            companyId={post.companyId}
-                            title={post.title}
-                            location={post.location}
-                            modality={post.modality}
-                            salary={post.salary}
-                            startDate={post.startDate}
-                        />
+                        <FavNot>
+                            <p>{post.title}</p>
+                            <p>{post.location.country}</p>
+                        </FavNot>
                     ))}
                 </Modal>
             )}
