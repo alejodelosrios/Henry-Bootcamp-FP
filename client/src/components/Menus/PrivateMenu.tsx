@@ -33,11 +33,19 @@ const ButtonsContainer = styled.div`
   position: relative;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+
+  background-color: lightblue;
 `;
 
-const Not = styled.div`
-  position: absolute;
-  right: -80px;
+const Options = styled.div`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
 `
 
 const PrivateMenu: FC<Props> = ({ role }) => {
@@ -98,10 +106,16 @@ const PrivateMenu: FC<Props> = ({ role }) => {
         )}
       </NavLinks>
       <ButtonsContainer>
-        <Logout contenido="Logout" estilo="primary" />
-        <Not>
+        {/* <Logout contenido="Logout" estilo="primary" /> */}
+        <Options>
           <Notifications role={role} />
-        </Not>
+        </Options>
+
+        <Options>
+        </Options>
+
+        <Options>
+        </Options>
       </ButtonsContainer>
     </>
   );

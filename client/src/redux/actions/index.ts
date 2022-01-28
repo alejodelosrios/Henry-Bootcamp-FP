@@ -115,7 +115,10 @@ interface jobApplication {
 
 interface getNotifications {
   type: ActionType.GET_NOTIFICATIONS;
-  payload: object[];
+  payload: {
+    notifications: object[],
+    role: string
+  };
 }
 
 export type Action =
