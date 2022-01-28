@@ -9,8 +9,8 @@ export const LanguagesInfoComp = () => {
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
-    const languagesArray = useSelector((state: any) => state.userReducer.languages);
-    
+    const languagesArray = useSelector((state: any) => state.userReducer.applicant.languages);
+
     const [userLanguages, setUserLanguages] = useState(
         {
             id: '',
@@ -69,7 +69,7 @@ export const LanguagesInfoComp = () => {
             language: '',
         }
     );
-    
+
     function saveEducation() {
         setId(id + 1);
         flag === 0 ? setFlag(100) : setFlag(0);
@@ -87,7 +87,7 @@ export const LanguagesInfoComp = () => {
         dispatch(deleteUserLanguages(id))
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
-        displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none'); 
+        displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
     }
 
     return (
@@ -131,7 +131,7 @@ export const LanguagesInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                <EachContainer>                    
+                <EachContainer>
                         <SubTitles>Idioma:</SubTitles>
                         <EditInput
                             value={userLanguages.language}
@@ -146,10 +146,10 @@ export const LanguagesInfoComp = () => {
                             name="level"
                             onChange={(e) => handleChange(e)}
                         ></EditInput>
-                    </EachContainer>                    
+                    </EachContainer>
                 <Header>
                     <Edit onClick={() => deleteFunction(userLanguages.id)}>Borrar</Edit>
-                    <Edit onClick={() => updateFunction()}>Guardar</Edit>                
+                    <Edit onClick={() => updateFunction()}>Guardar</Edit>
                 </Header>
             </div>
             <div className='overlay' style={{
@@ -168,7 +168,7 @@ export const LanguagesInfoComp = () => {
 
             {
                 (languagesArray.length >= 0 && languagesArray.length < 4) ?
-                    
+
                     <NoLanguages>
                         <Edit onClick={() => addLaguages()}>Añadir Idioma</Edit>
                     </NoLanguages>
@@ -195,7 +195,7 @@ export const LanguagesInfoComp = () => {
                 overflow: 'hidden',
                 transition: 'all 1s',
             }}>
-                <EachContainer>                    
+                <EachContainer>
                         <SubTitles>Idioma:</SubTitles>
                         <EditInput
                             value={addUserLanguageState.language}
