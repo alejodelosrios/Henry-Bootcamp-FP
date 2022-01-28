@@ -11,9 +11,9 @@ datasource db {
 
 model User {
   id        Int        @id @default(autoincrement())
-  email     String     @default("")
-  password  String     @default("")
-  role      String     @default("")
+  email     String     @unique
+  password  String     
+  role      String     
   applicant Applicant?
   company   Company?
 }
@@ -38,7 +38,7 @@ model Applicant {
   notifications Notification[]
   followed      Company[]
   postulations  ApplicantPool[]
-  favourites    Post[]         @relation("_UserToFavourites")
+  favorites    Post[]         @relation("_UserToFavorites")
 }
 
 model Company {
@@ -77,7 +77,7 @@ model Post {
   endDate      String
   tags         String[]
   applicants   ApplicantPool[]
-  favoritedBy  Applicant[] @relation("_UserToFavourites")
+  favoritedBy  Applicant[] @relation("_UserToFavorites")
   //RELACION CON CATEGORY
   categoryId   Int
   category     Category    @relation(fields: [categoryId], references: [id])
