@@ -131,7 +131,7 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         applicant: {
           ...state.applicant,
-          experience: state.experience.filter(
+          experience: state.applicant.experience.filter(
             (exp: any) => exp.id !== action.payload
           ),
         }
