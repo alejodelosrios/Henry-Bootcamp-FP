@@ -112,3 +112,5 @@ api/prisma/migrations/migration_lock.toml
 api/prisma/migrations/20220124180447_init/migration.sql
 api/prisma/migrations/migration_lock.toml
 api/prisma/migrations/migration_lock.toml
+api/prisma/migrations/20220127163131_init/migration.sql
+.gitignore

@@ -1,4 +1,5 @@
-import {ActionType} from "./actionTypes";
+import { ActionType } from "./actionTypes";
+import { jobApplication } from "./applicantActionCreators";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
@@ -98,6 +99,15 @@ interface deleteUserLanguages {
 interface setUserFollows {
   type: ActionType.SET_USER_FOLLOWS;
 }
+interface jobApplication {
+  type: ActionType.JOB_APPLICATION;
+  payload: object[];
+}
+
+interface getNotifications {
+  type: ActionType.GET_NOTIFICATIONS;
+  payload: object[];
+}
 
 export type Action =
   | getPosts
@@ -119,4 +129,6 @@ export type Action =
   | updateUserLanguages
   | addUserLanguages
   | deleteUserLanguages
-  | setUserFollows;
+  | setUserFollows
+  | getNotifications
+  | jobApplication;
