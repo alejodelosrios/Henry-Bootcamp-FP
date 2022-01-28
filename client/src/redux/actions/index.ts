@@ -1,5 +1,4 @@
-import { ActionType } from "./actionTypes";
-import { jobApplication } from "./applicantActionCreators";
+import {ActionType} from "./actionTypes";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
@@ -42,8 +41,14 @@ interface setUserCreateModal {
 interface getUser {
   type: ActionType.GET_USER;
   payload: {
-    data: object;
-    modal: object;
+    data: {
+      id: string,
+      role: string,
+      email: string,
+      applicant: object,
+      company: object,
+    };
+    modal: object|boolean;
   };
 }
 interface setEmail {
@@ -58,6 +63,10 @@ interface setUser {
 interface updateUser {
   type: ActionType.UPDATE_USER;
   payload: object;
+}
+interface updateMail {
+  type: ActionType.UPDATE_MAIL;
+  payload: string;
 }
 interface updateUserExp {
   type: ActionType.UPDATE_USER_EXP;
@@ -120,6 +129,7 @@ export type Action =
   | setUser
   | getUser
   | updateUser
+  | updateMail
   | updateUserExp
   | addUserExp
   | DeleteUserExp
