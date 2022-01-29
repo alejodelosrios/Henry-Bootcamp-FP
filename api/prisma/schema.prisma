@@ -50,7 +50,7 @@ model Company {
   name            String
   legalName       String
   stin            String
-  image           String
+  logo            String
   location        String
   values          String[]
   aboutValues     String
@@ -58,10 +58,19 @@ model Company {
   mission         String
   vision          String
   accountManagers String[]
+  images          Image[]
   notifications   Notification[]
   reviews         Review[]
   posts           Post[]
   followers       Applicant[]
+}
+
+model Image {
+  id              Int            @id @default(autoincrement())
+  name            String?
+  url             String
+  companyId       Int
+  company         Company       @relation(fields: [companyId], references: [id])
 }
 
 model Post {
