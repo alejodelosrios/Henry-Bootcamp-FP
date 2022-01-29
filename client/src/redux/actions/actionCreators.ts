@@ -329,3 +329,17 @@ export const getNotifications =
       console.log(error);
     }
   }
+
+  export const getCompany = 
+    (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let {data}: any = await axios.get(`/company/${companyId}`);
+      return dispatch({
+        type: ActionType.GET_COMPANY,
+        payload: data
+      });
+    } catch (error) {
+      console.log('Ups! algo salió mal');
+      console.log(error);
+    }
+  }

@@ -9,12 +9,8 @@ import { SkillTagsComp } from './SkillTags';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 
-interface Props {
-    user: any
-};
-
-export const Profile: FC<Props> = ({ user }) => {    
-    const navigate = useNavigate()
+export const UserProfile: FC = () => {
+    const navigate = useNavigate();
     const userRole = useSelector((state: any) => state.userReducer.role);
     
     useEffect(() => {

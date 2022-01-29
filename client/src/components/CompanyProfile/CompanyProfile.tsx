@@ -1,12 +1,22 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CompanyInfo, CompanyName, FollowButton, Location, Logo, MainDiv, PaginateButtons, PaginateButtonsDiv, PresentationCard, Rating, RatingContainer } from './Styles';
 import logo from '../../assets/companyTest/logo.png'
 import { AboutCompany } from './AboutCompany';
 import { Mission } from './Mission';
 import { CompanyPosts } from './CompanyPosts';
 import { CompanyRating } from './CompanyRating';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
+import { getCompany } from '../../redux/actions/actionCreators';
 
-export const CompanyProfile = () => {
+export const CompanyProfile = () => {  
+    const dispatch = useDispatch();
+    const { companyId } = useParams();
+    useEffect(() => {
+        dispatch(getCompany(companyId))
+    }, [dispatch, companyId])
+    
+    const company = useSelector((state: any) => state.companyReducer.companyDetail);
 
     const [flag, setFlag] = useState('information');
 
@@ -26,13 +36,13 @@ export const CompanyProfile = () => {
     return (
         <MainDiv>
             <PresentationCard className='presentation-card'>
-                <Logo src={logo} alt="logo" />
+                <Logo src={company.companyLogo} alt="logo" />
                 <CompanyInfo className='logo'>
                     <div className='company-name'>
-                        <CompanyName>Pedidos Ya</CompanyName>
+                        <CompanyName>{company.name}</CompanyName>
                     </div>
                     <div className='location'>
-                        <Location>Buenos Aires, Argentina</Location>
+                        <Location>{company.location}</Location>
                     </div>
                     <RatingContainer className='rating-container'>
                         <div className='componente-rating'>
@@ -54,7 +64,7 @@ export const CompanyProfile = () => {
                 <PaginateButtons onClick={() => switchPosts()} style={{ background: (flag === 'posts' ? '#9DD6FD' : '#EF5DA8') }}>Publicaciones</PaginateButtons>
                 <PaginateButtons onClick={() => switchRating()} style={{ background: (flag === 'rating' ? '#9DD6FD' : '#EF5DA8') }}>Rating</PaginateButtons>
             </PaginateButtonsDiv>
-            {flag === 'information'  ? <AboutCompany/> : null}
+            {flag === 'information'  ? <AboutCompany /> : null}
             {flag === 'mission'  ? <Mission/> : null}
             {flag === 'posts'  ? <CompanyPosts/> : null}
             {flag === 'rating'  ? <CompanyRating/> : null}

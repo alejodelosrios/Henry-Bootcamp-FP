@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-import { UserProfile } from "./pages/Profile";
+import {Profile} from "./pages/Profile";
 import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
@@ -15,8 +15,8 @@ import { PostDetailPage } from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./pages/MyPostulations/UserPostulations";
-import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import QandA from "./pages/Q&A/QandA";
+import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 
 function App() {
         const [userLogged, setUserLogged] = useState(false);
@@ -26,7 +26,7 @@ function App() {
 
         useEffect(() => {
                 const getUser = () => {
-                        fetch("http://localhost:3001/auth/login/success", {
+                        fetch("https://transforma-server-u5det.ondigitalocean.app/api/v2/auth/login/success", {
                                 method: "GET",
                                 credentials: "include",
                                 headers: {
@@ -97,15 +97,11 @@ function App() {
                                         path="/my-applications"
                                         element={<UserPostulations />}
                                 />
-                                <Route
-                                        path="/company/:companyId"
-                                        element={<CompanyProfile />}
-                                ></Route>
                                 <Route path="/home" element={<Home />}></Route>
                                 <Route
                                         path="/profile"
                                         element={
-                                                <UserProfile
+                                                <Profile
                                                         user={userLogged}
                                                 />
                                         }
@@ -128,6 +124,7 @@ function App() {
                                 />
                                 <Route path="/about-us" element={<AboutUs />} />
                                 <Route path="/frequent-questions" element={<QandA />} />
+                                <Route path='/company/:companyId' element={<CompanyProfile/>}/>
                         </Routes>
                 </ThemeProvider>
         );

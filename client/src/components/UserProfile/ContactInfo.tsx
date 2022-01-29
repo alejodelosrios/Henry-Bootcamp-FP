@@ -25,8 +25,6 @@ export const ContactInfoComp = () => {
     const mail = useSelector((state: any) => state.userReducer.email);
     console.log(user);
     const [userInfo, setUserInfo] = useState({
-        // firstName: user.firstName,
-        // lastName: user.lastName,
         phoneNumber: user.phoneNumber,
         country: user.country,
         email: mail,
@@ -61,7 +59,7 @@ export const ContactInfoComp = () => {
                     <NameTag>
                         {user.firstName} {user.lastName}
                     </NameTag>
-                    <RolTag>Full Stack Developer</RolTag>
+                    <RolTag>{user.experience[0].position}</RolTag>
                     <ContactButton>Contactar</ContactButton>
                 </NameDiv>
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Paginated from "./Paginated/Paginated";
@@ -14,26 +14,35 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const PostsContainer = () => {
+interface Props {
+    companyId?: number;
+}
+
+
+const PostsContainer:FC<Props> = ({companyId}) => {
     const currentPosts = useSelector(
         (state: any) => state.postsReducer.currentPosts
     );
-
+    const companyPosts = currentPosts.filter((post: any) => post.companyId === companyId);
+    
     //PAGINADO ////////////////////////////////////////////
     const [currPage, setCurrPage] = useState(1);
     const PostsPerPage = 4;
     const ixLastPost = currPage * PostsPerPage;
     const ixFirstPost = ixLastPost - PostsPerPage;
     const currPost = currentPosts.slice(ixFirstPost, ixLastPost);
-
+    const currentCompanyPosts = companyPosts.slice(ixFirstPost, ixLastPost);
+    
     const paginado = (pagNum: number) => {
         setCurrPage(pagNum);
     };
-
+    
+    console.log(currentCompanyPosts);
     return (
         <>
             <Container>
-                {currPost.map((post: any) => (
+                {companyId ? 
+                currentCompanyPosts.map((post: any) => (
                     <Post
                         key={post.id}
                         postId={post.id}
@@ -44,14 +53,35 @@ const PostsContainer = () => {
                         salary={post.salary}
                         startDate={post.startDate}
                     />
-                ))}
+                ))
+                :
+                currPost.map((post: any) => (
+                    <Post
+                        key={post.id}
+                        postId={post.id}
+                        companyId={post.companyId}
+                        title={post.title}
+                        location={post.location}
+                        modality={post.modality}
+                        salary={post.salary}
+                        startDate={post.startDate}
+                    />
+                ))
+                }
+                
             </Container>
 
+            {companyId ?
+                <Paginated
+                PostsPerPage={PostsPerPage}
+                AllPostsLength={companyPosts.length}
+                paginado={paginado}
+            /> :
             <Paginated
                 PostsPerPage={PostsPerPage}
                 AllPostsLength={currentPosts.length}
                 paginado={paginado}
-            />
+            />}
         </>
     );
 };

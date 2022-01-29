@@ -131,7 +131,7 @@ export const ExperienceInfoComp = () => {
                         <ParagraphStyle>{exp.endDate}</ParagraphStyle>
                     </EachContainer>
                     <EachContainer>
-                        <SubTitles>Breve descripción:</SubTitles>
+                        <SubTitles>Descripción:</SubTitles>
                         <ParagraphStyle>{exp.description}</ParagraphStyle>
                     </EachContainer>
                 </ExperienceCard>
