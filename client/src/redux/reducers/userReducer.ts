@@ -14,16 +14,16 @@ const initialState = {
     companyLogo: "",
     images: [],
     values: [],
-    aboutValues: '',
-    about: '',
+    aboutValues: "",
+    about: "",
     mission: "",
     vision: "",
-    location: '',
+    location: "",
     accountManagers: [],
     notifications: [],
     reviews: [],
     posts: [],
-    followers: []
+    followers: [],
   },
   applicant: {
     id: null,
@@ -50,9 +50,9 @@ const initialState = {
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_USER:
-      console.log("Reducer: ", action.payload);
+      //console.log("Reducer: ", action.payload);
       if (!action.payload.modal) {
-        console.log("Entro")
+        //console.log("Entro")
         return {
           ...state,
           id: action.payload.data.id,
@@ -60,16 +60,16 @@ const userReducer = (state = initialState, action: Action) => {
           email: action.payload.data.email,
           applicant: {
             ...state.applicant,
-            ...action.payload.data.applicant
+            ...action.payload.data.applicant,
           },
           company: {
             ...state.company,
-            ...action.payload.data.company
+            ...action.payload.data.company,
           },
           userCreateModal: action.payload.modal,
         };
       }
-      console.log("No entro")
+      console.log("No entro");
       return {
         ...state,
         ...action.payload,
@@ -104,7 +104,7 @@ const userReducer = (state = initialState, action: Action) => {
       console.log(action.payload);
       return {
         ...state,
-        email: action.payload
+        email: action.payload,
       };
     case ActionType.UPDATE_USER_EXP:
       return {
@@ -117,7 +117,7 @@ const userReducer = (state = initialState, action: Action) => {
             }
             return exp;
           }),
-        }
+        },
       };
     case ActionType.ADD_USER_EXP:
       return {
@@ -125,7 +125,7 @@ const userReducer = (state = initialState, action: Action) => {
         applicant: {
           ...state.applicant,
           experience: [...state.applicant.experience, action.payload],
-        }
+        },
       };
     case ActionType.DELETE_USER_EXP:
       return {
@@ -135,7 +135,7 @@ const userReducer = (state = initialState, action: Action) => {
           experience: state.applicant.experience.filter(
             (exp: any) => exp.id !== action.payload
           ),
-        }
+        },
       };
     case ActionType.UPDATE_USER_EDUCATION:
       return {
@@ -148,7 +148,7 @@ const userReducer = (state = initialState, action: Action) => {
             }
             return exp;
           }),
-        }
+        },
       };
     case ActionType.ADD_USER_EDUCATION:
       return {
@@ -156,7 +156,7 @@ const userReducer = (state = initialState, action: Action) => {
         applicant: {
           ...state.applicant,
           education: [...state.applicant.education, action.payload],
-        }
+        },
       };
     case ActionType.DELETE_USER_EDUCATION:
       return {
@@ -166,7 +166,7 @@ const userReducer = (state = initialState, action: Action) => {
           education: state.applicant.education.filter(
             (exp: any) => exp.id !== action.payload
           ),
-        }
+        },
       };
     case ActionType.UPDATE_USER_LANGUAGES:
       return {
@@ -180,7 +180,7 @@ const userReducer = (state = initialState, action: Action) => {
             }
             return exp;
           }),
-        }
+        },
       };
     case ActionType.ADD_USER_LANGUAGES:
       return {
@@ -189,7 +189,7 @@ const userReducer = (state = initialState, action: Action) => {
         applicant: {
           ...state.applicant,
           languages: [...state.applicant.languages, action.payload],
-        }
+        },
       };
     case ActionType.DELETE_USER_LANGUAGES:
       return {
@@ -200,26 +200,28 @@ const userReducer = (state = initialState, action: Action) => {
           languages: state.applicant.languages.filter(
             (exp: any) => exp.id !== action.payload
           ),
-        }
+        },
       };
     case ActionType.GET_NOTIFICATIONS:
-      if (action.payload.role === 'applicant') {
+      if (action.payload.role === "applicant") {
         return {
           ...state,
           applicant: {
             ...state.applicant,
-            notifications: action.payload.notifications
+            notifications: action.payload.notifications,
           },
-        }
-      } else if (action.payload.role === 'company') {
+        };
+      } else if (action.payload.role === "company") {
         return {
           ...state,
           company: {
             ...state.company,
-            notifications: action.payload.notifications
+            notifications: action.payload.notifications,
           },
-        }
-      } else { return state }
+        };
+      } else {
+        return state;
+      }
     case ActionType.GET_FAVORITES:
       return {
         ...state,
@@ -230,15 +232,18 @@ const userReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         applicant: {
-          ...state.applicant, 
-          favorites: action.payload
-        }
+          ...state.applicant,
+          favorites: action.payload,
+        },
       };
 
     case ActionType.JOB_APPLICATION:
       return {
         ...state,
-        postulations: action.payload,
+        applicant: {
+          ...state.applicant,
+          postulations: action.payload,
+        }
       };
     default:
       return state;

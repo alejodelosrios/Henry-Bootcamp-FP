@@ -7,7 +7,7 @@ export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
     let { data } = await axios.get("/posts/index");
     //console.log(data);
-    console.log("POSTS", "Se recibe data de la API");
+    //console.log("POSTS", "Se recibe data de la API");
     return dispatch({ type: ActionType.GET_POSTS, payload: data });
   } catch (error) {
     console.log(error);
@@ -18,7 +18,7 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
   try {
     let { data } = await axios.get(`/posts/${id}`);
     //console.log(data);
-    console.log("POSTS BY ID", "Se recibe data de la API");
+    //console.log("POSTS BY ID", "Se recibe data de la API");
     return dispatch({ type: ActionType.GET_POSTS_BY_ID, payload: data });
   } catch (error) {
     console.log(error);
@@ -114,17 +114,17 @@ export const createUser =
   };
 export const getUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
-    console.log("Data enviada: ", userData);
+    //console.log("Data enviada: ", userData);
     try {
       let { data } = await axios.get(`/user/${userData.email}`);
-      console.log("Información actualizada");
-      console.log("Data recibida: ", data);
+      //console.log("Información actualizada");
+      //console.log("Data recibida: ", data);
       return dispatch({
         type: ActionType.GET_USER,
-        payload:{
-          data:data,
-          modal: false
-        }
+        payload: {
+          data: data,
+          modal: false,
+        },
       });
     } catch (error) {
       console.log(error);
@@ -316,30 +316,30 @@ export const getNotifications =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
     try {
       let { data }: any = await axios.get(`/${role}/${applicantId}`);
-      console.log("Notifications actualizadas");
+      //console.log("Notifications actualizadas");
       return dispatch({
         type: ActionType.GET_NOTIFICATIONS,
         payload: {
-          notifications: data.notifications, 
-          role: role
+          notifications: data.notifications,
+          role: role,
         },
       });
     } catch (error) {
       console.log("Ups! algo salió mal");
       console.log(error);
     }
-  }
+  };
 
-  export const getCompany = 
-    (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
+export const getCompany =
+  (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
     try {
       let { data }: any = await axios.get(`/company/${companyId}`);
       return dispatch({
         type: ActionType.GET_COMPANY,
-        payload: data
+        payload: data,
       });
     } catch (error) {
-      console.log('Ups! algo salió mal');
+      console.log("Ups! algo salió mal");
       console.log(error);
     }
-  }
+  };

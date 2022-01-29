@@ -137,6 +137,17 @@ const PostDetail: FC = ({}) => {
   !company ? (userCompanyId = null) : (userCompanyId = company.id);
   !applicant ? (applicantId = null) : (applicantId = applicant.id);
 
+  let alreadyApplied = false;
+
+  for (const p of applicant.postulations) {
+    console.log("P: ", p.id + "", "PostId: ", postId);
+    if (p.postId + "" === postId) {
+      alreadyApplied = true;
+      break;
+    }
+  }
+  console.log(alreadyApplied);
+
   useEffect(() => {
     dispatch(getPostsById(postId));
   }, []);
@@ -199,8 +210,12 @@ const PostDetail: FC = ({}) => {
         <MainSection>
           <TitleContainer>
             <PostTitle>{post.title}</PostTitle>
-            {role === "applicant" || role === "" ? (
+            {role === "" ? (
               <button onClick={() => apply()}>Aplicar</button>
+            ) : role === "applicant" && !alreadyApplied ? (
+              <button onClick={() => apply()}>Aplicar</button>
+            ) : role === "applicant" && alreadyApplied ? (
+              <button onClick={() => apply()}>Retirar aplicación</button>
             ) : null}
             {role === "company" && companyId === userCompanyId ? (
               <button onClick={() => edit()}>Editar</button>
