@@ -333,7 +333,7 @@ export const getNotifications =
   export const getCompany = 
     (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
     try {
-      let {data}: any = await axios.get(`/company/${companyId}`);
+      let { data }: any = await axios.get(`/company/${companyId}`);
       return dispatch({
         type: ActionType.GET_COMPANY,
         payload: data

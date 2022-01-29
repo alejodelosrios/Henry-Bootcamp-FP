@@ -32,7 +32,13 @@ export const CompanyProfile = () => {
     const switchRating = () => {
         setFlag('rating')
     }
-
+    if (company.id === null) {
+        return (
+            <div>
+                <h1>Loading...</h1>
+            </div>
+        )
+    }
     return (
         <MainDiv>
             <PresentationCard className='presentation-card'>
