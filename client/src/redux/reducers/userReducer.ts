@@ -240,7 +240,10 @@ const userReducer = (state = initialState, action: Action) => {
     case ActionType.JOB_APPLICATION:
       return {
         ...state,
-        postulations: action.payload,
+        applicant: {
+          ...state.applicant,
+          postulations: action.payload,
+        }
       };
     default:
       return state;
