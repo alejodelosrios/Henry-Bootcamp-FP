@@ -30,7 +30,7 @@ const companyReducer = (state = initialState, action: Action) => {
       console.log(action.payload);
       return {
         ...state,
-        companyDetail: action.payload,
+        companyDetail: {...state.companyDetail, ...action.payload},
       };
     default:
       return state;
