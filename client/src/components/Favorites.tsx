@@ -1,10 +1,10 @@
-import { FC, useState, useEffect } from "react";
+import { FC, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { getFavorite } from "../redux/actions/applicantActionCreators";
 
-type P = {
+type Props = {
     role: string;
 };
 
@@ -45,7 +45,7 @@ const Modal = styled.div`
 `;
 
 const FavNot = styled.div`
-    display:flex;
+    display: flex;
     flex-direction: column;
     padding: 10px;
     width: 100%;
@@ -58,28 +58,21 @@ const FavNot = styled.div`
     &:hover {
         background-color: #c779ff32;
     }
-`
+`;
 
 const Detail = styled.p`
     color: black;
     text-decoration: none;
-    font-family: ${p => p.theme.colors.typography.poppins};
-`
+    font-family: ${(p) => p.theme.colors.typography.poppins};
+`;
 
-const Favorites: FC<P> = ({ role })=> {
-    const favs = useSelector((state: any) => state.userReducer.applicant.favorites);
-    const [modal, setModal] = useState(false);
-    const {  applicant } = useSelector(
-        (state: any) => state.userReducer
+const Favorites: FC<Props> = ({ role }) => {
+    const divRef = useRef<HTMLDivElement>(null);
+    const favs = useSelector(
+        (state: any) => state.userReducer.applicant.favorites
     );
-
-    const handleFav = () => {
-        setModal(!modal);
-    };
-
-    const handlePost = ()=>{
-        setModal(!modal);
-    }
+    const [modal, setModal] = useState(false);
+    const { applicant } = useSelector((state: any) => state.userReducer);
 
     const dispatch = useDispatch();
 
@@ -89,19 +82,44 @@ const Favorites: FC<P> = ({ role })=> {
         }
     }, []);
 
+    useEffect(() => {
+        const checkIfClickedOutside = (e:any) => {
+            // If the menu is open and the clicked target is not within the menu,
+            // then close the menu
+            if (modal && divRef.current && !divRef.current.contains(e.target)) {
+                setModal(false);
+            }
+        };
+        document.addEventListener("mousedown", checkIfClickedOutside);
+
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", checkIfClickedOutside);
+        };
+    }, [modal]);
+
     return (
-        <FavCont>
-            <FavBut onClick={handleFav} modal={modal}>
+        <FavCont ref={divRef}>
+            <FavBut
+                onClick={() => setModal((oldState) => !oldState)}
+                modal={modal}
+            >
                 {"★"}
             </FavBut>
 
             {modal && (
                 <Modal>
                     {favs?.map((post: any) => (
-                        
-                        <FavNot key={post.id} onClick={handlePost}>
-                            <Link to={`/company/${post.companyId}/post/${post.id}`}>
-                                <Detail>{post.title} - {post.location}</Detail>
+                        <FavNot
+                            key={post.id}
+                            onClick={() => setModal((oldState) => !oldState)}
+                        >
+                            <Link
+                                to={`/company/${post.companyId}/post/${post.id}`}
+                            >
+                                <Detail>
+                                    {post.title} - {post.location}
+                                </Detail>
                             </Link>
                         </FavNot>
                     ))}
