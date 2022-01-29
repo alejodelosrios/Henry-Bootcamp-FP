@@ -113,4 +113,3 @@ const UserPostulations: FC = () => {
 };
 
 export default UserPostulations;
-export default UserPostulations;
