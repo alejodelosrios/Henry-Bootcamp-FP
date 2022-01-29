@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { getNotifications } from "../redux/actions/actionCreators";
 
-type P = {
+type Props = {
     role: string;
 };
 
@@ -82,17 +82,16 @@ const Noti = styled.li<{ viewed?: boolean }>`
         `}
 `;
 
-const Notifications: FC<P> = ({ role }) => {
-
+const Notifications: FC<Props> = ({ role }) => {
+    const divRef = useRef<HTMLDivElement>(null);
     const { applicant, company } = useSelector(
         (state: any) => state.userReducer
     );
 
-    const notifications = role === 'applicant' 
-        ? applicant.notifications
-        : company.notifications;
-    
-    const viewed = notifications?.filter((n:any)=> !n.viewed).length;
+    const notifications =
+        role === "applicant" ? applicant.notifications : company.notifications;
+
+    const viewed = notifications?.filter((n: any) => !n.viewed).length;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -105,29 +104,40 @@ const Notifications: FC<P> = ({ role }) => {
 
     const [modal, setModal] = useState(false);
 
-    const handleNotif = () => {
-        setModal(!modal);
-    };
+    useEffect(() => {
+        const checkIfClickedOutside = (e: any) => {
+            // If the menu is open and the clicked target is not within the menu,
+            // then close the menu
+            if (modal && divRef.current && !divRef.current.contains(e.target)) {
+                setModal(false);
+            }
+        };
+        document.addEventListener("mousedown", checkIfClickedOutside);
 
+        return () => {
+            // Cleanup the event listener
+            document.removeEventListener("mousedown", checkIfClickedOutside);
+        };
+    }, [modal]);
     return (
-        <NotCont>
-            <NotBut onClick={handleNotif} modal={modal}>
+        <NotCont ref={divRef}>
+            <NotBut
+                onClick={() => setModal((oldState) => !oldState)}
+                modal={modal}
+            >
                 {"●"}
-                {(viewed && !modal)
-                    ? <Count>{viewed}</Count>
-                    : null
-                }
+                {viewed && !modal ? <Count>{viewed}</Count> : null}
             </NotBut>
 
             {modal && (
                 <Modal>
                     {notifications.length
-                        ? (notifications.map((not: any) => (
-                            <Noti key={not.id} viewed={not.viewed}>
-                                {not.message}
-                            </Noti>)))
-                        : 'Aún no tienes notificaciones...'
-                    }
+                        ? notifications.map((not: any) => (
+                              <Noti key={not.id} viewed={not.viewed}>
+                                  {not.message}
+                              </Noti>
+                          ))
+                        : "Aún no tienes notificaciones..."}
                 </Modal>
             )}
         </NotCont>
