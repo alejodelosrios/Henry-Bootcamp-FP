@@ -51,6 +51,7 @@ model Company {
   legalName       String
   stin            String
   image           String
+  location        String
   values          String[]
   aboutValues     String
   about           String
