@@ -16,6 +16,8 @@ model User {
   role      String     
   applicant Applicant?
   company   Company?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Applicant {
@@ -94,6 +96,8 @@ model Post {
   categoryId   Int
   category     Category    @relation(fields: [categoryId], references: [id])
   //=============
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model ApplicantPool {
@@ -103,6 +107,8 @@ model ApplicantPool {
   applicantId   Int
   post          Post          @relation(fields: [postId], references: [id])
   postId        Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 }
 
 model Experience {
