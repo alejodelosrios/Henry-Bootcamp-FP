@@ -1,5 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { getFavorite } from "../redux/actions/applicantActionCreators";
 
@@ -47,7 +48,22 @@ const FavNot = styled.div`
     display:flex;
     flex-direction: column;
     padding: 10px;
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    margin: 2px 0;
     border-radius: 10px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #c779ff32;
+    }
+`
+
+const Detail = styled.p`
+    color: black;
+    text-decoration: none;
+    font-family: ${p => p.theme.colors.typography.poppins};
 `
 
 const Favorites: FC<P> = ({ role })=> {
@@ -60,6 +76,10 @@ const Favorites: FC<P> = ({ role })=> {
     const handleFav = () => {
         setModal(!modal);
     };
+
+    const handlePost = ()=>{
+        setModal(!modal);
+    }
 
     const dispatch = useDispatch();
 
@@ -78,9 +98,11 @@ const Favorites: FC<P> = ({ role })=> {
             {modal && (
                 <Modal>
                     {favs?.map((post: any) => (
-                        <FavNot key={post.id}>
-                            <p>{post.title}</p>
-                            <p>{post.location.country}</p>
+                        
+                        <FavNot key={post.id} onClick={handlePost}>
+                            <Link to={`/company/${post.companyId}/post/${post.id}`}>
+                                <Detail>{post.title} - {post.location}</Detail>
+                            </Link>
                         </FavNot>
                     ))}
                 </Modal>
