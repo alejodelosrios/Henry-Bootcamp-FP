@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import styled from "styled-components";
 import {createUser, getUser} from "../../redux/actions/actionCreators";
@@ -10,7 +10,17 @@ import logo from '../../assets/logo.svg';
 import backgroundImg from '../../assets/two_people.jpg';
 import logoGoogle from '../../assets/google-logo.png';
 
-function LoginForm({type}: any) {
+function LoginForm({ type }: any) {
+    const navigate = useNavigate()
+    const userRole = useSelector((state: any) => state.userReducer.role);
+    
+    useEffect(() => {
+        if (userRole === 'company') {
+            navigate('/profile')
+        } else if (userRole === 'applicant') {
+                navigate('/home')
+        }
+    }, [userRole])
 
     const roleId = useSelector(
         (state: any) => state.userReducer.roleId
@@ -26,7 +36,6 @@ function LoginForm({type}: any) {
         role: 1,
     });
 
-    const navigate = useNavigate()
     if (roleId) {
         navigate("/home");
     }
