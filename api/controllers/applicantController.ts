@@ -93,35 +93,38 @@ module.exports = {
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
-      const checkIfApplicantPoolExists = await prisma.applicantPool.findFirst({
+      if(!applicantId) return res.send("Debes incluir el campo 'applicantId'")
+      if(!postId) return res.send("Debes incluir el campo 'postId'")
+      const checkIfApplicationExists = await prisma.applicantPool.findMany({
         where: {
           applicantId: Number(applicantId),
           postId: Number(postId)
         }
       })
-      if(checkIfApplicantPoolExists && !checkIfApplicantPoolExists.hasOwnProperty("status")){
-        const applicantPool = await prisma.applicantPool.create({
-          data: {
-            applicantId: applicantId,
-            postId: postId,
-            status: "applied"
-          }
-        })  
-      }
-      const applicantUpdate = await prisma.applicant.findFirst({
-        where: {
-          id: Number(applicantId),
-        },
-        include: {
-          postulations: {
-            include: {
-              post: true
+      if(checkIfApplicationExists){
+        if(!checkIfApplicationExists.length){
+          const applicantPool = await prisma.applicantPool.create({
+            data: {
+              applicantId: Number(applicantId),
+              postId: Number(postId),
+              status: "applied"
+            }
+          })
+        }
+        const applicantUpdate = await prisma.applicant.findFirst({
+          where: {
+            id: Number(applicantId),
+          },
+          include: {
+            postulations: {
+              include: {
+                post: true
+              }
             }
           }
-        }
-      });
-      const postulations = applicantUpdate && applicantUpdate.postulations
-      res.json(postulations);
+        });
+        res.json(applicantUpdate && applicantUpdate.postulations);
+      }
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
