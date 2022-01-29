@@ -50,7 +50,7 @@ model Company {
   name            String
   legalName       String
   stin            String
-  logo            String
+  companyLogo            String
   location        String
   values          String[]
   aboutValues     String
