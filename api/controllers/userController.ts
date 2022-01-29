@@ -49,7 +49,7 @@ module.exports = {
             legalName: "",
             stin: "",
             accountManagers: [],
-            logo: "",
+            companyLogo: "",
             location: "",
             values: "",
             aboutValues: "",
