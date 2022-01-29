@@ -30,5 +30,5 @@ app.use("/api/v2", mainRouter)
 
 const PORT = process.env.PORT || 3002
 app.listen(PORT, () => {
-    console.log("SERVER RUNNING ON PORT 3002")
+    console.log("SERVER RUNNING ON PORT 3002 ATENTOS AL NUEVO NUMERO DE PUERTO O.O")
 })
