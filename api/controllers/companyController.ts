@@ -12,7 +12,10 @@ module.exports = {
         stin,
         accountManagers,
         image,
-        companyValues,
+        location,
+        values,
+        aboutValues,
+        about,
         mission,
         vision,
       } = req.body;
@@ -41,10 +44,18 @@ module.exports = {
         return res.send(
           "Debes incluir un campo 'image', puede contener una string vacía"
         );
-      if (!companyValues)
+      if (!values)
         return res.send(
-          "Debes incluir un campo 'companyValues', puede contener una string vacía"
+          "Debes incluir un campo 'values', es un arreglo que contiene strings, puede estar vacío"
         );
+      if (!aboutValues)
+      return res.send(
+        "Debes incluir un campo 'aboutValues', puede contener una string vacía"
+      );
+      if (!about)
+      return res.send(
+        "Debes incluir un campo 'about', puede contener una string vacía"
+      );
       if (!mission)
         return res.send(
           "Debes incluir un campo 'mission', puede contener una string vacía"
@@ -61,8 +72,11 @@ module.exports = {
           legalName: legalName as string,
           stin: stin as string,
           accountManagers: accountManagers as string[],
-          image: image as string,
-          companyValues: companyValues as string,
+          logo: image as string,
+          location: location as string,
+          values: values as string,
+          aboutValues: aboutValues as string,
+          about: about as string,
           mission: mission as string,
           vision: vision as string,
         },
@@ -189,6 +203,31 @@ module.exports = {
     }
   },
 
+  addImage: async (req: Request, res: Response) => {
+    try {
+      const { companyId } = req.params;
+      const { name = "", url } = req.body;
+      if(!companyId) return res.send("Debes enviar el companyId por params")
+      if(!url) return res.send("Debes incluir un campo 'url'")
+      const newImage = await prisma.image.create({
+        data: {
+          name: name as string,
+          url: url as string,
+          companyId: Number(companyId)
+        }
+      })
+      const images = await prisma.image.findMany({
+        where: {
+          companyId: Number(companyId)
+        }
+      })
+      res.json(images)
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
   update: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;
@@ -198,7 +237,10 @@ module.exports = {
         stin,
         accountManagers,
         image,
-        companyValues,
+        location,
+        values,
+        aboutValues,
+        about,
         mission,
         vision,
       } = req.body;
@@ -212,8 +254,11 @@ module.exports = {
           legalName: legalName as string,
           stin: stin as string,
           accountManagers: accountManagers as string[],
-          image: image as string,
-          companyValues: companyValues as string,
+          logo: image as string,
+          location: location as string,
+          values: values as string,
+          aboutValues: aboutValues as string,
+          about: about as string,
           mission: mission as string,
           vision: vision as string,
         },

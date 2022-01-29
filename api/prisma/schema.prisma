@@ -38,7 +38,7 @@ model Applicant {
   notifications Notification[]
   followed      Company[]
   postulations  ApplicantPool[]
-  favorites    Post[]         @relation("_UserToFavorites")
+  favorites     Post[]         @relation("_UserToFavorites")
 }
 
 model Company {
@@ -50,15 +50,27 @@ model Company {
   name            String
   legalName       String
   stin            String
-  image           String
-  companyValues   String
+  logo            String
+  location        String
+  values          String[]
+  aboutValues     String
+  about           String
   mission         String
   vision          String
   accountManagers String[]
+  images          Image[]
   notifications   Notification[]
   reviews         Review[]
   posts           Post[]
   followers       Applicant[]
+}
+
+model Image {
+  id              Int            @id @default(autoincrement())
+  name            String?
+  url             String
+  companyId       Int
+  company         Company       @relation(fields: [companyId], references: [id])
 }
 
 model Post {
