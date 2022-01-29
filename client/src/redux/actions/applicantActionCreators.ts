@@ -16,3 +16,33 @@ export const jobApplication =
       console.log(error);
     }
   };
+
+  export const getFavorite = 
+  (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let {data}:any = await axios.get(`/${role}/${applicantId}`);
+      console.log("Favoritos actualizados");
+      return dispatch({
+        type: ActionType.GET_FAVORITES,
+        payload: data.favorites
+      });
+    } catch (error) {
+      console.log('Ups! algo salió mal');
+      console.log(error);
+    }
+  }
+
+  export const setFavorite = 
+    (applicantId:number, postId:number) => async (dispatch: Dispatch<Action>)=>{
+      try {
+        let {data}: any = await axios.put(`/applicant/favorite`, {applicantId, postId});
+        getFavorite('applicant', applicantId);
+        return dispatch({
+          type: ActionType.SET_FAVORITES,
+          payload: data
+        });
+      } catch (error) {
+        console.log('Ups! algo salió mal');
+        console.log(error);
+      }
+    }

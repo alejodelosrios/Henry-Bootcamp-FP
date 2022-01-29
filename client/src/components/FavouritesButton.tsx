@@ -1,25 +1,33 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { setFavorite } from "../redux/actions/applicantActionCreators";
 import { checkExistance } from "../services/checkExistance";
 
 interface Props {
-  postId: Number;
+  postId: number;
 }
 
 const Button = styled.button`
   border: none;
   background-color: rgba(0, 0, 0, 0);
   color: #ef5da8;
+  cursor: pointer;
 `;
 const FavouritesButton: FC<Props> = ({ postId }) => {
-  //const dispatch = useDispatch(setFavs({ postId, userId }));
-  //const favs = useSelector((state) => state.userReducer.favs);
-  const favs = [1, 2, 3, 4, 5]; //  Arreglo de prueba
-  let isFav = checkExistance(favs, postId);
-  //console.log(isFav);
+  const dispatch = useDispatch();
+  const {favorites, id} = useSelector((state:any) => state.userReducer.applicant);
+  const [isFav, setIsFav] = useState(checkExistance(favorites, postId));
+
+  const handleFav = ()=>{
+    dispatch(setFavorite(id, postId));
+    setIsFav(!isFav)
+  }
+
   return (
-    <>{isFav === true ? <Button>Guardar</Button> : <Button>Retirar</Button>}</>
+    <Button onClick={handleFav}>
+      {isFav ? 'Retirar' : 'Guardar'}
+    </Button>
   );
 };
 

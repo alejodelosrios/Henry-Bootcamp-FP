@@ -63,7 +63,6 @@ const Noti = styled.div`
 
 const ProfModalButton: FC<P> = ({ user }) => {
 
-    console.log(user);
     const [modal, setModal] = useState(false);
 
     const handleNotif = () => {

@@ -125,6 +125,11 @@ interface getFavorite {
   payload: object[];
 }
 
+interface setFavorites {
+  type: ActionType.SET_FAVORITES,
+  payload: object[]
+}
+
 export type Action =
   | getPosts
   | filterAndSort
@@ -149,4 +154,5 @@ export type Action =
   | setUserFollows
   | getNotifications
   | getFavorite
-  | jobApplication;
+  | jobApplication
+  | setFavorites;

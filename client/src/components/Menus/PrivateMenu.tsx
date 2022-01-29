@@ -49,15 +49,13 @@ const Options = styled.div`
 
 const PrivateMenu: FC<Props> = ({ role }) => {
   let location = useLocation();
-  console.log(location);
   let isAbout = false;
   if (location.pathname === "/about-us") {
     isAbout = true;
   }
-  console.log(isAbout);
   
   const user = useSelector((state: any) => state.userReducer.applicant);
-
+  
   return (
     <>
       <NavLinks className="multi-options">
