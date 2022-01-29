@@ -93,7 +93,6 @@ const Notifications: FC<P> = ({ role }) => {
         : company.notifications;
     
     const viewed = notifications?.filter((n:any)=> !n.viewed).length;
-    console.log(notifications);
     const dispatch = useDispatch();
 
     useEffect(() => {

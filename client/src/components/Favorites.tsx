@@ -1,7 +1,7 @@
 import { FC, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
-import { getFavorite } from "../redux/actions/actionCreators";
+import { getFavorite } from "../redux/actions/applicantActionCreators";
 
 type P = {
     role: string;
@@ -78,8 +78,7 @@ const Favorites: FC<P> = ({ role })=> {
             {modal && (
                 <Modal>
                     {favs?.map((post: any) => (
-                        //Hay que modificar este Post para revisar lo que recibe!!
-                        <FavNot>
+                        <FavNot key={post.id}>
                             <p>{post.title}</p>
                             <p>{post.location.country}</p>
                         </FavNot>

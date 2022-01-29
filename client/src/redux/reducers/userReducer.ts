@@ -26,6 +26,7 @@ const initialState = {
     followers: []
   },
   applicant: {
+    id: null,
     firstName: "",
     lastName: "",
     about: "",
@@ -223,6 +224,15 @@ const userReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         applicant: { ...state.applicant, favourites: action.payload },
+      };
+
+    case ActionType.SET_FAVORITES:
+      return {
+        ...state,
+        applicant: {
+          ...state.applicant, 
+          favorites: action.payload
+        }
       };
 
     case ActionType.JOB_APPLICATION:
