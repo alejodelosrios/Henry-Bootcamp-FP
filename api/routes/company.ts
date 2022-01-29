@@ -14,6 +14,7 @@ companyRouter.get("/posts/:companyId", companyController.getPosts);
 
 //PUT
 companyRouter.put("/application", companyController.updateStatus);
+companyRouter.put("/add-image/:companyId", companyController.getImages)
 companyRouter.put("/update/:companyId", companyController.update);
 
 //DELETE

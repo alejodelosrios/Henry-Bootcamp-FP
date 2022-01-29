@@ -142,7 +142,8 @@ async function main(){
                     legalName: faker.random.words(2),
                     stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
                     accountManagers: [`${faker.name.firstName()} ${faker.name.lastName()}`, `${faker.name.firstName()} ${faker.name.lastName()}`],
-                    image: faker.internet.avatar(),
+                    logo: faker.image.business(),
+                    location: faker.random.words(2),
                     values: [faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word()],
                     aboutValues: faker.lorem.paragraph(),
                     about: faker.lorem.paragraph(),
@@ -154,7 +155,7 @@ async function main(){
         })
     }
 
-    //agregarles las reviews
+    //agregarles las reviews e imagenes para el carrousel
     for(let i=1; i<companies; i++){
         await prisma.review.createMany({
             data: [
@@ -182,6 +183,25 @@ async function main(){
                     description: faker.lorem.paragraph(),
                     score: Math.floor(Math.random()*5)+1,
                     companyId: i
+                }
+            ]
+        })
+        await prisma.image.createMany({
+            data: [
+                {
+                    name: "una imagen random",
+                    url: faker.image.business(),
+                    companyId: i 
+                },
+                {
+                    name: "una imagen random",
+                    url: faker.image.business(),
+                    companyId: i 
+                },
+                {
+                    name: "una imagen random",
+                    url: faker.image.business(),
+                    companyId: i 
                 }
             ]
         })
