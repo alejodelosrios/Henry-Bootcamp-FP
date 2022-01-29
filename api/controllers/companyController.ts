@@ -131,6 +131,7 @@ module.exports = {
           reviews: true,
           posts: true,
           followers: true,
+          images: true
         },
       });
       res.json(company);
