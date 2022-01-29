@@ -62,40 +62,40 @@ const PrivateMenu: FC<Props> = ({ role }) => {
         {role === "applicant" ? (
           <>
             <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Inicio"}</A>
+              <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Nosotros"}</A>
+              <A About={isAbout}>{"Nosotros"}</A>
             </Link>
             <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
             <Link to="/my-applications" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Mis Postulaciones"}</A>
+              <A About={isAbout}>{"Mis Postulaciones"}</A>
             </Link>
           </>
         ) : role === "company" ? (
           <>
             <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Inicio"}</A>
+              <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Nosotros"}</A>
+              <A About={isAbout}>{"Nosotros"}</A>
             </Link>
             <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
-            <A>{"Empresas"}</A>
+            <A About={isAbout}>{"Empresas"}</A>
           </>
         ) : (
           <>
             <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Inicio"}</A>
+              <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
-              <A>{"Nosotros"}</A>
+              <A About={isAbout}>{"Nosotros"}</A>
             </Link>
-            <A>{"Admin"}</A>
+            <A About={isAbout}>{"Admin"}</A>
           </>
         )}
       </NavLinks>

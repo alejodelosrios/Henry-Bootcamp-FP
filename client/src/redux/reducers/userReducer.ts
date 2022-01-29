@@ -11,18 +11,18 @@ const initialState = {
     name: "",
     legalName: "",
     stin: "",
-    image: "",
-    companyValues: "",
+    companyLogo: "",
+    images: [],
+    values: [],
+    aboutValues: '',
+    about: '',
     mission: "",
     vision: "",
-    accountManagers: [
-    ],
-    notifications: [
-    ],
-    reviews: [
-    ],
-    posts: [
-    ],
+    location: '',
+    accountManagers: [],
+    notifications: [],
+    reviews: [],
+    posts: [],
     followers: []
   },
   applicant: {
