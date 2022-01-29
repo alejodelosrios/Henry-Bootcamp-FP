@@ -212,7 +212,8 @@ module.exports = {
       const newImage = await prisma.image.create({
         data: {
           name: name as string,
-          url: url as string
+          url: url as string,
+          companyId: Number(companyId)
         }
       })
       const images = await prisma.image.findMany({
