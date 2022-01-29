@@ -38,7 +38,7 @@ model Applicant {
   notifications Notification[]
   followed      Company[]
   postulations  ApplicantPool[]
-  favorites    Post[]         @relation("_UserToFavorites")
+  favorites     Post[]         @relation("_UserToFavorites")
 }
 
 model Company {
@@ -51,7 +51,9 @@ model Company {
   legalName       String
   stin            String
   image           String
-  companyValues   String
+  values          String[]
+  aboutValues     String
+  about           String
   mission         String
   vision          String
   accountManagers String[]

@@ -143,7 +143,9 @@ async function main(){
                     stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
                     accountManagers: [`${faker.name.firstName()} ${faker.name.lastName()}`, `${faker.name.firstName()} ${faker.name.lastName()}`],
                     image: faker.internet.avatar(),
-                    companyValues: faker.random.words(3),
+                    values: [faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word()],
+                    aboutValues: faker.lorem.paragraph(),
+                    about: faker.lorem.paragraph(),
                     mission: faker.lorem.paragraph(),
                     vision: faker.lorem.paragraph()
                 }
