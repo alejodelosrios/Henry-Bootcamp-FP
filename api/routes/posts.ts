@@ -12,6 +12,7 @@ postsRouter.get("/index", postsController.index);
 postsRouter.get("/:postId", postsController.postById);
 
 //PUT
+postsRouter.put("/update/:postId", postsController.update)
 
 //DELETE
 postsRouter.delete("/delete/:postId", postsController.delete);
