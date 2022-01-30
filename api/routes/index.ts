@@ -24,7 +24,7 @@ mainRouter.use("/posts", postsRouter);
 mainRouter.use("/company", companyRouter);
 mainRouter.use("/education", educationRouter);
 mainRouter.use("/experience", experienceRouter);
-mainRouter.use("/tags", tagsRouter);
+mainRouter.use("/tag", tagsRouter);
 mainRouter.use("/category", categoryRouter);
 mainRouter.use("/news", newsRouter);
 mainRouter.use("/notification", notificationRouter);

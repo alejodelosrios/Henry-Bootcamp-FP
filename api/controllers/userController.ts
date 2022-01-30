@@ -111,7 +111,11 @@ module.exports = {
               skillTags: true,
               notifications: true,
               followed: true,
-              postulations: true,
+              postulations: {
+                include: {
+                  post: true
+                }
+              },
               favorites: true
             }
           },
