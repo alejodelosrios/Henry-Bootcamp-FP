@@ -215,6 +215,36 @@ module.exports = {
       res.send(error);
     }
   },
+
+  update: async (req: Request, res: Response) => {
+    try {
+      const { postId } = req.params;
+      const { endDate } = req.body;
+      if (!postId) return res.send("Debes enviar el postId por params");
+      const updatedPost = await prisma.post.update({
+        where: {
+          id: Number(postId),
+        },
+        data: {
+          endDate: endDate
+        }
+      });
+
+      const company = await prisma.company.findFirst({
+        where: {
+          id: updatedPost && updatedPost.companyId
+        },
+        include: {
+          posts: true
+        }
+      })
+
+      res.json(company && company.posts);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
   
   delete: async (req: Request, res: Response) => {
     try {
