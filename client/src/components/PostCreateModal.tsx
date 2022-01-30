@@ -71,6 +71,9 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
   const postCreateModal = useSelector(
     (state: any) => state.postsReducer.postCreateModal
   );
+  const companyId = useSelector(
+    (state: any) => state.userReducer.company.id
+  );
   let navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -79,12 +82,12 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
       setForm({
         location: "",
         endDate: "",
-        category: "",
+        category: 1,
         tags: [],
         title: "",
         description: "",
 
-        company: 1,
+        companyId:companyId ,
         modality: "remote",
         contractType: "fullTime",
         startDate: "2022-01-22",
@@ -126,3 +129,17 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
 };
 
 export default PostCreateModal;
+
+
+
+//{
+  //"category": "2",
+	//"companyId": "8",
+	//"contractType": "fullTime",
+	//"description": "Dolor tempor id dol",
+	//"endDate": "2000-04-26",
+	//"location": "Mendoza",
+	//"modality": "remote",
+	//"salary": "3000",
+	//"startDate": "2022-01-22"
+//}

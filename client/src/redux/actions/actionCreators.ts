@@ -51,13 +51,13 @@ export const filterAndSort =
 export const createPost =
   (dataPost: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      //console.log("Data enviada: ", dataPost);
+      console.log("Data enviada: ", dataPost);
 
       let { data } = await axios.post(
-        `/posts/create/${dataPost.company}`,
+        `/posts/create/${dataPost.companyId}`,
         dataPost
       );
-      //console.log("Data recibida:", data);
+      console.log("Data recibida:", data);
       console.log("CREATE POST", "Se envió la data a la API");
       return dispatch({
         type: ActionType.SET_POST_CREATE_MODAL,

@@ -245,6 +245,14 @@ const userReducer = (state = initialState, action: Action) => {
           postulations: action.payload,
         }
       };
+    case ActionType.EDIT_POST:
+      return {
+        ...state,
+        company: {
+          ...state.company,
+          postulations: action.payload,
+        }
+      };
     default:
       return state;
   }

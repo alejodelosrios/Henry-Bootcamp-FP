@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-import {Profile} from "./pages/Profile";
+import { Profile } from "./pages/Profile";
 import Home from "./pages/Home";
 import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
@@ -26,16 +26,20 @@ function App() {
 
         useEffect(() => {
                 const getUser = () => {
-                        fetch("https://transforma-server-u5det.ondigitalocean.app/api/v2/auth/login/success", {
-                                method: "GET",
-                                credentials: "include",
-                                headers: {
-                                        Accept: "application/json",
-                                        "Content-Type": "application/json",
-                                        "Access-Control-Allow-Credentials":
-                                                "true",
-                                },
-                        })
+                        fetch(
+                                "https://transforma-server-u5det.ondigitalocean.app/api/v2/auth/login/success",
+                                {
+                                        method: "GET",
+                                        credentials: "include",
+                                        headers: {
+                                                Accept: "application/json",
+                                                "Content-Type":
+                                                        "application/json",
+                                                "Access-Control-Allow-Credentials":
+                                                        "true",
+                                        },
+                                }
+                        )
                                 .then((response) => {
                                         if (response.status === 200)
                                                 return response.json();
@@ -100,19 +104,19 @@ function App() {
                                 <Route path="/home" element={<Home />}></Route>
                                 <Route
                                         path="/profile"
-                                        element={
-                                                <Profile
-                                                        user={userLogged}
-                                                />
-                                        }
+                                        element={<Profile user={userLogged} />}
                                 />
                                 <Route
                                         path="/company/:companyId/post/:postId"
                                         element={<PostDetailPage />}
                                 />
                                 <Route
+                                        path="/company/:companyId/post/:postId/edit"
+                                        element={<CreatePostPage mode="edit" />}
+                                />
+                                <Route
                                         path="/create-post"
-                                        element={<CreatePostPage />}
+                                        element={<CreatePostPage mode="create" />}
                                 />
                                 <Route
                                         path="/login"
@@ -123,8 +127,14 @@ function App() {
                                         element={<LoginPage type="register" />}
                                 />
                                 <Route path="/about-us" element={<AboutUs />} />
-                                <Route path="/frequent-questions" element={<QandA />} />
-                                <Route path='/company/:companyId' element={<CompanyProfile/>}/>
+                                <Route
+                                        path="/frequent-questions"
+                                        element={<QandA />}
+                                />
+                                <Route
+                                        path="/company/:companyId"
+                                        element={<CompanyProfile />}
+                                />
                         </Routes>
                 </ThemeProvider>
         );

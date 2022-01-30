@@ -14,7 +14,7 @@ export const PresentationCard = styled.div`
     width: 100%;
 `
 
-export const Logo = styled.img`    
+export const Logo = styled.img`
     width: 20%;
     border-radius: 50%;
     margin-right: 3.5rem;
@@ -26,7 +26,7 @@ export const CompanyInfo = styled.div`
 `
 
 export const CompanyName = styled.h1`
-    font-size: 8rem;
+    font-size: 5rem;
     color: #757577;
     `
     export const Location = styled.h5`
@@ -81,7 +81,6 @@ export const PaginateButtons = styled.div`
     background: #FFB7FF;
     color: #FEFEFF;
     font-family: Poppins;
-    font-size: 32px;
     font-style: normal;
     font-weight: 400;
     letter-spacing: 0em;
@@ -215,4 +214,3 @@ export const RatingPercentage = styled.h1`
     text-align: left;
     color: #C879FF;
 `
-

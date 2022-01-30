@@ -82,7 +82,7 @@ const UserPostulations: FC = () => {
           <PT>Mis</PT> Postulaciones
         </Title>
         <CardContainer>
-          {postulations.length > 1
+          {postulations.length > 0
             ? postulations.map((el: any) => (
                 <PostCard
                   key={el.postId}

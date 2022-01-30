@@ -1,6 +1,8 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createPost } from "../../redux/actions/actionCreators";
+import {FC, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
+import {createPost} from "../../redux/actions/actionCreators";
+import {editPost} from "../../redux/actions/companyActionCreators";
 import PostCreateModal from "../PostCreateModal";
 import {
   Container,
@@ -26,7 +28,7 @@ type Form = {
   tags: string[];
   title: string;
   description: string;
-  company: number;
+  companyId: number;
   modality: string;
   contractType: string;
   startDate: string;
@@ -35,11 +37,29 @@ type Form = {
 
 type Tag = string;
 
-const PostCreateForm = () => {
+type Props = {
+  mode: string
+}
+
+const PostCreateForm: FC<Props> = ({mode}) => {
   const dispatch = useDispatch();
+  const {postId, companyId} = useParams();
+
   const postCreateModal = useSelector(
     (state: any) => state.postsReducer.postCreateModal
   );
+  const posts = useSelector(
+    (state: any) => state.postsReducer.posts
+  );
+  const company = useSelector(
+    (state: any) => state.userReducer.company
+  );
+
+
+  console.log("Posts: ", posts)
+  const post = posts.find((e: any) => e.id + "" === postId)
+  console.log("Post: ", post)
+
   const [form, setForm] = useState<Form>({
     location: "",
     endDate: "",
@@ -47,7 +67,7 @@ const PostCreateForm = () => {
     tags: [],
     title: "",
     description: "",
-    company: 1,
+    companyId: company.id,
     modality: "remote",
     contractType: "fullTime",
     startDate: "2022-01-22",
@@ -57,27 +77,35 @@ const PostCreateForm = () => {
   const [tag, setTag] = useState<Tag>("");
 
   const addTag = () => {
-    setForm({ ...form, tags: [...form.tags, tag] });
+    setForm({...form, tags: [...form.tags, tag]});
     setTag("");
   };
 
-  const deleteTag = ({ target: { name } }: any) => {
-    setForm({ ...form, tags: form.tags.filter((e) => e !== name) });
+  const deleteTag = ({target: {name}}: any) => {
+    setForm({...form, tags: form.tags.filter((e) => e !== name)});
   };
 
-  const handleInputs = ({ target: { name, value } }: any) => {
+  const handleInputs = ({target: {name, value}}: any) => {
     if (name === "tag") {
       setTag(value);
     } else {
-      setForm({ ...form, [name]: value });
+      setForm({...form, [name]: value});
     }
   };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
     console.log("submit");
-    dispatch(createPost(form));
+    dispatch(createPost({
+      ...form,
+      category: +form.category
+    }));
   };
+  const edit = ()=>{
+
+    dispatch(editPost(post.id,form.endDate));
+  }
+
   return (
     <>
       <TopBackground></TopBackground>
@@ -91,52 +119,81 @@ const PostCreateForm = () => {
         <Aside>
           <Div>
             <Label>Ubicación</Label>
-            <Select name="location" onChange={(e) => handleInputs(e)}>
-              <option value=""></option>
-              <option value="Buenos Aires">Buenos Aires</option>
-              <option value="Mendoza">Mendoza</option>
-            </Select>
+            {mode === "edit" ?
+              <p>{post.location}</p>
+              :
+              <Select name="location" onChange={(e) => handleInputs(e)}>
+                <option value=""></option>
+                <option value="Buenos Aires">Buenos Aires</option>
+                <option value="Mendoza">Mendoza</option>
+              </Select>
+            }
           </Div>
           <Div>
             <Label>Fecha Fin</Label>
-            <Input
-              type="date"
-              name="endDate"
-              onChange={(e) => handleInputs(e)}
-              value={form.endDate}
-            />
+            {mode === "edit" ?
+              <Input
+                type="date"
+                value={post.endDate}
+                name="endDate"
+                onChange={(e) => handleInputs(e)}
+              />
+              :
+              <Input
+                type="date"
+                name="endDate"
+                onChange={(e) => handleInputs(e)}
+                value={form.endDate}
+              />
+            }
           </Div>
           <Div>
             <Label>Categoría</Label>
-            <Select name="category" onChange={(e) => handleInputs(e)}>
-              <option value={1}>Tecnología</option>
-              <option value={2}>Salud</option>
-            </Select>
+            {mode === "edit" ?
+              <p>{post.category}</p>
+              :
+              <Select name="category" onChange={(e) => handleInputs(e)}>
+                <option value={1}>Tecnología</option>
+                <option value={2}>Salud</option>
+              </Select>
+            }
           </Div>
           <Div>
             <Label>Tags</Label>
             <div>
-              <Input2
-                type="text"
-                name="tag"
-                value={tag}
-                onChange={(e) => handleInputs(e)}
-              />
-              <Button type="button" onClick={() => addTag()}>
-                Agregar
-              </Button>
+
+              {mode === "edit" ?
+                null
+                :
+                <>
+                  <Input2
+                    type="text"
+                    name="tag"
+                    value={tag}
+                    onChange={(e) => handleInputs(e)}
+                  />
+                  <Button type="button" onClick={() => addTag()}>
+                    Agregar
+                  </Button>
+                </>
+              }
             </div>
             <div>
               {form.tags.map((tag, i) => (
                 <div key={i}>
                   {tag}
-                  <Button
-                    type="button"
-                    name={tag}
-                    onClick={(e) => deleteTag(e)}
-                  >
-                    Eliminar
-                  </Button>
+                  {mode === "edit" ?
+                    null
+                    :
+
+                    <Button
+                      type="button"
+                      name={tag}
+                      onClick={(e) => deleteTag(e)}
+                    >
+                      Eliminar
+                    </Button>
+                  }
                 </div>
               ))}
             </div>
@@ -145,24 +202,40 @@ const PostCreateForm = () => {
         <Section>
           <Div>
             <Label>Título</Label>
-            <Input
-              type="text"
-              name="title"
-              onChange={(e) => handleInputs(e)}
-              value={form.title}
-            />
+
+            {mode === "edit" ?
+              <p>{post.title}</p>
+              :
+              <Input
+                type="text"
+                name="title"
+                onChange={(e) => handleInputs(e)}
+                value={form.title}
+              />
+            }
           </Div>
           <Label>Descripción</Label>
-          <TextArea
-            name="description"
-            onChange={(e) => handleInputs(e)}
-            value={form.description}
-            cols={60}
-            rows={14}
-          ></TextArea>
-          <Button type="submit" onClick={(e) => onSubmit(e)}>
-            Crear
-          </Button>
+          {mode === "edit" ?
+            <p>{post.description}</p>
+            :
+            <TextArea
+              name="description"
+              onChange={(e) => handleInputs(e)}
+              value={form.description}
+              cols={60}
+              rows={14}
+            ></TextArea>
+          }
+
+          {mode === "edit" ?
+            <Button type="submit" onClick={edit}>
+              Editar
+            </Button>
+            :
+            <Button type="submit" onClick={(e) => onSubmit(e)}>
+              Crear
+            </Button>
+          }
         </Section>
       </Form>
       {postCreateModal.val && (
