@@ -7,6 +7,7 @@ module.exports = {
       const {
         message,
         type,
+        postId,
         applicantId,
         companyId
       } = req.body;
@@ -16,6 +17,7 @@ module.exports = {
 
       const notification = await prisma.notification.create({
         data: {
+          postId: postId as number,
           message: message as string,
           type: type as string,
           applicantId: applicantId as number,

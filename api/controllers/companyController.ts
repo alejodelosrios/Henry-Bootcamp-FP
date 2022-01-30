@@ -162,7 +162,7 @@ module.exports = {
     }
   },
 
-  updateStatus: async (req: Request, res: Response) => {
+  updateApplicationStatus: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId, newStatus } = req.body;
       const updatedStatus = await prisma.applicantPool.updateMany({
@@ -172,15 +172,27 @@ module.exports = {
         },
         data: {
           status: newStatus,
-        },
-      });
-      const post = await prisma.post.findFirst({
-        where: {
-          id: Number(postId),
-        },
+        }
       });
 
-      if (post && post.companyId) {
+      //NOTIFY APPLICANT
+
+      const post = await prisma.post.findFirst({
+        where: {
+          id: Number(postId)
+        }
+      })
+
+      const notifyApplicant = await prisma.notification.create({
+        data: {
+          message: `Se ha modificado el estado de tu postulacion para ${post && post.title}`,
+          type: "statusUpdate",
+          applicantId: Number(applicantId),
+          postId: Number(postId),
+        }
+      })
+
+      if(post && post.companyId) {
         const companies = await prisma.company.findMany({
           where: {
             id: post.companyId,

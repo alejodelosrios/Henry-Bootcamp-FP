@@ -18,7 +18,7 @@ module.exports = {
       category,
     } = req.body;
 
-    if (typeof companyId !== "number") return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params, contiene un number");
+    if (typeof Number(companyId) !== "number") return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params, contiene un number");
     if (typeof title !== "string") return res.send("Debes incluir un campo 'title', contiene una string, puede estar vacia");
     if (typeof description !== "string") return res.send("Debes incluir un campo 'description'");
     if (typeof location !== "string") return res.send("Debes incluir un campo 'location', es una string que puede estar vacia");
@@ -213,6 +213,36 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.send(error);
+    }
+  },
+
+  update: async (req: Request, res: Response) => {
+    try {
+      const { postId } = req.params;
+      const { endDate } = req.body;
+      if (!postId) return res.send("Debes enviar el postId por params");
+      const updatedPost = await prisma.post.update({
+        where: {
+          id: Number(postId),
+        },
+        data: {
+          endDate: endDate
+        }
+      });
+
+      const company = await prisma.company.findFirst({
+        where: {
+          id: updatedPost && updatedPost.companyId
+        },
+        include: {
+          posts: true
+        }
+      })
+
+      res.json(company && company.posts);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
     }
   },
   
