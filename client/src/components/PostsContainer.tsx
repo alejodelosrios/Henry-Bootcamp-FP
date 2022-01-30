@@ -7,7 +7,6 @@ import Post from "./Post";
 const Container = styled.div`
     margin: auto;
     width: 100%;
-    height: 100vh;
     display: flex;
     overflow-y: auto;
     flex-direction: column;
@@ -87,5 +86,3 @@ const PostsContainer: FC<Props> = ({ companyId }) => {
 };
 
 export default PostsContainer;
-
-//experience={post.experience}

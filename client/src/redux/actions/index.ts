@@ -4,6 +4,10 @@ interface getPosts {
   type: ActionType.GET_POSTS;
   payload: object[];
 }
+interface editPost {
+  type: ActionType.EDIT_POST;
+  payload: object;
+}
 
 interface getCurrentPosts {
   type: ActionType.GET_CURRENT_POSTS;
@@ -136,6 +140,7 @@ interface getCompany {
 
 export type Action =
   | getPosts
+  | editPost
   | filterAndSort
   | getPostsById
   | setPostCreateModal

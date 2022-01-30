@@ -134,26 +134,27 @@ const PostDetail: FC = ({}) => {
   let userCompanyId: string | null;
   let applicantId: number | null;
 
-  !company ? (userCompanyId = null) : (userCompanyId = company.id);
+  !company ? (userCompanyId = null) : (userCompanyId = company.id + "");
   !applicant ? (applicantId = null) : (applicantId = applicant.id);
+  //console.log("userCompanyId: ", userCompanyId);
+  //console.log("companyId: ", companyId);
 
   let alreadyApplied = false;
-
   for (const p of applicant.postulations) {
-    console.log("P: ", p.id + "", "PostId: ", postId);
+    //console.log("P: ", p.id + "", "PostId: ", postId);
     if (p.postId + "" === postId) {
       alreadyApplied = true;
       break;
     }
   }
-  console.log(alreadyApplied);
+  //console.log(alreadyApplied);
 
   useEffect(() => {
     dispatch(getPostsById(postId));
   }, []);
   const navigate = useNavigate();
 
-  const edit = () => {};
+
   const apply = () => {
     if (!role) {
       return navigate("/register");
@@ -218,7 +219,7 @@ const PostDetail: FC = ({}) => {
               <button onClick={() => apply()}>Retirar aplicación</button>
             ) : null}
             {role === "company" && companyId === userCompanyId ? (
-              <button onClick={() => edit()}>Editar</button>
+              <button onClick={() => navigate(`/company/${companyId}/post/${postId}/edit`)}>Editar</button>
             ) : null}
           </TitleContainer>
           <PostSubtitle>Descripción:</PostSubtitle>

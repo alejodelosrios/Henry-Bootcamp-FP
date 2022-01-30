@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { Logout } from "./Logout";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
 
 type P = {
     user: any;
@@ -62,7 +63,8 @@ const Noti = styled.div`
 `;
 
 const ProfModalButton: FC<P> = ({ user }) => {
-
+    const companyId = useSelector((state: any) => state.userReducer.company.id);
+    const role = useSelector((state: any) => state.userReducer.role);
     const [modal, setModal] = useState(false);
 
     const handleNotif = () => {
@@ -77,11 +79,31 @@ const ProfModalButton: FC<P> = ({ user }) => {
 
             {modal && (
                 <Modal>
-                    <Link to='/profile' onClick={handleNotif}>
-                        <Noti>
-                            {(user.firstName || 'My') + ' ' + (user.lastName || 'profile')}
-                        </Noti>
-                    </Link>
+                    {role === "company" ? (
+                        <>
+                            <Link
+                                to={`/company/${companyId}`}
+                                onClick={handleNotif}
+                            >
+                                <Noti>
+                                    {(user.firstName || "My") +
+                                        " " +
+                                        (user.lastName || "profile")}
+                                </Noti>
+                            </Link>
+                            <Link to={`/create-post`} onClick={handleNotif}>
+                                <Noti>Crear post</Noti>
+                            </Link>
+                        </>
+                    ) : (
+                        <Link to={`/profile`} onClick={handleNotif}>
+                            <Noti>
+                                {(user.firstName || "My") +
+                                    " " +
+                                    (user.lastName || "profile")}
+                            </Noti>
+                        </Link>
+                    )}
                     <Noti onClick={handleNotif}>
                         <Logout contenido="Logout" estilo="primary" />
                     </Noti>

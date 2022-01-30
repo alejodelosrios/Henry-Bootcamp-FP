@@ -1,10 +1,14 @@
-import React from "react";
+import React, {FC} from "react";
 import PostCreateForm from "../components/PostCreateForm/PostCreateForm";
 
-const CreatePostPage = () => {
+type Props ={
+  mode: string
+}
+
+const CreatePostPage:FC<Props> = ({mode }) => {
   return (
     <div>
-      <PostCreateForm></PostCreateForm>
+      <PostCreateForm mode={mode}/>
     </div>
   );
 };
