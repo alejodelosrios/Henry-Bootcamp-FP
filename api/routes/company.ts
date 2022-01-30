@@ -13,7 +13,7 @@ companyRouter.get("/:companyId", companyController.companyById);
 companyRouter.get("/posts/:companyId", companyController.getPosts);
 
 //PUT
-companyRouter.put("/application", companyController.updateStatus);
+companyRouter.put("/application", companyController.updateApplicationStatus);
 companyRouter.put("/add-image/:companyId", companyController.addImage)
 companyRouter.put("/update/:companyId", companyController.update);
 

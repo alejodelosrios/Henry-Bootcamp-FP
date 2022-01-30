@@ -179,6 +179,9 @@ model Notification {
 
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
+  postId      Int
+  //=============
+  //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?
   applicant   Applicant?        @relation(fields: [applicantId], references: [id])
   //=============

@@ -18,7 +18,7 @@ module.exports = {
       category,
     } = req.body;
 
-    if (typeof companyId !== "number") return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params, contiene un number");
+    if (typeof Number(companyId) !== "number") return res.send("Debes incluir un campo 'companyId' que indique a cual compañia pertenece este post por params, contiene un number");
     if (typeof title !== "string") return res.send("Debes incluir un campo 'title', contiene una string, puede estar vacia");
     if (typeof description !== "string") return res.send("Debes incluir un campo 'description'");
     if (typeof location !== "string") return res.send("Debes incluir un campo 'location', es una string que puede estar vacia");

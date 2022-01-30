@@ -309,6 +309,7 @@ async function main(){
     for(let i=0; i<applicants*3; i++){
         await prisma.notification.create({
             data: {
+                postId: 1+Math.floor(Math.random()*(applicants-1)),
                 message: faker.lorem.paragraph(),
                 type: faker.random.arrayElement(["alert","update", "application"]),
                 applicantId: 1+Math.floor(Math.random()*(applicants-1))
@@ -319,6 +320,7 @@ async function main(){
     for(let i=0; i<companies*3; i++){
         await prisma.notification.create({
             data: {
+                postId: 1+Math.floor(Math.random()*(applicants-1)),
                 message: faker.lorem.paragraph(),
                 type: faker.random.arrayElement(["alert","update", "application"]),
                 companyId: 1+Math.floor(Math.random()*(companies-1))
@@ -354,6 +356,17 @@ async function main(){
                     categoryId: 1+Math.floor(Math.random()*(categories.length-1))
                 }
             ]
+        })
+    }
+    //AGREGAR POSTULATIONS A APPLICANTS Y COMPANIES
+
+    for(let i=0; i<posts*3; i++){
+        await prisma.applicantPool.create({
+            data: {
+                    status: faker.random.arrayElement(["applied", "completed", "inTouch"]),
+                    applicantId: 1+Math.floor(Math.random()*(applicants-1)),
+                    postId: 1+Math.floor(Math.random()*(posts-1))
+                }
         })
     }
 }
