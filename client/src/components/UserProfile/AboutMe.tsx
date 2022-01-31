@@ -10,15 +10,13 @@ import {
     EachContainer,
     EditTextArea,
     ParagraphStyle,
-
-    
 } from "./Styles";
 
 export const AboutMe = () => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.userReducer.applicant);
-    console.log(user)
+    //console.log(user)
     const [userInfo, setUserInfo] = useState({
         about: user.about,
     });
@@ -28,16 +26,15 @@ export const AboutMe = () => {
     }
     function updateFunction() {
         flag ? setFlag(false) : setFlag(true);
-        dispatch(updateUser(userInfo))
+        dispatch(updateUser(userInfo));
     }
-    
 
     function handleChange(e: any) {
-    let obj = {
-        ...userInfo,
-        [e.target.name]: e.target.value,
-    };
-    setUserInfo(obj);
+        let obj = {
+            ...userInfo,
+            [e.target.name]: e.target.value,
+        };
+        setUserInfo(obj);
     }
 
     if (!flag) {
@@ -53,7 +50,7 @@ export const AboutMe = () => {
                     </EachContainer>
                 </ContactCard>
             </ContactInfo>
-    );
+        );
     } else {
         return (
             <ContactInfo>

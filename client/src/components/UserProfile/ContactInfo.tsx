@@ -1,6 +1,6 @@
-import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {updateMail, updateUser} from "../../redux/actions/actionCreators";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateMail, updateUser } from "../../redux/actions/actionCreators";
 import {
     ContactInfo,
     Header,
@@ -23,7 +23,7 @@ export const ContactInfoComp = () => {
     const dispatch = useDispatch();
     const user = useSelector((state: any) => state.userReducer.applicant);
     const mail = useSelector((state: any) => state.userReducer.email);
-    console.log(user);
+    //console.log(user);
     const [userInfo, setUserInfo] = useState({
         phoneNumber: user.phoneNumber,
         country: user.country,
@@ -35,13 +35,13 @@ export const ContactInfoComp = () => {
     }
     function updateFunction() {
         flag ? setFlag(false) : setFlag(true);
-        dispatch(updateUser({
-            phoneNumber: userInfo.phoneNumber,
-            country: userInfo.country,
-        }));
-        dispatch(updateMail(
-            userInfo.email
-        ));
+        dispatch(
+            updateUser({
+                phoneNumber: userInfo.phoneNumber,
+                country: userInfo.country,
+            })
+        );
+        dispatch(updateMail(userInfo.email));
     }
 
     function handleChange(e: any) {

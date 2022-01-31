@@ -83,9 +83,9 @@ const UserPostulations: FC = () => {
         </Title>
         <CardContainer>
           {postulations.length > 0
-            ? postulations.map((el: any) => (
+            ? postulations.map((el: any, i: number) => (
                 <PostCard
-                  key={el.postId}
+                  key={i}
                   postId={el.postId}
                   applicantId={el.applicantId}
                   state={el.state}

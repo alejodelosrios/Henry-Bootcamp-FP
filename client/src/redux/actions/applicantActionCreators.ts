@@ -9,7 +9,7 @@ export const jobApplication =
       let { data } = await axios.put(`/applicant/apply`, obj);
       //const { notification } = await axios.put(`/applicant/apply`, obj);
       data = data && data.postulation.postulations;
-      console.log(data);
+      //console.log(data);
       console.log("Informaciónctualizada");
       return dispatch({
         type: ActionType.JOB_APPLICATION,
