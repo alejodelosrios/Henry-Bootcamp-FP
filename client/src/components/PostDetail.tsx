@@ -62,7 +62,7 @@ const Sidebar = styled.aside`
 `;
 const SidebarTitle = styled.p`
   font-weight: bold;
-  font-size: 1rem:
+  font-size: 1rem;
 `;
 const Group = styled.div`
   display: flex;

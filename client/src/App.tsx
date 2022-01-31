@@ -19,125 +19,84 @@ import QandA from "./pages/Q&A/QandA";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 
 function App() {
-        const [userLogged, setUserLogged] = useState(false);
-        const dispatch = useDispatch();
-        const role = useSelector((state: any) => state.userReducer.role);
-        const email = useSelector((state: any) => state.userReducer.email);
+  const [userLogged, setUserLogged] = useState(false);
+  const dispatch = useDispatch();
+  const role = useSelector((state: any) => state.userReducer.role);
+  const email = useSelector((state: any) => state.userReducer.email);
 
-        useEffect(() => {
-                const getUser = () => {
-                        fetch(
-                                "https://transforma-server-u5det.ondigitalocean.app/api/v2/auth/login/success",
-                                {
-                                        method: "GET",
-                                        credentials: "include",
-                                        headers: {
-                                                Accept: "application/json",
-                                                "Content-Type":
-                                                        "application/json",
-                                                "Access-Control-Allow-Credentials":
-                                                        "true",
-                                        },
-                                }
-                        )
-                                .then((response) => {
-                                        if (response.status === 200)
-                                                return response.json();
-                                        throw new Error(
-                                                "authentication has been failed!"
-                                        );
-                                })
-                                .then((resObject) => {
-                                        //console.log("Respuesta: ", resObject);
-                                        if (!resObject.user.role) {
-                                                //console.log("Set Email", resObject.user);
-                                                setUserLogged(resObject.user);
-                                                let userData = {
-                                                        email: resObject.user
-                                                                .emails[0]
-                                                                .value,
-                                                        password: resObject.user
-                                                                .id,
-                                                };
-                                                dispatch(setUser(userData));
-                                        } else {
-                                                //console.log("SetUser");
-                                                dispatch(
-                                                        setUser(resObject.user)
-                                                );
-                                        }
-                                })
-                                .catch((err) => {
-                                        console.log(err);
-                                });
-                };
-                getUser();
-                dispatch(getPosts());
-        }, []);
-        return (
-                <ThemeProvider theme={light}>
-                        <GlobalStyles />
-                        <NavBar />
-                        <Routes>
-                                {!role && email && (
-                                        <>
-                                                <Route
-                                                        path="/"
-                                                        element={
-                                                                <Navigate to="/select-role" />
-                                                        }
-                                                />
-                                                <Route
-                                                        path="/select-role"
-                                                        element={
-                                                                <ChooseRoleModal title="Rol" />
-                                                        }
-                                                />
-                                        </>
-                                )}
-                                <Route path="/" element={<WelcomePage />} />
-                                <Route path="/about-us" element={<AboutUs />} />
-                                <Route
-                                        path="/my-applications"
-                                        element={<UserPostulations />}
-                                />
-                                <Route path="/home" element={<Home />}></Route>
-                                <Route
-                                        path="/profile"
-                                        element={<Profile user={userLogged} />}
-                                />
-                                <Route
-                                        path="/company/:companyId/post/:postId"
-                                        element={<PostDetailPage />}
-                                />
-                                <Route
-                                        path="/company/:companyId/post/:postId/edit"
-                                        element={<CreatePostPage mode="edit" />}
-                                />
-                                <Route
-                                        path="/create-post"
-                                        element={<CreatePostPage mode="create" />}
-                                />
-                                <Route
-                                        path="/login"
-                                        element={<LoginPage type="login" />}
-                                />
-                                <Route
-                                        path="/register"
-                                        element={<LoginPage type="register" />}
-                                />
-                                <Route path="/about-us" element={<AboutUs />} />
-                                <Route
-                                        path="/frequent-questions"
-                                        element={<QandA />}
-                                />
-                                <Route
-                                        path="/company/:companyId"
-                                        element={<CompanyProfile />}
-                                />
-                        </Routes>
-                </ThemeProvider>
-        );
+  useEffect(() => {
+    const getUser = () => {
+      fetch(`${process.env.REACT_APP_GOOGLE}/auth/login/success`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Credentials": "true",
+        },
+      })
+        .then((response) => {
+          if (response.status === 200) return response.json();
+          throw new Error("authentication has been failed!");
+        })
+        .then((resObject) => {
+          // console.log("Respuesta: ", resObject);
+          if (!resObject.user.role) {
+            //console.log("Set Email", resObject.user);
+            setUserLogged(resObject.user);
+            let userData = {
+              email: resObject.user.emails[0].value,
+              password: resObject.user.id,
+            };
+            dispatch(setUser(userData));
+          } else {
+            // console.log("SetUser");
+            dispatch(setUser(resObject.user));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getUser();
+    dispatch(getPosts());
+  }, []);
+  return (
+    <ThemeProvider theme={light}>
+      <GlobalStyles />
+      <NavBar />
+      <Routes>
+        {!role && email && (
+          <>
+            <Route path="/" element={<Navigate to="/select-role" />} />
+            <Route
+              path="/select-role"
+              element={<ChooseRoleModal title="Rol" />}
+            />
+          </>
+        )}
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/my-applications" element={<UserPostulations />} />
+        <Route path="/home" element={<Home />}></Route>
+        <Route path="/profile" element={<Profile user={userLogged} />} />
+        <Route
+          path="/company/:companyId/post/:postId"
+          element={<PostDetailPage />}
+        />
+        <Route
+          path="/company/:companyId/post/:postId/edit"
+          element={<CreatePostPage mode="edit" />}
+        />
+        <Route path="/create-post" element={<CreatePostPage mode="create" />} />
+        <Route path="/login" element={<LoginPage type="login" />} />
+        <Route path="/register" element={<LoginPage type="register" />} />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/frequent-questions" element={<QandA />} />
+        <Route path="/company/:companyId" element={<CompanyProfile />} />
+      </Routes>
+    </ThemeProvider>
+  );
 }
 
 export default App;
