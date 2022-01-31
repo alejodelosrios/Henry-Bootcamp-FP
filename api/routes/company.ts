@@ -11,6 +11,7 @@ companyRouter.post("review/:companyId", companyController.review)
 companyRouter.get("/index", companyController.index);
 companyRouter.get("/:companyId", companyController.companyById);
 companyRouter.get("/posts/:companyId", companyController.getPosts);
+companyRouter.get("/applicants/:postId", companyController.getPostApplicants)
 
 //PUT
 companyRouter.put("/application", companyController.updateApplicationStatus);

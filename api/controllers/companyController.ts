@@ -158,9 +158,28 @@ module.exports = {
         res.status(400).send("Company doesn't exist");
       }
     } catch (error) {
+      console.log(error)
       res.status(400).send(error);
     }
   },
+
+  getPostApplicants: async (req: Request, res: Response) => {
+    try {
+      const { postId } = req.params
+      const applicants = await prisma.applicantPool.findMany({
+        where: {
+          postId: Number(postId),
+        },
+        include: {
+          applicant: true
+        }
+      })
+      res.json(applicants)
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error);
+    }
+  }, 
 
   updateApplicationStatus: async (req: Request, res: Response) => {
     try {
