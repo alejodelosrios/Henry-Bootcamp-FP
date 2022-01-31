@@ -205,7 +205,11 @@ module.exports = {
           id: Number(postId),
         },
         include: {
-          applicants: true,
+          applicants: {
+            include: {
+              applicant: true
+            }
+          },
           favoritedBy: true
         }
       });
