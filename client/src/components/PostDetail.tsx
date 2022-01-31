@@ -2,7 +2,7 @@ import { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { getPostsById } from "../redux/actions/actionCreators";
+import { getPosts, getPostsById } from "../redux/actions/actionCreators";
 import CompanyLogo from "../assets/company-logo.svg";
 import { Link } from "react-router-dom";
 import { jobApplication } from "../redux/actions/applicantActionCreators";
@@ -151,9 +151,8 @@ const PostDetail: FC = ({}) => {
 
   useEffect(() => {
     dispatch(getPostsById(postId));
-  }, []);
+  }, [postId]);
   const navigate = useNavigate();
-
 
   const apply = () => {
     if (!role) {
@@ -216,10 +215,16 @@ const PostDetail: FC = ({}) => {
             ) : role === "applicant" && !alreadyApplied ? (
               <button onClick={() => apply()}>Aplicar</button>
             ) : role === "applicant" && alreadyApplied ? (
-              <button onClick={() => apply()}>Retirar aplicación</button>
+              <p>Aplicado</p>
             ) : null}
             {role === "company" && companyId === userCompanyId ? (
-              <button onClick={() => navigate(`/company/${companyId}/post/${postId}/edit`)}>Editar</button>
+              <button
+                onClick={() =>
+                  navigate(`/company/${companyId}/post/${postId}/edit`)
+                }
+              >
+                Editar
+              </button>
             ) : null}
           </TitleContainer>
           <PostSubtitle>Descripción:</PostSubtitle>

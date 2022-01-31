@@ -19,7 +19,10 @@ const Button = styled.button<{ estilo?: String }>`
 
 export const Logout: FC<Props> = ({ contenido, estilo }) => {
   const logout = () => {
-    window.open("http://localhost:3001/auth/logout", "_self");
+    window.open(
+      "https://transforma-server-u5det.ondigitalocean.app/api/v2/auth/logout",
+      "_self"
+    );
   };
 
   return (

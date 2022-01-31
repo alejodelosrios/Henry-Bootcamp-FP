@@ -92,7 +92,7 @@ const userReducer = (state = initialState, action: Action) => {
         ...action.payload,
       };
     case ActionType.UPDATE_USER:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
         applicant: {
@@ -243,7 +243,7 @@ const userReducer = (state = initialState, action: Action) => {
         applicant: {
           ...state.applicant,
           postulations: action.payload,
-        }
+        },
       };
     case ActionType.EDIT_POST:
       return {
@@ -251,7 +251,7 @@ const userReducer = (state = initialState, action: Action) => {
         company: {
           ...state.company,
           postulations: action.payload,
-        }
+        },
       };
     default:
       return state;

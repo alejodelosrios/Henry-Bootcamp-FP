@@ -27,10 +27,10 @@ const initialState = {
 const companyReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_COMPANY:
-      console.log(action.payload);
+      //console.log(action.payload);
       return {
         ...state,
-        companyDetail: {...state.companyDetail, ...action.payload},
+        companyDetail: { ...state.companyDetail, ...action.payload },
       };
     default:
       return state;
