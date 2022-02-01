@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import {FC} from "react";
+import {useSelector} from "react-redux";
+import {Link, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Favorites from "../Favorites";
 import Notifications from "../Notifications";
@@ -16,7 +16,7 @@ const NavLinks = styled.nav`
   align-items: center;
 `;
 
-const A = styled.button<{ About?: boolean }>`
+const A = styled.button<{About?: boolean}>`
   text-decoration: none;
   border: none;
   background: transparent;
@@ -34,19 +34,10 @@ const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap:0.3rem;
 `;
 
-const Options = styled.div`
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 5px;
-`;
-
-const PrivateMenu: FC<Props> = ({ role }) => {
+const PrivateMenu: FC<Props> = ({role}) => {
   let location = useLocation();
   let isAbout = false;
   if (location.pathname === "/about-us") {
@@ -62,46 +53,40 @@ const PrivateMenu: FC<Props> = ({ role }) => {
           <>
             <Link
               to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link
               to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
             <Link
               to="/frequent-questions"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
-            </Link>
-            <Link
-              to="/my-applications"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Mis Postulaciones"}</A>
             </Link>
           </>
         ) : role === "company" ? (
           <>
             <Link
               to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link
               to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
             <Link
               to="/frequent-questions"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
@@ -111,13 +96,13 @@ const PrivateMenu: FC<Props> = ({ role }) => {
           <>
             <Link
               to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
             <Link
               to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
+              style={{textDecoration: "none", cursor: "default"}}
             >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
@@ -126,18 +111,11 @@ const PrivateMenu: FC<Props> = ({ role }) => {
         )}
       </NavLinks>
       <ButtonsContainer>
-        <Options>
-          <Notifications role={role} />
-        </Options>
+        <Notifications role={role} />
         {role === "applicant" && (
-          <Options>
-            <Favorites role={role} />
-          </Options>
+          <Favorites role={role} />
         )}
-
-        <Options>
-          <ProfModalButton user={user} />
-        </Options>
+        <ProfModalButton user={user} />
       </ButtonsContainer>
     </>
   );

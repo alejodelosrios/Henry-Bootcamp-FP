@@ -3,6 +3,7 @@ import FilterUser from "../components/FilterUser";
 import PostsNavBar from "../components/PostsNavBar";
 import PostsContainer from "../components/PostsContainer";
 import styled from "styled-components";
+import HomeLayout from "./HomeLayout";
 
 const Container = styled.div`
     margin: auto;
@@ -52,32 +53,34 @@ const TopBackground = styled.div`
 
 const Home = () => {
     return (
-        <Container>
-            {/*
-            <Link to={"/"}>
-            Route to Post Creater
-            <button>Create New Post</button>
-            </Link>
+        <HomeLayout>
+            <Container>
+                {/*
+                <Link to={"/"}>
+                Route to Post Creater
+                <button>Create New Post</button>
+                </Link>
             */}
-            <TopBackground></TopBackground>
-            <SearchBar />
-            <Content>
-                <Sidebar>
-                    <FilterUser></FilterUser>
-                </Sidebar>
-                <PostSection>
-                    <PostsNavBar></PostsNavBar>
-                    <PostsContainer></PostsContainer>
-                </PostSection>
-                <RightSidebar>
-                    <SidebarTitle>
-                        Empresas
-                        <br />
-                        destacadas
-                    </SidebarTitle>
-                </RightSidebar>
-            </Content>
-        </Container>
+                <TopBackground></TopBackground>
+                <SearchBar />
+                <Content>
+                    <Sidebar>
+                        <FilterUser></FilterUser>
+                    </Sidebar>
+                    <PostSection>
+                        <PostsNavBar></PostsNavBar>
+                        <PostsContainer></PostsContainer>
+                    </PostSection>
+                    <RightSidebar>
+                        <SidebarTitle>
+                            Empresas
+                            <br />
+                            destacadas
+                        </SidebarTitle>
+                    </RightSidebar>
+                </Content>
+            </Container>
+        </HomeLayout>
     );
 };
 
