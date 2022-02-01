@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { CompanyInfo, CompanyName, FollowButton, Location, Logo, MainDiv, PaginateButtons, PaginateButtonsDiv, PresentationCard, Rating, RatingContainer } from './Styles';
-import logo from '../../assets/companyTest/logo.png'
 import { AboutCompany } from './AboutCompany';
 import { Mission } from './Mission';
 import { CompanyPosts } from './CompanyPosts';
@@ -42,8 +41,8 @@ export const CompanyProfile = () => {
     }
     return (
         <HomeLayout>
-            <MainDiv>
-                <PresentationCard className='presentation-card'>
+        <MainDiv>
+            <PresentationCard className='presentation-card'>
                 <Logo src={company.companyLogo} alt="logo" />
                     <CompanyInfo className='logo'>
                         <div className='company-name'>
