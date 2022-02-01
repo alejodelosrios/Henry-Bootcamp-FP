@@ -13,7 +13,6 @@ const Container = styled.div`
   justify-content: flex-end;
   align-items: center;
   padding: 1rem 1.5rem;
-  border-bottom: 0.5px solid gray;
 `;
 
 const ButtonsContainer = styled.div`
