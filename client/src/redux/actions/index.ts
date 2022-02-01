@@ -1,4 +1,4 @@
-import {ActionType} from "./actionTypes";
+import { ActionType } from "./actionTypes";
 
 interface getPosts {
   type: ActionType.GET_POSTS;
@@ -46,13 +46,13 @@ interface getUser {
   type: ActionType.GET_USER;
   payload: {
     data: {
-      id: string,
-      role: string,
-      email: string,
-      applicant: object,
-      company: object,
+      id: string;
+      role: string;
+      email: string;
+      applicant: object;
+      company: object;
     };
-    modal: object|boolean;
+    modal: object | boolean;
   };
 }
 interface setEmail {
@@ -61,7 +61,14 @@ interface setEmail {
 }
 interface setUser {
   type: ActionType.SET_USER;
-  payload: object;
+  payload: {
+    password?: string;
+    id: string;
+    role: string;
+    email: string;
+    applicant: object;
+    company: object;
+  };
 }
 
 interface updateUser {
@@ -120,8 +127,8 @@ interface jobApplication {
 interface getNotifications {
   type: ActionType.GET_NOTIFICATIONS;
   payload: {
-    notifications: object[],
-    role: string
+    notifications: object[];
+    role: string;
   };
 }
 interface getFavorite {
@@ -130,12 +137,12 @@ interface getFavorite {
 }
 
 interface setFavorites {
-  type: ActionType.SET_FAVORITES,
-  payload: object[]
+  type: ActionType.SET_FAVORITES;
+  payload: object[];
 }
 interface getCompany {
-  type: ActionType.GET_COMPANY,
-  payload: object
+  type: ActionType.GET_COMPANY;
+  payload: object;
 }
 
 export type Action =
