@@ -1,10 +1,11 @@
 import LoginForm from "../components/Login/LoginForm";
+import HomeLayout from "./HomeLayout";
 
-function LoginPage({type}:any) {
+function LoginPage({type}: any) {
   return (
-    <div>
+    <HomeLayout>
       <LoginForm type={type} />
-    </div>
+    </HomeLayout>
   );
 }
 

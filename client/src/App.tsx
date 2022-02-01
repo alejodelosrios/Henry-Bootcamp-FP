@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import { Profile } from "./pages/Profile";
 import Home from "./pages/Home";
-import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
 import { ThemeProvider } from "styled-components";
@@ -65,7 +64,6 @@ function App() {
   return (
     <ThemeProvider theme={light}>
       <GlobalStyles />
-      <NavBar />
       <Routes>
         {!role && email && (
           <>

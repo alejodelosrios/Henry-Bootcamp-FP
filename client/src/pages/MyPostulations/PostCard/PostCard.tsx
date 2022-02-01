@@ -20,7 +20,7 @@ import PostulationState from "../PostulationState/PostulationState";
 type PostArgs = {
     postId: number;
     applicantId: number;
-    state: string;
+    status: string;
     created_at: string;
     post: {
         id: number;
@@ -33,7 +33,7 @@ type PostArgs = {
 const PostCard = ({
     postId,
     applicantId,
-    state,
+    status,
     created_at,
     post,
 }: PostArgs) => {
@@ -57,7 +57,7 @@ const PostCard = ({
                     <ContenedorB2>
                         <PostulationState
                             postId={postId}
-                            state={state}
+                            status={status}
                             companyId={post.companyId}
                         />
                     </ContenedorB2>
