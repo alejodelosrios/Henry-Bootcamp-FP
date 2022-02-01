@@ -4,7 +4,7 @@ import {CompanyInfo, CompanyName, Location, Logo, MainDiv, PresentationCard,Edit
 import {AboutCompany} from './AboutCompany';
 import {Mission} from './Mission';
 import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router';
+import { useParams } from 'react-router';
 import {getCompany} from '../../redux/actions/actionCreators';
 import Dashboard from '../../pages/Dashboard/Dashboard';
 
@@ -17,6 +17,7 @@ export const CompanyProfile = () => {
 
     const company = useSelector((state: any) => state.companyReducer.companyDetail);
     const [companyInfo, setCompanyInfo] = useState(company);
+
 
     if (company.id !== null && companyInfo.id === null) {
         setCompanyInfo(company)
@@ -38,7 +39,6 @@ export const CompanyProfile = () => {
         setCompanyInfo(obj);
         saveNewData()
     }
-
     function saveNewData() {
         // dispatch(editCompany(companyInfo))
     }
@@ -58,8 +58,8 @@ export const CompanyProfile = () => {
                             onChange={(e) => handleChange(e)}
                         >
                         </CompanyName>
-                        </div>
-                        <div className='location'>
+                    </div>
+                    <div className='location'>
                         <Location
                             placeholder='Locación'
                             value={companyInfo.location}
@@ -78,6 +78,5 @@ export const CompanyProfile = () => {
         </Dashboard>
     )
 }
-
 
 export default CompanyProfile;

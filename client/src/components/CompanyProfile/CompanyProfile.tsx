@@ -5,11 +5,12 @@ import { Mission } from './Mission';
 import { CompanyPosts } from './CompanyPosts';
 import { CompanyRating } from './CompanyRating';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { getCompany } from '../../redux/actions/actionCreators';
 import HomeLayout from '../../pages/HomeLayout';
 
 export const CompanyProfile = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { companyId } = useParams();
     useEffect(() => {
@@ -39,9 +40,13 @@ export const CompanyProfile = () => {
             </div>
         )
     }
+    const editCompany = () => {
+        navigate(`/edit-company/${companyId}`)
+    }
     return (
         <HomeLayout>
         <MainDiv>
+            <button onClick={()=>editCompany()}>Editar</button>
             <PresentationCard className='presentation-card'>
                 <Logo src={company.companyLogo} alt="logo" />
                     <CompanyInfo className='logo'>
