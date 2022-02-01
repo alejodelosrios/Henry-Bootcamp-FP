@@ -100,7 +100,7 @@ const Notifications: FC<Props> = ({ role }) => {
         } else if (role === "company") {
             dispatch(getNotifications(role, company.id));
         }
-    }, [applicant]);
+    }, []);
 
     const [modal, setModal] = useState(false);
 

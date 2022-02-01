@@ -41,7 +41,7 @@ function App() {
         .then((resObject) => {
           // console.log("Respuesta: ", resObject);
           if (!resObject.user.role) {
-            //console.log("Set Email", resObject.user);
+            console.log("Set Email", resObject.user);
             setUserLogged(resObject.user);
             let userData = {
               email: resObject.user.emails[0].value,

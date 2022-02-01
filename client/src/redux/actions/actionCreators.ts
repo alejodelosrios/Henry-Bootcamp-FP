@@ -88,13 +88,18 @@ export const createUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", userData);
     try {
-      const { data } = await axios.post(`/user/create`, userData);
+      let resCreate = await axios.post(`/user/create`, userData);
+      // console.log(resCreate.data);
+
+      let resGet = await axios.get(`/user/${userData.email}`);
+      // console.log(resGet.data);
+
       //console.log("Data recibida: ",data );
       console.log("CREATE USER", "Se envió la data a la API");
       return dispatch({
         type: ActionType.GET_USER,
         payload: {
-          data: data[0],
+          data: resGet.data,
           modal: {
             val: true,
             msg: `The user ${userData.email} was created successfully!`,
