@@ -102,7 +102,44 @@ module.exports = {
           companyId: Number(companyId),
         },
       });
-      res.json(review);
+
+      const company = await prisma.company.findFirst({
+        where: {
+          id: Number(companyId)
+        },
+        include: {
+          reviews: true
+        }
+      })
+
+      let rating: number = 0
+      company && company.reviews.map(review => {
+        if(review && review.score) return rating += review.score
+      })
+
+      if(company){
+        rating /= company.reviews.length
+      }
+
+      const updateCompanyRating = await prisma.company.update({
+        where: {
+          id: Number(companyId)
+        },
+        data: {
+          rating: Math.round(rating)
+        }
+      })
+
+      const updateCompanyPosts = await prisma.post.updateMany({
+        where: {
+          companyId: Number(companyId)
+        },
+        data: {
+          companyRating: Math.round(rating)
+        }
+      })
+      
+      res.json(company && company.reviews);
     } catch (error) {
       console.log(error)
       res.status(400).send(error);
