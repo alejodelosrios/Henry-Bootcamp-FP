@@ -64,7 +64,7 @@ module.exports = {
   filter: async (req: Request, res: Response) => {
     try {
       const {
-        inputName,
+        inputNames,
         categories,
         score,
         orderBy,
@@ -73,7 +73,7 @@ module.exports = {
         contractType,
       } = req.body;
 
-      if (typeof inputName !== "string") return res.send("Debes incluir un campo 'inputName', contiene una string, puede estar vacia");
+      if (typeof inputNames !== "object") return res.send("Debes incluir un campo 'inputName', es un arreglo que contiene strings, puede estar vacio");
       if (typeof categories !== "object") return res.send("Debes incluir un campo 'categories', es un arreglo que contiene numbers");
       
       if (typeof location !== "object") return res.send("Debes incluir un campo 'location', que es un objeto con propiedad 'city', que contiene un arreglo");
@@ -104,9 +104,12 @@ module.exports = {
       });
 
       // FILTRO INPUTNAME
-      inputName
-        ? (posts = posts.filter((post) =>
-            post.title.toLowerCase().includes(inputName.toLowerCase())
+      inputNames.length
+        ? (posts = posts.filter((post) => {
+            for(let i=0; i<inputNames.length; i++){
+              if(post.title.toLowerCase().includes(inputNames[i].toLowerCase())) return post
+            }
+          }
           ))
         : null;
 

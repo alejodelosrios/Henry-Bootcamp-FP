@@ -142,7 +142,7 @@ async function main(){
                     legalName: faker.random.words(2),
                     stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
                     accountManagers: [`${faker.name.firstName()} ${faker.name.lastName()}`, `${faker.name.firstName()} ${faker.name.lastName()}`],
-                    companyLogo: faker.image.business(),
+                    companyLogo: faker.image.image(),
                     location: faker.random.words(2),
                     values: [faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word()],
                     aboutValues: faker.lorem.paragraph(),
@@ -190,17 +190,17 @@ async function main(){
             data: [
                 {
                     name: "una imagen random",
-                    url: faker.image.business(),
+                    url: faker.image.image(),
                     companyId: i 
                 },
                 {
                     name: "una imagen random",
-                    url: faker.image.business(),
+                    url: faker.image.image(),
                     companyId: i 
                 },
                 {
                     name: "una imagen random",
-                    url: faker.image.business(),
+                    url: faker.image.image(),
                     companyId: i 
                 }
             ]
