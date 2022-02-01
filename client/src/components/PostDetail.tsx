@@ -232,7 +232,7 @@ const PostDetail: FC = ({}) => {
           <Text>{post.description}</Text>
           <p>Etiquetas (Keywords) </p>
           {role === 'company' && companyId === userCompanyId
-            ? <ApplicantByPost applicants={post.applicants} />
+            ? <ApplicantByPost applicants={post.applicants} postId={post.id}/>
             : null
           }
         </MainSection>
