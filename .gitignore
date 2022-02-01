@@ -108,3 +108,4 @@ dist
 migration_lock.toml
 migration.sql
 client/package-lock.json
+api/package-lock.json
