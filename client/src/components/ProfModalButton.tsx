@@ -1,8 +1,8 @@
-import { FC, useState } from "react";
-import { Logout } from "./Logout";
-import { Link } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { useSelector } from "react-redux";
+import {FC, useState} from "react";
+import {Logout} from "./Logout";
+import {Link} from "react-router-dom";
+import styled, {css} from "styled-components";
+import {useSelector} from "react-redux";
 
 type P = {
     user: any;
@@ -13,10 +13,10 @@ const NotCont = styled.div`
     z-index: 1000;
 `;
 
-const NotBut = styled.button<{ modal?: boolean }>`
+const NotBut = styled.button<{modal?: boolean}>`
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
     display: flex;
@@ -62,7 +62,7 @@ const Noti = styled.div`
     }
 `;
 
-const ProfModalButton: FC<P> = ({ user }) => {
+const ProfModalButton: FC<P> = ({user}) => {
     const companyId = useSelector((state: any) => state.userReducer.company.id);
     const role = useSelector((state: any) => state.userReducer.role);
     const [modal, setModal] = useState(false);
@@ -85,24 +85,27 @@ const ProfModalButton: FC<P> = ({ user }) => {
                                 to={`/company/${companyId}`}
                                 onClick={handleNotif}
                             >
-                                <Noti>
-                                    {(user.firstName || "My") +
-                                        " " +
-                                        (user.lastName || "profile")}
-                                </Noti>
+                                <Noti>Perfil</Noti>
                             </Link>
                             <Link to={`/create-post`} onClick={handleNotif}>
                                 <Noti>Crear post</Noti>
                             </Link>
                         </>
                     ) : (
-                        <Link to={`/profile`} onClick={handleNotif}>
-                            <Noti>
-                                {(user.firstName || "My") +
-                                    " " +
-                                    (user.lastName || "profile")}
-                            </Noti>
-                        </Link>
+
+                        <>
+                            <Link
+                                to="/my-applications"
+                                style={{textDecoration: "none", cursor: "default"}}
+                            >
+                                <Noti>Postulaciones</Noti>
+                            </Link>
+                            <Link to={`/profile`} onClick={handleNotif}
+                                style={{textDecoration: "none", cursor: "default"}}
+                            >
+                                <Noti>Perfil</Noti>
+                            </Link>
+                        </>
                     )}
                     <Noti onClick={handleNotif}>
                         <Logout contenido="Logout" estilo="primary" />
