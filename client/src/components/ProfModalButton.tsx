@@ -83,11 +83,14 @@ const ProfModalButton: FC<P> = ({user}) => {
                         <>
                             <Link
                                 to={`/edit-company/${companyId}`}
+                                style={{textDecoration: "none"}}
                                 onClick={handleNotif}
                             >
                                 <Noti>Perfil</Noti>
                             </Link>
-                            <Link to={`/create-post`} onClick={handleNotif}>
+                            <Link to={`/create-post`}
+                                style={{textDecoration: "none"}}
+                                onClick={handleNotif}>
                                 <Noti>Crear post</Noti>
                             </Link>
                         </>
