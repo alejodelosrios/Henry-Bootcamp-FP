@@ -5,7 +5,7 @@ const companyRouter = Router();
 
 //POST
 companyRouter.post("/create/:userId", companyController.create);
-companyRouter.post("review/:companyId", companyController.review)
+companyRouter.post("/review/:companyId", companyController.review)
 
 //GET
 companyRouter.get("/index", companyController.index);
