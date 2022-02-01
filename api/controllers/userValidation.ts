@@ -1,33 +1,54 @@
 import { prisma } from "../prisma/database";
 
 module.exports = {
-    getUserIfExists: async function (email: string) {
-        console.log(email);
-        const user = await prisma.user.findMany({
-            where: {
-                email: email,
-            },
+  getUserIfExists: async function (email: string) {
+    try {
+      if (!email) return "Debes enviar el email del usuario por params";
+      const user = await prisma.user.findFirst({
+        where: {
+          email: email,
+        },
+        include: {
+          applicant: {
             include: {
-                applicant: true,
-                company: true,
+              experience: true,
+              education: true,
+              languages: true,
+              skillTags: true,
+              notifications: true,
+              followed: true,
+              postulations: {
+                include: {
+                  post: true,
+                },
+              },
+              favorites: true,
             },
-        });
-        if (user[0]) {
-            return user[0];
-        }
-        return "No se encontro el usuario";
+          },
+          company: {
+            include: {
+              notifications: true,
+              reviews: true,
+              posts: true,
+              followers: true,
+            },
+          },
+        },
+      });
 
-        //users.forEach(user => {
-        //if(user.email === email) return user
-        //else return "No se encontro el usuario"
-        //})
-    },
-    
-    checkIfEmailAvailable: async function (email: string) {
-        const users = await prisma.user.findMany();
-        users.forEach((user) => {
-            if (user.email === email) return false;
-            else return true;
-        });
-    },
+      if (!user) return "No se encontro el usuario";
+      return user;
+    } catch (error) {
+      console.log(error);
+      return error;
+    }
+  },
+
+  checkIfEmailAvailable: async function (email: string) {
+    const users = await prisma.user.findMany();
+    users.forEach((user) => {
+      if (user.email === email) return false;
+      else return true;
+    });
+  },
 };

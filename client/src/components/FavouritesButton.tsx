@@ -16,19 +16,17 @@ const Button = styled.button`
 `;
 const FavouritesButton: FC<Props> = ({ postId }) => {
   const dispatch = useDispatch();
-  const {favorites, id} = useSelector((state:any) => state.userReducer.applicant);
+  const { favorites, id } = useSelector(
+    (state: any) => state.userReducer.applicant
+  );
   const [isFav, setIsFav] = useState(checkExistance(favorites, postId));
 
-  const handleFav = ()=>{
+  const handleFav = () => {
     dispatch(setFavorite(id, postId));
-    setIsFav(!isFav)
-  }
+    setIsFav(!isFav);
+  };
 
-  return (
-    <Button onClick={handleFav}>
-      {isFav ? 'Retirar' : 'Guardar'}
-    </Button>
-  );
+  return <Button onClick={handleFav}>{isFav ? "Retirar" : "Guardar"}</Button>;
 };
 
 export default FavouritesButton;

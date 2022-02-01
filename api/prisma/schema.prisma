@@ -52,13 +52,14 @@ model Company {
   name            String
   legalName       String
   stin            String
-  companyLogo            String
+  companyLogo     String
   location        String
   values          String[]
   aboutValues     String
   about           String
   mission         String
   vision          String
+  rating          Int?      @default(0)
   accountManagers String[]
   images          Image[]
   notifications   Notification[]
@@ -89,6 +90,7 @@ model Post {
   salary       String
   startDate    String
   endDate      String
+  companyRating Int?      @default(0)
   tags         String[]
   applicants   ApplicantPool[]
   favoritedBy  Applicant[] @relation("_UserToFavorites")

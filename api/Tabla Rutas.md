@@ -48,7 +48,7 @@ Las rutas son las siguientes:
 >   POST    /create/:companyId      (crea un nuevo post)                                      => recibe companyId por params y objeto post (mirar en /prisma/seed.ts para los modelos)
 *   POST    /filter                 (devuelve todos los posts que coinciden con los filtros)  => recibe objeto filtros (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todos los posts)                                => no recibe parametros
->   GET     /:postId                (devuelve un post especifico)                             => recibe postId por params
+>   GET     /:postId                (devuelve un post especifico con todos sus applicants)    => recibe postId por params
 *   PUT     /update/:postId         (actualiza la endDate de un post especifico)              => recibe postId por params y objeto con propiedad endDate
 >   DELETE  /delete/:postId         (borra un post especifico)                                => recibe postId por params
 

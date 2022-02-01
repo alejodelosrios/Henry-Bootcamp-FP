@@ -5,6 +5,7 @@ const initialState = {
   id: null,
   role: "",
   email: "",
+  password:"",
   company: {
     id: null,
     userId: null,
@@ -50,7 +51,9 @@ const initialState = {
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_USER:
-      //console.log("Reducer: ", action.payload);
+      console.log("Reducer: ", action.payload);
+      // console.log(action.payload.modal, !action.payload.modal);
+
       if (!action.payload.modal) {
         //console.log("Entro")
         return {
@@ -66,13 +69,23 @@ const userReducer = (state = initialState, action: Action) => {
             ...state.company,
             ...action.payload.data.company,
           },
-          userCreateModal: action.payload.modal,
         };
       }
       console.log("No entro");
       return {
         ...state,
-        ...action.payload,
+        id: action.payload.data.id,
+        role: action.payload.data.role,
+        email: action.payload.data.email,
+        applicant: {
+          ...state.applicant,
+          ...action.payload.data.applicant,
+        },
+        company: {
+          ...state.company,
+          ...action.payload.data.company,
+        },
+        userCreateModal: action.payload.modal,
       };
 
     case ActionType.SET_USER_CREATE_MODAL:
@@ -86,10 +99,21 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      //console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
-        ...action.payload,
+        id: action.payload.id,
+        password:action.payload.password,
+        role: action.payload.role,
+        email: action.payload.email,
+        applicant: {
+          ...state.applicant,
+          ...action.payload.applicant,
+        },
+        company: {
+          ...state.company,
+          ...action.payload.company,
+        },
       };
     case ActionType.UPDATE_USER:
       //console.log(action.payload);

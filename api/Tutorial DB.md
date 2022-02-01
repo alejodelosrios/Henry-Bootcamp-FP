@@ -24,7 +24,7 @@ Para inicializar el proyecto deben hacer las siguientes acciones y ejecutar los 
 8 - Ejecutar 'npx prisma db seed' para crear todos los users, roles, companias y posts que hayan configurado
 
 
-9 - Ejecutar 'npm run devStart' para iniciar el servidor!
+9 - Ejecutar 'npm start' para iniciar el servidor!
 
 
 Si llegan a necesitar resetear la DB entonces ejecutan el siguiente comando:
