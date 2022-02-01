@@ -114,7 +114,7 @@ export const StyledButton = styled.button`
     letter-spacing: 0.10000000149011612px;
     text-align: center;
     height: 42px;
-    width: 150px;
+    width: 100%;
     border-radius: 2px;
     padding: 10px, 30px, 10px, 30px;
     border: none;
@@ -141,7 +141,7 @@ export const GoogleBtn = styled.button`
     letter-spacing: 0.10000000149011612px;
     text-align: left;
     height: 42px;
-    width: 150px;
+    width: 306px;
     border-radius: 2px;
     padding: 2px 2px;
     border: none;
