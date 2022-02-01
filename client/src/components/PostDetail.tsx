@@ -6,6 +6,7 @@ import { getPosts, getPostsById } from "../redux/actions/actionCreators";
 import CompanyLogo from "../assets/company-logo.svg";
 import { Link } from "react-router-dom";
 import { jobApplication } from "../redux/actions/applicantActionCreators";
+import ApplicantByPost from "./ApplicantsByPost";
 
 const TopBackground = styled.div`
   position: absolute;
@@ -230,6 +231,10 @@ const PostDetail: FC = ({}) => {
           <PostSubtitle>Descripción:</PostSubtitle>
           <Text>{post.description}</Text>
           <p>Etiquetas (Keywords) </p>
+          {role === 'company' && companyId === userCompanyId
+            ? <ApplicantByPost applicants={post.applicants} />
+            : null
+          }
         </MainSection>
       </Content>
     </Container>
