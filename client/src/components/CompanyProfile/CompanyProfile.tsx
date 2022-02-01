@@ -8,14 +8,15 @@ import { CompanyRating } from './CompanyRating';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 import { getCompany } from '../../redux/actions/actionCreators';
+import HomeLayout from '../../pages/HomeLayout';
 
-export const CompanyProfile = () => {  
+export const CompanyProfile = () => {
     const dispatch = useDispatch();
     const { companyId } = useParams();
     useEffect(() => {
         dispatch(getCompany(companyId))
     }, [dispatch, companyId])
-    
+
     const company = useSelector((state: any) => state.companyReducer.companyDetail);
 
     const [flag, setFlag] = useState('information');
@@ -40,41 +41,43 @@ export const CompanyProfile = () => {
         )
     }
     return (
-        <MainDiv>
-            <PresentationCard className='presentation-card'>
+        <HomeLayout>
+            <MainDiv>
+                <PresentationCard className='presentation-card'>
                 <Logo src={company.companyLogo} alt="logo" />
-                <CompanyInfo className='logo'>
-                    <div className='company-name'>
+                    <CompanyInfo className='logo'>
+                        <div className='company-name'>
                         <CompanyName>{company.name}</CompanyName>
-                    </div>
-                    <div className='location'>
+                        </div>
+                        <div className='location'>
                         <Location>{company.location}</Location>
-                    </div>
-                    <RatingContainer className='rating-container'>
-                        <div className='componente-rating'>
-                            <Rating className='rating-stars'>
+                        </div>
+                        <RatingContainer className='rating-container'>
+                            <div className='componente-rating'>
+                                <Rating className='rating-stars'>
                                 <div>estrellas numero '</div>
                                 <div>estrellas comp clickeable</div>
-                            </Rating>
-                            <div className='rating-description'>
+                                </Rating>
+                                <div className='rating-description'>
                                 Basado en 514 evaluaciones
+                                </div>
                             </div>
-                        </div>
                         <FollowButton>+ Seguir</FollowButton>
-                    </RatingContainer>
-                </CompanyInfo>
-            </PresentationCard>
-            <PaginateButtonsDiv className='paginate-buttons'>
+                        </RatingContainer>
+                    </CompanyInfo>
+                </PresentationCard>
+                <PaginateButtonsDiv className='paginate-buttons'>
                 <PaginateButtons onClick={() => switchInformation()} style={{background: (flag === 'information' ? '#9DD6FD' : '#EF5DA8')}}>Información</PaginateButtons>
                 <PaginateButtons onClick={() => switchMission()} style={{background: (flag === 'mission' ? '#9DD6FD' : '#EF5DA8')}}>Misión y valores</PaginateButtons>
                 <PaginateButtons onClick={() => switchPosts()} style={{ background: (flag === 'posts' ? '#9DD6FD' : '#EF5DA8') }}>Publicaciones</PaginateButtons>
                 <PaginateButtons onClick={() => switchRating()} style={{ background: (flag === 'rating' ? '#9DD6FD' : '#EF5DA8') }}>Rating</PaginateButtons>
-            </PaginateButtonsDiv>
+                </PaginateButtonsDiv>
             {flag === 'information'  ? <AboutCompany /> : null}
             {flag === 'mission'  ? <Mission/> : null}
             {flag === 'posts'  ? <CompanyPosts/> : null}
             {flag === 'rating'  ? <CompanyRating/> : null}
         </MainDiv>
+        </HomeLayout>
     )
 }
 
