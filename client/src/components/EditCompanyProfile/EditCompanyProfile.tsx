@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { CompanyInfo, CompanyName, FollowButton, Location, Logo, MainDiv, PaginateButtons, PaginateButtonsDiv, PresentationCard, Rating, RatingContainer } from './Styles';
-import logo from '../../assets/companyTest/logo.png'
 import { AboutCompany } from './AboutCompany';
 import { Mission } from './Mission';
 import { CompanyPosts } from './CompanyPosts';
@@ -18,6 +17,11 @@ export const CompanyProfile = () => {
     }, [dispatch, companyId])
     
     const company = useSelector((state: any) => state.companyReducer.companyDetail);
+    const [companyInfo, setCompanyInfo] = useState(company);
+    
+    if (company.id !== null && companyInfo.id === null) {
+        setCompanyInfo(company)
+    }
 
     const [flag, setFlag] = useState('information');
 
@@ -40,20 +44,47 @@ export const CompanyProfile = () => {
             </div>
         )
     }
-    const editCompany = () => {
-        navigate(`/edit-company/${companyId}`)
+
+    function handleChange(e: any) {
+        let obj = {
+          ...companyInfo,
+          [e.target.name]: e.target.value,
+        };
+        setCompanyInfo(obj);
+        saveNewData()
     }
+    
+    function saveNewData() {
+        // dispatch(editCompany(companyInfo))
+    }
+
+    const doneEditing = () => {
+        navigate(`/company/${companyId}`)
+    }
+
     return (
         <MainDiv>
-            <button onClick={()=>editCompany()}>Editar</button>
+            <button onClick={()=>doneEditing()}>Volver</button>
             <PresentationCard className='presentation-card'>
                 <Logo src={company.companyLogo} alt="logo" />
                 <CompanyInfo className='logo'>
                     <div className='company-name'>
-                        <CompanyName>{company.name}</CompanyName>
+                        <CompanyName
+                            placeholder='Nombre de la compañía'
+                            value={companyInfo.name}
+                            name="name"
+                            onChange={(e) => handleChange(e)}
+                        >
+                        </CompanyName>
                     </div>
                     <div className='location'>
-                        <Location>{company.location}</Location>
+                        <Location
+                            placeholder='Locación'
+                            value={companyInfo.location}
+                            name="location"
+                            onChange={(e) => handleChange(e)}
+                        >
+                        </Location>
                     </div>
                     <RatingContainer className='rating-container'>
                         <div className='componente-rating'>
@@ -65,7 +96,7 @@ export const CompanyProfile = () => {
                                 Basado en 514 evaluaciones
                             </div>
                         </div>
-                        <FollowButton>+ Seguir</FollowButton>
+                        {/* <FollowButton>+ Seguir</FollowButton> */}
                     </RatingContainer>
                 </CompanyInfo>
             </PresentationCard>
