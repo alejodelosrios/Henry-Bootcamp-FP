@@ -10,7 +10,6 @@ type Props = {
   role: string;
 };
 
-
 const NavLinks = styled.nav`
   z-index: 1000;
   display: flex;
@@ -45,7 +44,7 @@ const Options = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0 5px;
-`
+`;
 
 const PrivateMenu: FC<Props> = ({ role }) => {
   let location = useLocation();
@@ -53,46 +52,73 @@ const PrivateMenu: FC<Props> = ({ role }) => {
   if (location.pathname === "/about-us") {
     isAbout = true;
   }
-  
+
   const user = useSelector((state: any) => state.userReducer.applicant);
-  
+
   return (
     <>
       <NavLinks className="multi-options">
         {role === "applicant" ? (
           <>
-            <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/home"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
-            <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/about-us"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
-            <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/frequent-questions"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
-            <Link to="/my-applications" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/my-applications"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Mis Postulaciones"}</A>
             </Link>
           </>
         ) : role === "company" ? (
           <>
-            <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/home"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
-            <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/about-us"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
-            <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/frequent-questions"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
             <A About={isAbout}>{"Empresas"}</A>
           </>
         ) : (
           <>
-            <Link to="/home" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/home"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Inicio"}</A>
             </Link>
-            <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
+            <Link
+              to="/about-us"
+              style={{ textDecoration: "none", cursor: "default" }}
+            >
               <A About={isAbout}>{"Nosotros"}</A>
             </Link>
             <A About={isAbout}>{"Admin"}</A>
@@ -103,13 +129,14 @@ const PrivateMenu: FC<Props> = ({ role }) => {
         <Options>
           <Notifications role={role} />
         </Options>
+        {role === "applicant" && (
+          <Options>
+            <Favorites role={role} />
+          </Options>
+        )}
 
         <Options>
-          <Favorites role={role}/>
-        </Options>
-
-        <Options>
-          <ProfModalButton user={user}/>
+          <ProfModalButton user={user} />
         </Options>
       </ButtonsContainer>
     </>

@@ -79,7 +79,7 @@ function LoginForm({ type }: any) {
     };
 
     const google = () => {
-        window.open("http://localhost:3001/auth/google", "_self");
+        window.open(`${process.env.REACT_APP_GOOGLE}/auth/google`, "_self");
     };
 
     return (

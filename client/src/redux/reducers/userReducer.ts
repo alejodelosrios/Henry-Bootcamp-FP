@@ -86,10 +86,20 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      //console.log(action.payload);
+      // console.log(action.payload);
       return {
         ...state,
-        ...action.payload,
+        id: action.payload.id,
+        role: action.payload.role,
+        email: action.payload.email,
+        applicant: {
+          ...state.applicant,
+          ...action.payload.applicant,
+        },
+        company: {
+          ...state.company,
+          ...action.payload.company,
+        },
       };
     case ActionType.UPDATE_USER:
       //console.log(action.payload);
