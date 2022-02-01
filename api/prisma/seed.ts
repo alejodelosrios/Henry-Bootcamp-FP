@@ -358,6 +358,45 @@ async function main(){
             ]
         })
     }
+
+    for(let i=1; i<companies; i++){
+        const company = await prisma.company.findFirst({
+            where: {
+              id: Number(i)
+            },
+            include: {
+              reviews: true
+            }
+          })
+    
+          let rating: number = 0
+          company && company.reviews.map(review => {
+            if(review && review.score) return rating += review.score
+          })
+    
+          if(company){
+            rating /= company.reviews.length
+          }
+    
+          const updateCompanyRating = await prisma.company.update({
+            where: {
+              id: Number(i)
+            },
+            data: {
+              rating: Math.round(rating)
+            }
+          })
+    
+          const updateCompanyPosts = await prisma.post.updateMany({
+            where: {
+              companyId: Number(i)
+            },
+            data: {
+              companyRating: Math.round(rating)
+            }
+          })
+    }
+
     //AGREGAR POSTULATIONS A APPLICANTS Y COMPANIES
 
     for(let i=0; i<posts*3; i++){

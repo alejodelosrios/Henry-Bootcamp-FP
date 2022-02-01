@@ -44,7 +44,7 @@ function LoginForm({ type }: any) {
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
-    role: 1,
+    role: "1",
   });
 
   if (roleId) {
@@ -65,7 +65,7 @@ function LoginForm({ type }: any) {
     setFormInputs({
       email: "",
       password: "",
-      role: 1,
+      role: "1",
     });
   };
   const register = (e: any) => {
@@ -74,7 +74,7 @@ function LoginForm({ type }: any) {
     setFormInputs({
       email: "",
       password: "",
-      role: 1,
+      role: "",
     });
   };
 
@@ -113,8 +113,8 @@ function LoginForm({ type }: any) {
                     name="role"
                   >
                     <option defaultValue="1">Escoge un rol</option>
-                    <option value={1}>Applicant</option>
-                    <option value={2}>Recruiter</option>
+                    <option value="applicant">Applicant</option>
+                    <option value="company">Recruiter</option>
                   </RegisterSelect>
                 </div>
               )}
@@ -136,34 +136,35 @@ function LoginForm({ type }: any) {
                     Registrarse
                   </StyledButton>
                 )}
-
-                <GoogleBtn onClick={google}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <div
-                      className="google-btn"
-                      style={{
-                        width: "38px",
-                        height: "38px",
-                        background: "white",
-                        zIndex: "3",
-                        alignItems: "center",
-                        textAlign: "center",
-                        paddingTop: "7px",
-                        borderRadius: "2px",
-                      }}
-                    >
-                      <GoogleLogo src={logoGoogle} alt="google-logo" />
-                    </div>
-                    <div style={{ paddingLeft: "13px" }}>Google</div>
-                  </div>
-                </GoogleBtn>
               </div>
             </Form>
+            <br />
+            <p>o</p>
+            <GoogleBtn onClick={google}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <div
+                  className="google-btn"
+                  style={{
+                    width: "38px",
+                    height: "38px",
+                    background: "white",
+                    zIndex: "3",
+                    alignItems: "center",
+                    textAlign: "center",
+                    paddingTop: "7px",
+                    borderRadius: "2px",
+                  }}
+                >
+                  <GoogleLogo src={logoGoogle} alt="google-logo" />
+                </div>
+                <div style={{ margin: "auto" }}>Google</div>
+              </div>
+            </GoogleBtn>
           </FormContainer>
         </BackgroundCover>
       </MainDiv>
