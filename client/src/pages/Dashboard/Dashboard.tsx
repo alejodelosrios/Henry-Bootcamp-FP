@@ -11,11 +11,11 @@ const Container = styled.div`
 const DashboardContainer = styled.div`
   display: flex;
   flex-direction:column;
-  width: 100%;
+  width: 80vw;
   height: inherit;
 `;
 const Content = styled.div`
-  width: 100%;
+  width: inherit;
   height: calc(100vh - 60px);
   overflow-Y:auto;
   padding: 5rem 3rem
