@@ -2,7 +2,7 @@ const router = require("express").Router();
 const passport = require("passport");
 const userValidation = require("../controllers/userValidation");
 
-const CLIENT_URL = "http://localhost:3000/";
+const CLIENT_URL = process.env.CLIENT_URL;
 
 router.get("/login/success", async (req, res) => {
   if (req.user) {
