@@ -207,7 +207,15 @@ module.exports = {
         include: {
           applicants: {
             include: {
-              applicant: true
+              applicant:  {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                  country: true,
+                  image: true,
+                  skillTags: true,
+                }
+              }
             }
           },
           favoritedBy: true
