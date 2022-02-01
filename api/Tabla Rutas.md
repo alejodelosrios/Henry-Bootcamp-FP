@@ -38,6 +38,7 @@ Las rutas son las siguientes:
 >   GET     /:companyId             (devuelve una company especifica con TODA su info)        => recibe companyId por params
 >   GET     /posts/:companyId       (devuelve todos los posts de una company)                 => recibe companyId por params
 >   PUT     /application            (actualiza el estado de un aplicante de una postulacion)  => recibe objeto con applicantId, postId y newStatus
+>   PUT     /favorites              (agrega applicant a candidatos favoritos para ese post)   => recibe objeto con applicantId y postId
 >   PUT     /add-image/:companyId   (agrega imagenes al carrusel de una compañia)             => recibe companyId por params y objeto image (mirar en /prisma/seed.ts para los modelos)
 >   PUT     /update/:companyId      (actualiza la informacion de una company)                 => recibe companyId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:companyId      (borra una company especifica)                            => recibe companyId por params

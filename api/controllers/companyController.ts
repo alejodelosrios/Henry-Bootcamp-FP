@@ -253,6 +253,62 @@ module.exports = {
     }
   },
 
+  addFavoriteApplicant: async (req: Request, res: Response) => {
+    try {
+      const { applicantId, postId } = req.body
+      if(!applicantId) return res.send("Debes incluir un campo 'applicantId', es un number")
+      if(!postId) return res.send("Debes incluir un campo 'postId', es un number")
+
+      const post = await prisma.post.findFirst({
+        where: {
+          id: Number(postId)
+        },
+        include: {
+          favorites: true
+        }
+      })
+
+      const checkIfApplicantAlreadyFavorite = post && post.favorites.filter(applicant => applicant.id === applicantId)
+
+      if(checkIfApplicantAlreadyFavorite){
+        if(!checkIfApplicantAlreadyFavorite.length){
+          const addApplicantToFavorites = await prisma.post.update({
+            where: {
+              id: postId
+            },
+            data: {
+              favorites: {
+                connect: [{ id: applicantId }]
+              }
+            },
+            include: {
+              favorites: true
+            }
+          })
+          res.json(addApplicantToFavorites)
+        } else {
+          const removeApplicantFromFavorites = await prisma.post.update({
+            where: {
+              id: postId
+            },
+            data: {
+              favorites: {
+                disconnect: [{ id: applicantId }]
+              }
+            },
+            include: {
+              favorites: true
+            }
+          })
+          res.json(removeApplicantFromFavorites)
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
   addImage: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;
