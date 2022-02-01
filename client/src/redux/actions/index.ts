@@ -62,6 +62,7 @@ interface setEmail {
 interface setUser {
   type: ActionType.SET_USER;
   payload: {
+    password?: string;
     id: string;
     role: string;
     email: string;
