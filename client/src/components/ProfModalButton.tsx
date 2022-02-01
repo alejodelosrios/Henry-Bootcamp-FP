@@ -82,7 +82,7 @@ const ProfModalButton: FC<P> = ({user}) => {
                     {role === "company" ? (
                         <>
                             <Link
-                                to={`/company/${companyId}`}
+                                to={`/edit-company/${companyId}`}
                                 onClick={handleNotif}
                             >
                                 <Noti>Perfil</Noti>
