@@ -17,6 +17,7 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./pages/MyPostulations/UserPostulations";
 import QandA from "./pages/Q&A/QandA";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
+import EditCompanyProfile from './components/EditCompanyProfile/EditCompanyProfile';
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -94,6 +95,7 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/frequent-questions" element={<QandA />} />
         <Route path="/company/:companyId" element={<CompanyProfile />} />
+        <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
       </Routes>
     </ThemeProvider>
   );

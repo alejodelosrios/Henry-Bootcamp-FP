@@ -7,6 +7,14 @@ export const MainDiv = styled.div`
     align-items: center;
 `
 
+export const EditMainDiv = styled.div`
+    margin: 20px 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+`
+
 export const PresentationCard = styled.div`
     display: flex;
     flex-direction: row;
@@ -30,11 +38,11 @@ export const CompanyInfo = styled.div`
     justify-content: center;
 `
 
-export const CompanyName = styled.h1`
+export const CompanyName = styled.input`
     font-size: 5rem;
     color: #757577;
     `
-export const Location = styled.h5`
+    export const Location = styled.input`
     color: #757577;
 
 `
@@ -140,10 +148,14 @@ export const SubTags = styled.h2`
     letter-spacing: 0em;
     text-align: left;
     color: #EF5DA8;
+    cursor: pointer;
+    :hover {
+        background: red
+    }
 
 `
 
-export const AboutParagraph = styled.p`
+export const AboutParagraph = styled.textarea`
     font-family: Open Sans;
     margin-top: 0.5rem;
     font-size: 24px;
@@ -153,6 +165,8 @@ export const AboutParagraph = styled.p`
     letter-spacing: 0em;
     text-align: left;
     color: #444444;
+    width: 100%;
+    height: 200px;
 `
 
 export const RatingContaier = styled.div`
