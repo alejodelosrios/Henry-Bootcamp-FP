@@ -51,7 +51,6 @@ let inputDefault = `
 
 
 export const MainDiv = styled.div`
-    margin: 20px 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -187,7 +186,7 @@ export const Titles = styled.h3`
     line-height: 56px;
     letter-spacing: 0em;
     text-align: left;
-    color: ${primary};    
+    color: ${primary};
 `
 
 export const SubTitles = styled.h4`
@@ -230,7 +229,7 @@ export const EditInput = styled.input`
     font-weight: 400;
     line-height: 35px;
     letter-spacing: 0em;
-    text-align: left;   
+    text-align: left;
     ${inputDefault};
 `
 export const DateInput = styled.input`
@@ -248,7 +247,7 @@ export const DateInput = styled.input`
     font-weight: 400;
     line-height: 35px;
     letter-spacing: 0em;
-    text-align: left;   
+    text-align: left;
     ${inputDefault};
 `
 
@@ -303,7 +302,6 @@ export const EachLang = styled.div`
 `
 export const NameDiv = styled.div`
     width: 100%;
-    font-size: 5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -312,23 +310,22 @@ export const NameDiv = styled.div`
 
 export const NameTag = styled.h1`
     font-family: Poppins;
-    font-size: 99px;
+    font-size: 3rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 25px;
+    line-height: auto;
     letter-spacing: 0em;
     text-align: left;
 `
 
 export const RolTag = styled.h5`
-    margin-left: 3.8px;
     font-family: Roboto;
-    font-size: 36px;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 120px;
     letter-spacing: 0em;
     text-align: left;
+    text-transform: capitalize;
 `
 
 export const ContactButton = styled.button`
@@ -372,7 +369,7 @@ export const TagsContainer = styled.div`
     justify-content: space-around;
     width: 80%;
     align-items: center;
-    text-align: center;    
+    text-align: center;
     flex-wrap: wrap;
 `
 
@@ -397,7 +394,7 @@ export const TagInput = styled.input`
     border-radius: 15px 0 0 15px;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    
+
 `
 
 export const AddTagBtn = styled.button`
@@ -424,6 +421,3 @@ export const TagsSelect = styled.select`
     width: 100%;
 
 `
-
-
-
