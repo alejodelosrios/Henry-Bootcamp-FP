@@ -37,7 +37,7 @@ const UserPostulations: FC = () => {
                 key={i}
                 postId={el.postId}
                 applicantId={el.applicantId}
-                state={el.state}
+                status={el.status}
                 created_at={el.created_at}
                 post={el.post}
               />
