@@ -26,11 +26,8 @@ const ApplicantByPost: FC<Props> = ({applicants}) => {
             <Container>
                 {applicants.map((ap: any) => (
                     <ApplicantCard 
-                        name={`${ap.firstName || 'Francisco'} ${ap.lastName || 'Minutti'}`}
-                        country={ap.country || 'Argentina'}
-                        img={ap.image}
-                        skills={ap.skillTags || ['Cocinero', 'Musico', 'Developer', 'Futbolista', 'Html', 'Css', 'Javascript', 'Sequelize']}
-                        id={ap.applicantId}
+                        applicant = {ap.applicant}
+                        applicantId={ap.applicantId}
                     /> 
                 ))}
             </Container>

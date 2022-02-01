@@ -4,11 +4,14 @@ import styled from 'styled-components';
 // import FavouritesButton from './FavouritesButton';
 
 interface Props {
-    name: string,
-    country: string,
-    img: string,
-    skills: string[],
-    id: number
+    applicant: {
+        firstName: string,
+        lastName: string,
+        country: string,
+        img: string,
+        skillTags: string[]
+    }
+    applicantId: number
 }
 
 const Card = styled.div`
@@ -62,20 +65,24 @@ const Sk = styled.div`
     margin: 0 1%;
 `
 
-const ApplicantCard: FC<Props> = ({name, country, img, skills, id}) => {
+const ApplicantCard: FC<Props> = ({ applicant, applicantId}) => {
 
     const testImg = 'https://lh3.googleusercontent.com/ogw/ADea4I4JwPvgMEtnazYdZHcb0xWqmBA2FUvTqlBKzh3eMA=s83-c-mo'
 
-    const showSkills = skills.length > 5
-        ? skills.splice(0,5)
-        : skills;
+    const {firstName, lastName, country, img, skillTags } = applicant;
+
+    const showSkills = skillTags.length > 5
+        ? skillTags.splice(0,5)
+        : skillTags;
 
   return (
     <Card>
         {/* <FavouritesButton postId={id}/> */}
         <Photo src={img || testImg}/>
         <Info>
-            <Link to={`/applicant/${id}`}><Name>{name}</Name></Link>
+            <Link to={`/applicant/${applicantId}`}>
+                <Name>{`${firstName} ${lastName}`}</Name>
+            </Link>
             <h2>{country}</h2>
             <Skills>{showSkills.map(s => (
                 <Sk>{s}</Sk>
