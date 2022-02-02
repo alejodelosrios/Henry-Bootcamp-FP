@@ -105,7 +105,14 @@ dist
 
 # mac-config-files
 .DS_Store
+
+# migrations
 migration_lock.toml
 migration.sql
 client/package-lock.json
 api/package-lock.json
+
+# conventional scopes
+.vscode
+.vscode/settings.json
+.vscode/settings.json

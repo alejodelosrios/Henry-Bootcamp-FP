@@ -1,6 +1,5 @@
 {
     "conventionalCommits.scopes": [
-        "register",
-        "posts"
+        "git-ignore"
     ]
 }
