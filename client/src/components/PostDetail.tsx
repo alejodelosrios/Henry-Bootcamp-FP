@@ -2,11 +2,10 @@ import { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { getPosts, getPostsById } from "../redux/actions/actionCreators";
+import { getPostsById } from "../redux/actions/actionCreators";
 import CompanyLogo from "../assets/company-logo.svg";
 import { Link } from "react-router-dom";
 import { jobApplication } from "../redux/actions/applicantActionCreators";
-import ApplicantByPost from "./ApplicantsByPost";
 
 const TopBackground = styled.div`
   position: absolute;
@@ -231,10 +230,6 @@ const PostDetail: FC = ({}) => {
           <PostSubtitle>Descripción:</PostSubtitle>
           <Text>{post.description}</Text>
           <p>Etiquetas (Keywords) </p>
-          {role === 'company' && companyId === userCompanyId
-            ? <ApplicantByPost applicants={post.applicants} postId={post.id}/>
-            : null
-          }
         </MainSection>
       </Content>
     </Container>
@@ -242,12 +237,3 @@ const PostDetail: FC = ({}) => {
 };
 
 export default PostDetail;
-//Mínimo {post.experience.min} años - $ Máximo{" "}
-//{post.experience.max} años
-//$ Mínimo {post.salary.min} - $ Máximo {post.salary.max}
-
-//<ul>
-//{post.tags.map((tag) => (
-//<li>{tag}</li>
-//))}
-//</ul>
