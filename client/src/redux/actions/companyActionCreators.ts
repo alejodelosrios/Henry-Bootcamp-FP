@@ -16,3 +16,18 @@ export const editPost =
       console.log(error);
     }
   };
+
+export const setFavApplicant =
+  (applicantId: number, postId:number)=> async (dispatch: Dispatch<Action>)=>{
+    try {
+      let { data } = await axios.put(`/company/favorites`, {
+        applicantId,
+        postId
+      });
+      console.log('ACTION => ', data.favorites);
+      console.log("POSTS", "Fav Appplicant Seted");
+      return dispatch({ type: ActionType.SET_FAV_APPLICANT, payload: data.favorites });
+    } catch (error) {
+      console.log(error);
+    }
+  }

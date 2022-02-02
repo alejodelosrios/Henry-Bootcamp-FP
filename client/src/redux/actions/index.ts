@@ -145,6 +145,11 @@ interface getCompany {
   payload: object;
 }
 
+interface setFavApplicant {
+  type: ActionType.SET_FAV_APPLICANT;
+  payload: object[];
+}
+
 export type Action =
   | getPosts
   | editPost
@@ -172,4 +177,5 @@ export type Action =
   | getFavorite
   | jobApplication
   | getCompany
-  | setFavorites;
+  | setFavorites
+  | setFavApplicant;

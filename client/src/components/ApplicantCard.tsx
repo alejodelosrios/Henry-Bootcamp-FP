@@ -1,7 +1,9 @@
-import {FC} from 'react';
+import {FC, useState} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import FavouritesButton from './FavouritesButton';
+import { setFavApplicant } from '../redux/actions/companyActionCreators';
+import { checkExistance } from '../services/checkExistance';
 
 interface Props {
     applicant: {
@@ -11,10 +13,12 @@ interface Props {
         img: string,
         skillTags: string[]
     }
-    applicantId: number
+    applicantId: number,
+    postId: number
 }
 
 const Card = styled.div`
+    position: relative;
     background-color: ${p => p.theme.colors.backgrounds.cards};
     width: 100%;
     padding: 2% 0;
@@ -28,6 +32,21 @@ const Card = styled.div`
         background-color: ${p => p.theme.colors.backgrounds.base};
     }
 `;
+
+const FavsApp = styled.div`
+    position: absolute;
+    top: 10%;
+    right: 2%;
+    font-size: 25px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${p => p.theme.colors.details.secondary2};
+`
 
 const Photo = styled.img`
     border-radius: 50%;
@@ -44,8 +63,6 @@ const Info = styled.div`
 const Name = styled.h1`
     text-decoration: ${p => p.theme.colors.backgrounds.cards} underline;
     color: ${p => p.theme.colors.typography.dark};
-
-
 `;
 
 const Skills = styled.div`
@@ -65,15 +82,30 @@ const Sk = styled.div`
     margin: 0 1%;
 `
 
-const ApplicantCard: FC<Props> = ({ applicant, applicantId}) => {
+const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
 
+    const dispatch = useDispatch();
     const testImg = 'https://lh3.googleusercontent.com/ogw/ADea4I4JwPvgMEtnazYdZHcb0xWqmBA2FUvTqlBKzh3eMA=s83-c-mo'
 
     const {firstName, lastName, country, img, skillTags } = applicant;
+    let favApplicants = []
+
+    favApplicants = useSelector(
+        (state:any)=> state.postsReducer.postById.favApplicants
+    )
+
+    // checkExistance(favApplicants, applicantId)
+    const [isFav, setIsFav] = useState(false);
 
     const showSkills = skillTags.length > 5
         ? skillTags.splice(0,5)
         : skillTags;
+
+    const handleApp = ()=>{
+        console.log('dispatch en componente');
+        dispatch(setFavApplicant(applicantId, postId));
+        setIsFav(!isFav);
+    }
 
   return (
     <Card>
@@ -88,6 +120,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId}) => {
                 <Sk>{s}</Sk>
             ))}</Skills>
         </Info>
+        <FavsApp onClick={handleApp}>{isFav ? '✦' : '✧' }</FavsApp>
     </Card>
   );
 };
