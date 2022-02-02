@@ -2,7 +2,6 @@ import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import { Profile } from "./pages/Profile";
 import Home from "./pages/Home";
-import { NavBar } from "./components/NavBar";
 import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
 import { ThemeProvider } from "styled-components";
@@ -18,6 +17,8 @@ import UserPostulations from "./pages/MyPostulations/UserPostulations";
 import QandA from "./pages/Q&A/QandA";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import EditCompanyProfile from './components/EditCompanyProfile/EditCompanyProfile';
+import CompanyJobPosts from "./components/CompanyJobPosts";
+import CompanyPostDetail from "./components/CompanyPostDetail";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -65,7 +66,6 @@ function App() {
   return (
     <ThemeProvider theme={light}>
       <GlobalStyles />
-      <NavBar />
       <Routes>
         {!role && email && (
           <>
@@ -95,6 +95,8 @@ function App() {
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/frequent-questions" element={<QandA />} />
         <Route path="/company/:companyId" element={<CompanyProfile />} />
+        <Route path="/company/posts" element={<CompanyJobPosts />} />
+        <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
         <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
       </Routes>
     </ThemeProvider>

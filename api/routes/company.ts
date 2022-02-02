@@ -14,6 +14,7 @@ companyRouter.get("/posts/:companyId", companyController.getPosts);
 
 //PUT
 companyRouter.put("/application", companyController.updateApplicationStatus);
+companyRouter.put("/favorites", companyController.addFavoriteApplicant)
 companyRouter.put("/add-image/:companyId", companyController.addImage)
 companyRouter.put("/update/:companyId", companyController.update);
 

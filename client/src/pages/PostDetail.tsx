@@ -1,8 +1,9 @@
 import PostDetail from "../components/PostDetail";
+import HomeLayout from "./HomeLayout";
 export const PostDetailPage = () => {
   return (
-    <div>
+    <HomeLayout>
       <PostDetail />
-    </div>
+    </HomeLayout>
   );
 };

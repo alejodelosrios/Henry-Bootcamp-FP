@@ -1,14 +1,13 @@
 import styled from "styled-components";
 
 export const MainDiv = styled.div`
-    margin: 20px 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:100%
 `
 
 export const EditMainDiv = styled.div`
-    margin: 20px 200px;
     display: flex;
     flex-direction: column;
     align-items: center;

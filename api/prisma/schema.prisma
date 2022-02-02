@@ -26,6 +26,9 @@ model Applicant {
   userId        Int            @unique @default(1)
   user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   //=============
+  //RELACION CON POSTS
+  favoritedOnPost Post[]        
+  //=============
   firstName     String
   lastName      String
   about         String
@@ -92,6 +95,7 @@ model Post {
   endDate      String
   companyRating Int?      @default(0)
   tags         String[]
+  favorites    Applicant[]
   applicants   ApplicantPool[]
   favoritedBy  Applicant[] @relation("_UserToFavorites")
   //RELACION CON CATEGORY
