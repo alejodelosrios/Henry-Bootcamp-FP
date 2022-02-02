@@ -4,7 +4,9 @@ const passport = require('passport');
 const passportSetup = require('./passport');
 const cors = require('cors');
 const authRoute = require('./routes/auth')
-const mainRouter = require('./routes/index')
+const mainRouter = require('./routes/index');
+const isAuthorized = require("./routes/middlewares/isAuthorized");
+const validateToken = require("./routes/middlewares/validateToken");
 
 const app = express();
 app.use(express.json());

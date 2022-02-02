@@ -13,8 +13,6 @@ const newsRouter = require("./news");
 const notificationRouter = require("./notification");
 // const notificationTypeRouter = require("./notificationTypes");
 
-
-
 const mainRouter = Router();
 
 mainRouter.use("/language", languageRouter);

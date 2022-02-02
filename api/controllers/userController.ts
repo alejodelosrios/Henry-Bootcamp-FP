@@ -1,9 +1,13 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+
+const jwt = require("jsonwebtoken");
+const SHA2 = require("sha2");
+
 const userValidator = require("./userValidation")
 
 module.exports = {
-  create: async (req: Request, res: Response) => {
+  register: async (req: Request, res: Response) => {
     try {
       const {
         email,
@@ -18,10 +22,11 @@ module.exports = {
       const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email)
       if(!checkIfEmailAvailable) return res.send("Email en uso")
 
+      let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
       const user = await prisma.user.create({
         data: {
           email: email as string,
-          password: password as string,
+          password: hashedPassword as string,
           role: role as string,
         },
       });
@@ -77,7 +82,17 @@ module.exports = {
           }
         }
       });
-      res.json(newUser);
+
+      const userForToken = {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+    
+      jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
+        if(err) return res.status(500).send(err)
+        res.header("token", token).json(user)
+      })
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -94,13 +109,18 @@ module.exports = {
     }
   },
 
-  userByEmail: async (req: Request, res: Response) => {
+  login: async (req: Request, res: Response) => {
     try {
-      const { email } = req.params;
-      if (!email) return res.send("Debes enviar el email del usuario por params");
+      let { email, password } = req.body;
+      if (!email) return res.send("Debes incluir un campo 'email', es un string");
+      if (!password) return res.send("Debes incluir un campo 'password', es un string");
+
+      let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
+      
       const user = await prisma.user.findFirst({
         where: {
           email: email,
+          password: hashedPassword
         },
         include: {
           applicant: {
@@ -129,32 +149,22 @@ module.exports = {
           }
         }
       });
-      // let formattedPackageForFront
-      // if(user){
-      //   if(user.applicant && "admin applicant".includes(user.role)){
-      //     let {id, userId, ...rest} = user.applicant
-      //     formattedPackageForFront = {
-      //       userId: user.id,
-      //       applicantId: id,
-      //       email: user.email,
-      //       role: user.role,
-      //       ...rest,
-      //     }
-      //   } else if(user.company && "company".includes(user.role)){
-      //     let {id, userId, ...rest} = user.company
-      //     formattedPackageForFront = {
-      //       userId: user.id,
-      //       companyId: id,
-      //       email: user.email,
-      //       role: user.role,
-      //       ...rest,
-      //     }
-      //   }
-      // }
-      res.json(user);
+
+      if(!user) return res.status(403).send("credenciales invalidas")
+
+      const userForToken = {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+    
+      jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
+        if(err) return res.status(500).send(err)
+        res.header("token", token).json(user)
+      })
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   },
   
