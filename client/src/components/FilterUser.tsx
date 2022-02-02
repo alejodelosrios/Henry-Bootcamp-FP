@@ -17,7 +17,6 @@ const Types = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-
   margin-top: 15%;
 `;
 
@@ -63,7 +62,7 @@ const FilterUser: FC = () => {
 
   const handleFilter = (id: string, name: string, checked: boolean) => {
     if (id === "location") {
-      dispatch(
+      return dispatch(
         filterAndSort({
           ...filter,
           location: {
@@ -72,79 +71,57 @@ const FilterUser: FC = () => {
           },
         })
       );
-    } else {
-      dispatch(
-        filterAndSort({ ...filter, [id]: { ...filter[id], [name]: checked } })
+    }
+
+    if (id === "inputNames") {
+      return dispatch(
+        filterAndSort({
+          ...filter,
+          inputNames: filter.inputNames.filter((elem: any) => elem !== name),
+        })
       );
     }
 
-    //switch (id) {
-    //case "categories":
-    //checked
-    //? setFilter({
-    //...filter,
-    //categories: filter.categories.filter((cat) => cat !== name),
-    //})
-    //: setFilter({
-    //...filter,
-    //categories: [...filter.categories, name],
-    //});
-    //break;
-    //case "location":
-    //checked
-    //? setFilter({
-    //...filter,
-    //location: {
-    //city: [...filter.location.city, name],
-    //},
-    //})
-    //: setFilter({
-    //...filter,
-    //location: {
-    //city: filter.location.city.filter((c) => c !== name),
-    //},
-    //});
-    //break;
-    //case "modality":
-    //setFilter({
-    //...filter,
-    //modality: {
-    //...filter.modality,
-    //[name]: checked,
-    //},
-    //});
-    //break;
-    //case "contractType":
-    //setFilter({
-    //...filter,
-    //contractType: {
-    //...filter.contractType,
-    //[name]: checked,
-    //},
-    //});
-    //break;
-    //default:
-    //break;
-    //}
+    dispatch(
+      filterAndSort({ ...filter, [id]: { ...filter[id], [name]: checked } })
+    );
   };
 
   return (
     <FilterContainer>
       <h3>Filtros</h3>
-      <Types>
-        <TypeTitle>Ubicación</TypeTitle>
-        {filter.location.city.map((city: string, index: number) => (
-          <Option key={index}>
-            <label htmlFor="location1">{city}</label>
-            <Switcher
-              checkedProp={true}
-              id="location"
-              name={city}
-              handleFilter={handleFilter}
-            />
-          </Option>
-        ))}
-      </Types>
+      {filter.inputNames.length > 0 && (
+        <Types>
+          <TypeTitle>Puestos buscados</TypeTitle>
+          {filter.inputNames.map((e: string, index: number) => (
+            <Option key={index}>
+              <label htmlFor={`inputNames${index}`}>{e}</label>
+              <Switcher
+                checkedProp={true}
+                id="inputNames"
+                name={e}
+                handleFilter={handleFilter}
+              />
+            </Option>
+          ))}
+        </Types>
+      )}
+      {filter.location.city.length > 0 && (
+        <Types>
+          <TypeTitle>Ubicación</TypeTitle>
+          {filter.location.city.map((city: string, index: number) => (
+            <Option key={index}>
+              <label htmlFor={`location${index}`}>{city}</label>
+              <Switcher
+                checkedProp={true}
+                id="location"
+                name={city}
+                handleFilter={handleFilter}
+              />
+            </Option>
+          ))}
+        </Types>
+      )}
       <Types>
         <TypeTitle>Modalidad</TypeTitle>
         <Option>
@@ -195,31 +172,8 @@ const FilterUser: FC = () => {
           />
         </Option>
       </Types>
-      {/* <div>
-        <h4>Categorías</h4>
-        <div>
-          <input type="checkbox" id="cat1" name="cat1" value="CAT1" />
-          <label htmlFor="location">Categoría 1</label>
-          <br />
-          <input type="checkbox" id="cat2" name="cat2" value="CAT2" />
-          <label htmlFor="cat2">Categoría 2</label>
-        </div>
-      </div> */}
     </FilterContainer>
   );
 };
 
 export default FilterUser;
-
-//<Option>
-//<label htmlFor="location1">Buenos Aires</label>
-//<Switcher
-//id="location"
-//name="Buenos Aires"
-//handleFilter={handleFilter}
-///>
-//</Option>
-//<Option>
-//<label htmlFor="location2">Mendoza</label>
-//<Switcher id="location" name="Mendoza" handleFilter={handleFilter} />
-//</Option>

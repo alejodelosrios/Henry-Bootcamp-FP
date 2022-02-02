@@ -5,11 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { filterAndSort } from "../redux/actions/actionCreators";
 import { useNavigate } from "react-router";
 
-interface Search {
-  postulacion?: string | undefined;
-  localizacion?: string | undefined;
-}
-
 const Container = styled.div`
   padding: 1.5rem 0;
   z-index: 999;
@@ -94,6 +89,11 @@ const Inputs = styled.input`
   }
 `;
 
+interface Search {
+  postulacion?: string | undefined;
+  localizacion?: string | undefined;
+}
+
 const SearchBar: FC = () => {
   let navigate = useNavigate();
 
@@ -115,8 +115,19 @@ const SearchBar: FC = () => {
     });
   };
 
-  const handleClick = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (!search.postulacion && !search.localizacion) {
+      return null;
+    }
+    if (!search.localizacion) {
+      dispatch(
+        filterAndSort({
+          ...filters_and_sort,
+          inputNames: [...filters_and_sort.inputNames, search.postulacion],
+        })
+      );
+    }
     if (!search.postulacion) {
       dispatch(
         filterAndSort({
@@ -127,18 +138,12 @@ const SearchBar: FC = () => {
           },
         })
       );
-    } else if (!search.localizacion) {
+    }
+    if (search.postulacion && search.localizacion) {
       dispatch(
         filterAndSort({
           ...filters_and_sort,
-          inputName: search.postulacion,
-        })
-      );
-    } else {
-      dispatch(
-        filterAndSort({
-          ...filters_and_sort,
-          inputName: search.postulacion,
+          inputNames: [...filters_and_sort.inputNames, search.postulacion],
           location: {
             ...filters_and_sort.location,
             city: [...filters_and_sort.location.city, search.localizacion],
@@ -155,7 +160,7 @@ const SearchBar: FC = () => {
 
   return (
     <Container>
-      <form onSubmit={(e) => handleClick(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <MainFlexDiv>
           <IndDivs>
             <Titles>Buscar trabajo</Titles>
@@ -178,7 +183,7 @@ const SearchBar: FC = () => {
             />
           </IndDivs>
           <button type="submit"></button>
-          <Button onClick={(e) => handleClick(e)}>Buscar</Button>
+          <Button onClick={(e) => handleSubmit(e)}>Buscar</Button>
         </MainFlexDiv>
       </form>
     </Container>
