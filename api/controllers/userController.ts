@@ -92,7 +92,7 @@ module.exports = {
       jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
         if(err) return res.status(500).send(err)
         res.json({
-          ...user,
+          ...newUser,
           token: token
         })
       })
