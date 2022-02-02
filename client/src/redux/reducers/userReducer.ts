@@ -277,6 +277,16 @@ const userReducer = (state = initialState, action: Action) => {
           postulations: action.payload,
         },
       };
+    case ActionType.SUBMIT_TAGS: 
+      console.log('en el reducer ', action.payload);
+    return {
+      ...state,
+
+      applicant: { 
+        ...state.applicant,
+          skillTags: action.payload
+      },
+    }; 
     default:
       return state;
   }
