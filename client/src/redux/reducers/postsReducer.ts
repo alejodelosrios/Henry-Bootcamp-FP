@@ -6,7 +6,7 @@ const initialState = {
   postById: {},
   currentPosts: [],
   filters_and_sort: {
-    inputName: "",
+    inputNames: [],
     categories: [],
     score: "",
     orderBy: "",
@@ -52,6 +52,12 @@ const postsReducer = (state = initialState, action: Action) => {
         ...state,
         postCreateModal: action.payload,
       };
+    case ActionType.SET_FAV_APPLICANT:
+      console.log('REDUCER => ', action.payload);
+      return {
+        ...state,
+        postById: {...state.postById, favApplicants: action.payload}
+      }
     default:
       return state;
   }

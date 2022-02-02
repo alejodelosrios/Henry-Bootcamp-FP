@@ -3,27 +3,6 @@ import styled from "styled-components";
 import img from "../assets/iStock-1.jpg";
 import FavouritesButton from "./FavouritesButton";
 
-type PostArgs = {
-  postId: number;
-  companyId: number;
-  title: String;
-  location: {
-    country: String;
-    state: String;
-  };
-  //experience: {
-  //min: Number;
-  //max: Number;
-  //};
-  modality: String;
-  salary: String;
-  //salary: {
-  //min: Number;
-  //max: Number;
-  //};
-  startDate: String;
-};
-
 const Box = styled.div`
   width: 80px;
   height: 60px;
@@ -113,6 +92,28 @@ const P3 = styled.p`
   color: #ef5da8;
 `;
 
+type PostArgs = {
+  postId: number;
+  companyId: number;
+  title: String;
+  location: {
+    country: string;
+    state: string;
+  };
+  //experience: {
+  //min: Number;
+  //max: Number;
+  //};
+  modality: string;
+  salary: string;
+  //salary: {
+  //min: Number;
+  //max: Number;
+  //};
+  startDate: string;
+  companyLogo: string;
+};
+
 const Post = ({
   postId,
   companyId,
@@ -122,12 +123,13 @@ const Post = ({
   modality,
   salary,
   startDate,
+  companyLogo,
 }: PostArgs) => {
   return (
     <ContenedorA>
       <ContenedorB>
         <Box>
-          <Img src={img} alt="img-logo-company" />
+          <Img src={companyLogo} alt="img-logo-company" />
         </Box>
         <ContenedorC>
           <div>

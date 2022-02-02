@@ -22,26 +22,16 @@ import {
 
 type PostArgs = {
     postId: number;
-    state: string;
+    status: string;
     companyId: number;
 };
 
-const PostulationState = ({ postId, state, companyId }: PostArgs) => {
-    let stateType = "";
-    if (state === "submitted") {
-        stateType = "one";
-    } else if (state === "inProgress") {
-        stateType = "two";
-    } else if (state === "inTouch") {
-        stateType = "three";
-    } else if (state === "completed") {
-        stateType = "four";
-    }
+const PostulationState = ({ postId, status, companyId }: PostArgs) => {
 
     return (
         <>
             <Container>
-                {state === "submitted" ? (
+                {status === "applied" ? (
                     <>
                         <First>
                             <P>
@@ -50,7 +40,7 @@ const PostulationState = ({ postId, state, companyId }: PostArgs) => {
                         </First>
                         <TriangleOne></TriangleOne>
                     </>
-                ) : state !== "completed" ? (
+                ) : status !== "completed" ? (
                     <>
                         <First>
                             <P>
@@ -66,7 +56,7 @@ const PostulationState = ({ postId, state, companyId }: PostArgs) => {
                     </>
                 )}
 
-                {state === "inProgress" ? (
+                {status === "inProgress" ? (
                     <>
                         <Second>
                             <P2>
@@ -75,12 +65,7 @@ const PostulationState = ({ postId, state, companyId }: PostArgs) => {
                         </Second>
                         <TriangleTwo></TriangleTwo>
                     </>
-                ) : state == "completed" ? (
-                    <>
-                        <SecondB></SecondB>
-                        <TriangleTwoB></TriangleTwoB>
-                    </>
-                ) : state === "submitted" ? (
+                ) : status === "completed" || status === "applied" ? (
                     <>
                         <SecondB></SecondB>
                         <TriangleTwoB></TriangleTwoB>
@@ -96,7 +81,7 @@ const PostulationState = ({ postId, state, companyId }: PostArgs) => {
                     </>
                 )}
 
-                {state === "inTouch" ? (
+                {status === "inTouch" ? (
                     <>
                         <Third>
                             <P>
@@ -112,7 +97,7 @@ const PostulationState = ({ postId, state, companyId }: PostArgs) => {
                     </>
                 )}
 
-                {state !== "completed" ? (
+                {status !== "completed" ? (
                     <Link
                         to={`/company/${companyId}/post/${postId}`}
                         style={{ textDecoration: "none" }}

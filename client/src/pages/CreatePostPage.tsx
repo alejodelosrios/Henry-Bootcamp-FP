@@ -1,5 +1,6 @@
 import React, {FC} from "react";
 import PostCreateForm from "../components/PostCreateForm/PostCreateForm";
+import Dashboard from "./Dashboard/Dashboard";
 
 type Props ={
   mode: string
@@ -7,9 +8,9 @@ type Props ={
 
 const CreatePostPage:FC<Props> = ({mode }) => {
   return (
-    <div>
+    <Dashboard>
       <PostCreateForm mode={mode}/>
-    </div>
+    </Dashboard>
   );
 };
 

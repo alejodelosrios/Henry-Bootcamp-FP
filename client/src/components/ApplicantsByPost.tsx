@@ -8,7 +8,6 @@ import Post from "./Post";
 const Container = styled.div`
     width: 100%;
     max-height: 450px;
-    background-color: blue;
     display: flex;
     overflow-y: auto;
     flex-direction: column;
@@ -16,18 +15,21 @@ const Container = styled.div`
 `;
 
 interface Props {
- applicants: object[]
+ applicants: object[],
+ postId: number
 }
 
-const ApplicantByPost: FC<Props> = ({applicants}) => {
+const ApplicantByPost: FC<Props> = ({applicants, postId}) => {
     
     return (
         <>
             <Container>
                 {applicants.map((ap: any) => (
                     <ApplicantCard 
+                        key={ap.id}
                         applicant = {ap.applicant}
                         applicantId={ap.applicantId}
+                        postId={postId}
                     /> 
                 ))}
             </Container>
