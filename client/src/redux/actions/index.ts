@@ -144,32 +144,37 @@ interface getCompany {
   type: ActionType.GET_COMPANY;
   payload: object;
 }
+interface submitTags {
+  type: ActionType.SUBMIT_TAGS;
+  payload: any;
+}
 
 export type Action =
-  | getPosts
-  | editPost
-  | filterAndSort
-  | getPostsById
-  | setPostCreateModal
-  | setUserCreateModal
-  | getCurrentPosts
-  | setEmail
-  | setUser
-  | getUser
-  | updateUser
-  | updateMail
-  | updateUserExp
-  | addUserExp
-  | DeleteUserExp
-  | updateUserEducation
-  | addUserEducation
-  | deleteUserEducation
-  | updateUserLanguages
-  | addUserLanguages
-  | deleteUserLanguages
-  | setUserFollows
-  | getNotifications
-  | getFavorite
-  | jobApplication
-  | getCompany
-  | setFavorites;
+| getPosts
+| editPost
+| filterAndSort
+| getPostsById
+| setPostCreateModal
+| setUserCreateModal
+| getCurrentPosts
+| setEmail
+| setUser
+| getUser
+| updateUser
+| updateMail
+| updateUserExp
+| addUserExp
+| DeleteUserExp
+| updateUserEducation
+| addUserEducation
+| deleteUserEducation
+| updateUserLanguages
+| addUserLanguages
+| deleteUserLanguages
+| setUserFollows
+| getNotifications
+| getFavorite
+| jobApplication
+| getCompany
+| submitTags
+| setFavorites;

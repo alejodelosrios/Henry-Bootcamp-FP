@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserLanguages, deleteUserLanguages, updateUserLanguages } from '../../redux/actions/actionCreators';
 import { Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput, LanguageCard, NoLanguages } from './Styles';
 
-export const LanguagesInfoComp = () => {
-
+export const LanguagesInfoComp = () => {    
+    const userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
-    const languagesArray = useSelector((state: any) => state.userReducer.applicant.languages);
+    const [languagesArray, setLanguagesArray] = useState([]);
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+        .then((res) => {
+            setLanguagesArray(res.data.languages)
+        })
+    },[])
 
     const [userLanguages, setUserLanguages] = useState(
         {
             id: '',
             level: '',
             language: '',
+            applicantId: userId
         }
     );
 
@@ -27,6 +36,7 @@ export const LanguagesInfoComp = () => {
             id: languages.id,
             level: languages.level,
             language: languages.language,
+            applicantId: userId
         });
     }
 
@@ -35,6 +45,12 @@ export const LanguagesInfoComp = () => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         dispatch(updateUserLanguages(userLanguages));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setLanguagesArray(res.data.languages)
+            })
+        },100)
     }
 
     function closeModal() {
@@ -55,32 +71,38 @@ export const LanguagesInfoComp = () => {
         addDisplayFlag === 'none' ? setAddDisplayFlag('flex') : setAddDisplayFlag('none');
     }
 
-    const [id, setId] = useState(2);
+    const [id, setId] = useState(0);
 
     function addHandleChange(e: any) {
-        setId(id + 1);
         setAddUserLanguageState({...addUserLanguageState, [e.target.name]: e.target.value})
     }
 
     const [addUserLanguageState, setAddUserLanguageState] = useState(
         {
-            id: id,
+            id: Math.floor(Math.random() * 9129312),
             level: '',
             language: '',
+            applicantId: userId
         }
     );
 
-    function saveEducation() {
-        setId(id + 1);
+    function saveLanguages() {
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         addDisplayFlag === 'none' ? setAddDisplayFlag('flex') : setAddDisplayFlag('none');
         dispatch(addUserLanguages(addUserLanguageState));
         setAddUserLanguageState({
-            id: id,
+            id: Math.floor(Math.random() * 9129312),
             level: '',
             language: '',
+            applicantId: userId
         })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setLanguagesArray(res.data.languages)
+            })
+        },100)
     }
 
     function deleteFunction(id: any) {
@@ -88,6 +110,12 @@ export const LanguagesInfoComp = () => {
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setLanguagesArray(res.data.languages)
+            })
+        },100)
     }
 
     return (
@@ -213,7 +241,7 @@ export const LanguagesInfoComp = () => {
                     </EachContainer>
                 <Header>
                     <Edit onClick={() => closeModal()}>Descartar</Edit>
-                    <Edit onClick={() => saveEducation()}>Guardar</Edit>
+                    <Edit onClick={() => saveLanguages()}>Guardar</Edit>
                 </Header>
             </div>
             </Education>

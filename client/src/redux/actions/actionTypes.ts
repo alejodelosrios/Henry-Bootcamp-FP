@@ -26,4 +26,5 @@ export enum ActionType {
     SET_FAVORITES = "SET_FAVORITES",
     GET_COMPANY = 'GET_COMPANY',
     EDIT_POST = "EDIT_POST",
+    SUBMIT_TAGS = 'SUBMIT_TAGS'
 }
