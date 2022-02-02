@@ -56,7 +56,7 @@ export const EducationInfoComp = () => {
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
-        },100)
+        },500)
     }
 
     function closeModal() {
@@ -114,7 +114,7 @@ export const EducationInfoComp = () => {
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
-        },100)
+        },500)
     }
 
     function deleteFunction(id: any) {
@@ -124,7 +124,7 @@ export const EducationInfoComp = () => {
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
-        },100)
+        },500)
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');

@@ -82,7 +82,7 @@ export const ExperienceInfoComp = () => {
             .then((res) => {
                 setExpArray(res.data.experience)
             })
-        },100)
+        },500)
     }
 
     function closeModal() {
@@ -155,7 +155,7 @@ export const ExperienceInfoComp = () => {
             .then((res) => {
                 setExpArray(res.data.experience)
             })
-        },100)
+        },500)
     }
 
     function deleteFunction(id: any) {
@@ -165,7 +165,7 @@ export const ExperienceInfoComp = () => {
             .then((res) => {
                 setExpArray(res.data.experience)
             })
-        },100)
+        },500)
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === "none"
             ? setOverlayFlag("block")
