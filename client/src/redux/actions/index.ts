@@ -144,6 +144,10 @@ interface getCompany {
   type: ActionType.GET_COMPANY;
   payload: object;
 }
+interface submitTags {
+  type: ActionType.SUBMIT_TAGS;
+  payload: any;
+}
 
 interface setFavApplicant {
   type: ActionType.SET_FAV_APPLICANT;
