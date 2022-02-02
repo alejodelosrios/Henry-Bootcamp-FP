@@ -91,7 +91,10 @@ module.exports = {
     
       jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
         if(err) return res.status(500).send(err)
-        res.header("token", token).json(user)
+        res.json({
+          ...user,
+          toke: token
+        })
       })
     } catch (error) {
       console.log(error);
@@ -160,7 +163,10 @@ module.exports = {
     
       jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
         if(err) return res.status(500).send(err)
-        res.header("token", token).json(user)
+        res.json({
+          ...user,
+          toke: token
+        })
       })
     } catch (error) {
       console.log(error);
