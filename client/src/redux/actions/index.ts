@@ -149,32 +149,37 @@ interface submitTags {
   payload: any;
 }
 
+interface setFavApplicant {
+  type: ActionType.SET_FAV_APPLICANT;
+  payload: object[];
+}
+
 export type Action =
-| getPosts
-| editPost
-| filterAndSort
-| getPostsById
-| setPostCreateModal
-| setUserCreateModal
-| getCurrentPosts
-| setEmail
-| setUser
-| getUser
-| updateUser
-| updateMail
-| updateUserExp
-| addUserExp
-| DeleteUserExp
-| updateUserEducation
-| addUserEducation
-| deleteUserEducation
-| updateUserLanguages
-| addUserLanguages
-| deleteUserLanguages
-| setUserFollows
-| getNotifications
-| getFavorite
-| jobApplication
-| getCompany
-| submitTags
-| setFavorites;
+  | getPosts
+  | editPost
+  | filterAndSort
+  | getPostsById
+  | setPostCreateModal
+  | setUserCreateModal
+  | getCurrentPosts
+  | setEmail
+  | setUser
+  | getUser
+  | updateUser
+  | updateMail
+  | updateUserExp
+  | addUserExp
+  | DeleteUserExp
+  | updateUserEducation
+  | addUserEducation
+  | deleteUserEducation
+  | updateUserLanguages
+  | addUserLanguages
+  | deleteUserLanguages
+  | setUserFollows
+  | getNotifications
+  | getFavorite
+  | jobApplication
+  | getCompany
+  | setFavorites
+  | setFavApplicant;
