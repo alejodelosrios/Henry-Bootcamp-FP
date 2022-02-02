@@ -6,7 +6,7 @@ const initialState = {
   postById: {},
   currentPosts: [],
   filters_and_sort: {
-    inputName: "",
+    inputNames: [],
     categories: [],
     score: "",
     orderBy: "",

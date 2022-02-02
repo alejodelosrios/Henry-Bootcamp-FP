@@ -40,7 +40,7 @@ export const filterAndSort =
         type: ActionType.GET_CURRENT_POSTS,
         payload: {
           data: data,
-          filters_and_sort: { ...filters_and_sort, inputName: "" },
+          filters_and_sort: { ...filters_and_sort},
         },
       });
     } catch (error) {
