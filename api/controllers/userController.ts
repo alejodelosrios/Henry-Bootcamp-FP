@@ -93,7 +93,7 @@ module.exports = {
         if(err) return res.status(500).send(err)
         res.json({
           ...user,
-          toke: token
+          token: token
         })
       })
     } catch (error) {
@@ -165,7 +165,7 @@ module.exports = {
         if(err) return res.status(500).send(err)
         res.json({
           ...user,
-          toke: token
+          token: token
         })
       })
     } catch (error) {
