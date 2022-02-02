@@ -182,4 +182,5 @@ export type Action =
   | jobApplication
   | getCompany
   | setFavorites
+  | submitTags
   | setFavApplicant;
