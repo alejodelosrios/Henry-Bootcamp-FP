@@ -63,7 +63,7 @@ export const ContactInfoComp = () => {
             {user.firstName} {user.lastName}
           </NameTag>
           {user.experience.length > 0 && (
-            <RolTag>{user.education[0].degree}</RolTag>
+            <RolTag>{user?.education[0]?.degree}</RolTag>
           )}
           <ContactButton>Contactar</ContactButton>
         </NameDiv>
@@ -79,11 +79,11 @@ export const ContactInfoComp = () => {
           </EachContainer>
           <EachContainer>
             <SubTitles>Teléfono:</SubTitles>
-            <ParagraphStyle>{user.phoneNumber}</ParagraphStyle>
+            <ParagraphStyle>{user?.phoneNumber}</ParagraphStyle>
           </EachContainer>
           <EachContainer>
             <SubTitles>Localidad:</SubTitles>
-            <ParagraphStyle>{user.country}</ParagraphStyle>
+            <ParagraphStyle>{user?.country}</ParagraphStyle>
           </EachContainer>
         </ContactCard>
       </ContactInfo>
@@ -95,7 +95,7 @@ export const ContactInfoComp = () => {
           <NameTag>
             {user.firstName} {user.lastName}
           </NameTag>
-          <RolTag>{user.education[0].degree}</RolTag>
+          <RolTag>{user?.education[0]?.degree}</RolTag>
           <ContactButton>Contactar</ContactButton>
         </NameDiv>
 

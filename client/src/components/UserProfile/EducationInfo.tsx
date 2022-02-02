@@ -135,7 +135,8 @@ export const EducationInfoComp = () => {
                 <Header>
                     <Titles>Educación</Titles>
                 </Header>
-                {educationArray.map((education: any) => (
+                {   educationArray.length > 0 ? 
+                educationArray.map((education: any) => (
                     <EducationCard key={education.id}>
                         <Header>
                             <div></div>
@@ -163,7 +164,8 @@ export const EducationInfoComp = () => {
                         </EachContainer>
                     </EducationCard>
                 )
-                )}
+                ):
+                null}
             <div className='edit-modal' style={{
                 position: 'fixed',
                 display: displayFlag,
