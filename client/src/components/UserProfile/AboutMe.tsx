@@ -15,7 +15,8 @@ import {
 export const AboutMe = () => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.userReducer.applicant);
+    const user = useSelector((state: any) => state.userReducer.applicant); 
+    const userId = useSelector((state: any) => state.userReducer.applicant.id);
     //console.log(user)
     const [userInfo, setUserInfo] = useState({
         about: user.about,
@@ -26,9 +27,9 @@ export const AboutMe = () => {
     }
     function updateFunction() {
         flag ? setFlag(false) : setFlag(true);
-        dispatch(updateUser(userInfo));
+        dispatch(updateUser(userInfo, userId));
     }
-
+    
     function handleChange(e: any) {
         let obj = {
             ...userInfo,
