@@ -4,6 +4,7 @@ import { ActionType } from "../actions/actionTypes";
 const initialState = {
   id: null,
   role: "",
+  token:"",
   email: "",
   password:"",
   company: {
@@ -60,6 +61,7 @@ const userReducer = (state = initialState, action: Action) => {
           ...state,
           id: action.payload.data.id,
           role: action.payload.data.role,
+          token:action.payload.data.token,
           email: action.payload.data.email,
           applicant: {
             ...state.applicant,
@@ -76,6 +78,7 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         id: action.payload.data.id,
         role: action.payload.data.role,
+        token:action.payload.data.token,
         email: action.payload.data.email,
         applicant: {
           ...state.applicant,

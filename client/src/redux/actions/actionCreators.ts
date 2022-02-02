@@ -1,9 +1,7 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { ActionType } from "./actionTypes";
 import { Action } from "./index";
-// const userId = useSelector((state: any) => state.userReducer.id)
 
 export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
@@ -42,7 +40,7 @@ export const filterAndSort =
         type: ActionType.GET_CURRENT_POSTS,
         payload: {
           data: data,
-          filters_and_sort: { ...filters_and_sort},
+          filters_and_sort: { ...filters_and_sort },
         },
       });
     } catch (error) {
@@ -51,13 +49,19 @@ export const filterAndSort =
   };
 
 export const createPost =
-  (dataPost: any) => async (dispatch: Dispatch<Action>) => {
+  (dataPost: any, token: string) => async (dispatch: Dispatch<Action>) => {
     try {
       console.log("Data enviada: ", dataPost);
+      console.log(token);
 
       let { data } = await axios.post(
         `/posts/create/${dataPost.companyId}`,
-        dataPost
+        dataPost,
+        {
+          headers: {
+            token: token,
+          },
+        }
       );
       console.log("Data recibida:", data);
       console.log("CREATE POST", "Se envió la data a la API");
@@ -88,12 +92,15 @@ export const setUserCreateModal = (data: any) => {
 
 export const createUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
-    //console.log("Data enviada: ", userData);
+    console.log("Data enviada: ", userData);
     try {
-      let resCreate = await axios.post(`/user/create`, userData);
+      let { data } = await axios.post(`/user/register`, userData);
+      console.log(data);
+
+      // let resCreate = await axios.post(`/user/create`, userData);
       // console.log(resCreate.data);
 
-      let resGet = await axios.get(`/user/${userData.email}`);
+      // let resGet = await axios.get(`/user/${userData.email}`);
       // console.log(resGet.data);
 
       //console.log("Data recibida: ",data );
@@ -101,7 +108,7 @@ export const createUser =
       return dispatch({
         type: ActionType.GET_USER,
         payload: {
-          data: resGet.data,
+          data: data,
           modal: {
             val: true,
             msg: `The user ${userData.email} was created successfully!`,
@@ -123,7 +130,7 @@ export const getUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", userData);
     try {
-      let { data } = await axios.get(`/user/${userData.email}`);
+      let { data } = await axios.post(`/user/login`, userData);
       //console.log("Información actualizada");
       //console.log("Data recibida: ", data);
       return dispatch({
@@ -198,7 +205,7 @@ export const addUserExp =
 export const deleteUserExp =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      console.log(id)
+      console.log(id);
       await axios.delete(`/experience/delete/${id}`);
       console.log("Información actualizada");
       return dispatch({
@@ -269,7 +276,10 @@ export const updateUserLanguages =
 export const addUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      await axios.post(`/language/create/${userLanguages.applicantId}`, userLanguages);
+      await axios.post(
+        `/language/create/${userLanguages.applicantId}`,
+        userLanguages
+      );
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_LANGUAGES,
@@ -339,7 +349,7 @@ export const getCompany =
     }
   };
 
-  export const submitTags =
+export const submitTags =
   (skillTags: any) => async (dispatch: Dispatch<Action>) => {
     try {
       // await axios.put(`/update/:17`, {skillTags});
