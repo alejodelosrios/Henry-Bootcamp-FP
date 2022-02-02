@@ -65,7 +65,7 @@ module.exports = {
         });
       }
       
-      const newUser = await prisma.user.findMany({
+      const newUser = await prisma.user.findFirst({
         where: {
           email: email,
         },
