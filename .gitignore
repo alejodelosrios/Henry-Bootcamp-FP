@@ -111,5 +111,5 @@ client/package-lock.json
 api/package-lock.json
 
 #conventional commits
-.VScode
-.VScode/settings.json
+.vscode
+.vscode/settings.json
