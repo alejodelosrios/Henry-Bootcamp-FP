@@ -36,6 +36,7 @@ const Return = styled.div`
 const CompanyPostDetail = () => {
     const {postId} = useParams();
     const dispatch = useDispatch();
+    
     useEffect(() => {
         dispatch(getPostsById(postId));
     }, []);

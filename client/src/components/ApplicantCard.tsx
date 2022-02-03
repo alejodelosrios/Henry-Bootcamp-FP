@@ -87,9 +87,9 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
 
     const {firstName, lastName, country, img, skillTags } = applicant;
 
-    const {favoritedBy} = useSelector(
+    const {favorites} = useSelector(
         (state:any)=> state.postsReducer.postById
-    )
+    )    
 
     const showSkills = skillTags.length > 5
         ? skillTags.splice(0,5)
@@ -98,9 +98,8 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
             : ['Html', 'Css', 'Javascript', 'React', 'Redux'];
 
 
-    // checkExistance(favApplicants, applicantId)
-    console.log(favoritedBy);
-    const [isFav, setIsFav] = useState(checkExistance(favoritedBy, applicantId));
+    // checkExistance(favorites, applicantId)
+    const [isFav, setIsFav] = useState(checkExistance(favorites, applicantId));
     
 
     const handleFav = ()=>{

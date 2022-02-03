@@ -62,7 +62,7 @@ const postsReducer = (state = initialState, action: Action) => {
       console.log("REDUCER => ", action.payload);
       return {
         ...state,
-        postById: { ...state.postById, favoritedBy: action.payload },
+        postById: { ...state.postById, favorites: action.payload },
       };
     case ActionType.SET_CURRENT_ITEMS_BY_PAGE:
       let currentPageLocal = action.payload;
