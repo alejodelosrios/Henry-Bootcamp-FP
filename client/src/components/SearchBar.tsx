@@ -182,7 +182,6 @@ const SearchBar: FC = () => {
               value={search?.localizacion}
             />
           </IndDivs>
-          <button type="submit"></button>
           <Button onClick={(e) => handleSubmit(e)}>Buscar</Button>
         </MainFlexDiv>
       </form>

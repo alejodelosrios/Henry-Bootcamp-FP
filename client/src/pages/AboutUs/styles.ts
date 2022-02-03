@@ -20,13 +20,13 @@ export const TL = styled.span`
     margin-top: 6vw;
     `
 
-export const SubTitle = styled.h3`
+export const SubTitle = styled.h2`
     color: #EF5DA8;
     font-size: 2vw;
     margin-bottom: 2vw;
     margin-top:3vw;
 `
-export const AsideTitle = styled.h3`
+export const AsideTitle = styled.h2`
     color: #EF5DA8;
     font-size: 2vw;
     margin-bottom: 2vw;

@@ -272,18 +272,51 @@ module.exports = {
 
   tags: async (req: Request, res: Response) => {
     try {
-      const { applicantId, tagIds } = req.body;
-      const applicantUpdate = await prisma.applicant.update({
+      const { applicantId, tagId } = req.body;
+
+      const applicant = await prisma.applicant.findFirst({
         where: {
-          id: Number(applicantId),
+          id: applicantId
         },
-        data: {
-          skillTags: {
-            connect: tagIds.map((tag: number) => ({ id: Number(tag) })),
+        include: {
+          skillTags: true
+        }
+      })
+
+      const checkIfTagAlreadyExists = applicant && applicant.skillTags.filter(tag => tag.id === tagId)
+
+      if(checkIfTagAlreadyExists && checkIfTagAlreadyExists.length) {
+        const applicantUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
           },
-        },
-      });
-      res.json(applicantUpdate);
+          data: {
+            skillTags: {
+              disconnect: [{id: tagId}],
+            },
+          },
+          include: {
+            skillTags: true
+          }
+        });
+        res.json(applicantUpdate);
+      }
+      else {
+        const applicantUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
+          },
+          data: {
+            skillTags: {
+              connect: [{id: tagId}],
+            },
+          },
+          include: {
+            skillTags: true
+          }
+        });
+        res.json(applicantUpdate);
+      }
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
