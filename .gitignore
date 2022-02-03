@@ -112,7 +112,6 @@ migration.sql
 client/package-lock.json
 api/package-lock.json
 
-# conventional scopes
+#conventional commits
 .vscode
-.vscode/settings.json
 .vscode/settings.json

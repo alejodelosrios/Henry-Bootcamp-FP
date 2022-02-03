@@ -25,6 +25,16 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
   }
 };
 
+export const set_current_items_by_page = (data: number) => {
+  return { type: ActionType.SET_CURRENT_ITEMS_BY_PAGE, payload: data };
+};
+
+export const setCurrentPosts = (data: object[]) => {
+  console.log(data);
+
+  return { type: ActionType.SET_CURRENT_POSTS, payload: data };
+};
+
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", filters_and_sort);

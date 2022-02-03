@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "git-ignore"
+        "pagination-bar"
+        "filter-score"
     ]
 }

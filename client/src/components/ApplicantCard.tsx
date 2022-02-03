@@ -1,4 +1,4 @@
-import {FC, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -21,6 +21,7 @@ const Card = styled.div`
     position: relative;
     background-color: ${p => p.theme.colors.backgrounds.cards};
     width: 100%;
+    height: 150px;
     padding: 2% 0;
     margin-bottom: 3px;
     border-radius: 20px;
@@ -37,14 +38,8 @@ const FavsApp = styled.div`
     position: absolute;
     top: 10%;
     right: 2%;
-    font-size: 25px;
+    font-size: 30px;
     cursor: pointer;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: ${p => p.theme.colors.details.secondary2};
 `
 
@@ -56,7 +51,7 @@ const Photo = styled.img`
 `;
 
 const Info = styled.div`
-    width: 80%;
+    width: 40%;
     color: ${p => p.theme.colors.typography.dark};
 `;
 
@@ -68,59 +63,63 @@ const Name = styled.h1`
 const Skills = styled.div`
     display: flex;
     align-items: center;
-    max-width: 90%;
+    justify-content: space-evenly;
+    width: 35%;
+    height: 100%;
 `;
 
 const Sk = styled.div`
+    height: 30%;
     background-color: ${p => p.theme.colors.details.secondary1};
     font-size: 13px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 1%;
+    padding: 0 2%;
     margin: 0 1%;
 `
 
 const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
 
     const dispatch = useDispatch();
-    const testImg = 'https://lh3.googleusercontent.com/ogw/ADea4I4JwPvgMEtnazYdZHcb0xWqmBA2FUvTqlBKzh3eMA=s83-c-mo'
+    const testImg = 'https://i.pinimg.com/564x/f4/8f/0a/f48f0aaac7925f65c5224951d5153b76.jpg'
 
     const {firstName, lastName, country, img, skillTags } = applicant;
-    let favApplicants = []
 
-    favApplicants = useSelector(
-        (state:any)=> state.postsReducer.postById.favApplicants
-    )
-
-    // checkExistance(favApplicants, applicantId)
-    const [isFav, setIsFav] = useState(false);
+    const {favorites} = useSelector(
+        (state:any)=> state.postsReducer.postById
+    )    
 
     const showSkills = skillTags.length > 5
         ? skillTags.splice(0,5)
-        : skillTags;
+        : skillTags.length
+            ? skillTags
+            : ['Html', 'Css', 'Javascript', 'React', 'Redux'];
 
-    const handleApp = ()=>{
-        console.log('dispatch en componente');
+
+    // checkExistance(favorites, applicantId)
+    const [isFav, setIsFav] = useState(checkExistance(favorites, applicantId));
+    
+
+    const handleFav = ()=>{
         dispatch(setFavApplicant(applicantId, postId));
         setIsFav(!isFav);
     }
 
   return (
     <Card>
-        {/* <FavouritesButton postId={id}/> */}
         <Photo src={img || testImg}/>
         <Info>
             <Link to={`/applicant/${applicantId}`}>
                 <Name>{`${firstName} ${lastName}`}</Name>
             </Link>
             <h2>{country}</h2>
-            <Skills>{showSkills.map(s => (
-                <Sk>{s}</Sk>
-            ))}</Skills>
         </Info>
-        <FavsApp onClick={handleApp}>{isFav ? '✦' : '✧' }</FavsApp>
+        <Skills>{showSkills.map(s => (
+                <Sk key={s}>{s}</Sk>
+        ))}</Skills>
+        <FavsApp onClick={handleFav}>{isFav ? '★' : '☆' }</FavsApp>
     </Card>
   );
 };
