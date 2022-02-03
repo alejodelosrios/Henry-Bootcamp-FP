@@ -19,6 +19,7 @@ import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
 import EditCompanyProfile from './components/EditCompanyProfile/EditCompanyProfile';
 import CompanyJobPosts from "./components/CompanyJobPosts";
 import CompanyPostDetail from "./components/CompanyPostDetail";
+import ButtonMELI from "./components/MercadoPago/MercadoPago";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -98,6 +99,7 @@ function App() {
         <Route path="/company/posts" element={<CompanyJobPosts />} />
         <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
         <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
+        <Route path='/button' element={<ButtonMELI/>} />
       </Routes>
     </ThemeProvider>
   );
