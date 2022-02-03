@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUserEducation, deleteUserEducation, updateUserEducation } from '../../redux/actions/actionCreators';
 import { Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput } from './Styles';
@@ -9,7 +10,14 @@ export const EducationInfoComp = () => {
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
-    const educationArray = useSelector((state: any) => state.userReducer.applicant.education);
+    const [educationArray, setEducationArray] = useState([]);
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+        .then((res) => {
+            setEducationArray(res.data.education)
+        })
+    },[])
+    const userId = useSelector((state: any) => state.userReducer.applicant.id);
 
     const [userEducation, setUserEducation] = useState(
         {
@@ -18,7 +26,8 @@ export const EducationInfoComp = () => {
             institution: '',
             endDate: '',
             startDate: '',
-            description: ''
+            description: '',
+            applicantId: userId
         }
     );
 
@@ -32,7 +41,8 @@ export const EducationInfoComp = () => {
             endDate: education.endDate,
             startDate: education.startDate,
             description: education.description,
-            institution: education.institution
+            institution: education.institution,
+            applicantId: userId
         });
     }
 
@@ -41,6 +51,12 @@ export const EducationInfoComp = () => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         dispatch(updateUserEducation(userEducation));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
+                    setEducationArray(res.data.education)
+                })
+        },500)
     }
 
     function closeModal() {
@@ -84,7 +100,7 @@ export const EducationInfoComp = () => {
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         addDisplayFlag === 'none' ? setAddDisplayFlag('flex') : setAddDisplayFlag('none');
-        dispatch(addUserEducation(addUserEducationState));
+        dispatch(addUserEducation(addUserEducationState, userId));
         setAddUserEducationState({
             id: id,
             degree: '',
@@ -93,10 +109,22 @@ export const EducationInfoComp = () => {
             description: '',
             institution: ''
         })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
+                    setEducationArray(res.data.education)
+                })
+        },500)
     }
 
     function deleteFunction(id: any) {
         dispatch(deleteUserEducation(id))
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
+                    setEducationArray(res.data.education)
+                })
+        },500)
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
@@ -107,7 +135,8 @@ export const EducationInfoComp = () => {
                 <Header>
                     <Titles>Educación</Titles>
                 </Header>
-                {educationArray.map((education: any) => (
+                {   educationArray.length > 0 ? 
+                educationArray.map((education: any) => (
                     <EducationCard key={education.id}>
                         <Header>
                             <div></div>
@@ -135,7 +164,8 @@ export const EducationInfoComp = () => {
                         </EachContainer>
                     </EducationCard>
                 )
-                )}
+                ):
+                null}
             <div className='edit-modal' style={{
                 position: 'fixed',
                 display: displayFlag,

@@ -1,7 +1,9 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { Dispatch } from "redux";
 import { ActionType } from "./actionTypes";
 import { Action } from "./index";
+// const userId = useSelector((state: any) => state.userReducer.id)
 
 export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
@@ -152,25 +154,12 @@ export const setEmail =
   };
 
 export const updateUser =
-  (userData: any) => async (dispatch: Dispatch<Action>) => {
+  (userData: any, userId: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.post(`/user/update`, userData);
+      await axios.put(`/applicant/update/${userId}`, userData);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER,
-        payload: userData,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-export const updateMail =
-  (userData: any) => async (dispatch: Dispatch<Action>) => {
-    try {
-      // await axios.post(`/user/update`, userData);
-      console.log("Información actualizada");
-      return dispatch({
-        type: ActionType.UPDATE_MAIL,
         payload: userData,
       });
     } catch (error) {
@@ -181,7 +170,7 @@ export const updateMail =
 export const updateUserExp =
   (userExp: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.put(`/user/update`, userExp);
+      await axios.put(`/experience/update/${userExp.id}`, userExp);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_EXP,
@@ -193,9 +182,9 @@ export const updateUserExp =
   };
 
 export const addUserExp =
-  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+  (userExp: any, userId: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.post(`/user/update`, userExp);
+      await axios.post(`/experience/create/${userId}`, userExp);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_EXP,
@@ -207,13 +196,14 @@ export const addUserExp =
   };
 
 export const deleteUserExp =
-  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+  (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.delete(`/user/update`, userExp);
+      console.log(id)
+      await axios.delete(`/experience/delete/${id}`);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_EXP,
-        payload: userExp,
+        payload: id,
       });
     } catch (error) {
       console.log(error);
@@ -223,7 +213,7 @@ export const deleteUserExp =
 export const updateUserEducation =
   (userEducation: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.put(`/user/update`, userExp);
+      await axios.put(`/education/update/${userEducation.id}`, userEducation);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_EDUCATION,
@@ -235,9 +225,9 @@ export const updateUserEducation =
   };
 
 export const addUserEducation =
-  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+  (userEducation: any, userId: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.post(`/user/update`, userExp);
+      await axios.post(`/education/create/${userId}`, userEducation);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_EDUCATION,
@@ -249,13 +239,13 @@ export const addUserEducation =
   };
 
 export const deleteUserEducation =
-  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+  (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.delete(`/user/update`, userExp);
+      await axios.delete(`/education/delete/${id}`);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_EDUCATION,
-        payload: userEducation,
+        payload: id,
       });
     } catch (error) {
       console.log(error);
@@ -265,7 +255,7 @@ export const deleteUserEducation =
 export const updateUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.put(`/user/update`, userExp);
+      await axios.put(`/language/update/${userLanguages.id}`, userLanguages);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_LANGUAGES,
@@ -279,7 +269,7 @@ export const updateUserLanguages =
 export const addUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.post(`/user/update`, userExp);
+      await axios.post(`/language/create/${userLanguages.applicantId}`, userLanguages);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_LANGUAGES,
@@ -291,13 +281,13 @@ export const addUserLanguages =
   };
 
 export const deleteUserLanguages =
-  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+  (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      // await axios.delete(`/user/update`, userExp);
+      await axios.delete(`/language/delete/${id}`);
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_LANGUAGES,
-        payload: userLanguages,
+        payload: id,
       });
     } catch (error) {
       console.log(error);
@@ -345,6 +335,20 @@ export const getCompany =
       });
     } catch (error) {
       console.log("Ups! algo salió mal");
+      console.log(error);
+    }
+  };
+
+  export const submitTags =
+  (skillTags: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      // await axios.put(`/update/:17`, {skillTags});
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.SUBMIT_TAGS,
+        payload: skillTags,
+      });
+    } catch (error) {
       console.log(error);
     }
   };

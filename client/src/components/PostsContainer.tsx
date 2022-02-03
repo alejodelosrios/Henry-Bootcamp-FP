@@ -41,7 +41,7 @@ const PostsContainer: FC<Props> = ({ companyId }) => {
   return (
     <>
       <Container>
-        {companyId
+        {companyId && currentCompanyPosts.length > 0
           ? currentCompanyPosts.map((post: any) => (
               <Post
                 key={post.id}
@@ -55,7 +55,12 @@ const PostsContainer: FC<Props> = ({ companyId }) => {
                 companyLogo={post.company.companyLogo}
               />
             ))
-          : currPost.map((post: any) => (
+          : companyId &&
+            currentCompanyPosts.length === 0 && (
+              <p>La empresa aún no ha realizado ninguna publicación</p>
+            )}
+        {!companyId && currPost.length > 0
+          ? currPost.map((post: any) => (
               <Post
                 key={post.id}
                 postId={post.id}
@@ -67,7 +72,11 @@ const PostsContainer: FC<Props> = ({ companyId }) => {
                 startDate={post.startDate}
                 companyLogo={post.company.companyLogo}
               />
-            ))}
+            ))
+          : !companyId &&
+            currPost.length === 0 && (
+              <p>No se encontró coincidencias con lo buscado</p>
+            )}
       </Container>
 
       {companyId ? (

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { submitTags } from "../../redux/actions/actionCreators";
 import {
     AddTagBtn,
     Edit,
@@ -13,10 +15,23 @@ import {
 } from "./Styles";
 
 export const SkillTagsComp = () => {
+    const userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
-    const skillsArray = useSelector(
-        (state: any) => state.userReducer.applicant.skillTags
-    );
+    const [skillsArray, setSkillsArray] = useState([]);
+    const applicantSkills = useSelector((state: any) => state.userReducer.applicant.skillTags);
+
+    useEffect(() => {
+        fetch(`${process.env.REACT_APP_API}/tag/index`)
+            .then((res) => res.json())
+            .then((data) => {
+                setSkillsArray(data)
+            })
+    }, [])
+
+    const upperCase = (string: string) => {        
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
     const [flag, setFlag] = useState(false);
 
     const switchFlag = () => {
@@ -31,12 +46,18 @@ export const SkillTagsComp = () => {
 
     const selectSkill = (e: any) => {
         e.preventDefault();
-        for (let i = 0; i < skillsSelected.skills.length; i++) {
-            if (e.target.value === skillsSelected.skills[i]) {
-                alert(`Ya seleccionaste ${e.target.value}`);
-                return;
-            }
-        }
+        // for (let i = 0; i < skillsSelected.skills.length; i++) {
+        //     if (e.target.value === skillsSelected.skills[i]) {
+        //         alert(`Ya seleccionaste ${e.target.value}`);
+        //         return;
+        //     }
+        // }
+        // axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+        //     applicantId: userId,
+        //     tagIds: []
+        // })
+        //! aca hay que ir añadiendo al aplicante las tags que elija
+        console.log('e.target.value ', skillsSelected)
         setSkillsSelected({
             ...skillsSelected,
             skills: [...skillsSelected.skills, e.target.value],
@@ -44,7 +65,6 @@ export const SkillTagsComp = () => {
     };
 
     const deleteSkill = (e: any) => {
-        console.log(e);
         setSkillsSelected({
             ...skillsSelected,
             skills: skillsSelected.skills.filter((s: any) => s !== e),
@@ -52,12 +72,14 @@ export const SkillTagsComp = () => {
     };
 
     const handleSubmit = () => {
-        // dispatch(tagsSelected(skillsSelected.skills));
+        // dispatch(submitTags(skillsSelected.skills));
         switchFlag();
     };
 
     const handleOnChange = (e: any) => {
-        setNewTag(e.target.value);
+        
+        // setNewTag(e.target.value.id); //! aca hay que crear no agregar
+        console.log(e.target.value)
     };
 
     const addSkillByInput = (e: any) => {
@@ -103,8 +125,8 @@ export const SkillTagsComp = () => {
                     >
                         <option>Selecciona tags</option>
                         {skillsArray.map((tag: any) => (
-                            <option value={tag} key={tag}>
-                                {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                            <option value={tag.name} key={tag.id}>
+                                {upperCase(tag.name)}
                             </option>
                         ))}
                     </TagsSelect>
@@ -129,10 +151,10 @@ export const SkillTagsComp = () => {
                         </AddTagBtn>
                     </form>
                     <TagsContainer style={{ gridArea: "3 / 1 / 5 / 5" }}>
-                        {skillsSelected.skills.length
-                            ? skillsSelected.skills.map((e: any) => (
-                                  <Tag onClick={() => deleteSkill(e)} key={e}>
-                                      {e}
+                        {applicantSkills.length
+                            ? applicantSkills.map((e: any) => (
+                                  <Tag onClick={() => deleteSkill(e)} key={e.id}>
+                                      {upperCase(e.name)}
                                   </Tag>
                               ))
                             : null}
@@ -148,9 +170,9 @@ export const SkillTagsComp = () => {
                     <Edit onClick={() => switchFlag()}>Editar</Edit>
                 </Header>
                 <TagsContainer>
-                    {skillsSelected.skills.length
-                        ? skillsSelected.skills.map((e: any) => (
-                              <Tag key={e}>{e}</Tag>
+                    {applicantSkills.length
+                        ? applicantSkills.map((e: any) => (
+                              <Tag key={e.id}>{upperCase(e.name)}</Tag>
                           ))
                         : null}
                 </TagsContainer>
