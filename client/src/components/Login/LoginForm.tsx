@@ -21,6 +21,7 @@ import {
 import logo from "../../assets/logo.svg";
 import backgroundImg from "../../assets/two_people.jpg";
 import logoGoogle from "../../assets/google-logo.png";
+import { Paragraph } from "../../pages/WelcomePage/styles";
 
 function LoginForm({ type }: any) {
   const navigate = useNavigate();
@@ -138,8 +139,11 @@ function LoginForm({ type }: any) {
                 )}
               </div>
             </Form>
-            <br />
-            <p>o</p>
+            <Paragraph style={{
+              marginTop: '1rem',
+              marginBottom: '7px',
+              fontSize: '17px'
+            }}>O ingresa con:</Paragraph>
             <GoogleBtn onClick={google}>
               <div
                 style={{
@@ -162,7 +166,7 @@ function LoginForm({ type }: any) {
                 >
                   <GoogleLogo src={logoGoogle} alt="google-logo" />
                 </div>
-                <div style={{ margin: "auto" }}>Google</div>
+                <div style={{ marginLeft: "80px" }}>Google</div>
               </div>
             </GoogleBtn>
           </FormContainer>
