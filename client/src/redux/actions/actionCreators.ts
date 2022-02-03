@@ -27,6 +27,16 @@ export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
   }
 };
 
+export const set_current_items_by_page = (data: number) => {
+  return { type: ActionType.SET_CURRENT_ITEMS_BY_PAGE, payload: data };
+};
+
+export const setCurrentPosts = (data: object[]) => {
+  console.log(data);
+
+  return { type: ActionType.SET_CURRENT_POSTS, payload: data };
+};
+
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", filters_and_sort);
@@ -42,7 +52,7 @@ export const filterAndSort =
         type: ActionType.GET_CURRENT_POSTS,
         payload: {
           data: data,
-          filters_and_sort: { ...filters_and_sort},
+          filters_and_sort: { ...filters_and_sort },
         },
       });
     } catch (error) {
@@ -198,7 +208,7 @@ export const addUserExp =
 export const deleteUserExp =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      console.log(id)
+      console.log(id);
       await axios.delete(`/experience/delete/${id}`);
       console.log("Información actualizada");
       return dispatch({
@@ -269,7 +279,10 @@ export const updateUserLanguages =
 export const addUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      await axios.post(`/language/create/${userLanguages.applicantId}`, userLanguages);
+      await axios.post(
+        `/language/create/${userLanguages.applicantId}`,
+        userLanguages
+      );
       console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_LANGUAGES,
@@ -339,7 +352,7 @@ export const getCompany =
     }
   };
 
-  export const submitTags =
+export const submitTags =
   (skillTags: any) => async (dispatch: Dispatch<Action>) => {
     try {
       // await axios.put(`/update/:17`, {skillTags});
