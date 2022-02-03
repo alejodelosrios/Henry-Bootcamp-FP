@@ -365,3 +365,17 @@ export const submitTags =
       console.log(error);
     }
   };
+
+export const editCompany =
+  (userExp: any, userId: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.post(`/experience/create/${userId}`, userExp);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
