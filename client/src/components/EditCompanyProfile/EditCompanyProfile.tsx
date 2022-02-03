@@ -1,26 +1,41 @@
-import {useEffect, useState} from 'react';
-import {CompanyInfo, CompanyName, Location, Logo, MainDiv, PresentationCard,EditMainDiv
-} from './Styles';
-import {AboutCompany} from './AboutCompany';
-import {Mission} from './Mission';
-import {useDispatch, useSelector} from 'react-redux';
-import { useParams } from 'react-router';
-import {getCompany} from '../../redux/actions/actionCreators';
-import Dashboard from '../../pages/Dashboard/Dashboard';
+import { useEffect, useState } from "react";
+import {
+    CardContent,
+    Input,
+    Logo,
+    MainDiv,
+    CardContainer,
+    InputGroup,
+    CustomLabel,
+    CardTitle,
+    CompanyInfo,
+    CardHeader,
+    EditButton,
+} from "./Styles";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { getCompany } from "../../redux/actions/actionCreators";
+import Dashboard from "../../pages/Dashboard/Dashboard";
+import { AboutCompany } from "./AboutCompany";
+import { Mission } from "./Mission";
+import { Values } from "./Values";
+import { Vission } from "./Vission";
 
 export const CompanyProfile = () => {
     const dispatch = useDispatch();
-    const {companyId} = useParams();
+    const { companyId } = useParams();
     useEffect(() => {
-        dispatch(getCompany(companyId))
-    }, [dispatch, companyId])
+        dispatch(getCompany(companyId));
+    }, [dispatch, companyId]);
 
-    const company = useSelector((state: any) => state.companyReducer.companyDetail);
+    const company = useSelector(
+        (state: any) => state.companyReducer.companyDetail
+    );
     const [companyInfo, setCompanyInfo] = useState(company);
-
+    const [isEdit, setIsEdit] = useState(false);
 
     if (company.id !== null && companyInfo.id === null) {
-        setCompanyInfo(company)
+        setCompanyInfo(company);
     }
 
     if (company.id === null) {
@@ -28,7 +43,7 @@ export const CompanyProfile = () => {
             <div>
                 <h1>Loading...</h1>
             </div>
-        )
+        );
     }
 
     function handleChange(e: any) {
@@ -37,46 +52,87 @@ export const CompanyProfile = () => {
             [e.target.name]: e.target.value,
         };
         setCompanyInfo(obj);
-        saveNewData()
     }
     function saveNewData() {
+        console.log("Guardando el contact info");
+        setIsEdit(false);
         // dispatch(editCompany(companyInfo))
     }
-
-
-    return (
-        <Dashboard>
-            <MainDiv>
-                <PresentationCard className='presentation-card'>
-                <Logo src={company.companyLogo} alt="logo" />
-                    <CompanyInfo className='logo'>
-                        <div className='company-name'>
-                        <CompanyName
-                            placeholder='Nombre de la compañía'
-                            value={companyInfo.name}
-                            name="name"
-                            onChange={(e) => handleChange(e)}
-                        >
-                        </CompanyName>
-                    </div>
-                    <div className='location'>
-                        <Location
-                            placeholder='Locación'
-                            value={companyInfo.location}
-                            name="location"
-                            onChange={(e) => handleChange(e)}
-                        >
-                        </Location>
-                        </div>
-                    </CompanyInfo>
-                </PresentationCard>
-                <EditMainDiv>
-                <AboutCompany />
-                <Mission />
-                </EditMainDiv>
-        </MainDiv>
-        </Dashboard>
-    )
-}
+    if (!isEdit) {
+        return (
+            <Dashboard>
+                <MainDiv>
+                    <CardContainer className="presentation-card">
+                        <CardHeader>
+                            <CardTitle>Presentación</CardTitle>
+                            <EditButton onClick={() => setIsEdit(true)}>
+                                Editar
+                            </EditButton>
+                        </CardHeader>
+                        <CardContent>
+                            <Logo src={company.companyLogo} alt="logo" />
+                            <CompanyInfo>
+                                <InputGroup className="company-name">
+                                    <CustomLabel>Nombre compañía:</CustomLabel>
+                                    <p>{companyInfo.name}</p>
+                                </InputGroup>
+                                <InputGroup className="location">
+                                    <CustomLabel>Ubicación:</CustomLabel>
+                                    <p>{companyInfo.location}</p>
+                                </InputGroup>
+                            </CompanyInfo>
+                        </CardContent>
+                    </CardContainer>
+                    <AboutCompany />
+                    <Mission />
+                    <Vission />
+                    <Values />
+                </MainDiv>
+            </Dashboard>
+        );
+    } else {
+        return (
+            <Dashboard>
+                <MainDiv>
+                    <CardContainer className="presentation-card">
+                        <CardHeader>
+                            <CardTitle>Presentación</CardTitle>
+                            <EditButton onClick={() => saveNewData()}>
+                                Guardar
+                            </EditButton>
+                        </CardHeader>
+                        <CardContent>
+                            <Logo src={company.companyLogo} alt="logo" />
+                            <CompanyInfo>
+                                <InputGroup className="company-name">
+                                    <CustomLabel>Nombre compañía:</CustomLabel>
+                                    <Input
+                                        placeholder="Nombre de la compañía"
+                                        value={companyInfo.name}
+                                        name="name"
+                                        onChange={(e) => handleChange(e)}
+                                    ></Input>
+                                </InputGroup>
+                                <InputGroup className="location">
+                                    <CustomLabel>Ubicación:</CustomLabel>
+                                    <Input
+                                        placeholder="Locación"
+                                        value={companyInfo.location}
+                                        name="location"
+                                        onChange={(e) => handleChange(e)}
+                                    ></Input>
+                                </InputGroup>
+                            </CompanyInfo>
+                        </CardContent>
+                    </CardContainer>
+                    <AboutCompany />
+                    <Mission />
+                    <Vission />
+                    <Values />
+                </MainDiv>
+            </Dashboard>
+        );
+    }
+};
 
 export default CompanyProfile;
