@@ -56,7 +56,7 @@ const postsReducer = (state = initialState, action: Action) => {
       console.log('REDUCER => ', action.payload);
       return {
         ...state,
-        postById: {...state.postById, favApplicants: action.payload}
+        postById: {...state.postById, favoritedBy: action.payload}
       }
     default:
       return state;
