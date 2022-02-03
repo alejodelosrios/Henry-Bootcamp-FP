@@ -50,7 +50,7 @@ export const LanguagesInfoComp = () => {
             .then((res) => {
                 setLanguagesArray(res.data.languages)
             })
-        },100)
+        },500)
     }
 
     function closeModal() {
@@ -102,7 +102,7 @@ export const LanguagesInfoComp = () => {
             .then((res) => {
                 setLanguagesArray(res.data.languages)
             })
-        },100)
+        },500)
     }
 
     function deleteFunction(id: any) {
@@ -115,7 +115,7 @@ export const LanguagesInfoComp = () => {
             .then((res) => {
                 setLanguagesArray(res.data.languages)
             })
-        },100)
+        },500)
     }
 
     return (
