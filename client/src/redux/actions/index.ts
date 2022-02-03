@@ -17,6 +17,14 @@ interface getCurrentPosts {
   };
 }
 
+interface setCurrentPosts {
+  type: ActionType.SET_CURRENT_POSTS;
+  payload: object[];
+}
+interface set_current_items_by_page {
+  type: ActionType.SET_CURRENT_ITEMS_BY_PAGE;
+  payload: number;
+}
 interface getPostsById {
   type: ActionType.GET_POSTS_BY_ID;
   payload: object;
@@ -156,6 +164,8 @@ interface setFavApplicant {
 
 export type Action =
   | getPosts
+  | set_current_items_by_page
+  | setCurrentPosts
   | editPost
   | filterAndSort
   | getPostsById
