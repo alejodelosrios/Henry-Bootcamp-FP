@@ -1,4 +1,5 @@
 import { Router } from "express";
+const validateToken = require("./middlewares/validateToken")
 
 const applicantRouter = require("./applicant");
 const postsRouter = require("./posts");
@@ -19,7 +20,7 @@ const mainRouter = Router();
 mainRouter.use("/language", languageRouter);
 mainRouter.use("/user", userRouter);
 mainRouter.use("/applicant", applicantRouter);
-mainRouter.use("/posts", postsRouter);
+mainRouter.use("/posts", validateToken(), postsRouter);
 mainRouter.use("/company", companyRouter);
 mainRouter.use("/education", educationRouter);
 mainRouter.use("/experience", experienceRouter);

@@ -56,6 +56,7 @@ interface getUser {
     data: {
       id: string;
       role: string;
+      token: string;
       email: string;
       applicant: object;
       company: object;

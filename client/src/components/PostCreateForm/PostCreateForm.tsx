@@ -1,12 +1,12 @@
-import {FC, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {Navigate, useNavigate, useParams} from "react-router";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate, useParams } from "react-router";
 import {
   createPost,
   getPosts,
   getPostsById,
 } from "../../redux/actions/actionCreators";
-import {editPost} from "../../redux/actions/companyActionCreators";
+import { editPost } from "../../redux/actions/companyActionCreators";
 import PostCreateModal from "../PostCreateModal";
 import {
   Container,
@@ -45,16 +45,17 @@ type Props = {
   mode: string;
 };
 
-const PostCreateForm: FC<Props> = ({mode}) => {
+const PostCreateForm: FC<Props> = ({ mode }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {postId, companyId} = useParams();
+  const { postId, companyId } = useParams();
 
   const postCreateModal = useSelector(
     (state: any) => state.postsReducer.postCreateModal
   );
   const posts = useSelector((state: any) => state.postsReducer.posts);
   const company = useSelector((state: any) => state.userReducer.company);
+  const token = useSelector((state: any) => state.userReducer.token);
 
   //console.log("Posts: ", posts);
   const post = posts.find((e: any) => e.id + "" === postId);
@@ -77,19 +78,19 @@ const PostCreateForm: FC<Props> = ({mode}) => {
   const [tag, setTag] = useState<Tag>("");
 
   const addTag = () => {
-    setForm({...form, tags: [...form.tags, tag]});
+    setForm({ ...form, tags: [...form.tags, tag] });
     setTag("");
   };
 
-  const deleteTag = ({target: {name}}: any) => {
-    setForm({...form, tags: form.tags.filter((e) => e !== name)});
+  const deleteTag = ({ target: { name } }: any) => {
+    setForm({ ...form, tags: form.tags.filter((e) => e !== name) });
   };
 
-  const handleInputs = ({target: {name, value}}: any) => {
+  const handleInputs = ({ target: { name, value } }: any) => {
     if (name === "tag") {
       setTag(value);
     } else {
-      setForm({...form, [name]: value});
+      setForm({ ...form, [name]: value });
     }
   };
 
@@ -97,10 +98,13 @@ const PostCreateForm: FC<Props> = ({mode}) => {
     e.preventDefault();
     console.log("submit");
     dispatch(
-      createPost({
-        ...form,
-        category: +form.category,
-      })
+      createPost(
+        {
+          ...form,
+          category: +form.category,
+        },
+        token
+      )
     );
   };
   const edit = (e: any) => {
