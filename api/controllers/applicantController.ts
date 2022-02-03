@@ -93,8 +93,8 @@ module.exports = {
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
-      if(!applicantId) return res.send("Debes incluir el campo 'applicantId'")
-      if(!postId) return res.send("Debes incluir el campo 'postId'")
+      if (!applicantId) return res.send("Debes incluir el campo 'applicantId'");
+      if (!postId) return res.send("Debes incluir el campo 'postId'");
 
       //CONSEGUIMOS EL APPLICANT Y POST PARA USAR SUS DATOS PARA PERSONALIZAR LA NOTIFICACION
       const applicant = await prisma.applicant.findFirst({
@@ -104,103 +104,115 @@ module.exports = {
         include: {
           postulations: {
             include: {
-              post: true
-            }
-          }
-        }
+              post: true,
+            },
+          },
+        },
       });
 
-      const postulation = applicant && applicant.postulations.filter(postulation => postulation.postId === postId)
+      const postulation =
+        applicant &&
+        applicant.postulations.filter(
+          (postulation) => postulation.postId === postId
+        );
 
       //SI NO APLICO ENTONCES CREAMOS SU APLICACION
-      if(postulation){
-        if(!postulation.length){
+      if (postulation) {
+        if (!postulation.length) {
           const applicantPool = await prisma.applicantPool.create({
             data: {
               applicantId: Number(applicantId),
               postId: Number(postId),
-              status: "applied"
-            }
-          })
+              status: "applied",
+            },
+          });
         }
 
         const post = await prisma.post.findFirst({
           where: {
-            id: Number(postId)
-          }
-        })
+            id: Number(postId),
+          },
+        });
 
         // NOTIFICAMOS AL USER QUE APLICO CORRECTAMENTE
 
         const notifyApplicant = await prisma.notification.create({
           data: {
             type: "application",
-            message: `Te has postulado existosamente para la oferta ${post && post.title}`,
+            message: `Te has postulado existosamente para la oferta ${
+              post && post.title
+            }`,
             postId: Number(postId),
-            applicantId: Number(applicantId)
-          }
-        })
+            applicantId: Number(applicantId),
+          },
+        });
 
         //NOTIFICAMOS A LA COMPANY QUE RECIBIO UNA POSTULACION
         const notifyCompany = await prisma.notification.create({
           data: {
             type: "application",
-            message: `Has recibido una postulacion de ${applicant && applicant.firstName} ${applicant && applicant.lastName} para la oferta $${post && post.title}`,
+            message: `Has recibido una postulacion de ${
+              applicant && applicant.firstName
+            } ${applicant && applicant.lastName} para la oferta $${
+              post && post.title
+            }`,
             postId: Number(postId),
-            companyId: post && post.companyId
-          }
-        })
+            companyId: post && post.companyId,
+          },
+        });
       }
 
       //RECUPERAMOS TODAS LAS NOTIFICACIONES ASOCIADAS AL APPLICANT
       const notifications = await prisma.notification.findMany({
         where: {
-          applicantId: Number(applicantId)
-        }
-      })
+          applicantId: Number(applicantId),
+        },
+      });
 
       const updatedApplicant = await prisma.applicant.findFirst({
         where: {
-          id: applicantId
+          id: applicantId,
         },
         include: {
           postulations: {
             include: {
-              post: true
-            }
-          }
-        }
-      })
+              post: true,
+            },
+          },
+        },
+      });
 
       // FORMATEAMOS EL OBJETO COMO PIDIO EL FRONT
       const response = {
         postulation: updatedApplicant && updatedApplicant,
-        notifications: notifications
-      }
-    
+        notifications: notifications,
+      };
+
       res.json(response);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
     }
   },
-  
+
   addfavorite: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
 
       const applicant = await prisma.applicant.findFirst({
-        where:{
-          id: Number(applicantId)
+        where: {
+          id: Number(applicantId),
         },
         include: {
-          favorites: true
-        }
-      })
+          favorites: true,
+        },
+      });
 
-      const isAlreadyFavourite = applicant && applicant.favorites.find(favourite => favourite.id === postId)
+      const isAlreadyFavourite =
+        applicant &&
+        applicant.favorites.find((favourite) => favourite.id === postId);
 
-      if(isAlreadyFavourite) {
+      if (isAlreadyFavourite) {
         const favouriteUpdate = await prisma.applicant.update({
           where: {
             id: Number(applicantId),
@@ -211,8 +223,8 @@ module.exports = {
             },
           },
           include: {
-            favorites: true
-          }
+            favorites: true,
+          },
         });
         res.json(favouriteUpdate.favorites);
       } else {
@@ -226,8 +238,8 @@ module.exports = {
             },
           },
           include: {
-            favorites: true
-          }
+            favorites: true,
+          },
         });
         res.json(favouriteUpdate.favorites);
       }
@@ -235,7 +247,7 @@ module.exports = {
       console.log(error);
       res.status(400).send(error);
     }
-  }, 
+  },
 
   follow: async (req: Request, res: Response) => {
     try {
@@ -311,7 +323,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  
+
   delete: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;
