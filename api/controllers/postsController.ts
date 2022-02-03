@@ -212,6 +212,7 @@ module.exports = {
               }
             }
           },
+          favorites: true,
           favoritedBy: true
         }
       });

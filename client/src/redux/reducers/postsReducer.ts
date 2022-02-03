@@ -52,6 +52,7 @@ const postsReducer = (state = initialState, action: Action) => {
         currentPosts: action.payload.data,
         filters_and_sort: action.payload.filters_and_sort,
         currentPage: 1,
+        currentItems: action.payload.data.slice(0,state.itemsPerPage),
       };
     case ActionType.SET_POST_CREATE_MODAL:
       return {
@@ -62,7 +63,7 @@ const postsReducer = (state = initialState, action: Action) => {
       console.log("REDUCER => ", action.payload);
       return {
         ...state,
-        postById: { ...state.postById, favoritedBy: action.payload },
+        postById: { ...state.postById, favorites: action.payload },
       };
     case ActionType.SET_CURRENT_ITEMS_BY_PAGE:
       let currentPageLocal = action.payload;

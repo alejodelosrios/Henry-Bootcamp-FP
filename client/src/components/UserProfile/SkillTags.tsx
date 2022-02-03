@@ -17,14 +17,20 @@ import {
 export const SkillTagsComp = () => {
     const userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
-    const [skillsArray, setSkillsArray] = useState([]);
-    const applicantSkills = useSelector((state: any) => state.userReducer.applicant.skillTags);
+    const [skillsArray, setSkillsArray] = useState<any[]>([]);
+    const [applicantSkills, setApplicantSkills] = useState<any[]>([])
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API}/tag/index`)
-            .then((res) => res.json())
-            .then((data) => {
-                setSkillsArray(data)
+        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setApplicantSkills(res.data.skillTags)
+            })
+    }, [])
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/tag/index`)
+            .then((res) => {
+                setSkillsArray(res.data)
             })
     }, [])
 
@@ -38,63 +44,95 @@ export const SkillTagsComp = () => {
         flag === false ? setFlag(true) : setFlag(false);
     };
 
-    const [skillsSelected, setSkillsSelected] = useState<any>({
-        skills: [],
-    });
-
-    const [newTag, setNewTag] = useState("");
+    const [newTag, setNewTag] = useState('');
 
     const selectSkill = (e: any) => {
         e.preventDefault();
-        // for (let i = 0; i < skillsSelected.skills.length; i++) {
-        //     if (e.target.value === skillsSelected.skills[i]) {
-        //         alert(`Ya seleccionaste ${e.target.value}`);
-        //         return;
-        //     }
-        // }
-        // axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-        //     applicantId: userId,
-        //     tagIds: []
-        // })
-        //! aca hay que ir añadiendo al aplicante las tags que elija
-        console.log('e.target.value ', skillsSelected)
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: [...skillsSelected.skills, e.target.value],
-        });
+        for (let i = 0; i < applicantSkills.length; i++) {
+            if (applicantSkills[i].id == e.target.value) {
+                return alert(`Ya seleccionaste ${applicantSkills[i].name}`)
+            }
+        }
+        axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+            applicantId: userId,
+            tagIds: [e.target.value]
+        })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setApplicantSkills(res.data.skillTags)
+            })
+        }, 400);
     };
 
     const deleteSkill = (e: any) => {
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: skillsSelected.skills.filter((s: any) => s !== e),
-        });
+        axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+            applicantId: userId,
+            tagIds: [e]
+        })
+            .catch((err) => {
+            console.log(err)
+        })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setApplicantSkills(res.data.skillTags)
+            })
+        }, 400);
     };
 
     const handleSubmit = () => {
-        // dispatch(submitTags(skillsSelected.skills));
         switchFlag();
     };
 
-    const handleOnChange = (e: any) => {
-        
-        // setNewTag(e.target.value.id); //! aca hay que crear no agregar
-        console.log(e.target.value)
+    const handleOnChange = (e: any) => { 
+        setNewTag(e.target.value)
     };
 
     const addSkillByInput = (e: any) => {
         e.preventDefault();
-        for (let i = 0; i < skillsSelected.skills.length; i++) {
-            if (newTag === skillsSelected.skills[i]) {
-                alert(`Ya seleccionaste ${newTag}`);
-                setNewTag("");
-                return;
+
+        for (let i = 0; i < applicantSkills.length; i++) {
+            if (applicantSkills[i].name.toLowerCase() == newTag.toLowerCase()) {
+                return alert(`Ya seleccionaste ${applicantSkills[i].name}`), setNewTag("");
             }
         }
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: [...skillsSelected.skills, newTag],
-        });
+        
+        for (let i = 0; i < skillsArray.length; i++) {
+            if (skillsArray[i].name.toLowerCase() === newTag.toLowerCase()) {
+                console.log(skillsArray[i].name)
+                axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+                    applicantId: userId,
+                    tagIds: [skillsArray[i].id]
+                })
+                    .catch((err) => {
+                    console.log(err)
+                })
+                return setTimeout(() => {
+                    axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                    .then((res) => {
+                        setApplicantSkills(res.data.skillTags)
+                    })
+                }, 400);
+            }
+            
+        }
+        axios.post(`${process.env.REACT_APP_API}/tag/create`, {
+            name: newTag
+        })
+            .then((res) => {
+                axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+                    applicantId: userId,
+                    tagIds: [res.data.id]
+                })
+            })
+        
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setApplicantSkills(res.data.skillTags)
+            })
+        }, 400);
         setNewTag("");
     };
 
@@ -120,12 +158,11 @@ export const SkillTagsComp = () => {
                     <TagsSelect
                         style={{ gridArea: "2 / 1 / 3 / 5" }}
                         className="skills-select"
-                        value={skillsSelected}
                         onChange={(e) => selectSkill(e)}
                     >
                         <option>Selecciona tags</option>
                         {skillsArray.map((tag: any) => (
-                            <option value={tag.name} key={tag.id}>
+                            <option value={tag.id} key={tag.id}>
                                 {upperCase(tag.name)}
                             </option>
                         ))}
@@ -139,7 +176,7 @@ export const SkillTagsComp = () => {
                     >
                         <TagInput
                             type="text"
-                            className="addSkill"
+                            className="newTag"
                             value={newTag}
                             onChange={(e) => handleOnChange(e)}
                         ></TagInput>
@@ -153,7 +190,7 @@ export const SkillTagsComp = () => {
                     <TagsContainer style={{ gridArea: "3 / 1 / 5 / 5" }}>
                         {applicantSkills.length
                             ? applicantSkills.map((e: any) => (
-                                  <Tag onClick={() => deleteSkill(e)} key={e.id}>
+                                  <Tag onClick={() => deleteSkill(e.id)} key={e.id}>
                                       {upperCase(e.name)}
                                   </Tag>
                               ))

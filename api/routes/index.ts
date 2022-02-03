@@ -11,9 +11,8 @@ const tagsRouter = require("./tags");
 const categoryRouter = require("./category");
 const newsRouter = require("./news");
 const notificationRouter = require("./notification");
+const paymentRouter = require("./payment");
 // const notificationTypeRouter = require("./notificationTypes");
-
-
 
 const mainRouter = Router();
 
@@ -28,7 +27,8 @@ mainRouter.use("/tag", tagsRouter);
 mainRouter.use("/category", categoryRouter);
 mainRouter.use("/news", newsRouter);
 mainRouter.use("/notification", notificationRouter);
-// mainRouter.use("/notification/types", notificationTypeRouter);
+mainRouter.use("/payment", paymentRouter);
 
+// mainRouter.use("/notification/types", notificationTypeRouter);
 
 module.exports = mainRouter;
