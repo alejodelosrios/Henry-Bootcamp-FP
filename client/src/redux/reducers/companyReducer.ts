@@ -32,6 +32,11 @@ const companyReducer = (state = initialState, action: Action) => {
         ...state,
         companyDetail: { ...state.companyDetail, ...action.payload },
       };
+    case ActionType.POST_MELI: {
+        return {
+          ...state,
+        };
+      }
     default:
       return state;
   }

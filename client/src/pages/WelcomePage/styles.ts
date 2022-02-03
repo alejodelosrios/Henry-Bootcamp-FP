@@ -39,12 +39,12 @@ export const CategorySec = styled.section`
   background-color: rgba(0,0,0,0);
 `;
 
-export const TitleB = styled.h5`
+export const TitleB = styled.h2`
 font-size: 45px;
 color: #757577;
 `;
 
-export const SubTitle = styled.h5`
+export const SubTitle = styled.h3`
 font-size: 20px;
 color: #757577;
 margin-top: 10px;
@@ -84,7 +84,7 @@ export const HL = styled.p`
   margin: 0;
 `;
 
-export const Paragraph = styled.h5<{ bold?: boolean }>`
+export const Paragraph = styled.p<{ bold?: boolean }>`
   color: grey;
   font-size: 1.5vw;
   margin-top: 0px;
