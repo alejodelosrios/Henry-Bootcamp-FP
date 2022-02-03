@@ -86,10 +86,27 @@ const FilterUser: FC = () => {
       filterAndSort({ ...filter, [id]: { ...filter[id], [name]: checked } })
     );
   };
+  const handleScore = ({ target: { value } }: any) => {
+    dispatch(filterAndSort({ ...filter, score: value }));
+  };
 
   return (
     <FilterContainer>
       <h3>Filtros</h3>
+      <Types>
+        <TypeTitle>Score</TypeTitle>
+        <Option>
+          <label htmlFor="score">Score</label>
+          <select onChange={(e) => handleScore(e)}>
+            <option value="">todos</option>
+            <option value="5">5 ⭐</option>
+            <option value="4">4 ⭐</option>
+            <option value="3">3 ⭐</option>
+            <option value="2">2 ⭐</option>
+            <option value="1">1 ⭐</option>
+          </select>
+        </Option>
+      </Types>
       {filter.inputNames.length > 0 && (
         <Types>
           <TypeTitle>Puestos buscados</TypeTitle>
