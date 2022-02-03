@@ -52,6 +52,7 @@ const postsReducer = (state = initialState, action: Action) => {
         currentPosts: action.payload.data,
         filters_and_sort: action.payload.filters_and_sort,
         currentPage: 1,
+        currentItems: action.payload.data.slice(0,state.itemsPerPage),
       };
     case ActionType.SET_POST_CREATE_MODAL:
       return {
