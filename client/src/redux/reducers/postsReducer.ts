@@ -26,6 +26,10 @@ const initialState = {
     },
   },
   postCreateModal: { val: false, msg: "" },
+
+  itemsPerPage: 3,
+  currentPage: 1,
+  currentItems: [],
 };
 
 const postsReducer = (state = initialState, action: Action) => {
@@ -35,6 +39,7 @@ const postsReducer = (state = initialState, action: Action) => {
         ...state,
         posts: action.payload,
         currentPosts: action.payload,
+        currentItems: action.payload.slice(0, state.itemsPerPage),
       };
     case ActionType.GET_POSTS_BY_ID:
       return {
@@ -46,6 +51,7 @@ const postsReducer = (state = initialState, action: Action) => {
         ...state,
         currentPosts: action.payload.data,
         filters_and_sort: action.payload.filters_and_sort,
+        currentPage: 1,
       };
     case ActionType.SET_POST_CREATE_MODAL:
       return {
@@ -53,11 +59,30 @@ const postsReducer = (state = initialState, action: Action) => {
         postCreateModal: action.payload,
       };
     case ActionType.SET_FAV_APPLICANT:
-      console.log('REDUCER => ', action.payload);
+      console.log("REDUCER => ", action.payload);
       return {
         ...state,
-        postById: {...state.postById, favoritedBy: action.payload}
-      }
+        postById: { ...state.postById, favoritedBy: action.payload },
+      };
+    case ActionType.SET_CURRENT_ITEMS_BY_PAGE:
+      let currentPageLocal = action.payload;
+      let indexOfLastItem = currentPageLocal * state.itemsPerPage;
+      let indexOfFirstItem = indexOfLastItem - state.itemsPerPage;
+      let currentItemsLocal = state.currentPosts.slice(
+        indexOfFirstItem,
+        indexOfLastItem
+      );
+      return {
+        ...state,
+        currentPage: currentPageLocal,
+        currentItems: currentItemsLocal,
+      };
+    case ActionType.SET_CURRENT_POSTS:
+      return {
+        ...state,
+        currentPosts: action.payload,
+        currentPage: 1,
+      };
     default:
       return state;
   }
