@@ -39,18 +39,13 @@ const JobPosts = styled.div`
 
 const CompanyJobPosts: FC = () => {
 
-  const companyId = useSelector((state: any) => state.companyReducer.companyDetail.id)
-  const currentPosts = useSelector(
-    (state: any) => state.postsReducer.currentPosts
-  );
-  const companyPosts = currentPosts.filter(
-    (post: any) => post.companyId === companyId
-  );
+  const {posts} = useSelector((state: any) => state.userReducer.company)
+  
   return (
     <Dashboard>
       <CompPosts>
         {
-          companyPosts.map((post: any, i: number) => (
+          posts.map((post: any, i: number) => (
             <JobPosts key={i}>
               <Link to={`/company/posts/${post.id}/detail`}>
                 <h1>{post.title}</h1>
