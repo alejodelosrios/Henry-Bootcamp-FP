@@ -83,6 +83,7 @@ const postsReducer = (state = initialState, action: Action) => {
         currentPosts: action.payload,
         currentPage: 1,
       };
+
     default:
       return state;
   }
