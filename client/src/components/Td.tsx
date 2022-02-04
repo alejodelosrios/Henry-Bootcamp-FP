@@ -46,7 +46,7 @@ const Td: FC <Props> = ({column, row, postId}) => {
   return (
     <td>{
         column === 'image'
-            ? <Link to={`/applicant/${row.applicantId}`}>
+            ? <Link to={`./applicant/${row.applicantId}`}>
                 <img src={row.applicant[column]} alt="" />
             </Link>
             : column === 'skillTags'
