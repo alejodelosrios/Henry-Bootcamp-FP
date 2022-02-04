@@ -1,22 +1,18 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-const userValidator = require("./userValidation")
+const userValidator = require("./userValidation");
 
 module.exports = {
   create: async (req: Request, res: Response) => {
     try {
-      const {
-        email,
-        password,
-        role
-      } = req.body;
+      const { email, password, role } = req.body;
       if (!email) return res.send("Falta campo 'email'");
       if (!password) return res.send("Falta campo 'password'");
       if (!role) return res.send("Falta campo 'role'");
 
-      //CHEQUEA SI EL USER EXISTE ANTES DE CREARLO, 
-      const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email)
-      if(!checkIfEmailAvailable) return res.send("Email en uso")
+      //CHEQUEA SI EL USER EXISTE ANTES DE CREARLO,
+      const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email);
+      if (!checkIfEmailAvailable) return res.send("Email en uso");
 
       const user = await prisma.user.create({
         data: {
@@ -26,7 +22,7 @@ module.exports = {
         },
       });
 
-      if(role === "applicant" || role === "admin") {
+      if (role === "applicant" || role === "admin") {
         const applicant = await prisma.applicant.create({
           data: {
             userId: user.id,
@@ -37,11 +33,11 @@ module.exports = {
             country: "",
             image: "",
             showImage: true,
-          }
-        })
+          },
+        });
       }
-      
-      if(role === "company") {
+
+      if (role === "company") {
         const company = await prisma.company.create({
           data: {
             userId: user.id,
@@ -59,7 +55,7 @@ module.exports = {
           },
         });
       }
-      
+
       const newUser = await prisma.user.findMany({
         where: {
           email: email,
@@ -67,15 +63,15 @@ module.exports = {
         include: {
           applicant: {
             include: {
-              notifications: true
-            }
+              notifications: true,
+            },
           },
           company: {
             include: {
-              notifications: true
-            }
-          }
-        }
+              notifications: true,
+            },
+          },
+        },
       });
       res.json(newUser);
     } catch (error) {
@@ -97,7 +93,8 @@ module.exports = {
   userByEmail: async (req: Request, res: Response) => {
     try {
       const { email } = req.params;
-      if (!email) return res.send("Debes enviar el email del usuario por params");
+      if (!email)
+        return res.send("Debes enviar el email del usuario por params");
       const user = await prisma.user.findFirst({
         where: {
           email: email,
@@ -113,21 +110,22 @@ module.exports = {
               followed: true,
               postulations: {
                 include: {
-                  post: true
-                }
+                  post: true,
+                },
               },
-              favorites: true
-            }
+              favorites: true,
+            },
           },
           company: {
             include: {
               notifications: true,
               reviews: true,
               posts: true,
-              followers: true
-            }
-          }
-        }
+              followers: true,
+              payment: true,
+            },
+          },
+        },
       });
       // let formattedPackageForFront
       // if(user){
@@ -157,7 +155,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  
+
   update: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
@@ -169,8 +167,14 @@ module.exports = {
       } = req.body;
 
       if (!userId) return res.send("Debes enviar el id del usuario por params");
-      if (!email) return res.send("Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo");
-      if (!password) return res.send("Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla");
+      if (!email)
+        return res.send(
+          "Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo"
+        );
+      if (!password)
+        return res.send(
+          "Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla"
+        );
       const userUpdated = await prisma.user.updateMany({
         where: {
           id: Number(userId),
