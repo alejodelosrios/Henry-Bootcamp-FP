@@ -20,6 +20,7 @@ Las rutas son las siguientes:
 /applicant
 
 >   POST    /create/:userId         (crea un nuevo applicant)                                 => recibe userId por params y objeto applicant (mirar en /prisma/seed.ts para los modelos)
+>   POST    /review/:companyId      (crea una nueva review para una compañia especifica)      => recibe companyId por params y objeto review (mirar en /prisma/seed.ts para los modelos) 
 >   GET     /index                  (devuelve todos los applicants)                           => no recibe parametros
 >   GET     /:applicantId           (devuelve un applicant especifico con TODA su info)       => recibe applicantId por params
 >   PUT     /apply                  (postula a un applicant para un post)                     => recibe objeto con applicantId y postId
@@ -28,12 +29,24 @@ Las rutas son las siguientes:
 >   PUT     /tags                   (añade tags al perfil de un applicant)                    => recibe objeto con applicantId y arreglo de tags a relacionar
 >   PUT     /update/:applicantId    (actualiza la informacion de un applicant)                => recibe applicantId por params y objeto con todas las propiedades a actualizar
 >   DELETE  /delete/:applicantId    (borra un applicant especifico)                           => recibe applicantId por params
+===============================================================================================
+>   POST    /experience/create/:applicantId     (crea una nueva experience y la asocia a un applicant)    => recibe applicantId por params y objeto experience (mirar en /prisma/seed.ts para los modelos)
+>   PUT     /experience/update/:experienceId    (actualiza la informacion de un experience)               => recibe experienceId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /experience/delete/:experienceId    (borra una experience especifica)                         => recibe experienceId por params
+===============================================================================================
+>   POST    /education/create/:applicantId      (crea una nueva education y la asocia a un applicant)     => recibe applicantId por params y objeto education (mirar en /prisma/seed.ts para los modelos)
+>   PUT     /education/update/:educationId      (actualiza la informacion de un education)                => recibe educationId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /education/delete/:educationId      (borra una education especifica)                          => recibe educationId por params
+===============================================================================================
+>   POST    /language/create/:applicantId       (crea una nueva languages y la asocia a un applicant)     => recibe applicantId por params objeto languages (mirar en /prisma/seed.ts para los modelos)
+>   PUT     /language/update/:languageId        (actualiza la informacion de un languages)                => recibe languageId por params y objeto con todas las propiedades a actualizar
+>   DELETE  /language/delete/:languageId        (borra una languages especifica)                          => recibe languageId por params
+===============================================================================================
 
 
 /company
 
 >   POST    /create/:userId         (crea una nueva company)                                  => recibe userId por params y objeto company (mirar en /prisma/seed.ts para los modelos)
->   POST    /review/:companyId      (crea una nueva review para una compañia especifica)      => recibe companyId por params y objeto review (mirar en /prisma/seed.ts para los modelos) 
 >   GET     /index                  (devuelve todas las company)                              => no recibe parametros
 >   GET     /:companyId             (devuelve una company especifica con TODA su info)        => recibe companyId por params
 >   GET     /posts/:companyId       (devuelve todos los posts de una company)                 => recibe companyId por params
@@ -54,27 +67,6 @@ Las rutas son las siguientes:
 >   DELETE  /delete/:postId         (borra un post especifico)                                => recibe postId por params
 
 
-/experience
-
->   POST    /create/:applicantId    (crea una nueva experience y la asocia a un applicant)    => recibe applicantId por params y objeto experience (mirar en /prisma/seed.ts para los modelos)
->   PUT     /update/:experienceId   (actualiza la informacion de un experience)               => recibe experienceId por params y objeto con todas las propiedades a actualizar
->   DELETE  /delete/:experienceId   (borra una experience especifica)                         => recibe experienceId por params
-
-
-/education
-
->   POST    /create/:applicantId    (crea una nueva education y la asocia a un applicant)     => recibe applicantId por params y objeto education (mirar en /prisma/seed.ts para los modelos)
->   PUT     /update/:educationId    (actualiza la informacion de un education)                => recibe educationId por params y objeto con todas las propiedades a actualizar
->   DELETE  /delete/:educationId    (borra una education especifica)                          => recibe educationId por params
-
-
-/language
-
->   POST    /create/:applicantId    (crea una nueva languages y la asocia a un applicant)     => recibe applicantId por params objeto languages (mirar en /prisma/seed.ts para los modelos)
->   PUT     /update/:languageId     (actualiza la informacion de un languages)                => recibe languageId por params y objeto con todas las propiedades a actualizar
->   DELETE  /delete/:languageId     (borra una languages especifica)                          => recibe languageId por params
-
-
 /category
 
 >   POST    /create                 (crea una category)                                       => recibe objeto category (mirar en /prisma/seed.ts para los modelos)
@@ -85,11 +77,11 @@ Las rutas son las siguientes:
 
 /tag
 
->   POST    /create                 (crea una tags)                                           => recibe objeto tags (mirar en /prisma/seed.ts para los modelos)
+>   POST    /create                 (crea una tag)                                            => recibe objeto tags (mirar en /prisma/seed.ts para los modelos)
 >   GET     /index                  (devuelve todas las tags existentes)                      => no recibe parametros
 >   GET     /:tagId                 (devuelve una tag especifica)                             => recibe el tagId por params
->   PUT     /update/:tagId          (actualiza una tags)                                      => recibe id por params y objeto con todas las propiedades a actualizar
->   DELETE  /delete/:tagId          (borra una tags especifica)                               => recibe id por params
+>   PUT     /update/:tagId          (actualiza una tag)                                       => recibe id por params y objeto con todas las propiedades a actualizar
+>   DELETE  /delete/:tagId          (borra una tag especifica)                                => recibe id por params
 
 
 /notification

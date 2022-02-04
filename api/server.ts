@@ -30,9 +30,25 @@ app.use("/auth", authRoute);
 
 app.use("/api/v2", mainRouter);
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(
-    "SERVER RUNNING ON PORT 3002 ATENTOS AL NUEVO NUMERO DE PUERTO O.O"
+    "SERVER RUNNING ON PORT 3001"
   );
-});
+})
+
+  .on("error", function(err) {
+    
+    process.once("SIGUSR2", function() {
+      process.kill(process.pid, "SIGUSR2")
+    })
+
+    process.on("SIGINT", function() {
+      process.kill(process.pid, "SIGINT")
+    })
+
+    process.on("uncaughtException", function(err) {
+      console.log("UNCAUGHT EXCEPTION")
+    })
+
+  })

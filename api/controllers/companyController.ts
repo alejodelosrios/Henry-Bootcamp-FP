@@ -87,65 +87,6 @@ module.exports = {
     }
   },
 
-  review: async (req: Request, res: Response) => {
-    try {
-      const { companyId } = req.params
-      const { description, score } = req.body;
-      if(!description) return res.send("Debes incluir un campo 'description' en el body")
-      if(!score) return res.send("Debes incluir un campo 'score' en el body")
-      if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
-
-      const review = await prisma.review.create({
-        data: {
-          description: description,
-          score: score,
-          companyId: Number(companyId),
-        },
-      });
-
-      const company = await prisma.company.findFirst({
-        where: {
-          id: Number(companyId)
-        },
-        include: {
-          reviews: true
-        }
-      })
-
-      let rating: number = 0
-      company && company.reviews.map(review => {
-        if(review && review.score) return rating += review.score
-      })
-
-      if(company){
-        rating /= company.reviews.length
-      }
-
-      const updateCompanyRating = await prisma.company.update({
-        where: {
-          id: Number(companyId)
-        },
-        data: {
-          rating: Math.round(rating)
-        }
-      })
-
-      const updateCompanyPosts = await prisma.post.updateMany({
-        where: {
-          companyId: Number(companyId)
-        },
-        data: {
-          companyRating: Math.round(rating)
-        }
-      })
-      
-      res.json(company && company.reviews);
-    } catch (error) {
-      console.log(error)
-      res.status(400).send(error);
-    }
-  },
-
   index: async (req: Request, res: Response) => {
     try {
       const companies = await prisma.company.findMany();
