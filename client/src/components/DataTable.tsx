@@ -48,9 +48,7 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
     // const columns = data[0] && Object.keys(data[0].applicant)
     const columns = ['image', 'firstName', 'lastName', 'skillTags', 'favorites']
     const colSpanish = ['Perfil', 'Nombre', 'Apellido', 'Skills', 'Favoritos']
-
-
-    console.log(data);
+    
   return (
     <Table cellPadding={0} cellSpacing={0}>
         <thead>

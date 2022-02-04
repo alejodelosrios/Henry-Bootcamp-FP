@@ -57,7 +57,7 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
     return (
         <>
             <Container>
-
+                {/* Este true de abajo tiene que ser company.premium */}
                 {true
                     ? <><Filters>
                             <input 
