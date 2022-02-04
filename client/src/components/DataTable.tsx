@@ -53,7 +53,7 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
     <Table cellPadding={0} cellSpacing={0}>
         <thead>
             <tr>{data.length && colSpanish.map((heading: any) => (
-                <th>{heading}</th>
+                <th key={heading}>{heading}</th>
             ))}</tr>
         </thead>
 
