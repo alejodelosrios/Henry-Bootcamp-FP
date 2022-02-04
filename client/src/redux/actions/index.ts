@@ -170,6 +170,10 @@ interface sendMercadoPago {
   type: ActionType.POST_MELI;
   payload: object;
 }
+interface setApplicantDetail {
+  type: ActionType.SET_APPLICANT_DETAIL;
+  payload: object;
+}
 
 interface updateInfo {
   type: ActionType.UPDATE_PREMIUM;
@@ -211,3 +215,4 @@ export type Action =
   | sendMercadoPago
   | updateInfo
   | editCompany
+  | setApplicantDetail;
