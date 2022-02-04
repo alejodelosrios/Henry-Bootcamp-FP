@@ -209,7 +209,7 @@ export const UserRatingText = styled.p`
     text-align: center;
     color: #757577;
     `
-export const RatingPercentage = styled.h1`
+export const RatingPercentage = styled.i`
     font-family: Poppins;
     font-size: 75px;
     font-style: normal;
@@ -218,4 +218,6 @@ export const RatingPercentage = styled.h1`
     letter-spacing: 0em;
     text-align: left;
     color: #C879FF;
+    transition: 200ms;
+    // color: #8f8f8f
 `

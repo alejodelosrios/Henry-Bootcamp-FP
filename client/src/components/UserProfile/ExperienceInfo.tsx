@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     updateUserExp,
@@ -22,14 +23,21 @@ import {
 } from "./Styles";
 
 export const ExperienceInfoComp = () => {
+    const userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState("none");
     const [overlayFlag, setOverlayFlag] = useState("none");
-    const expArray = useSelector(
-        (state: any) => state.userReducer.applicant.experience
-    );
-    //console.log(expArray);
+    const [expArray, setExpArray] = useState([]);
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+        .then((res) => {
+            setExpArray(res.data.experience)
+        })
+    },[])
+    // const expArray = useSelector(
+    //     (state: any) => state.userReducer.applicant.experience
+    // );
 
     const [userExperience, setUserExperience] = useState({
         id: "",
@@ -38,6 +46,7 @@ export const ExperienceInfoComp = () => {
         startDate: "",
         endDate: "",
         description: "",
+        applicantId: userId
     });
 
     function editFunction(exp: any) {
@@ -55,6 +64,7 @@ export const ExperienceInfoComp = () => {
             startDate: exp.startDate,
             endDate: exp.endDate,
             description: exp.description,
+            applicantId: userId
         });
     }
 
@@ -67,6 +77,12 @@ export const ExperienceInfoComp = () => {
             ? setDisplayFlag("flex")
             : setDisplayFlag("none");
         dispatch(updateUserExp(userExperience));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setExpArray(res.data.experience)
+            })
+        },500)
     }
 
     function closeModal() {
@@ -101,7 +117,6 @@ export const ExperienceInfoComp = () => {
     const [id, setId] = useState(2);
 
     function addHandleChange(e: any) {
-        setId(id + 1);
         setAddUserExperience({
             ...addUserExperience,
             [e.target.name]: e.target.value,
@@ -118,7 +133,7 @@ export const ExperienceInfoComp = () => {
     });
 
     function saveExperience() {
-        setId(id + 1);
+        setId(Math.floor(Math.random() * 98127319));
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === "none"
             ? setOverlayFlag("block")
@@ -126,7 +141,7 @@ export const ExperienceInfoComp = () => {
         addDisplayFlag === "none"
             ? setAddDisplayFlag("flex")
             : setAddDisplayFlag("none");
-        dispatch(addUserExp(addUserExperience));
+        dispatch(addUserExp(addUserExperience, userId));
         setAddUserExperience({
             id: id,
             company: "",
@@ -135,10 +150,22 @@ export const ExperienceInfoComp = () => {
             endDate: "",
             description: "",
         });
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setExpArray(res.data.experience)
+            })
+        },500)
     }
 
     function deleteFunction(id: any) {
         dispatch(deleteUserExp(id));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            .then((res) => {
+                setExpArray(res.data.experience)
+            })
+        },500)
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === "none"
             ? setOverlayFlag("block")
@@ -146,6 +173,7 @@ export const ExperienceInfoComp = () => {
         displayFlag === "none"
             ? setDisplayFlag("flex")
             : setDisplayFlag("none");
+        
     }
 
     return (

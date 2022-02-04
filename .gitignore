@@ -109,3 +109,8 @@ migration_lock.toml
 migration.sql
 client/package-lock.json
 api/package-lock.json
+
+#conventional commits
+.vscode
+.vscode/settings.json
+api/package-lock.json

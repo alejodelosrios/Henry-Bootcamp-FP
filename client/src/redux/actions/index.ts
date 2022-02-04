@@ -17,6 +17,14 @@ interface getCurrentPosts {
   };
 }
 
+interface setCurrentPosts {
+  type: ActionType.SET_CURRENT_POSTS;
+  payload: object[];
+}
+interface set_current_items_by_page {
+  type: ActionType.SET_CURRENT_ITEMS_BY_PAGE;
+  payload: number;
+}
 interface getPostsById {
   type: ActionType.GET_POSTS_BY_ID;
   payload: object;
@@ -144,14 +152,29 @@ interface getCompany {
   type: ActionType.GET_COMPANY;
   payload: object;
 }
+interface submitTags {
+  type: ActionType.SUBMIT_TAGS;
+  payload: any;
+}
 
 interface setFavApplicant {
   type: ActionType.SET_FAV_APPLICANT;
   payload: object[];
 }
+interface editCompany {
+  type: ActionType.EDIT_COMPANY;
+  payload: object[];
+}
+
+interface sendMercadoPago {
+  type: ActionType.POST_MELI;
+  payload: object;
+}
 
 export type Action =
   | getPosts
+  | set_current_items_by_page
+  | setCurrentPosts
   | editPost
   | filterAndSort
   | getPostsById
@@ -178,4 +201,7 @@ export type Action =
   | jobApplication
   | getCompany
   | setFavorites
-  | setFavApplicant;
+  | submitTags
+  | setFavApplicant
+  | sendMercadoPago
+  | editCompany;

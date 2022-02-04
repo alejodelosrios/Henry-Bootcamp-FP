@@ -20,7 +20,7 @@ type Props = {
         stin: string;
         companyLogo: string;
         images: object[];
-        values: string[];
+        values: object[];
         aboutValues: string;
         about: string;
         mission: string;
@@ -35,7 +35,7 @@ type Props = {
     setCompanyInfo: React.Dispatch<React.SetStateAction<object>>;
 };
 
-export const Mission: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
+export const Vission: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
     const dispatch = useDispatch();
     const [isEdit, setIsEdit] = useState(false);
 
@@ -56,16 +56,14 @@ export const Mission: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
         return (
             <CardContainer className="about-company">
                 <CardHeader>
-                    <CardTitle>Misión</CardTitle>
+                    <CardTitle>Visión</CardTitle>
                     <EditButton onClick={() => setIsEdit(true)}>
                         Editar
                     </EditButton>
                 </CardHeader>
                 <InputGroup>
-                    <CustomLabel className="subTitle">
-                        ¿Qué buscamos?
-                    </CustomLabel>
-                    <p>{companyInfo.mission}</p>
+                    <CustomLabel>¿Qué nos guía?</CustomLabel>
+                    <p>{companyInfo.vision}</p>
                 </InputGroup>
             </CardContainer>
         );
@@ -73,19 +71,17 @@ export const Mission: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
         return (
             <CardContainer className="about-company">
                 <CardHeader>
-                    <CardTitle>Misión</CardTitle>
+                    <CardTitle>Visión</CardTitle>
                     <EditButton onClick={() => saveNewData()}>
                         Guardar
                     </EditButton>
                 </CardHeader>
                 <InputGroup>
-                    <CustomLabel className="subTitle">
-                        ¿Qué buscamos?
-                    </CustomLabel>
+                    <CustomLabel>¿Qué nos guía?</CustomLabel>
                     <TextArea
-                        placeholder="Cuentanos cuál es tu misión"
-                        value={companyInfo.mission}
-                        name="mission"
+                        placeholder="Cuentanos cuál es tu visión"
+                        value={companyInfo.vision}
+                        name="vision"
                         onChange={(e) => handleChange(e)}
                     ></TextArea>
                 </InputGroup>

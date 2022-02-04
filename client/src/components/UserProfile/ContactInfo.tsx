@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateMail, updateUser } from "../../redux/actions/actionCreators";
+import { updateUser } from "../../redux/actions/actionCreators";
 import {
   ContactInfo,
   Header,
@@ -23,11 +23,13 @@ export const ContactInfoComp = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: any) => state.userReducer.applicant);
   const mail = useSelector((state: any) => state.userReducer.email);
+  const userId = useSelector((state: any) => state.userReducer.applicant.id);
   //console.log(user);
   const [userInfo, setUserInfo] = useState({
     phoneNumber: user.phoneNumber,
     country: user.country,
-    email: mail,
+    firstName: user.firstName,
+    lastName: user.lastName
   });
 
   function editFunction() {
@@ -35,13 +37,14 @@ export const ContactInfoComp = () => {
   }
   function updateFunction() {
     flag ? setFlag(false) : setFlag(true);
-    dispatch(
-      updateUser({
+    console.log(userId)
+    dispatch(updateUser({
         phoneNumber: userInfo.phoneNumber,
         country: userInfo.country,
-      })
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName
+      }, userId)
     );
-    dispatch(updateMail(userInfo.email));
   }
 
   function handleChange(e: any) {
@@ -60,7 +63,7 @@ export const ContactInfoComp = () => {
             {user.firstName} {user.lastName}
           </NameTag>
           {user.experience.length > 0 && (
-            <RolTag>{user.experience[0].position}</RolTag>
+            <RolTag>{user?.education[0]?.degree}</RolTag>
           )}
           <ContactButton>Contactar</ContactButton>
         </NameDiv>
@@ -76,11 +79,11 @@ export const ContactInfoComp = () => {
           </EachContainer>
           <EachContainer>
             <SubTitles>Teléfono:</SubTitles>
-            <ParagraphStyle>{user.phoneNumber}</ParagraphStyle>
+            <ParagraphStyle>{user?.phoneNumber}</ParagraphStyle>
           </EachContainer>
           <EachContainer>
             <SubTitles>Localidad:</SubTitles>
-            <ParagraphStyle>{user.country}</ParagraphStyle>
+            <ParagraphStyle>{user?.country}</ParagraphStyle>
           </EachContainer>
         </ContactCard>
       </ContactInfo>
@@ -92,7 +95,7 @@ export const ContactInfoComp = () => {
           <NameTag>
             {user.firstName} {user.lastName}
           </NameTag>
-          <RolTag>Full Stack Developer</RolTag>
+          <RolTag>{user?.education[0]?.degree}</RolTag>
           <ContactButton>Contactar</ContactButton>
         </NameDiv>
 
@@ -103,7 +106,7 @@ export const ContactInfoComp = () => {
               Guardar
             </Edit>
           </Header>
-          {/* <EachContainer>
+          <EachContainer>
                     <SubTitles>Nombre:</SubTitles>
                     <EditInput
                         placeholder={userInfo.firstName}
@@ -120,17 +123,7 @@ export const ContactInfoComp = () => {
                         name="lastName"
                         onChange={(e) => handleChange(e)}
                     ></EditInput>
-                </EachContainer> */}
-          <EachContainer>
-            <SubTitles>Mail:</SubTitles>
-            <EditInput
-              placeholder={userInfo.email}
-              value={userInfo.email}
-              name="email"
-              disabled
-              onChange={(e) => handleChange(e)}
-            ></EditInput>
-          </EachContainer>
+                </EachContainer>
           <EachContainer>
             <SubTitles>Teléfono:</SubTitles>
             <EditInput

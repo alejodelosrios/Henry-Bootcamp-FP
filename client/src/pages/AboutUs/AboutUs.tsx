@@ -23,17 +23,17 @@ const AboutUs: FC = () => {
           <Div>
             <SubTitle>Sobre Nosotros</SubTitle>
             <Description>
-              <SpanPink>Transforma</SpanPink> es una plataforma que busca generar un sistema de contratación inclusivo donde todas las personas que formen parte de esta comunidad puedan encontrar un mejor trabajo, con todas las prestaciones que corresponden, favoreciendo el crecimiento profesional. A su vez ayuda a las empresas a encontrar al profesional que mejor encaje con sus necesidades siempre desde un ambiente de mutuo respeto. Con este objetivo ofrece también soluciones innovadoras para la gestión del talento y la digitalización del reclutamiento.
+              <p> <SpanPink>Transforma</SpanPink> es una plataforma que busca generar un sistema de contratación inclusivo donde todas las personas que formen parte de esta comunidad puedan encontrar un mejor trabajo, con todas las prestaciones que corresponden, favoreciendo el crecimiento profesional. A su vez ayuda a las empresas a encontrar al profesional que mejor encaje con sus necesidades siempre desde un ambiente de mutuo respeto. Con este objetivo ofrece también soluciones innovadoras para la gestión del talento y la digitalización del reclutamiento.</p>
             </Description>
 
             <SubTitle>Misión</SubTitle>
             <Description>
-              <SpanPink>Generar un impacto directo en la sociedad actual</SpanPink>, donde todos y todas puedan acceder a sus derechos sin importar la identidad de género, la raza o la orientación sexual. Así como contribuir al enriquesimiento de las empresas con talentos y mejorando la interacción entre el trabajador o la trabajadora para con su entorno laboral.
+              <p> <SpanPink>Generar un impacto directo en la sociedad actual</SpanPink>, donde todos y todas puedan acceder a sus derechos sin importar la identidad de género, la raza o la orientación sexual. Así como contribuir al enriquesimiento de las empresas con talentos y mejorando la interacción entre el trabajador o la trabajadora para con su entorno laboral.</p>
             </Description>
 
             <SubTitle>Visión</SubTitle>
             <Description>
-              <SpanPink>Marcar el camino</SpanPink> para seguir el rumbo hacia una sociedad mas justa e inclusiva.
+              <p> <SpanPink>Marcar el camino</SpanPink> para seguir el rumbo hacia una sociedad mas justa e inclusiva.</p>
             </Description>
           </Div>
 
@@ -42,12 +42,12 @@ const AboutUs: FC = () => {
             <AsideTitle>Decí lo que Pensás</AsideTitle>
             <Description>
               <Span>"</Span>
-              Nos expresamos con transparencia y asertividad. Compartimos la información correcta en el momento que la necesitamos. Esto nos permite avanzar con mayor agilidad y nos deja disfrutar de un ambiente de trabajo saludable donde podemos ser quienes realmente somos.
+              <p>Nos expresamos con transparencia y asertividad. Compartimos la información correcta en el momento que la necesitamos. Esto nos permite avanzar con mayor agilidad y nos deja disfrutar de un ambiente de trabajo saludable donde podemos ser quienes realmente somos.</p>
             </Description>
             <AsideTitle>Compromiso Siempre</AsideTitle>
             <Description>
               <Span>"</Span>
-              Somos perseverantes y nos mantenemos enfocados a pesar de las dificultades, superamos cada obstáculo y buscamos superarnos a nosotros mismos cada día. Estamos cada vez que nuestro equipo nos necesita, porque el compromiso entre nosotros es total.
+              <p>Somos perseverantes y nos mantenemos enfocados a pesar de las dificultades, superamos cada obstáculo y buscamos superarnos a nosotros mismos cada día. Estamos cada vez que nuestro equipo nos necesita, porque el compromiso entre nosotros es total.</p>
             </Description>
           </Aside>
         </Section>
