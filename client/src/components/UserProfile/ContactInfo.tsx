@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../redux/actions/actionCreators";
+import React, {FC, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../../redux/actions/actionCreators";
 import {
   ContactInfo,
   Header,
@@ -18,18 +18,31 @@ import {
   ParagraphStyle,
 } from "./Styles";
 
-export const ContactInfoComp = () => {
+type Props = {
+  userRole: string;
+};
+
+export const ContactInfoComp: FC<Props> = ({userRole}) => {
   const [flag, setFlag] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.userReducer.applicant);
-  const mail = useSelector((state: any) => state.userReducer.email);
-  const userId = useSelector((state: any) => state.userReducer.applicant.id);
+
+  //console.log("Role: ", userRole)
+  const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+  let user = useSelector((state: any) => state.userReducer.applicant);
+  let mail = useSelector((state: any) => state.userReducer.email);
+  let userId = useSelector((state: any) => state.userReducer.applicant.id);
+  if (userRole === "company") {
+    user = applicantDetail;
+    mail = applicantDetail.email;
+    userId = applicantDetail.userId;
+  }
+
   //console.log(user);
   const [userInfo, setUserInfo] = useState({
     phoneNumber: user.phoneNumber,
     country: user.country,
     firstName: user.firstName,
-    lastName: user.lastName
+    lastName: user.lastName,
   });
 
   function editFunction() {
@@ -37,13 +50,17 @@ export const ContactInfoComp = () => {
   }
   function updateFunction() {
     flag ? setFlag(false) : setFlag(true);
-    console.log(userId)
-    dispatch(updateUser({
-        phoneNumber: userInfo.phoneNumber,
-        country: userInfo.country,
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName
-      }, userId)
+    console.log(userId);
+    dispatch(
+      updateUser(
+        {
+          phoneNumber: userInfo.phoneNumber,
+          country: userInfo.country,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+        },
+        userId
+      )
     );
   }
 
@@ -65,13 +82,14 @@ export const ContactInfoComp = () => {
           {user.experience.length > 0 && (
             <RolTag>{user?.education[0]?.degree}</RolTag>
           )}
-          <ContactButton>Contactar</ContactButton>
         </NameDiv>
 
         <ContactCard className="contact-card">
           <Header>
             <Titles>Contacto</Titles>
-            <Edit onClick={() => editFunction()}>Editar</Edit>
+            {userRole === "applicant" &&
+              <Edit onClick={() => editFunction()}>Editar</Edit>
+            }
           </Header>
           <EachContainer>
             <SubTitles>Mail:</SubTitles>
@@ -107,23 +125,23 @@ export const ContactInfoComp = () => {
             </Edit>
           </Header>
           <EachContainer>
-                    <SubTitles>Nombre:</SubTitles>
-                    <EditInput
-                        placeholder={userInfo.firstName}
-                        value={userInfo.firstName}
-                        name="firstName"
-                        onChange={(e) => handleChange(e)}
-                    ></EditInput>
-                </EachContainer>
-                <EachContainer>
-                    <SubTitles>Apellido:</SubTitles>
-                    <EditInput
-                        placeholder={userInfo.lastName}
-                        value={userInfo.lastName}
-                        name="lastName"
-                        onChange={(e) => handleChange(e)}
-                    ></EditInput>
-                </EachContainer>
+            <SubTitles>Nombre:</SubTitles>
+            <EditInput
+              placeholder={userInfo.firstName}
+              value={userInfo.firstName}
+              name="firstName"
+              onChange={(e) => handleChange(e)}
+            ></EditInput>
+          </EachContainer>
+          <EachContainer>
+            <SubTitles>Apellido:</SubTitles>
+            <EditInput
+              placeholder={userInfo.lastName}
+              value={userInfo.lastName}
+              name="lastName"
+              onChange={(e) => handleChange(e)}
+            ></EditInput>
+          </EachContainer>
           <EachContainer>
             <SubTitles>Teléfono:</SubTitles>
             <EditInput

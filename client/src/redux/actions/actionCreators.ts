@@ -384,3 +384,21 @@ export const editCompany =
       console.log(error);
     }
   };
+export const setApplicantDetail =
+  (applicantId: number) =>
+  async (dispatch: Dispatch<Action>) => {
+    //console.log("Data enviada: ", applicantId);
+    try {
+      const { data } = await axios.get(
+        `/applicant//${applicantId}`
+      );
+      //console.log("Data recibida: ", data);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.SET_APPLICANT_DETAIL,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
