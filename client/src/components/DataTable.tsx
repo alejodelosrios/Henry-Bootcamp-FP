@@ -49,6 +49,8 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
     const columns = ['image', 'firstName', 'lastName', 'skillTags', 'favorites']
     const colSpanish = ['Perfil', 'Nombre', 'Apellido', 'Skills', 'Favoritos']
 
+
+    console.log(data);
   return (
     <Table cellPadding={0} cellSpacing={0}>
         <thead>
@@ -58,10 +60,10 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
         </thead>
 
         <tbody> 
-            {data.map((row: any)=> <tr>{
-                columns.map((column: any)=>(
+            {data.map((row: any, j:number)=> <tr key={j}>{
+                columns.map((column: any, ix:number)=>(
                     <Td 
-                        key={row.applicantId}
+                        key={ix}
                         column={column}
                         row={row}
                         postId={postId}

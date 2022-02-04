@@ -50,7 +50,7 @@ const Td: FC <Props> = ({column, row, postId}) => {
                 <img src={row.applicant[column]} alt="" />
             </Link>
             : column === 'skillTags'
-                ? row.applicant[column].map((sk:any)=> <p>{sk.name}</p>)
+                ? row.applicant[column].map((sk:any)=> <p key={sk.id}>{sk.name}</p>)
                 : column === 'favorites' 
                     ? <FavsApp onClick={handleFav}>
                         {isFav ? '★' : '☆' }
