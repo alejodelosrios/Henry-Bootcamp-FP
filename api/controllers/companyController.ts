@@ -49,13 +49,13 @@ module.exports = {
           "Debes incluir un campo 'values', es un arreglo que contiene strings, puede estar vacío"
         );
       if (!aboutValues)
-      return res.send(
-        "Debes incluir un campo 'aboutValues', puede contener una string vacía"
-      );
+        return res.send(
+          "Debes incluir un campo 'aboutValues', puede contener una string vacía"
+        );
       if (!about)
-      return res.send(
-        "Debes incluir un campo 'about', puede contener una string vacía"
-      );
+        return res.send(
+          "Debes incluir un campo 'about', puede contener una string vacía"
+        );
       if (!mission)
         return res.send(
           "Debes incluir un campo 'mission', puede contener una string vacía"
@@ -109,7 +109,8 @@ module.exports = {
           reviews: true,
           posts: true,
           followers: true,
-          images: true
+          images: true,
+          payment: true,
         },
       });
       res.json(company);
@@ -150,27 +151,29 @@ module.exports = {
         },
         data: {
           status: newStatus,
-        }
+        },
       });
 
       //NOTIFY APPLICANT
 
       const post = await prisma.post.findFirst({
         where: {
-          id: Number(postId)
-        }
-      })
+          id: Number(postId),
+        },
+      });
 
       const notifyApplicant = await prisma.notification.create({
         data: {
-          message: `Se ha modificado el estado de tu postulacion para ${post && post.title}`,
+          message: `Se ha modificado el estado de tu postulacion para ${
+            post && post.title
+          }`,
           type: "statusUpdate",
           applicantId: Number(applicantId),
           postId: Number(postId),
-        }
-      })
+        },
+      });
 
-      if(post && post.companyId) {
+      if (post && post.companyId) {
         const companies = await prisma.company.findMany({
           where: {
             id: post.companyId,
@@ -196,52 +199,56 @@ module.exports = {
 
   addFavoriteApplicant: async (req: Request, res: Response) => {
     try {
-      const { applicantId, postId } = req.body
-      if(!applicantId) return res.send("Debes incluir un campo 'applicantId', es un number")
-      if(!postId) return res.send("Debes incluir un campo 'postId', es un number")
+      const { applicantId, postId } = req.body;
+      if (!applicantId)
+        return res.send("Debes incluir un campo 'applicantId', es un number");
+      if (!postId)
+        return res.send("Debes incluir un campo 'postId', es un number");
 
       const post = await prisma.post.findFirst({
         where: {
-          id: Number(postId)
+          id: Number(postId),
         },
         include: {
-          favorites: true
-        }
-      })
+          favorites: true,
+        },
+      });
 
-      const checkIfApplicantAlreadyFavorite = post && post.favorites.filter(applicant => applicant.id === applicantId)
+      const checkIfApplicantAlreadyFavorite =
+        post &&
+        post.favorites.filter((applicant) => applicant.id === applicantId);
 
-      if(checkIfApplicantAlreadyFavorite){
-        if(!checkIfApplicantAlreadyFavorite.length){
+      if (checkIfApplicantAlreadyFavorite) {
+        if (!checkIfApplicantAlreadyFavorite.length) {
           const addApplicantToFavorites = await prisma.post.update({
             where: {
-              id: postId
+              id: postId,
             },
             data: {
               favorites: {
-                connect: [{ id: applicantId }]
-              }
+                connect: [{ id: applicantId }],
+              },
             },
             include: {
-              favorites: true
-            }
-          })
-          res.json(addApplicantToFavorites)
+              favorites: true,
+            },
+          });
+          res.json(addApplicantToFavorites);
         } else {
           const removeApplicantFromFavorites = await prisma.post.update({
             where: {
-              id: postId
+              id: postId,
             },
             data: {
               favorites: {
-                disconnect: [{ id: applicantId }]
-              }
+                disconnect: [{ id: applicantId }],
+              },
             },
             include: {
-              favorites: true
-            }
-          })
-          res.json(removeApplicantFromFavorites)
+              favorites: true,
+            },
+          });
+          res.json(removeApplicantFromFavorites);
         }
       }
     } catch (error) {
@@ -254,21 +261,21 @@ module.exports = {
     try {
       const { companyId } = req.params;
       const { name = "", url } = req.body;
-      if(!companyId) return res.send("Debes enviar el companyId por params")
-      if(!url) return res.send("Debes incluir un campo 'url'")
+      if (!companyId) return res.send("Debes enviar el companyId por params");
+      if (!url) return res.send("Debes incluir un campo 'url'");
       const newImage = await prisma.image.create({
         data: {
           name: name as string,
           url: url as string,
-          companyId: Number(companyId)
-        }
-      })
+          companyId: Number(companyId),
+        },
+      });
       const images = await prisma.image.findMany({
         where: {
-          companyId: Number(companyId)
-        }
-      })
-      res.json(images)
+          companyId: Number(companyId),
+        },
+      });
+      res.json(images);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -316,7 +323,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  
+
   delete: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;

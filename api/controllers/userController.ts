@@ -3,24 +3,19 @@ import { Request, Response } from "express";
 
 const jwt = require("jsonwebtoken");
 const SHA2 = require("sha2");
-
 const userValidator = require("./userValidation")
 
 module.exports = {
   register: async (req: Request, res: Response) => {
     try {
-      const {
-        email,
-        password,
-        role
-      } = req.body;
+      const { email, password, role } = req.body;
       if (!email) return res.send("Falta campo 'email'");
       if (!password) return res.send("Falta campo 'password'");
       if (!role) return res.send("Falta campo 'role'");
 
-      //CHEQUEA SI EL USER EXISTE ANTES DE CREARLO, 
-      const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email)
-      if(!checkIfEmailAvailable) return res.send("Email en uso")
+      //CHEQUEA SI EL USER EXISTE ANTES DE CREARLO,
+      const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email);
+      if (!checkIfEmailAvailable) return res.send("Email en uso");
 
       let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
       const user = await prisma.user.create({
@@ -31,7 +26,7 @@ module.exports = {
         },
       });
 
-      if(role === "applicant" || role === "admin") {
+      if (role === "applicant" || role === "admin") {
         const applicant = await prisma.applicant.create({
           data: {
             userId: user.id,
@@ -42,11 +37,11 @@ module.exports = {
             country: "",
             image: "",
             showImage: true,
-          }
-        })
+          },
+        });
       }
-      
-      if(role === "company") {
+
+      if (role === "company") {
         const company = await prisma.company.create({
           data: {
             userId: user.id,
@@ -64,23 +59,28 @@ module.exports = {
           },
         });
       }
-      
+<<<<<<< HEAD
+
       const newUser = await prisma.user.findFirst({
+=======
+
+      const newUser = await prisma.user.findMany({
+>>>>>>> dev
         where: {
           email: email,
         },
         include: {
           applicant: {
             include: {
-              notifications: true
-            }
+              notifications: true,
+            },
           },
           company: {
             include: {
-              notifications: true
-            }
-          }
-        }
+              notifications: true,
+            },
+          },
+        },
       });
 
       const userForToken = {
@@ -88,7 +88,7 @@ module.exports = {
         email: user.email,
         role: user.role
       }
-    
+
       jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
         if(err) return res.status(500).send(err)
         res.json({
@@ -114,12 +114,18 @@ module.exports = {
 
   login: async (req: Request, res: Response) => {
     try {
+<<<<<<< HEAD
       let { email, password } = req.body;
       if (!email) return res.send("Debes incluir un campo 'email', es un string");
       if (!password) return res.send("Debes incluir un campo 'password', es un string");
 
       let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
-      
+
+=======
+      const { email } = req.params;
+      if (!email)
+        return res.send("Debes enviar el email del usuario por params");
+>>>>>>> dev
       const user = await prisma.user.findFirst({
         where: {
           email: email,
@@ -136,21 +142,22 @@ module.exports = {
               followed: true,
               postulations: {
                 include: {
-                  post: true
-                }
+                  post: true,
+                },
               },
-              favorites: true
-            }
+              favorites: true,
+            },
           },
           company: {
             include: {
               notifications: true,
               reviews: true,
               posts: true,
-              followers: true
-            }
-          }
-        }
+              followers: true,
+              payment: true,
+            },
+          },
+        },
       });
 
       if(!user) return res.status(403).send("credenciales invalidas")
@@ -160,7 +167,7 @@ module.exports = {
         email: user.email,
         role: user.role
       }
-    
+
       jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
         if(err) return res.status(500).send(err)
         res.json({
@@ -173,7 +180,7 @@ module.exports = {
       res.status(500).send(error);
     }
   },
-  
+
   update: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;
@@ -185,8 +192,14 @@ module.exports = {
       } = req.body;
 
       if (!userId) return res.send("Debes enviar el id del usuario por params");
-      if (!email) return res.send("Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo");
-      if (!password) return res.send("Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla");
+      if (!email)
+        return res.send(
+          "Debes enviar el campo 'email' por body e incluir otro campo 'newEmail' si quieres actualizarlo"
+        );
+      if (!password)
+        return res.send(
+          "Debes enviar el campo 'password' por body e incluir otro campo 'newPassword' si quieres actualizarla"
+        );
       const userUpdated = await prisma.user.updateMany({
         where: {
           id: Number(userId),

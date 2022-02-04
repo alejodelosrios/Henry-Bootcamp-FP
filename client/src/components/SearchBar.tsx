@@ -54,7 +54,7 @@ const IndDivs = styled.div`
   align-items: flex-start;
 `;
 
-const Titles = styled.h3`
+const Titles = styled.h2`
   padding: 13px 0 10px 0;
   font-weight: 100;
   color: #757577;
@@ -89,6 +89,28 @@ const Inputs = styled.input`
   }
 `;
 
+const Select = styled.select`
+  width: 306px;
+  height: 42px;
+  border-radius: 15px;
+  border: 1px solid #ffb7ff;
+  background: #ffb7ff1a;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.04em;
+  text-align: left;
+  padding-left: 1rem;
+  ::placeholder {
+    color: #afb0e9;
+  }
+  :focus {
+    background: #ffb7ff30;
+    outline: none;
+  }
+`;
+
 interface Search {
   postulacion?: string | undefined;
   localizacion?: string | undefined;
@@ -102,17 +124,45 @@ const SearchBar: FC = () => {
     (state: any) => state.postsReducer.filters_and_sort
   );
 
+  const posts = useSelector((state: any) => state.postsReducer.posts);
+
+  let cities: any[] = [];
+  let jobs: any[] = [];
+
+  for (const obj of posts) {
+    if (!cities.includes(obj.location)) {
+      cities.push(obj.location);
+    }
+    if (!jobs.includes(obj.title)) {
+      jobs.push(obj.title);
+    }
+  }
+
+  
+
   const [search, setSearch] = useState<Search>({
     postulacion: "",
     localizacion: "",
   });
 
-  const handleChange = (e: any) => {
-    e.preventDefault();
+  const [lists, setList] = useState({ postulacion: [] });
+
+  const handleChange = ({ target: { name, value } }: any) => {
     setSearch({
       ...search,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+    // console.log(name, value);
+    // console.log(cities);
+
+    if (name === "postulacion") {
+      setList({
+        ...lists,
+        [name]: value
+          ? jobs.filter((e) => e.toLowerCase().search(value.toLowerCase()) >= 0)
+          : [],
+      });
+    }
   };
 
   const handleSubmit = (e: any) => {
@@ -155,6 +205,10 @@ const SearchBar: FC = () => {
       postulacion: "",
       localizacion: "",
     });
+    setList({
+      postulacion: [],
+    });
+
     navigate("/home");
   };
 
@@ -170,20 +224,34 @@ const SearchBar: FC = () => {
               placeholder="Ingrese palabras clave"
               onChange={handleChange}
               value={search?.postulacion}
+              list="postulacion"
+              autoComplete="off"
             />
+            <datalist id="postulacion">
+              {lists.postulacion.slice(0, 4).map((e, i) => (
+                <option key={i} value={e} />
+              ))}
+            </datalist>
           </IndDivs>
           <IndDivs>
             <Titles>Localización</Titles>
-            <Inputs
-              type="text"
+            <Select
               name="localizacion"
-              placeholder="Ingrese ciudad"
-              onChange={handleChange}
               value={search?.localizacion}
-            />
+              onChange={(e) => handleChange(e)}
+            >
+              <option key={0}>Elegir ciudad</option>
+              {cities.map((e, i) => (
+                <option key={i} value={e}>
+                  {e}
+                </option>
+              ))}
+            </Select>
           </IndDivs>
-          <button type="submit"></button>
           <Button onClick={(e) => handleSubmit(e)}>Buscar</Button>
+          <button style={{ display: "none" }} onClick={(e) => handleSubmit(e)}>
+            Buscar
+          </button>
         </MainFlexDiv>
       </form>
     </Container>

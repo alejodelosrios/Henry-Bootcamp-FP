@@ -94,7 +94,7 @@ export const Section= styled.div`
     width:100%;
     margin: 2% 0;
 `
-export const Questions= styled.p`
+export const Questions= styled.h4`
     font-family: ${p=> p.theme.colors.typography.poppins};
     color: ${props=> props.theme.colors.typography.dark};
     margin-top: 1vw;
@@ -106,4 +106,5 @@ export const Text=styled.p`
     margin-top: 1vw;
     margin-bottom: 3vw;
     font-size: 1.3vw;
+    color: #4c4c4c;
 `

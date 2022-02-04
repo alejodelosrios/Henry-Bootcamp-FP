@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { submitTags } from "../../redux/actions/actionCreators";
 import {
@@ -14,18 +14,30 @@ import {
     Titles,
 } from "./Styles";
 
-export const SkillTagsComp = () => {
-    const userId = useSelector((state: any) => state.userReducer.applicant.id);
+type Props = {
+  userRole: string;
+};
+
+export const SkillTagsComp: FC<Props> = ({userRole}) => {
+    const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+    let userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
     const [skillsArray, setSkillsArray] = useState<any[]>([]);
     const [applicantSkills, setApplicantSkills] = useState<any[]>([])
+    if (userRole === "company") {
+        userId = applicantDetail.id
+    }
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
+        if (userRole === "company") {
+                setApplicantSkills(applicantDetail.skillTags)
+        } else {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
                 setApplicantSkills(res.data.skillTags)
-            })
-    }, [])
+                })
+        }
+    }, [applicantDetail.id])
 
     useEffect(() => {
         axios.get(`${process.env.REACT_APP_API}/tag/index`)
@@ -34,7 +46,7 @@ export const SkillTagsComp = () => {
             })
     }, [])
 
-    const upperCase = (string: string) => {        
+    const upperCase = (string: string) => {
         return string.charAt(0).toUpperCase() + string.slice(1)
     }
 
@@ -54,8 +66,8 @@ export const SkillTagsComp = () => {
             }
         }
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-            applicantId: userId,
-            tagIds: [e.target.value]
+            applicantId: Number(userId),
+            tagId: Number(e.target.value)
         })
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
@@ -67,8 +79,8 @@ export const SkillTagsComp = () => {
 
     const deleteSkill = (e: any) => {
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-            applicantId: userId,
-            tagIds: [e]
+            applicantId: Number(userId),
+            tagId: Number(e)
         })
             .catch((err) => {
             console.log(err)
@@ -85,7 +97,7 @@ export const SkillTagsComp = () => {
         switchFlag();
     };
 
-    const handleOnChange = (e: any) => { 
+    const handleOnChange = (e: any) => {
         setNewTag(e.target.value)
     };
 
@@ -97,13 +109,13 @@ export const SkillTagsComp = () => {
                 return alert(`Ya seleccionaste ${applicantSkills[i].name}`), setNewTag("");
             }
         }
-        
+
         for (let i = 0; i < skillsArray.length; i++) {
             if (skillsArray[i].name.toLowerCase() === newTag.toLowerCase()) {
                 console.log(skillsArray[i].name)
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-                    applicantId: userId,
-                    tagIds: [skillsArray[i].id]
+                    applicantId: Number(userId),
+                    tagId: Number(skillsArray[i].id)
                 })
                     .catch((err) => {
                     console.log(err)
@@ -115,18 +127,18 @@ export const SkillTagsComp = () => {
                     })
                 }, 400);
             }
-            
+
         }
         axios.post(`${process.env.REACT_APP_API}/tag/create`, {
             name: newTag
         })
             .then((res) => {
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-                    applicantId: userId,
-                    tagIds: [res.data.id]
+                    applicantId: Number(userId),
+                    tagId: Number(res.data.id)
                 })
             })
-        
+
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
             .then((res) => {

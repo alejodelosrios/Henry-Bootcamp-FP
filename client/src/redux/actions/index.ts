@@ -162,6 +162,24 @@ interface setFavApplicant {
   type: ActionType.SET_FAV_APPLICANT;
   payload: object[];
 }
+interface editCompany {
+  type: ActionType.EDIT_COMPANY;
+  payload: object[];
+}
+
+interface sendMercadoPago {
+  type: ActionType.POST_MELI;
+  payload: object;
+}
+interface setApplicantDetail {
+  type: ActionType.SET_APPLICANT_DETAIL;
+  payload: object;
+}
+
+interface updateInfo {
+  type: ActionType.UPDATE_PREMIUM;
+  payload: object;
+}
 
 export type Action =
   | getPosts
@@ -194,4 +212,8 @@ export type Action =
   | getCompany
   | setFavorites
   | submitTags
-  | setFavApplicant;
+  | setFavApplicant
+  | sendMercadoPago
+  | updateInfo
+  | editCompany
+  | setApplicantDetail;

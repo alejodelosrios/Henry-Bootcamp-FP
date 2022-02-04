@@ -30,25 +30,25 @@ app.use("/auth", authRoute);
 
 app.use("/api/v2", mainRouter);
 
-const PORT = process.env.PORT || 3001;
+app.use(cors({origin: 'http://localhost:3000'}));
+
+const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(
     "SERVER RUNNING ON PORT 3001"
   );
-})
+}).on("error", function (err) {
 
-  .on("error", function(err) {
-    
-    process.once("SIGUSR2", function() {
-      process.kill(process.pid, "SIGUSR2")
-    })
-
-    process.on("SIGINT", function() {
-      process.kill(process.pid, "SIGINT")
-    })
-
-    process.on("uncaughtException", function(err) {
-      console.log("UNCAUGHT EXCEPTION")
-    })
-
+  process.once("SIGUSR2", function () {
+    process.kill(process.pid, "SIGUSR2")
   })
+
+  process.on("SIGINT", function () {
+    process.kill(process.pid, "SIGINT")
+  })
+
+  process.on("uncaughtException", function (err) {
+    console.log("UNCAUGHT EXCEPTION")
+  })
+
+})

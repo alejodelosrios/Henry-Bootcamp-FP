@@ -31,3 +31,29 @@ export const setFavApplicant =
       console.log(error);
     }
   }
+
+/* ---------------- */
+export const sendMercadoPago =(payload:any)=>{
+  return async function (){
+    try {
+      var response = await axios.post("http://localhost:3002/api/v2/payment/checkout", payload)
+      let resp = response.data.init_point;
+      window.open(resp);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const updateInfo =(payload:any)=>{
+  return async function (){
+    try {
+      var response = await axios.post("http://localhost:3002/api/v2/payment/checkout", payload)
+      console.log('action updateInfo: ', response)
+      return response;
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}

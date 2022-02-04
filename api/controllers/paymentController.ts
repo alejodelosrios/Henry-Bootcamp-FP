@@ -7,7 +7,7 @@ mercadopago.configure({
 });
 
 module.exports = {
-  payment: async (req: Request, res: Response) => {
+  checkout: async (req: Request, res: Response) => {
     try {
       const preference = {
         items: [
@@ -18,7 +18,7 @@ module.exports = {
           },
         ],
         back_urls: {
-          success: `${process.env.CLIENT_URL}/payment/success`,
+          success: `${process.env.CLIENT_URL}/company/premium`,
           failure: `${process.env.CLIENT_URL}/payment/failure`,
           pending: `${process.env.CLIENT_URL}/payment/pending`,
         },
@@ -28,6 +28,30 @@ module.exports = {
       res.json(response.body);
     } catch (error) {
       res.status(500).send(error);
+    }
+  },
+  payment: async (req: Request, res: Response) => {
+    try {
+      const { mercadopagoCode, date, companyId } = req.body;
+      const createdPayment = await prisma.payment.create({
+        data: {
+          mercadopagoCode,
+          date,
+          companyId: Number(companyId),
+        },
+      });
+
+      const updatedCompany = await prisma.company.update({
+        where: {
+          id: Number(companyId),
+        },
+        data: {
+          premium: true,
+        },
+      });
+      res.json(updatedCompany);
+    } catch (error) {
+      res.status(400).send(error);
     }
   },
 };

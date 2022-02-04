@@ -16,9 +16,11 @@ import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./pages/MyPostulations/UserPostulations";
 import QandA from "./pages/Q&A/QandA";
 import CompanyProfile from "./components/CompanyProfile/CompanyProfile";
-import EditCompanyProfile from './components/EditCompanyProfile/EditCompanyProfile';
+import EditCompanyProfile from "./components/EditCompanyProfile/EditCompanyProfile";
 import CompanyJobPosts from "./components/CompanyJobPosts";
 import CompanyPostDetail from "./components/CompanyPostDetail";
+import ButtonMELI from "./components/MercadoPago/MercadoPago";
+import PremiumPage from "./pages/Premium Access/PremiumPage";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -62,6 +64,7 @@ function App() {
     };
     getUser();
     dispatch(getPosts());
+    dispatch(getPosts());
   }, []);
   return (
     <ThemeProvider theme={light}>
@@ -98,6 +101,11 @@ function App() {
         <Route path="/company/posts" element={<CompanyJobPosts />} />
         <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
         <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
+        <Route path='/company/premium' element={<PremiumPage/>} />
+        <Route
+          path="/company/posts/:postId/detail/applicant/:applicantId"
+          element={<Profile user={userLogged} />}
+        />
       </Routes>
     </ThemeProvider>
   );

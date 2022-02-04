@@ -30,7 +30,6 @@ export const set_current_items_by_page = (data: number) => {
 };
 
 export const setCurrentPosts = (data: object[]) => {
-  console.log(data);
 
   return { type: ActionType.SET_CURRENT_POSTS, payload: data };
 };
@@ -367,6 +366,44 @@ export const submitTags =
       return dispatch({
         type: ActionType.SUBMIT_TAGS,
         payload: skillTags,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const editCompany =
+  (companyData: object, companyId: number) =>
+  async (dispatch: Dispatch<Action>) => {
+    //console.log("Data enviada: ", companyData);
+    try {
+      const { data } = await axios.put(
+        `/company/update/${companyId}`,
+        companyData
+      );
+      //console.log("Data recibida: ", data);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.EDIT_COMPANY,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+export const setApplicantDetail =
+  (applicantId: number) =>
+  async (dispatch: Dispatch<Action>) => {
+    //console.log("Data enviada: ", applicantId);
+    try {
+      const { data } = await axios.get(
+        `/applicant//${applicantId}`
+      );
+      //console.log("Data recibida: ", data);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.SET_APPLICANT_DETAIL,
+        payload: data,
       });
     } catch (error) {
       console.log(error);
