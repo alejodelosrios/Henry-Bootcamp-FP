@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { sendMercadoPago } from "../../redux/actions/companyActionCreators";
+import { sendMercadoPago, updateInfo } from "../../redux/actions/companyActionCreators";
 import { useQueryParams } from "./useQueryParams";
+import { useEffect, useState } from "react";
+import { getCompany } from "../../redux/actions/actionCreators";
 
 const Button = styled.button`
   background: #c879ff;
@@ -11,14 +13,29 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 20px;
   color: white;
-  font-family: Open sans/Regular;`
+  font-family: Open sans/Regular;
+  margin-top: 2vw;
+  z-index: 200;`
 
 
-const ButtonMELI = () => {
+const ButtonMELI = ( compId:any ) => {
   const dispatch= useDispatch();
-  const query= useQueryParams();
+  const query:any= useQueryParams();
 
   console.log(query);
+
+  if(query.status && query.status === 'approved'){
+    const premium = {
+      mercadopagoCode: query.payment_id,
+      date: new Date(),
+      companyId: compId,
+    }
+    console.log(premium);
+    dispatch(updateInfo(premium))
+    /* setIsPremium(true) */
+    }
+
+  
 
   const send = {
     title: 'Premium Access',
@@ -33,7 +50,7 @@ const ButtonMELI = () => {
 
 return (
   <>
-    <Button onClick={handleSubmit} >Pagar</Button>
+    <Button onClick={(e)=>handleSubmit(e)} >Suscribirse</Button>
   </>
 )
 }
