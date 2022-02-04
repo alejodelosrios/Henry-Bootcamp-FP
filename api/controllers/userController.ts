@@ -59,13 +59,8 @@ module.exports = {
           },
         });
       }
-<<<<<<< HEAD
 
       const newUser = await prisma.user.findFirst({
-=======
-
-      const newUser = await prisma.user.findMany({
->>>>>>> dev
         where: {
           email: email,
         },
@@ -114,18 +109,12 @@ module.exports = {
 
   login: async (req: Request, res: Response) => {
     try {
-<<<<<<< HEAD
       let { email, password } = req.body;
       if (!email) return res.send("Debes incluir un campo 'email', es un string");
       if (!password) return res.send("Debes incluir un campo 'password', es un string");
 
       let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
 
-=======
-      const { email } = req.params;
-      if (!email)
-        return res.send("Debes enviar el email del usuario por params");
->>>>>>> dev
       const user = await prisma.user.findFirst({
         where: {
           email: email,
