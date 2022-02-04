@@ -167,6 +167,11 @@ interface sendMercadoPago {
   payload: object;
 }
 
+interface updateInfo {
+  type: ActionType.UPDATE_PREMIUM;
+  payload: object;
+}
+
 export type Action =
   | getPosts
   | set_current_items_by_page
@@ -199,4 +204,5 @@ export type Action =
   | setFavorites
   | submitTags
   | setFavApplicant
-  | sendMercadoPago;
+  | sendMercadoPago
+  | updateInfo;

@@ -37,6 +37,11 @@ const companyReducer = (state = initialState, action: Action) => {
           ...state,
         };
       }
+    case ActionType.UPDATE_PREMIUM: {
+        return {
+          ...state,
+        };
+      }
     default:
       return state;
   }
