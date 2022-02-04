@@ -144,7 +144,23 @@ module.exports = {
           favorites: true,
         },
       });
-      res.json(userProfile);
+      let formattedApplicantForFront
+      if(userProfile) {
+        const getEmail = await prisma.user.findFirst({
+          where: {
+            id: userProfile.userId
+          },
+          select: {
+            email: true
+          }
+        })
+        formattedApplicantForFront = {
+          ...getEmail,
+          ...userProfile
+        }
+      }
+      
+      res.json(formattedApplicantForFront);
     } catch (error) {
       res.status(400).send(error);
     }
