@@ -18,7 +18,7 @@ module.exports = {
           },
         ],
         back_urls: {
-          success: `${process.env.CLIENT_URL}/button`,
+          success: `${process.env.CLIENT_URL}/company/premium`,
           failure: `${process.env.CLIENT_URL}/payment/failure`,
           pending: `${process.env.CLIENT_URL}/payment/pending`,
         },
