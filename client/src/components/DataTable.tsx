@@ -61,7 +61,7 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
             {data.map((row: any)=> <tr>{
                 columns.map((column: any)=>(
                     <Td 
-                        key={row.applicant.id}
+                        key={row.applicantId}
                         column={column}
                         row={row}
                         postId={postId}
