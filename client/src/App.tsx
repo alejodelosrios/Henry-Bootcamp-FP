@@ -1,16 +1,16 @@
-import { Routes, Route, Navigate } from "react-router";
+import {Routes, Route, Navigate} from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-import { Profile } from "./pages/Profile";
+import {Profile} from "./pages/Profile";
 import Home from "./pages/Home";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import GlobalStyles from "./styles/globalStyles";
-import { ThemeProvider } from "styled-components";
+import {ThemeProvider} from "styled-components";
 import light from "./styles/themes/light";
 import CreatePostPage from "./pages/CreatePostPage";
-import { useDispatch, useSelector } from "react-redux";
-import { getPosts, setUser } from "./redux/actions/actionCreators";
+import {useDispatch, useSelector} from "react-redux";
+import {getPosts, getUser, setUser} from "./redux/actions/actionCreators";
 import LoginPage from "./pages/LoginPage";
-import { PostDetailPage } from "./pages/PostDetail";
+import {PostDetailPage} from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./pages/MyPostulations/UserPostulations";
@@ -21,6 +21,7 @@ import CompanyJobPosts from "./components/CompanyJobPosts";
 import CompanyPostDetail from "./components/CompanyPostDetail";
 import ButtonMELI from "./components/MercadoPago/MercadoPago";
 import PremiumPage from "./pages/Premium Access/PremiumPage";
+import Storage from "./services/storage";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -28,8 +29,13 @@ function App() {
   const role = useSelector((state: any) => state.userReducer.role);
   const email = useSelector((state: any) => state.userReducer.email);
 
+  const token = Storage.get("token");
   useEffect(() => {
-    const getUser = () => {
+    if (token) {
+      dispatch(getUser());
+    }
+
+    const getUserGoogle = () => {
       fetch(`${process.env.REACT_APP_GOOGLE}/auth/login/success`, {
         method: "GET",
         credentials: "include",
@@ -62,7 +68,7 @@ function App() {
           console.log(err);
         });
     };
-    getUser();
+    getUserGoogle();
     dispatch(getPosts());
     dispatch(getPosts());
   }, []);
@@ -101,7 +107,7 @@ function App() {
         <Route path="/company/posts" element={<CompanyJobPosts />} />
         <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
         <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
-        <Route path='/company/premium' element={<PremiumPage/>} />
+        <Route path='/company/premium' element={<PremiumPage />} />
         <Route
           path="/company/posts/:postId/detail/applicant/:applicantId"
           element={<Profile user={userLogged} />}

@@ -12,7 +12,7 @@ const notificationRouter = require("./notification");
 const newsRouter = require("./news");
 
 //VALIDADOR DE QUE EXISTE TOKEN
-const validateToken = require("./middlewares/validateToken")
+const validateToken = require("./middlewares/validateToken");
 
 // const notificationTypeRouter = require("./notificationTypes");
 
@@ -23,7 +23,7 @@ mainRouter.use("/user", userRouter);
 mainRouter.use("/company", validateToken(), companyRouter);
 mainRouter.use("/applicant", validateToken(), applicantRouter);
 
-mainRouter.use("/posts", validateToken(), postsRouter);
+mainRouter.use("/posts", postsRouter);
 mainRouter.use("/tag", validateToken(), tagsRouter);
 mainRouter.use("/category", validateToken(), categoryRouter);
 

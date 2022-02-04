@@ -1,14 +1,15 @@
 import axios from "axios";
-import { Dispatch } from "redux";
-import { ActionType } from "./actionTypes";
-import { Action } from "./index";
+import {Dispatch} from "redux";
+import Storage from "../../services/storage";
+import {ActionType} from "./actionTypes";
+import {Action} from "./index";
 
 export const getPosts = () => async (dispatch: Dispatch<Action>) => {
   try {
-    let { data } = await axios.get("/posts/index");
+    let {data} = await axios.get("/posts/index");
     //console.log(data);
     //console.log("POSTS", "Se recibe data de la API");
-    return dispatch({ type: ActionType.GET_POSTS, payload: data });
+    return dispatch({type: ActionType.GET_POSTS, payload: data});
   } catch (error) {
     console.log(error);
   }
@@ -16,29 +17,29 @@ export const getPosts = () => async (dispatch: Dispatch<Action>) => {
 
 export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
   try {
-    let { data } = await axios.get(`/posts/${id}`);
+    let {data} = await axios.get(`/posts/${id}`);
     //console.log(data);
     //console.log("POSTS BY ID", "Se recibe data de la API");
-    return dispatch({ type: ActionType.GET_POSTS_BY_ID, payload: data });
+    return dispatch({type: ActionType.GET_POSTS_BY_ID, payload: data});
   } catch (error) {
     console.log(error);
   }
 };
 
 export const set_current_items_by_page = (data: number) => {
-  return { type: ActionType.SET_CURRENT_ITEMS_BY_PAGE, payload: data };
+  return {type: ActionType.SET_CURRENT_ITEMS_BY_PAGE, payload: data};
 };
 
 export const setCurrentPosts = (data: object[]) => {
 
-  return { type: ActionType.SET_CURRENT_POSTS, payload: data };
+  return {type: ActionType.SET_CURRENT_POSTS, payload: data};
 };
 
 export const filterAndSort =
   (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", filters_and_sort);
     try {
-      let { data } = await axios({
+      let {data} = await axios({
         method: "POST",
         url: `/posts/filter`,
         data: filters_and_sort,
@@ -49,7 +50,7 @@ export const filterAndSort =
         type: ActionType.GET_CURRENT_POSTS,
         payload: {
           data: data,
-          filters_and_sort: { ...filters_and_sort },
+          filters_and_sort: {...filters_and_sort},
         },
       });
     } catch (error) {
@@ -63,7 +64,7 @@ export const createPost =
       console.log("Data enviada: ", dataPost);
       console.log(token);
 
-      let { data } = await axios.post(
+      let {data} = await axios.post(
         `/posts/create/${dataPost.companyId}`,
         dataPost,
         {
@@ -93,19 +94,21 @@ export const createPost =
     }
   };
 export const setPostCreateModal = (data: any) => {
-  return { type: ActionType.SET_POST_CREATE_MODAL, payload: data };
+  return {type: ActionType.SET_POST_CREATE_MODAL, payload: data};
 };
 export const setUserCreateModal = (data: any) => {
-  return { type: ActionType.SET_USER_CREATE_MODAL, payload: data };
+  return {type: ActionType.SET_USER_CREATE_MODAL, payload: data};
 };
 
 export const createUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
     console.log("Data enviada: ", userData);
     try {
-      let { data } = await axios.post(`/user/register`, userData);
-      console.log(data);
+      let {data} = await axios.post(`/user/register`, userData);
+      console.log("Respuesta:", data);
 
+      const {token} = data;
+      Storage.set('token', token);
       // let resCreate = await axios.post(`/user/create`, userData);
       // console.log(resCreate.data);
 
@@ -136,10 +139,26 @@ export const createUser =
     }
   };
 export const getUser =
-  (userData: any) => async (dispatch: Dispatch<Action>) => {
+  (userData?: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", userData);
+    const token = Storage.get("token");
     try {
-      let { data } = await axios.post(`/user/login`, userData);
+      let res;
+      if (token) {
+        res = await axios.post(`/user/login`, userData,
+          {
+            headers: {
+              token: token,
+            },
+          }
+        );
+      }
+      else {
+        res = await axios.post(`/user/login`, userData);
+        const {token} = res.data;
+        Storage.set('token', token);
+      }
+      const data = res.data;
       //console.log("Información actualizada");
       //console.log("Data recibida: ", data);
       return dispatch({
@@ -329,7 +348,7 @@ export const setUserFollows =
 export const getNotifications =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
     try {
-      let { data }: any = await axios.get(`/${role}/${applicantId}`);
+      let {data}: any = await axios.get(`/${role}/${applicantId}`);
       //console.log("Notifications actualizadas");
       return dispatch({
         type: ActionType.GET_NOTIFICATIONS,
@@ -347,7 +366,7 @@ export const getNotifications =
 export const getCompany =
   (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
     try {
-      let { data }: any = await axios.get(`/company/${companyId}`);
+      let {data}: any = await axios.get(`/company/${companyId}`);
       return dispatch({
         type: ActionType.GET_COMPANY,
         payload: data,
@@ -374,38 +393,38 @@ export const submitTags =
 
 export const editCompany =
   (companyData: object, companyId: number) =>
-  async (dispatch: Dispatch<Action>) => {
-    //console.log("Data enviada: ", companyData);
-    try {
-      const { data } = await axios.put(
-        `/company/update/${companyId}`,
-        companyData
-      );
-      //console.log("Data recibida: ", data);
-      console.log("Información actualizada");
-      return dispatch({
-        type: ActionType.EDIT_COMPANY,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    async (dispatch: Dispatch<Action>) => {
+      //console.log("Data enviada: ", companyData);
+      try {
+        const {data} = await axios.put(
+          `/company/update/${companyId}`,
+          companyData
+        );
+        //console.log("Data recibida: ", data);
+        console.log("Información actualizada");
+        return dispatch({
+          type: ActionType.EDIT_COMPANY,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
 export const setApplicantDetail =
   (applicantId: number) =>
-  async (dispatch: Dispatch<Action>) => {
-    //console.log("Data enviada: ", applicantId);
-    try {
-      const { data } = await axios.get(
-        `/applicant//${applicantId}`
-      );
-      //console.log("Data recibida: ", data);
-      console.log("Información actualizada");
-      return dispatch({
-        type: ActionType.SET_APPLICANT_DETAIL,
-        payload: data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+    async (dispatch: Dispatch<Action>) => {
+      //console.log("Data enviada: ", applicantId);
+      try {
+        const {data} = await axios.get(
+          `/applicant//${applicantId}`
+        );
+        //console.log("Data recibida: ", data);
+        console.log("Información actualizada");
+        return dispatch({
+          type: ActionType.SET_APPLICANT_DETAIL,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
