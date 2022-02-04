@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editCompany } from "../../redux/actions/actionCreators";
 import {
     CardContainer,
     TextArea,
@@ -14,15 +15,33 @@ import {
     EditButton,
 } from "./Styles";
 
-export const Values = () => {
-    const company = useSelector(
-        (state: any) => state.companyReducer.companyDetail
-    );
+type Props = {
+    companyInfo: {
+        id: number;
+        userId: number;
+        name: string;
+        legalName: string;
+        stin: string;
+        companyLogo: string;
+        images: object[];
+        values: string[];
+        aboutValues: string;
+        about: string;
+        mission: string;
+        vision: string;
+        location: string;
+        accountManagers: object[];
+        notifications: object[];
+        reviews: object[];
+        posts: object[];
+        followers: object[];
+    };
+    setCompanyInfo: React.Dispatch<React.SetStateAction<object>>;
+};
+export const Values: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
+    const dispatch = useDispatch();
 
-    const [valuesSelected, setValuesSelected] = useState(
-        useSelector((state: any) => state.companyReducer.companyDetail.values)
-    );
-
+    const [valuesSelected, setValuesSelected] = useState(companyInfo.values);
     const [newValue, setNewValue] = useState("");
     const [isEdit, setIsEdit] = useState(false);
 
@@ -37,30 +56,28 @@ export const Values = () => {
     };
 
     const addValueBtn = (e: any) => {
+        let obj = {
+            ...companyInfo,
+            values: valuesSelected,
+        };
         e.preventDefault();
         valuesSelected.push(newValue);
+        setCompanyInfo(obj);
         setNewValue("");
     };
-
-    const [companyInfo, setCompanyInfo] = useState(company);
-
-    if (company.id !== null && companyInfo.id === null) {
-        setCompanyInfo(company);
-    }
 
     function handleChange(e: any) {
         let obj = {
             ...companyInfo,
+            values: valuesSelected,
             [e.target.name]: e.target.value,
         };
         setCompanyInfo(obj);
     }
 
     function saveNewData() {
-        console.log("Guardando values & mission");
         setIsEdit(false);
-        // dispatch(editCompany(companyInfo))
-        // dispatch(editCompanyValues(valuesSelected))
+        dispatch(editCompany(companyInfo, companyInfo.id));
     }
 
     if (!isEdit) {

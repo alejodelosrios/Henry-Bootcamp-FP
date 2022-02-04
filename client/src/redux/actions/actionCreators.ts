@@ -367,13 +367,19 @@ export const submitTags =
   };
 
 export const editCompany =
-  (userExp: any, userId: any) => async (dispatch: Dispatch<Action>) => {
+  (companyData: object, companyId: number) =>
+  async (dispatch: Dispatch<Action>) => {
+    //console.log("Data enviada: ", companyData);
     try {
-      await axios.post(`/experience/create/${userId}`, userExp);
+      const { data } = await axios.put(
+        `/company/update/${companyId}`,
+        companyData
+      );
+      //console.log("Data recibida: ", data);
       console.log("Información actualizada");
       return dispatch({
-        type: ActionType.ADD_USER_EXP,
-        payload: userExp,
+        type: ActionType.EDIT_COMPANY,
+        payload: data,
       });
     } catch (error) {
       console.log(error);
