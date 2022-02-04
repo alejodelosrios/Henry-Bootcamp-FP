@@ -44,3 +44,16 @@ export const sendMercadoPago =(payload:any)=>{
     }
   }
 }
+
+export const updateInfo =(payload:any)=>{
+  return async function (){
+    try {
+      var response = await axios.post("http://localhost:3002/api/v2/payment/checkout", payload)
+      console.log('action updateInfo: ', response)
+      return response;
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
