@@ -1,17 +1,42 @@
-import {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import Carousel from '../Carousel/Carousel';
-import {CardTitle, TextArea, CardContainer, CardHeader, EditButton} from './Styles';
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editCompany } from "../../redux/actions/actionCreators";
+import Carousel from "../Carousel/Carousel";
+import {
+    CardTitle,
+    TextArea,
+    CardContainer,
+    CardHeader,
+    EditButton,
+} from "./Styles";
 
-export const AboutCompany = () => {
+type Props = {
+    companyInfo: {
+        id: number;
+        userId: number;
+        name: string;
+        legalName: string;
+        stin: string;
+        companyLogo: string;
+        images: object[];
+        values: string[];
+        aboutValues: string;
+        about: string;
+        mission: string;
+        vision: string;
+        location: string;
+        accountManagers: object[];
+        notifications: object[];
+        reviews: object[];
+        posts: object[];
+        followers: object[];
+    };
+    setCompanyInfo: React.Dispatch<React.SetStateAction<object>>;
+};
+
+export const AboutCompany: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
     const dispatch = useDispatch();
-    const company = useSelector((state: any) => state.companyReducer.companyDetail);
-    const [companyInfo, setCompanyInfo] = useState(company);
     const [isEdit, setIsEdit] = useState(false);
-
-    if (company.id !== null && companyInfo.id === null) {
-        setCompanyInfo(company)
-    }
 
     function handleChange(e: any) {
         let obj = {
@@ -22,19 +47,20 @@ export const AboutCompany = () => {
     }
 
     function saveNewData() {
-        console.log("Guardando el about")
         setIsEdit(false);
-         //dispatch(editCompany(companyInfo))
+        dispatch(editCompany(companyInfo, companyInfo.id));
     }
     if (!isEdit) {
         return (
             <CardContainer>
-                        <CardHeader>
-                            <CardTitle>Quiénes somos?</CardTitle>
-                            <EditButton onClick={() => setIsEdit(true)}>Editar</EditButton>
-                        </CardHeader>
+                <CardHeader>
+                    <CardTitle>Quiénes somos?</CardTitle>
+                    <EditButton onClick={() => setIsEdit(true)}>
+                        Editar
+                    </EditButton>
+                </CardHeader>
                 <p>{companyInfo.about}</p>
-                <div className='carousel'>
+                <div className="carousel">
                     <Carousel />
                 </div>
             </CardContainer>
@@ -42,18 +68,20 @@ export const AboutCompany = () => {
     } else {
         return (
             <CardContainer>
-                        <CardHeader>
-                            <CardTitle>Quiénes somos?</CardTitle>
-                            <EditButton onClick={() => saveNewData()}>Guardar</EditButton>
-                        </CardHeader>
+                <CardHeader>
+                    <CardTitle>Quiénes somos?</CardTitle>
+                    <EditButton onClick={() => saveNewData()}>
+                        Guardar
+                    </EditButton>
+                </CardHeader>
                 <TextArea
                     rows={8}
-                    placeholder='Cuentanos sobre tu compañía'
+                    placeholder="Cuentanos sobre tu compañía"
                     value={companyInfo.about}
                     name="about"
                     onChange={(e) => handleChange(e)}
                 ></TextArea>
-                <div className='carousel'>
+                <div className="carousel">
                     <Carousel />
                 </div>
             </CardContainer>

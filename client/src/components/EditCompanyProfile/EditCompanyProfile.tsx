@@ -14,31 +14,27 @@ import {
 } from "./Styles";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getCompany } from "../../redux/actions/actionCreators";
+import { editCompany, getCompany } from "../../redux/actions/actionCreators";
 import Dashboard from "../../pages/Dashboard/Dashboard";
 import { AboutCompany } from "./AboutCompany";
 import { Mission } from "./Mission";
-import { Values } from "./Values";
 import { Vission } from "./Vission";
+import { Values } from "./Values";
 
 export const CompanyProfile = () => {
     const dispatch = useDispatch();
     const { companyId } = useParams();
+    const company = useSelector(
+        (state: any) => state.companyReducer.companyDetail
+    );
     useEffect(() => {
         dispatch(getCompany(companyId));
     }, [dispatch, companyId]);
 
-    const company = useSelector(
-        (state: any) => state.companyReducer.companyDetail
-    );
     const [companyInfo, setCompanyInfo] = useState(company);
     const [isEdit, setIsEdit] = useState(false);
 
-    if (company.id !== null && companyInfo.id === null) {
-        setCompanyInfo(company);
-    }
-
-    if (company.id === null) {
+    if (!company.id) {
         return (
             <div>
                 <h1>Loading...</h1>
@@ -54,9 +50,8 @@ export const CompanyProfile = () => {
         setCompanyInfo(obj);
     }
     function saveNewData() {
-        console.log("Guardando el contact info");
         setIsEdit(false);
-        // dispatch(editCompany(companyInfo))
+        dispatch(editCompany(companyInfo, companyInfo.id));
     }
     if (!isEdit) {
         return (
@@ -83,10 +78,22 @@ export const CompanyProfile = () => {
                             </CompanyInfo>
                         </CardContent>
                     </CardContainer>
-                    <AboutCompany />
-                    <Mission />
-                    <Vission />
-                    <Values />
+                    <AboutCompany
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Mission
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Vission
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Values
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
                 </MainDiv>
             </Dashboard>
         );
@@ -125,10 +132,22 @@ export const CompanyProfile = () => {
                             </CompanyInfo>
                         </CardContent>
                     </CardContainer>
-                    <AboutCompany />
-                    <Mission />
-                    <Vission />
-                    <Values />
+                    <AboutCompany
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Mission
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Vission
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
+                    <Values
+                        companyInfo={companyInfo}
+                        setCompanyInfo={setCompanyInfo}
+                    />
                 </MainDiv>
             </Dashboard>
         );

@@ -32,11 +32,17 @@ const companyReducer = (state = initialState, action: Action) => {
         ...state,
         companyDetail: { ...state.companyDetail, ...action.payload },
       };
+    case ActionType.EDIT_COMPANY:
+      //console.log("Recibido en reducer: ", action.payload);
+      return {
+        ...state,
+        companyDetail: action.payload,
+      };
     case ActionType.POST_MELI: {
-        return {
-          ...state,
-        };
-      }
+      return {
+        ...state,
+      };
+    }
     default:
       return state;
   }
