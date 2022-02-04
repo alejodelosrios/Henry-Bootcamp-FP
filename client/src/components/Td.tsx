@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,24 +19,19 @@ const FavsApp = styled.div`
 `
 
 const Td: FC <Props> = ({column, row, postId}) => {
-    // const dispatch = useDispatch();
-
-    // const [isFav, setIsFav] = useState(checkExistance(favorites, row.applicantId));
-
-    // const handleFav = ()=>{
-    //     dispatch(setFavApplicant(row.applicantId, postId));
-    //     setIsFav(!isFav);
-    // }
 
     const dispatch = useDispatch();
+
+    const [isFav, setIsFav] = useState(false);
 
     const {favorites} = useSelector(
         (state:any)=> state.postsReducer.postById
     )
 
-    // checkExistance(favorites, applicantId)
-    const [isFav, setIsFav] = useState(checkExistance(favorites, row.applicantId));
-    
+    useEffect(() => {
+        console.log('me rerenderizé');
+        setIsFav(checkExistance(favorites, row.applicantId))
+    }, [favorites]);    
 
     const handleFav = ()=>{
         dispatch(setFavApplicant(row.applicantId, postId));
