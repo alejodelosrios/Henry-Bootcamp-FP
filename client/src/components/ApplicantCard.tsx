@@ -91,11 +91,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
         (state:any)=> state.postsReducer.postById
     )    
 
-    const showSkills = skillTags.length > 5
-        ? skillTags.splice(0,5)
-        : skillTags.length
-            ? skillTags
-            : ['Html', 'Css', 'Javascript', 'React', 'Redux'];
+    console.log(skillTags);
 
 
     // checkExistance(favorites, applicantId)
@@ -116,8 +112,8 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
             </Link>
             <h2>{country}</h2>
         </Info>
-        <Skills>{showSkills.map(s => (
-                <Sk key={s}>{s}</Sk>
+        <Skills>{skillTags.map((s: any) => (
+                <Sk key={s.id}>{s.name}</Sk>
         ))}</Skills>
         <FavsApp onClick={handleFav}>{isFav ? '★' : '☆' }</FavsApp>
     </Card>
