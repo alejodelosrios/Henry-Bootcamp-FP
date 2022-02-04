@@ -32,7 +32,6 @@ export const set_current_items_by_page = (data: number) => {
 };
 
 export const setCurrentPosts = (data: object[]) => {
-  console.log(data);
 
   return { type: ActionType.SET_CURRENT_POSTS, payload: data };
 };

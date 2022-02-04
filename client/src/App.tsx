@@ -64,6 +64,7 @@ function App() {
     };
     getUser();
     dispatch(getPosts());
+    dispatch(getPosts());
   }, []);
   return (
     <ThemeProvider theme={light}>
