@@ -43,7 +43,8 @@ interface Props {
 
 const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
     const [q, setQ] = useState('');
-    
+    const company = useSelector((state: any) => state.userReducer.company);
+
     const search = (rows :any)=>{
         const columns = rows[0] && Object.keys(rows[0])
 
@@ -56,25 +57,28 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
     return (
         <>
             <Container>
-                <Filters>
-                    <input 
-                        type="text" 
-                        placeholder="Search"
-                        value={q} 
-                        onChange={e => setQ(e.target.value)}
-                    />
-                </Filters>
-                <DataTable data={applicants} postId={postId} favorites={favorites}/>
 
-
-                {/* {applicants.map((ap: any) => (
-                    <ApplicantCard 
-                        key={ap.id}
-                        applicant = {ap.applicant}
-                        applicantId={ap.applicantId}
-                        postId={postId}
-                    /> 
-                ))} */}
+                {true
+                    ? <><Filters>
+                            <input 
+                                type="text" 
+                                placeholder="Search"
+                                value={q} 
+                                onChange={e => setQ(e.target.value)}
+                            />
+                        </Filters>
+                        <DataTable data={applicants} postId={postId} favorites={favorites}/>
+                    </>
+                    : applicants.map((ap: any) => (
+                        <ApplicantCard 
+                            key={ap.id}
+                            applicant = {ap.applicant}
+                            applicantId={ap.applicantId}
+                            postId={postId}
+                            companyId={company.id}
+                        /> 
+                    ))
+                }
             </Container>
         </>
     );

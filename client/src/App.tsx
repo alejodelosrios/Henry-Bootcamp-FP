@@ -101,7 +101,7 @@ function App() {
         <Route path="/company/posts" element={<CompanyJobPosts />} />
         <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
         <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
-        <Route path='/company/premium' element={<PremiumPage/>} />
+        <Route path='/company/premium/:companyId' element={<PremiumPage/>} />
         <Route
           path="/company/posts/:postId/detail/applicant/:applicantId"
           element={<Profile user={userLogged} />}
