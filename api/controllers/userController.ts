@@ -109,6 +109,42 @@ module.exports = {
 
   login: async (req: Request, res: Response) => {
     try {
+      if(req.headers.token) {
+        const token = jwt.decode(req.headers.token)
+        const user = await prisma.user.findFirst({
+          where: {
+            id: token.id
+          },
+          include: {
+            applicant: {
+              include: {
+                experience: true,
+                education: true,
+                languages: true,
+                skillTags: true,
+                notifications: true,
+                followed: true,
+                postulations: {
+                  include: {
+                    post: true,
+                  },
+                },
+                favorites: true,
+              },
+            },
+            company: {
+              include: {
+                notifications: true,
+                reviews: true,
+                posts: true,
+                followers: true,
+                payment: true,
+              },
+            },
+          },
+        })
+        return res.json(user)
+      }
       let { email, password } = req.body;
       if (!email) return res.send("Debes incluir un campo 'email', es un string");
       if (!password) return res.send("Debes incluir un campo 'password', es un string");
