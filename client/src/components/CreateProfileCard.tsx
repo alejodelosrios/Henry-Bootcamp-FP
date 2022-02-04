@@ -27,11 +27,11 @@ const TextContainter = styled.div`
 padding-top: 10px;
   flex: 2;
 `;
-const CardTitle = styled.h1`
+const CardTitle = styled.h2`
   color: white;
   font-family: ${(props) => props.theme.colors.typography.poppins};
 `;
-const CardSubtitle = styled.h2`
+const CardSubtitle = styled.h3`
   padding-top: 10px;
   font-family: ${(props) => props.theme.colors.typography.openSans};
   font-weight: normal;
@@ -61,6 +61,7 @@ const Button = styled.button`
   color: white;
   margin-left: 2px;
   border-radius: 10px;
+  cursor: pointer;
 
   font-family: ${(props) => props.theme.colors.typography.light};
 `;

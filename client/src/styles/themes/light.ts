@@ -13,9 +13,9 @@ export default {
       dark: "#7A7380",
       light: "#BBBABC",
       lighter: "#F5F5F5",
-      poppins: "'Poppins'",
-      openSans: "'Open Sans'",
-      Roboto: "'Roboto'",
+      openSans: "'Open Sans', sans-serif",
+      poppins: "'Poppins', sans-serif",
+      Roboto: "'Roboto', sans-serif",
     },
     details: {
       primary: "#EF5DA8",
