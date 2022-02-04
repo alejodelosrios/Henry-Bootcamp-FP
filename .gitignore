@@ -113,3 +113,4 @@ api/package-lock.json
 #conventional commits
 .vscode
 .vscode/settings.json
+api/package-lock.json
