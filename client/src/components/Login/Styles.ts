@@ -35,12 +35,12 @@ export const FormContainer = styled.div`
     margin-bottom: 20%;
     background: ${white};
     width: 400px;
-    height: 450px;
+    height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0px 30px 50px 30px;
+    padding: 20px 30px 50px 30px;
     ${boxShadow};
     border-radius: ${cardRadius};
     z-index: 3;
@@ -146,7 +146,6 @@ export const GoogleBtn = styled.button`
     padding: 2px 2px;
     border: none;
     box-shadow: 4px 4px 12px 5px #F178B61A;
-    margin-top: 1rem;
     color: ${white};
     transition: 0.5s;
     cursor: pointer;

@@ -4,64 +4,141 @@ export const MainDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    width:100%
-`
+    width: 100%;
+    gap: 1rem;
+`;
 
-export const EditMainDiv = styled.div`
+export const CardContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 80%;
-`
-
-export const PresentationCard = styled.div`
-    display: flex;
-    flex-direction: row;
     justify-content: center;
     width: 100%;
-`
+    gap: 2rem;
+    align-items: start;
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
+    //box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+`;
+export const CardHeader = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+export const CardTitle = styled.h2`
+    width: 100%;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: ${(props) => props.theme.colors.typography.light};
+`;
+export const EditButton = styled.button`
+    font-weight: bold;
+    font-size: 1.2rem;
+    border: none;
+    background: transparent;
+    color: ${(props) => props.theme.colors.backgrounds.pink};
+    :hover {
+        font-weight: bold;
+        color: ${(props) => props.theme.colors.details.secondary2};
+        transform: scale(1.01, 1.01);
+        transition-duration: 0.5s;
+    }
+`;
+export const CardContent = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+`;
 
 export const Logo = styled.img`
-    width: 300px;
-    height: 300px;
+    width: 155px;
+    height: 155px;
     text-align: center;
     object-fit: cover;
     color: transparent;
-    text-indent: 10000px;
-    border-radius: 50%;
-    margin-right: 3.5rem;
-`
+    border-radius: 1rem;
+`;
 export const CompanyInfo = styled.div`
+    width: inherit;
     display: flex;
     flex-direction: column;
     justify-content: center;
-`
+    gap: 1rem;
+`;
 
-export const CompanyName = styled.input`
-    font-size: 5rem;
-    color: #757577;
-    `
-    export const Location = styled.input`
-    color: #757577;
-
-`
+export const InputGroup = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: ${(props) => props.theme.colors.typography.darkest};
+    gap: 0.5rem;
+`;
+export const CustomLabel = styled.label`
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+`;
+export const Input = styled.input`
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    font-family: ${(props) => props.theme.colors.typography.openSans};
+    color: ${(props) => props.theme.colors.typography.darkest};
+    border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
+`;
+export const TextArea = styled.textarea`
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    font-family: ${(props) => props.theme.colors.typography.openSans};
+    color: ${(props) => props.theme.colors.typography.darkest};
+    border-radius: 0.5rem;
+    border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
+`;
 export const RatingContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-`
+`;
 
 export const Rating = styled.div`
     display: flex;
     flex-direction: row;
-`
+`;
+export const Button = styled.button`
+    width: 120px;
+    border-radius: 0.5rem;
+    background: ${(props) => props.theme.colors.backgrounds.pink};
+    color: ${(props) => props.theme.colors.backgrounds.white};
+    font-family: Poppins;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: auto;
+    letter-spacing: 0em;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    :hover {
+        background: ${(props) => props.theme.colors.backgrounds.pink};
+        transform: scale(1.01, 1.01);
+        transition-duration: 0.5s;
+    }
+`;
 export const FollowButton = styled.button`
     width: 237.77px;
     height: 63.13px;
     border-radius: 4px;
-    background: #EF5DA8;
-    color: #FEFEFF;
+    background: #ef5da8;
+    color: #fefeff;
     font-family: Poppins;
     font-size: 32px;
     font-style: normal;
@@ -73,25 +150,25 @@ export const FollowButton = styled.button`
     cursor: pointer;
     transition-duration: 0.5s;
     margin-left: 3.8px;
-    :hover  {
+    :hover {
         background: #ef419b;
         transform: scale(1.01, 1.01);
         transition-duration: 0.5s;
     }
-`
+`;
 export const PaginateButtonsDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 80%;
-`
+`;
 
 export const PaginateButtons = styled.div`
     width: auto;
     padding: 10px 20px;
     border-radius: 4px;
-    background: #FFB7FF;
-    color: #FEFEFF;
+    background: #ffb7ff;
+    color: #fefeff;
     font-family: Poppins;
     font-style: normal;
     font-weight: 400;
@@ -101,134 +178,33 @@ export const PaginateButtons = styled.div`
     border: none;
     cursor: pointer;
     transition-duration: 0.5s;
-    :hover  {
-        background: #9DD6FD;
+    :hover {
+        background: #9dd6fd;
         transform: scale(1.01, 1.01);
         transition-duration: 0.5s;
     }
-`
+`;
 
-export const AboutCompanyContainer = styled.div`
+export const TagsContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    width: 80%;
-    margin-top: 5rem;
-`
-
-export const AboutTitle = styled.h1`
-    font-family: Poppins;
-    font-size: 38px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 56px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #757577;
-`
-export const SubTitle = styled.h2`
-    font-family: Roboto;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 36px;
-    letter-spacing: 0em;
-    text-align: left;
-    color #757577;
-    margin-top: -5px;
-`
-
-export const SubTags = styled.h2`
-    font-family: Poppins;
-    font-size: 19px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 29px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #EF5DA8;
-    cursor: pointer;
-    :hover {
-        background: red
-    }
-
-`
-
-export const AboutParagraph = styled.textarea`
-    font-family: Open Sans;
-    margin-top: 0.5rem;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 35px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #444444;
-    width: 100%;
-    height: 200px;
-`
-
-export const RatingContaier = styled.div`
-    height: 565px;
-    width: 550px;
-    border-radius: 13px;
-    box-shadow: 0px 0px 27px -2px #00000040;
-    background: #FFFFFF;
-    padding: 40px;
-`
-
-export const UserRateContainer = styled.div`
-    height: 565px;
-    width: 550px;
-    background: transparent;
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
-`
-
-export const RatingCompContainer = styled.div`
-    display: flex;
-`
-
-export const RatingTitle = styled.h1`
+    width: 100%;
+    gap: 1rem;
+`;
+export const SubTags = styled.p`
     font-family: Poppins;
-    font-size: 33px;
+    font-size: 0.8rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 48px;
+    line-height: auto;
     letter-spacing: 0em;
-    text-align: left;
-    color: #757577;
-`
-export const UserRatingTitle = styled.h1`
-    font-family: Poppins;
-    font-size: 38px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 35px;
-    letter-spacing: 0em;
-    text-align: center;
-    color: #757577;
-`
-export const UserRatingText = styled.p`
-    font-family: Roboto;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 36px;
-    letter-spacing: 0em;
-    text-align: center;
-    color: #757577;
-    `
-export const RatingPercentage = styled.h1`
-    font-family: Poppins;
-    font-size: 75px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 112px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #C879FF;
-`
+    color: ${(props) => props.theme.colors.backgrounds.white};
+    background: ${(props) => props.theme.colors.details.secondary2};
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    :hover {
+        background: ${(props) => props.theme.colors.backgrounds.pink};
+    }
+`;

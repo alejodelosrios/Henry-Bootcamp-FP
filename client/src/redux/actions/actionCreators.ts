@@ -365,3 +365,23 @@ export const submitTags =
       console.log(error);
     }
   };
+
+export const editCompany =
+  (companyData: object, companyId: number) =>
+  async (dispatch: Dispatch<Action>) => {
+    //console.log("Data enviada: ", companyData);
+    try {
+      const { data } = await axios.put(
+        `/company/update/${companyId}`,
+        companyData
+      );
+      //console.log("Data recibida: ", data);
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.EDIT_COMPANY,
+        payload: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };

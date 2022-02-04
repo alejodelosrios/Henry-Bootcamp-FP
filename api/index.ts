@@ -30,9 +30,13 @@ app.use("/auth", authRoute);
 
 app.use("/api/v2", mainRouter);
 
+app.use(cors({origin: 'http://localhost:3000'}));
+
 const PORT = process.env.PORT || 3001;
+
 app.listen(PORT, () => {
   console.log(
     "SERVER RUNNING ON PORT 3001"
   );
-});
+})
+
