@@ -1,23 +1,37 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addUserLanguages, deleteUserLanguages, updateUserLanguages } from '../../redux/actions/actionCreators';
-import { Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput, LanguageCard, NoLanguages } from './Styles';
+import React, {FC, useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {addUserLanguages, deleteUserLanguages, updateUserLanguages} from '../../redux/actions/actionCreators';
+import {Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput, LanguageCard, NoLanguages} from './Styles';
 
-export const LanguagesInfoComp = () => {    
-    const userId = useSelector((state: any) => state.userReducer.applicant.id);
+type Props = {
+    userRole: string;
+};
+
+export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
+    const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+    let userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
     const [overlayFlag, setOverlayFlag] = useState('none');
     const [languagesArray, setLanguagesArray] = useState([]);
 
+    if (userRole === "company") {
+        userId = applicantDetail.id
+    }
+    console.log("Role:",userRole);
+    console.log(applicantDetail);
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-        .then((res) => {
-            setLanguagesArray(res.data.languages)
-        })
-    },[])
+        if (userRole === "company") {
+            setLanguagesArray(applicantDetail.languages)
+        } else {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
+                    setLanguagesArray(res.data.languages)
+                })
+        }
+    }, [applicantDetail.id])
 
     const [userLanguages, setUserLanguages] = useState(
         {
@@ -47,10 +61,10 @@ export const LanguagesInfoComp = () => {
         dispatch(updateUserLanguages(userLanguages));
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setLanguagesArray(res.data.languages)
-            })
-        },500)
+                .then((res) => {
+                    setLanguagesArray(res.data.languages)
+                })
+        }, 500)
     }
 
     function closeModal() {
@@ -70,8 +84,6 @@ export const LanguagesInfoComp = () => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         addDisplayFlag === 'none' ? setAddDisplayFlag('flex') : setAddDisplayFlag('none');
     }
-
-    const [id, setId] = useState(0);
 
     function addHandleChange(e: any) {
         setAddUserLanguageState({...addUserLanguageState, [e.target.name]: e.target.value})
@@ -99,10 +111,10 @@ export const LanguagesInfoComp = () => {
         })
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setLanguagesArray(res.data.languages)
-            })
-        },500)
+                .then((res) => {
+                    setLanguagesArray(res.data.languages)
+                })
+        }, 500)
     }
 
     function deleteFunction(id: any) {
@@ -112,34 +124,36 @@ export const LanguagesInfoComp = () => {
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setLanguagesArray(res.data.languages)
-            })
-        },500)
+                .then((res) => {
+                    setLanguagesArray(res.data.languages)
+                })
+        }, 500)
     }
 
     return (
         <Education>
-                <Header>
-                    <Titles>Idiomas</Titles>
-                </Header>
-                {languagesArray.map((languages: any) => (
-                    <LanguageCard key={languages.id}>
-                        <Header>
-                            <div></div>
-                            <Edit onClick={()=> editFunction(languages)}>Editar</Edit>
-                        </Header>
-                        <EachContainer>
-                            <SubTitles>Idioma:</SubTitles>
-                            <ParagraphStyle>{languages.language}</ParagraphStyle>
-                        </EachContainer>
-                        <EachContainer>
-                            <SubTitles>Nivel:</SubTitles>
-                            <ParagraphStyle>{languages.level}</ParagraphStyle>
-                        </EachContainer>
-                    </LanguageCard>
-                )
-                )}
+            <Header>
+                <Titles>Idiomas</Titles>
+            </Header>
+            {languagesArray.map((languages: any) => (
+                <LanguageCard key={languages.id}>
+                    <Header>
+                        <div></div>
+                        {userRole === "applicant" &&
+                            <Edit onClick={() => editFunction(languages)}>Editar</Edit>
+                        }
+                    </Header>
+                    <EachContainer>
+                        <SubTitles>Idioma:</SubTitles>
+                        <ParagraphStyle>{languages.language}</ParagraphStyle>
+                    </EachContainer>
+                    <EachContainer>
+                        <SubTitles>Nivel:</SubTitles>
+                        <ParagraphStyle>{languages.level}</ParagraphStyle>
+                    </EachContainer>
+                </LanguageCard>
+            )
+            )}
             <div className='edit-modal' style={{
                 position: 'fixed',
                 display: displayFlag,
@@ -160,21 +174,21 @@ export const LanguagesInfoComp = () => {
                 transition: 'all 1s',
             }}>
                 <EachContainer>
-                        <SubTitles>Idioma:</SubTitles>
-                        <EditInput
-                            value={userLanguages.language}
-                            name="language"
-                            onChange={(e) => handleChange(e)}
-                        ></EditInput>
-                    </EachContainer>
-                    <EachContainer>
-                        <SubTitles>Nivel:</SubTitles>
-                        <EditInput
-                            value={userLanguages.level}
-                            name="level"
-                            onChange={(e) => handleChange(e)}
-                        ></EditInput>
-                    </EachContainer>
+                    <SubTitles>Idioma:</SubTitles>
+                    <EditInput
+                        value={userLanguages.language}
+                        name="language"
+                        onChange={(e) => handleChange(e)}
+                    ></EditInput>
+                </EachContainer>
+                <EachContainer>
+                    <SubTitles>Nivel:</SubTitles>
+                    <EditInput
+                        value={userLanguages.level}
+                        name="level"
+                        onChange={(e) => handleChange(e)}
+                    ></EditInput>
+                </EachContainer>
                 <Header>
                     <Edit onClick={() => deleteFunction(userLanguages.id)}>Borrar</Edit>
                     <Edit onClick={() => updateFunction()}>Guardar</Edit>
@@ -184,9 +198,9 @@ export const LanguagesInfoComp = () => {
                 position: 'fixed',
                 opacity: flag,
                 display: overlayFlag,
-                top:'0',
-                left:'0',
-                bottom:'0',
+                top: '0',
+                left: '0',
+                bottom: '0',
                 right: '0',
                 backgroundColor: 'rgba(0, 0, 0, 0.4)',
                 transition: 'all 1s',
@@ -194,7 +208,7 @@ export const LanguagesInfoComp = () => {
             }}>
             </div>
 
-            {
+            {   userRole === "applicant" && (
                 (languagesArray.length >= 0 && languagesArray.length < 4) ?
 
                     <NoLanguages>
@@ -202,9 +216,11 @@ export const LanguagesInfoComp = () => {
                     </NoLanguages>
                     :
                     <></>
+            )
+
             }
 
-<div className='add-language' style={{
+            <div className='add-language' style={{
                 position: 'fixed',
                 display: addDisplayFlag,
                 opacity: flag,
@@ -224,26 +240,26 @@ export const LanguagesInfoComp = () => {
                 transition: 'all 1s',
             }}>
                 <EachContainer>
-                        <SubTitles>Idioma:</SubTitles>
-                        <EditInput
-                            value={addUserLanguageState.language}
-                            name="language"
-                            onChange={(e) => addHandleChange(e)}
-                        ></EditInput>
-                    </EachContainer>
-                    <EachContainer>
-                        <SubTitles>Nivel:</SubTitles>
-                        <EditInput
-                            value={addUserLanguageState.level}
-                            name="level"
-                            onChange={(e) => addHandleChange(e)}
-                        ></EditInput>
-                    </EachContainer>
+                    <SubTitles>Idioma:</SubTitles>
+                    <EditInput
+                        value={addUserLanguageState.language}
+                        name="language"
+                        onChange={(e) => addHandleChange(e)}
+                    ></EditInput>
+                </EachContainer>
+                <EachContainer>
+                    <SubTitles>Nivel:</SubTitles>
+                    <EditInput
+                        value={addUserLanguageState.level}
+                        name="level"
+                        onChange={(e) => addHandleChange(e)}
+                    ></EditInput>
+                </EachContainer>
                 <Header>
                     <Edit onClick={() => closeModal()}>Descartar</Edit>
                     <Edit onClick={() => saveLanguages()}>Guardar</Edit>
                 </Header>
             </div>
-            </Education>
+        </Education>
     )
 }

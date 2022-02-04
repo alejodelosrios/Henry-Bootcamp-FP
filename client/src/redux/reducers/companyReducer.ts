@@ -1,5 +1,5 @@
-import { Action } from "../actions";
-import { ActionType } from "../actions/actionTypes";
+import {Action} from "../actions";
+import {ActionType} from "../actions/actionTypes";
 
 const initialState = {
   companyDetail: {
@@ -22,6 +22,26 @@ const initialState = {
     posts: [],
     followers: [],
   },
+  applicantDetail: {
+    email: "",
+    id: null,
+    userId: null,
+    firstName: "",
+    lastName: "",
+    about: "",
+    phoneNumber: "",
+    country: "",
+    image: "",
+    showImage: true,
+    experience: [],
+    education: [],
+    languages: [],
+    skillTags: [],
+    notifications: [],
+    followed: [],
+    postulations: [],
+    favorites: [],
+  },
 };
 
 const companyReducer = (state = initialState, action: Action) => {
@@ -30,7 +50,7 @@ const companyReducer = (state = initialState, action: Action) => {
       //console.log(action.payload);
       return {
         ...state,
-        companyDetail: { ...state.companyDetail, ...action.payload },
+        companyDetail: {...state.companyDetail, ...action.payload},
       };
     case ActionType.EDIT_COMPANY:
       //console.log("Recibido en reducer: ", action.payload);
@@ -38,14 +58,21 @@ const companyReducer = (state = initialState, action: Action) => {
         ...state,
         companyDetail: action.payload,
       };
-    case ActionType.POST_MELI: 
-        return {
-          ...state,
-        };
-    case ActionType.UPDATE_PREMIUM: 
-        return {
-          ...state,
-        };
+    case ActionType.POST_MELI:
+      return {
+        ...state,
+      };
+    case ActionType.UPDATE_PREMIUM:
+      return {
+        ...state,
+      };
+    case ActionType.SET_APPLICANT_DETAIL: {
+      console.log("Recibido en reducer:", action.payload)
+      return {
+        ...state,
+        applicantDetail: action.payload,
+      };
+    }
     default:
       return state;
   }
