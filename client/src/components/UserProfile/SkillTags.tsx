@@ -54,8 +54,8 @@ export const SkillTagsComp = () => {
             }
         }
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-            applicantId: userId,
-            tagIds: [e.target.value]
+            applicantId: Number(userId),
+            tagId: Number(e.target.value)
         })
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
@@ -67,8 +67,8 @@ export const SkillTagsComp = () => {
 
     const deleteSkill = (e: any) => {
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-            applicantId: userId,
-            tagIds: [e]
+            applicantId: Number(userId),
+            tagId: Number(e)
         })
             .catch((err) => {
             console.log(err)
@@ -102,8 +102,8 @@ export const SkillTagsComp = () => {
             if (skillsArray[i].name.toLowerCase() === newTag.toLowerCase()) {
                 console.log(skillsArray[i].name)
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-                    applicantId: userId,
-                    tagIds: [skillsArray[i].id]
+                    applicantId: Number(userId),
+                    tagId: Number(skillsArray[i].id)
                 })
                     .catch((err) => {
                     console.log(err)
@@ -122,8 +122,8 @@ export const SkillTagsComp = () => {
         })
             .then((res) => {
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
-                    applicantId: userId,
-                    tagIds: [res.data.id]
+                    applicantId: Number(userId),
+                    tagId: Number(res.data.id)
                 })
             })
         

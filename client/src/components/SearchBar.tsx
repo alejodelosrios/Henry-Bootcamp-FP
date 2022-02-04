@@ -54,7 +54,7 @@ const IndDivs = styled.div`
   align-items: flex-start;
 `;
 
-const Titles = styled.h3`
+const Titles = styled.h2`
   padding: 13px 0 10px 0;
   font-weight: 100;
   color: #757577;
