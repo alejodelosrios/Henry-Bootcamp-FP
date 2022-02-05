@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { getPostsById } from "../redux/actions/public/postsActions";
 import CompanyLogo from "../assets/company-logo.svg";
 import { Link } from "react-router-dom";
-import { jobApplication } from "../redux/actions/applicantActionCreators";
+import { jobApplication } from "../redux/actions/private/applicantActions";
 
 const TopBackground = styled.div`
   position: absolute;

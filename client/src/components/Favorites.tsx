@@ -2,7 +2,7 @@ import { FC, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { getFavorite } from "../redux/actions/applicantActionCreators";
+import { getFavorite } from "../redux/actions/private/applicantActions";
 
 type Props = {
     role: string;

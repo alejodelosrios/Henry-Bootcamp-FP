@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { setFavorite } from "../redux/actions/applicantActionCreators";
+import { setFavorite } from "../redux/actions/private/applicantActions";
 import { checkExistance } from "../services/checkExistance";
 
 interface Props {

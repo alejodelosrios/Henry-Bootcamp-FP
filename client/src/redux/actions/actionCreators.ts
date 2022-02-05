@@ -4,6 +4,7 @@ import Storage from "../../services/storage";
 import {ActionType} from "./actionTypes";
 import {Action} from "./index";
 
+const token = Storage.get("token");
 
 export const setUserCreateModal = (data: any) => {
   return {type: ActionType.SET_USER_CREATE_MODAL, payload: data};
@@ -50,7 +51,6 @@ export const createUser =
 export const getUser =
   (userData?: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", userData);
-    const token = Storage.get("token");
     try {
       let res;
       if (token) {
@@ -254,23 +254,6 @@ export const setUserFollows =
     }
   };
 
-export const getNotifications =
-  (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
-    try {
-      let {data}: any = await axios.get(`/${role}/${applicantId}`);
-      //console.log("Notifications actualizadas");
-      return dispatch({
-        type: ActionType.GET_NOTIFICATIONS,
-        payload: {
-          notifications: data.notifications,
-          role: role,
-        },
-      });
-    } catch (error) {
-      console.log("Ups! algo salió mal");
-      console.log(error);
-    }
-  };
 
 export const getCompany =
   (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
@@ -313,24 +296,6 @@ export const editCompany =
         console.log("Información actualizada");
         return dispatch({
           type: ActionType.EDIT_COMPANY,
-          payload: data,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-export const setApplicantDetail =
-  (applicantId: number) =>
-    async (dispatch: Dispatch<Action>) => {
-      //console.log("Data enviada: ", applicantId);
-      try {
-        const {data} = await axios.get(
-          `/applicant//${applicantId}`
-        );
-        //console.log("Data recibida: ", data);
-        console.log("Información actualizada");
-        return dispatch({
-          type: ActionType.SET_APPLICANT_DETAIL,
           payload: data,
         });
       } catch (error) {
