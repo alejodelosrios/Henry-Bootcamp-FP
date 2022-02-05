@@ -4,59 +4,11 @@ import Storage from "../../services/storage";
 import {ActionType} from "./actionTypes";
 import {Action} from "./index";
 
-export const getPosts = () => async (dispatch: Dispatch<Action>) => {
-  try {
-    let {data} = await axios.get("/posts/index");
-    //console.log(data);
-    //console.log("POSTS", "Se recibe data de la API");
-    return dispatch({type: ActionType.GET_POSTS, payload: data});
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
-  try {
-    let {data} = await axios.get(`/posts/${id}`);
-    //console.log(data);
-    //console.log("POSTS BY ID", "Se recibe data de la API");
-    return dispatch({type: ActionType.GET_POSTS_BY_ID, payload: data});
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const set_current_items_by_page = (data: number) => {
-  return {type: ActionType.SET_CURRENT_ITEMS_BY_PAGE, payload: data};
-};
 
 export const setCurrentPosts = (data: object[]) => {
 
   return {type: ActionType.SET_CURRENT_POSTS, payload: data};
 };
-
-export const filterAndSort =
-  (filters_and_sort: any) => async (dispatch: Dispatch<Action>) => {
-    //console.log("Data enviada: ", filters_and_sort);
-    try {
-      let {data} = await axios({
-        method: "POST",
-        url: `/posts/filter`,
-        data: filters_and_sort,
-      });
-      //console.log("Data recibida: ", data);
-      console.log("POSTS FILTRADOS", "Se recibe data de la API");
-      return dispatch({
-        type: ActionType.GET_CURRENT_POSTS,
-        payload: {
-          data: data,
-          filters_and_sort: {...filters_and_sort},
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
 export const createPost =
   (dataPost: any, token: string) => async (dispatch: Dispatch<Action>) => {

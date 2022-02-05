@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { FC } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterAndSort } from "../redux/actions/actionCreators";
+import { filterAndSort } from "../redux/actions/public/postsActions";
 import { useNavigate } from "react-router";
 
 const Container = styled.div`
@@ -138,7 +138,7 @@ const SearchBar: FC = () => {
     }
   }
 
-  
+
 
   const [search, setSearch] = useState<Search>({
     postulacion: "",

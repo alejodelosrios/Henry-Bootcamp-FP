@@ -8,7 +8,8 @@ import {ThemeProvider} from "styled-components";
 import light from "./styles/themes/light";
 import CreatePostPage from "./pages/CreatePostPage";
 import {useDispatch, useSelector} from "react-redux";
-import {getPosts, getUser, setUser} from "./redux/actions/actionCreators";
+import {getUser, setUser} from "./redux/actions/actionCreators";
+import {getPosts} from "./redux/actions/public/postsActions";
 import LoginPage from "./pages/LoginPage";
 import {PostDetailPage} from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
@@ -68,7 +69,6 @@ function App() {
         });
     };
     getUserGoogle();
-    dispatch(getPosts());
     dispatch(getPosts());
   }, []);
   return (

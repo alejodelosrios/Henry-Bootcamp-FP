@@ -1,12 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
-import {
-  getPosts,
-  setPostCreateModal,
-  setUserCreateModal,
-} from "../redux/actions/actionCreators";
-
+import { setUserCreateModal } from "../redux/actions/actionCreators";
 import styled from "styled-components";
 
 const Modal = styled.div`
