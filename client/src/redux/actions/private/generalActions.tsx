@@ -6,9 +6,11 @@ import {Action} from "../index";
 
 const token = Storage.get("token");
 
+
 export const getNotifications =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
 
+      console.log("getNotifications")
       try {
         let {data}: any = await axios.get(`/${role}/${applicantId}`,
           {

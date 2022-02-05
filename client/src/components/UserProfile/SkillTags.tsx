@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { submitTags } from "../../redux/actions/actionCreators";
+import {FC, useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import Storage from "../../services/storage";
 import {
     AddTagBtn,
     Edit,
@@ -15,13 +15,13 @@ import {
 } from "./Styles";
 
 type Props = {
-  userRole: string;
+    userRole: string;
 };
 
 export const SkillTagsComp: FC<Props> = ({userRole}) => {
+    const token = Storage.get("token");
     const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
     let userId = useSelector((state: any) => state.userReducer.applicant.id);
-    const dispatch = useDispatch();
     const [skillsArray, setSkillsArray] = useState<any[]>([]);
     const [applicantSkills, setApplicantSkills] = useState<any[]>([])
     if (userRole === "company") {
@@ -30,11 +30,17 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
 
     useEffect(() => {
         if (userRole === "company") {
-                setApplicantSkills(applicantDetail.skillTags)
+            setApplicantSkills(applicantDetail.skillTags)
         } else {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
-                setApplicantSkills(res.data.skillTags)
+                    setApplicantSkills(res.data.skillTags)
                 })
         }
     }, [applicantDetail.id])
@@ -68,12 +74,24 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
             applicantId: Number(userId),
             tagId: Number(e.target.value)
-        })
+        },
+            {
+                headers: {
+                    token: token || "",
+                },
+            }
+        )
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setApplicantSkills(res.data.skillTags)
-            })
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
         }, 400);
     };
 
@@ -81,15 +99,27 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
         axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
             applicantId: Number(userId),
             tagId: Number(e)
-        })
+        },
+            {
+                headers: {
+                    token: token || "",
+                },
+            }
+        )
             .catch((err) => {
-            console.log(err)
-        })
-        setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setApplicantSkills(res.data.skillTags)
+                console.log(err)
             })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
         }, 400);
     };
 
@@ -116,15 +146,27 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
                     applicantId: Number(userId),
                     tagId: Number(skillsArray[i].id)
-                })
+                },
+                    {
+                        headers: {
+                            token: token || "",
+                        },
+                    }
+                )
                     .catch((err) => {
-                    console.log(err)
-                })
-                return setTimeout(() => {
-                    axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-                    .then((res) => {
-                        setApplicantSkills(res.data.skillTags)
+                        console.log(err)
                     })
+                return setTimeout(() => {
+                    axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                        {
+                            headers: {
+                                token: token || "",
+                            },
+                        }
+                    )
+                        .then((res) => {
+                            setApplicantSkills(res.data.skillTags)
+                        })
                 }, 400);
             }
 
@@ -141,9 +183,9 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
 
         setTimeout(() => {
             axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
-            .then((res) => {
-                setApplicantSkills(res.data.skillTags)
-            })
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
         }, 400);
         setNewTag("");
     };
@@ -168,7 +210,7 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
                     }}
                 >
                     <TagsSelect
-                        style={{ gridArea: "2 / 1 / 3 / 5" }}
+                        style={{gridArea: "2 / 1 / 3 / 5"}}
                         className="skills-select"
                         onChange={(e) => selectSkill(e)}
                     >
@@ -199,13 +241,13 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
                             Add
                         </AddTagBtn>
                     </form>
-                    <TagsContainer style={{ gridArea: "3 / 1 / 5 / 5" }}>
+                    <TagsContainer style={{gridArea: "3 / 1 / 5 / 5"}}>
                         {applicantSkills.length
                             ? applicantSkills.map((e: any) => (
-                                  <Tag onClick={() => deleteSkill(e.id)} key={e.id}>
-                                      {upperCase(e.name)}
-                                  </Tag>
-                              ))
+                                <Tag onClick={() => deleteSkill(e.id)} key={e.id}>
+                                    {upperCase(e.name)}
+                                </Tag>
+                            ))
                             : null}
                     </TagsContainer>
                 </div>
@@ -221,8 +263,8 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
                 <TagsContainer>
                     {applicantSkills.length
                         ? applicantSkills.map((e: any) => (
-                              <Tag key={e.id}>{upperCase(e.name)}</Tag>
-                          ))
+                            <Tag key={e.id}>{upperCase(e.name)}</Tag>
+                        ))
                         : null}
                 </TagsContainer>
             </SkillTags>

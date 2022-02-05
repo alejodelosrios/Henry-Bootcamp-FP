@@ -2,7 +2,7 @@ import {FC} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 import styled from "styled-components";
-import {createUser} from "../redux/actions/actionCreators";
+import {createUser} from "../redux/actions/public/generalActions";
 
 type Props = {
   title: string

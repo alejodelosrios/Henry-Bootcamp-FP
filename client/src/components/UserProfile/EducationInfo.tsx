@@ -1,7 +1,8 @@
 import axios from 'axios';
-import React, {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {addUserEducation, deleteUserEducation, updateUserEducation} from '../../redux/actions/actionCreators';
+import {addUserEducation, deleteUserEducation, updateUserEducation} from '../../redux/actions/private/applicantActions';
+import Storage from '../../services/storage';
 import {Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput} from './Styles';
 
 type Props = {
@@ -13,6 +14,7 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
     const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
     const userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
+    const token = Storage.get("token");
 
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState('none');
@@ -23,7 +25,13 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
         if (userRole === "company") {
             setEducationArray(applicantDetail.education)
         } else {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
@@ -63,7 +71,13 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         dispatch(updateUserEducation(userEducation));
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
@@ -121,7 +135,13 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
             institution: ''
         })
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })
@@ -131,7 +151,13 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
     function deleteFunction(id: any) {
         dispatch(deleteUserEducation(id))
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setEducationArray(res.data.education)
                 })

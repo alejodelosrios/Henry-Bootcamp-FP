@@ -9,7 +9,13 @@ const token = Storage.get("token");
 export const jobApplication =
   (obj: object) => async (dispatch: Dispatch<Action>) => {
     try {
-      let {data} = await axios.put(`/applicant/apply`, obj);
+      let {data} = await axios.put(`/applicant/apply`, obj,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
       //const { notification } = await axios.put(`/applicant/apply`, obj);
       data = data && data.postulation.postulations;
       //console.log(data);
@@ -25,6 +31,7 @@ export const jobApplication =
 
 export const getFavorite =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
+    console.log("getFavorite")
     try {
       let {data}: any = await axios.get(`/${role}/${applicantId}`,
         {
@@ -51,7 +58,13 @@ export const setFavorite =
         let {data}: any = await axios.put(`/applicant/favorite`, {
           applicantId,
           postId,
-        });
+        },
+          {
+            headers: {
+              token: token || "",
+            },
+          }
+        );
         getFavorite("applicant", applicantId);
         return dispatch({
           type: ActionType.SET_FAVORITES,
@@ -66,6 +79,7 @@ export const setFavorite =
 export const setApplicantDetail =
   (applicantId: number) =>
     async (dispatch: Dispatch<Action>) => {
+      console.log("SetApplicantDetai")
       //console.log("Data enviada: ", applicantId);
       try {
         const {data} = await axios.get(
@@ -86,3 +100,216 @@ export const setApplicantDetail =
         console.log(error);
       }
     };
+
+
+export const setEmail =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    return dispatch({
+      type: ActionType.SET_EMAIL,
+      payload: email,
+    });
+  };
+
+export const updateUser =
+  (userData: any, userId: any) => async (dispatch: Dispatch<Action>) => {
+    console.log(token);
+    try {
+      await axios.put(`/applicant/update/${userId}`, userData,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER,
+        payload: userData,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserExp =
+  (userExp: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.put(`/applicant/experience/update/${userExp.id}`, userExp,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserExp =
+  (userExp: any, userId: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.post(`/applicant/experience/create/${userId}`, userExp,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EXP,
+        payload: userExp,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserExp =
+  (id: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      console.log(id);
+      await axios.delete(`/applicant/experience/delete/${id}`,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EXP,
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserEducation =
+  (userEducation: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.put(`/applicant/education/update/${userEducation.id}`, userEducation,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserEducation =
+  (userEducation: any, userId: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.post(`/applicant/education/create/${userId}`, userEducation,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_EDUCATION,
+        payload: userEducation,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserEducation =
+  (id: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.delete(`/applicant/education/delete/${id}`,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_EDUCATION,
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const updateUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.put(`/applicant/language/update/${userLanguages.id}`, userLanguages,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.UPDATE_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const addUserLanguages =
+  (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.post(
+        `applicant/language/create/${userLanguages.applicantId}`,
+        userLanguages,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.ADD_USER_LANGUAGES,
+        payload: userLanguages,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const deleteUserLanguages =
+  (id: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.delete(`/applicant/language/delete/${id}`,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      console.log("Información actualizada");
+      return dispatch({
+        type: ActionType.DELETE_USER_LANGUAGES,
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };

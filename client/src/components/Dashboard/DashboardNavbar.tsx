@@ -31,10 +31,6 @@ const DashboardNavbar: FC = () => {
   return (
     <Container>
       <ButtonsContainer>
-        <Notifications role={role} />
-        {role === "applicant" && (
-          <Favorites role={role} />
-        )}
 
         <ProfModalButton user={user} />
       </ButtonsContainer>
@@ -43,3 +39,8 @@ const DashboardNavbar: FC = () => {
 };
 
 export default DashboardNavbar;
+
+        //<Notifications role={role} />
+        //{role === "applicant" && (
+          //<Favorites role={role} />
+        //)}

@@ -111,10 +111,6 @@ const PrivateMenu: FC<Props> = ({role}) => {
         )}
       </NavLinks>
       <ButtonsContainer>
-        <Notifications role={role} />
-        {role === "applicant" && (
-          <Favorites role={role} />
-        )}
         <ProfModalButton user={user} />
       </ButtonsContainer>
     </>
@@ -122,3 +118,8 @@ const PrivateMenu: FC<Props> = ({role}) => {
 };
 
 export default PrivateMenu;
+
+        //<Notifications role={role} />
+        //{role === "applicant" && (
+          //<Favorites role={role} />
+        //)}

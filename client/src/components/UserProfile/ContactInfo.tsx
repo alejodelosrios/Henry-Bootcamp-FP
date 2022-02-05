@@ -1,6 +1,6 @@
-import React, {FC, useState} from "react";
+import {FC, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {updateUser} from "../../redux/actions/actionCreators";
+import {updateUser} from "../../redux/actions/private/applicantActions";
 import {
   ContactInfo,
   Header,
@@ -10,7 +10,6 @@ import {
   EachContainer,
   SubTitles,
   EditInput,
-  EditTextArea,
   NameDiv,
   NameTag,
   RolTag,
