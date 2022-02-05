@@ -1,8 +1,8 @@
 import {FC, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { useNavigate, useParams} from "react-router";
-import { createPost } from "../../redux/actions/actionCreators";
-import {editPost} from "../../redux/actions/companyActionCreators";
+import { createPost } from "../../redux/actions/private/companyActions";
+import {editPost} from "../../redux/actions/private/companyActions";
 import PostCreateModal from "../PostCreateModal";
 import {
   Container,

@@ -5,49 +5,6 @@ import {ActionType} from "./actionTypes";
 import {Action} from "./index";
 
 
-export const setCurrentPosts = (data: object[]) => {
-
-  return {type: ActionType.SET_CURRENT_POSTS, payload: data};
-};
-
-export const createPost =
-  (dataPost: any, token: string) => async (dispatch: Dispatch<Action>) => {
-    try {
-      console.log("Data enviada: ", dataPost);
-      console.log(token);
-
-      let {data} = await axios.post(
-        `/posts/create/${dataPost.companyId}`,
-        dataPost,
-        {
-          headers: {
-            token: token,
-          },
-        }
-      );
-      console.log("Data recibida:", data);
-      console.log("CREATE POST", "Se envió la data a la API");
-      return dispatch({
-        type: ActionType.SET_POST_CREATE_MODAL,
-        payload: {
-          val: true,
-          msg: `The job post ${dataPost.title} was created successfully!`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-      return dispatch({
-        type: ActionType.SET_POST_CREATE_MODAL,
-        payload: {
-          val: true,
-          msg: `The job post ${dataPost.title}, couldn't be created!`,
-        },
-      });
-    }
-  };
-export const setPostCreateModal = (data: any) => {
-  return {type: ActionType.SET_POST_CREATE_MODAL, payload: data};
-};
 export const setUserCreateModal = (data: any) => {
   return {type: ActionType.SET_USER_CREATE_MODAL, payload: data};
 };
