@@ -19,6 +19,7 @@ const Button = styled.button`
 
 
 const ButtonMELI = ( compId:any ) => {
+
   const dispatch= useDispatch();
   const query:any= useQueryParams();
 
@@ -33,16 +34,14 @@ const ButtonMELI = ( compId:any ) => {
     console.log(premium);
     dispatch(updateInfo(premium))
     /* setIsPremium(true) */
-    }
-
-  
+  }
 
   const send = {
     title: 'Premium Access',
     price: 2500
   }
 
-  const handleSubmit = (e:any ) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     dispatch(sendMercadoPago(send))
   }

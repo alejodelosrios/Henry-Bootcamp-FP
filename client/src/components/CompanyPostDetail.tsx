@@ -36,13 +36,13 @@ const Return = styled.div`
 const CompanyPostDetail = () => {
     const {postId} = useParams();
     const dispatch = useDispatch();
-    
-    useEffect(() => {
-        dispatch(getPostsById(postId));
-    }, []);
 
     const post = useSelector((state: any) => state.postsReducer.postById);
     
+    useEffect(() => {
+        dispatch(getPostsById(postId));
+    }, [postId]);
+
     return (
         <Dashboard>
             {post.title && <>

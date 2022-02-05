@@ -14,7 +14,8 @@ interface Props {
         skillTags: string[]
     }
     applicantId: number,
-    postId: number
+    postId: number,
+    companyId: number
 }
 
 const Card = styled.div`
@@ -80,7 +81,7 @@ const Sk = styled.div`
     margin: 0 1%;
 `
 
-const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
+const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId }) => {
 
     const dispatch = useDispatch();
     const testImg = 'https://i.pinimg.com/564x/f4/8f/0a/f48f0aaac7925f65c5224951d5153b76.jpg'
@@ -89,9 +90,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
 
     const {favorites} = useSelector(
         (state:any)=> state.postsReducer.postById
-    )    
-
-    console.log(skillTags);
+    )
 
 
     // checkExistance(favorites, applicantId)
@@ -115,7 +114,9 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId}) => {
         <Skills>{skillTags.map((s: any) => (
                 <Sk key={s.id}>{s.name}</Sk>
         ))}</Skills>
-        <FavsApp onClick={handleFav}>{isFav ? '★' : '☆' }</FavsApp>
+        <Link to={`/company/premium/${companyId}`}>
+            <FavsApp>{/*isFav ? '★' : '☆' */ '☆'}</FavsApp>
+        </Link>
     </Card>
   );
 };

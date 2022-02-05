@@ -60,7 +60,6 @@ const postsReducer = (state = initialState, action: Action) => {
         postCreateModal: action.payload,
       };
     case ActionType.SET_FAV_APPLICANT:
-      console.log("REDUCER => ", action.payload);
       return {
         ...state,
         postById: { ...state.postById, favorites: action.payload },
