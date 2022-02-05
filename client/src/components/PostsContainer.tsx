@@ -1,6 +1,9 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
+import {FC, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
 import styled from "styled-components";
+import {setCompanyCurrentPosts} from "../redux/actions/private/companyActions";
+import {filterAndSort} from "../redux/actions/public/postsActions";
 import Post from "./Post";
 
 const Container = styled.div`
@@ -15,10 +18,25 @@ const Container = styled.div`
 
 const PostsContainer: FC = () => {
 
+  const {companyId} = useParams();
+  const dispatch = useDispatch();
   let currentItems = useSelector(
     (state: any) => state.postsReducer.currentItems
   );
-
+  let filters = useSelector(
+    (state: any) => state.postsReducer.filters_and_sort
+  );
+  let posts = useSelector(
+    (state: any) => state.postsReducer.posts
+  );
+  useEffect(() => {
+    if (companyId) {
+      let companyPosts = posts.filter((post: any) => post.companyId + "" === companyId)
+      dispatch(setCompanyCurrentPosts(companyPosts))
+    } else {
+      dispatch(filterAndSort(filters))
+    }
+  }, [])
   return (
     <>
       <Container>
