@@ -105,6 +105,7 @@ model Post {
   endDate       String
   companyRating Int?            @default(0)
   tags          String[]
+  active        Boolean?        @default(true)
   favorites     Applicant[]
   applicants    ApplicantPool[]
   favoritedBy   Applicant[]     @relation("_UserToFavorites")

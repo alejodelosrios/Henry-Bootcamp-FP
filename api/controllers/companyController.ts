@@ -128,7 +128,11 @@ module.exports = {
           id: Number(companyId),
         },
         include: {
-          posts: true,
+          posts: {
+            where: {
+              active: true
+            }
+          },
         },
       });
       if (company) {
