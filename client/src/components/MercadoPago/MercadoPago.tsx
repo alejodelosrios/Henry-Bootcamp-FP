@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendMercadoPago, updateInfo } from "../../redux/actions/private/companyActions";
 import { useQueryParams } from "./useQueryParams";
+import { FC, useEffect } from "react";
 
 const Button = styled.button`
   background: #c879ff;
@@ -15,24 +16,40 @@ const Button = styled.button`
   margin-top: 2vw;
   z-index: 200;`
 
+const SubscribedBtn = styled.div`
+  background: ${(props) => props.theme.colors.details.secondary};
+  border-radius: 15px;
+  padding: 12px 20px;
+  font-size: 20px;
+  color: white;
+  font-family: Open sans/Regular;
+  margin-top: 2vw;
+  z-index: 200;`
 
-const ButtonMELI = ( compId:any ) => {
+type Props = {
+  compId: number;
+}
+
+const ButtonMELI: FC<Props> = ({compId}) => {
 
   const dispatch= useDispatch();
   const query:any= useQueryParams();
+  const premium = useSelector((state:any)=> state.userReducer.company.premium)
 
   console.log(query);
+  console.log('compId: ', compId)
 
-  if(query.status && query.status === 'approved'){
+  useEffect(()=>{
+    if(query.status && query.status === 'approved'){
     const premium = {
       mercadopagoCode: query.payment_id,
-      date: new Date(),
+      date: new Date().toISOString(),
       companyId: compId,
     }
-    console.log(premium);
+    console.log(premium.mercadopagoCode);
+
     dispatch(updateInfo(premium))
-    /* setIsPremium(true) */
-  }
+  }}, [compId]) 
 
   const send = {
     title: 'Premium Access',
@@ -47,7 +64,7 @@ const ButtonMELI = ( compId:any ) => {
 
 return (
   <>
-    <Button onClick={(e)=>handleSubmit(e)} >Suscribirse</Button>
+  {premium?  <SubscribedBtn>Suscrito</SubscribedBtn> : <Button onClick={(e)=>handleSubmit(e)} >Suscribirse</Button>}
   </>
 )
 }
