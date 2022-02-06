@@ -60,13 +60,14 @@ module.exports = {
   update: async (req: Request, res: Response) => {
     try {
       const { notificationId } = req.params;
-      const { message, type, applicantId, companyId } = req.body;
+      const { message, type, applicantId, companyId, viewed } = req.body;
 
       if (!notificationId) return res.send("Debes enviar el id de la notificación por params");
       if (!message) return res.send("Debes enviar el campo 'message' por body");
       if (!type) return res.send("Debes enviar el campo 'typeId' por body");
       if (!applicantId) return res.send("Debes enviar el campo 'applicantId' por body ");
       if (!companyId) return res.send("Debes enviar el campo 'companyId' por body ");
+      if (!viewed) return res.send("Debes enviar el campo 'viewed' por body ");
 
       const notificationUpdated = await prisma.notification.updateMany({
         where: {
@@ -77,6 +78,7 @@ module.exports = {
           type: type as string,
           applicantId: applicantId as number,
           companyId: companyId as number,
+          viewed: viewed as boolean
         },
       });
       res.json(notificationUpdated);

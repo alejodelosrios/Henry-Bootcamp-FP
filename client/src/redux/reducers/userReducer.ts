@@ -51,12 +51,10 @@ const initialState = {
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
+
     case ActionType.GET_USER:
-      console.log("Reducer: ", action.payload);
-      // console.log(action.payload.modal, !action.payload.modal);
 
       if (!action.payload.modal) {
-        //console.log("Entro")
         return {
           ...state,
           id: action.payload.data.id,

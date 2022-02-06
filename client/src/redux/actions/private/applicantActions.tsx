@@ -4,11 +4,12 @@ import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
 import {Action} from "../index";
 
-const token = Storage.get("token");
+let token;
 
 export const jobApplication =
   (obj: object) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       let {data} = await axios.put(`/applicant/apply`, obj,
         {
           headers: {
@@ -31,8 +32,8 @@ export const jobApplication =
 
 export const getFavorite =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
-    console.log("getFavorite")
     try {
+      token = Storage.get("token");
       let {data}: any = await axios.get(`/${role}/${applicantId}`,
         {
           headers: {
@@ -55,6 +56,7 @@ export const setFavorite =
   (applicantId: number, postId: number) =>
     async (dispatch: Dispatch<Action>) => {
       try {
+        token = Storage.get("token");
         let {data}: any = await axios.put(`/applicant/favorite`, {
           applicantId,
           postId,
@@ -82,6 +84,8 @@ export const setApplicantDetail =
       console.log("SetApplicantDetai")
       //console.log("Data enviada: ", applicantId);
       try {
+        token = Storage.get("token");
+        console.log(token);
         const {data} = await axios.get(
           `/applicant/${applicantId}`,
           {
@@ -112,8 +116,8 @@ export const setEmail =
 
 export const updateUser =
   (userData: any, userId: any) => async (dispatch: Dispatch<Action>) => {
-    console.log(token);
     try {
+      token = Storage.get("token");
       await axios.put(`/applicant/update/${userId}`, userData,
         {
           headers: {
@@ -134,6 +138,7 @@ export const updateUser =
 export const updateUserExp =
   (userExp: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.put(`/applicant/experience/update/${userExp.id}`, userExp,
         {
           headers: {
@@ -154,6 +159,7 @@ export const updateUserExp =
 export const addUserExp =
   (userExp: any, userId: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.post(`/applicant/experience/create/${userId}`, userExp,
         {
           headers: {
@@ -174,6 +180,7 @@ export const addUserExp =
 export const deleteUserExp =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       console.log(id);
       await axios.delete(`/applicant/experience/delete/${id}`,
         {
@@ -195,6 +202,7 @@ export const deleteUserExp =
 export const updateUserEducation =
   (userEducation: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.put(`/applicant/education/update/${userEducation.id}`, userEducation,
         {
           headers: {
@@ -215,6 +223,7 @@ export const updateUserEducation =
 export const addUserEducation =
   (userEducation: any, userId: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.post(`/applicant/education/create/${userId}`, userEducation,
         {
           headers: {
@@ -235,6 +244,7 @@ export const addUserEducation =
 export const deleteUserEducation =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.delete(`/applicant/education/delete/${id}`,
         {
           headers: {
@@ -255,6 +265,7 @@ export const deleteUserEducation =
 export const updateUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.put(`/applicant/language/update/${userLanguages.id}`, userLanguages,
         {
           headers: {
@@ -275,6 +286,7 @@ export const updateUserLanguages =
 export const addUserLanguages =
   (userLanguages: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.post(
         `applicant/language/create/${userLanguages.applicantId}`,
         userLanguages,
@@ -297,6 +309,7 @@ export const addUserLanguages =
 export const deleteUserLanguages =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       await axios.delete(`/applicant/language/delete/${id}`,
         {
           headers: {

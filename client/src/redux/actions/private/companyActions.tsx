@@ -1,15 +1,15 @@
 import axios from "axios";
-import {useSelector} from "react-redux";
 import {Dispatch} from "redux";
 import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
 import {Action} from "../index";
 
-const token = Storage.get("token");
+let token: any;
 
 export const createPost =
   (dataPost: any, tokenId: string) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       console.log("Data enviada: ", dataPost);
       console.log(token);
 
@@ -55,6 +55,7 @@ export const setCompanyCurrentPosts = (data: object[]) => {
 export const editPost =
   (postId: number, endDate: string) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       let {data} = await axios.put(`/posts/update/${postId}`, {
         endDate: endDate,
       },
@@ -75,6 +76,7 @@ export const editPost =
 export const setFavApplicant =
   (applicantId: number, postId: number) => async (dispatch: Dispatch<Action>) => {
     try {
+      token = Storage.get("token");
       let {data} = await axios.put(`/company/favorites`, {
         applicantId,
         postId
@@ -95,6 +97,7 @@ export const setFavApplicant =
 export const sendMercadoPago = (payload: any) => {
   return async function () {
     try {
+      token = Storage.get("token");
       var response = await axios.post("http://localhost:3002/api/v2/company/payment/checkout", payload,
         {
           headers: {
@@ -112,9 +115,10 @@ export const sendMercadoPago = (payload: any) => {
 
 export const updateInfo = (payload: any) => {
   return async function (dispatch: Dispatch<Action>) {
-    console.log('updateInfo: ',payload)
-    console.log('token: ',token)
     try {
+      token = Storage.get("token");
+      console.log('token: ',token)
+      console.log(payload);
       var response = await axios.post("http://localhost:3002/api/v2/company/payment/payment", payload,
         {
           headers: {
@@ -122,7 +126,7 @@ export const updateInfo = (payload: any) => {
           },
         }
       )
-      console.log('action updateInfo: ', response)
+      console.log('action updateInfoooo: ', response)
       return dispatch({
         type: ActionType.UPDATE_PREMIUM,
         payload: response.data.premium,
@@ -140,6 +144,7 @@ export const editCompany =
       console.log("token: ", token)
       console.log("Data enviada: ", companyData);
       try {
+        token = Storage.get("token");
         const {data} = await axios.put(
           `/company/update/${companyId}`,
           companyData,

@@ -35,7 +35,7 @@ app.use(cors({origin: 'http://localhost:3000'}));
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () => {
   console.log(
-    "SERVER RUNNING ON PORT 3001"
+    "SERVER RUNNING ON PORT 3002"
   );
 }).on("error", function (err) {
 
