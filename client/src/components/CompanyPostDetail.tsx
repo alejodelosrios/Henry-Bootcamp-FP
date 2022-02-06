@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import {getPostsById} from "../redux/actions/actionCreators";
+import {getPostsById} from "../redux/actions/public/postsActions";
 import ApplicantByPost from "./ApplicantsByPost";
 
 const Title = styled.h1`
@@ -38,7 +38,7 @@ const CompanyPostDetail = () => {
     const dispatch = useDispatch();
 
     const post = useSelector((state: any) => state.postsReducer.postById);
-    
+
     useEffect(() => {
         dispatch(getPostsById(postId));
     }, [postId]);

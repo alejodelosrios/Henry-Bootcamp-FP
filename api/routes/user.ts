@@ -4,11 +4,11 @@ const userController = require("../controllers/userController");
 const userRouter = Router();
 
 //POST
-userRouter.post("/create", userController.create);
+userRouter.post("/register", userController.register);
+userRouter.post("/login", userController.login);
 
 //GET
 userRouter.get("/index", userController.index);
-userRouter.get("/:email", userController.userByEmail);
 
 //PUT
 userRouter.put("/update/:userId", userController.update);

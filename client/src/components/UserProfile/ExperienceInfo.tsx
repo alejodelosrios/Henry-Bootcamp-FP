@@ -1,11 +1,12 @@
 import axios from "axios";
-import React, {FC, useEffect, useState} from "react";
+import {FC, useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     updateUserExp,
     addUserExp,
     deleteUserExp,
-} from "../../redux/actions/actionCreators";
+} from "../../redux/actions/private/applicantActions";
+import Storage from "../../services/storage";
 import {
     Experience,
     Header,
@@ -18,7 +19,6 @@ import {
     EditInput,
     EditTextArea,
     DateInput,
-    FlexEndDiv,
     ParagraphStyle,
 } from "./Styles";
 
@@ -35,11 +35,18 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
     const [overlayFlag, setOverlayFlag] = useState("none");
     const [expArray, setExpArray] = useState([]);
 
+    const token = Storage.get("token");
     useEffect(() => {
         if (userRole === "company") {
             setExpArray(applicantDetail.experience)
         } else {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setExpArray(res.data.experience)
                 })
@@ -84,7 +91,13 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
             : setDisplayFlag("none");
         dispatch(updateUserExp(userExperience));
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setExpArray(res.data.experience)
                 })
@@ -157,7 +170,13 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
             description: "",
         });
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setExpArray(res.data.experience)
                 })
@@ -167,7 +186,13 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
     function deleteFunction(id: any) {
         dispatch(deleteUserExp(id));
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setExpArray(res.data.experience)
                 })

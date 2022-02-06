@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { createUser, getUser } from "../../redux/actions/actionCreators";
+import { getUser, createUser } from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import { Login } from "./Login";
 import { useNavigate } from "react-router";
 import {
   BackgroundCover,
@@ -19,7 +17,6 @@ import {
   Title,
 } from "./Styles";
 import logo from "../../assets/logo.svg";
-import backgroundImg from "../../assets/two_people.jpg";
 import logoGoogle from "../../assets/google-logo.png";
 import { Paragraph } from "../../pages/WelcomePage/styles";
 
@@ -30,7 +27,7 @@ function LoginForm({ type }: any) {
 
   useEffect(() => {
     if (userRole === "company") {
-      navigate(`/company/${companyId}`);
+      navigate(`/edit-company/${companyId}`);
     } else if (userRole === "applicant") {
       navigate("/home");
     }

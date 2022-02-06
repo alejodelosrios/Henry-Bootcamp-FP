@@ -35,7 +35,6 @@ const DashboardNavbar: FC = () => {
         {role === "applicant" && (
           <Favorites role={role} />
         )}
-
         <ProfModalButton user={user} />
       </ButtonsContainer>
     </Container>

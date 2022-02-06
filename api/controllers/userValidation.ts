@@ -1,4 +1,5 @@
 import { prisma } from "../prisma/database";
+import { Request, Response } from "express";
 
 module.exports = {
   getUserIfExists: async function (email: string) {
@@ -50,5 +51,5 @@ module.exports = {
       if (user.email === email) return false;
       else return true;
     });
-  },
+  }
 };

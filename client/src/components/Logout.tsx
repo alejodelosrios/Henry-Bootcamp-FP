@@ -1,5 +1,6 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import styled from "styled-components";
+import Storage from "../services/storage";
 
 interface Props {
   contenido: string;
@@ -19,6 +20,7 @@ const Button = styled.button<{ estilo?: String }>`
 
 export const Logout: FC<Props> = ({ contenido, estilo }) => {
   const logout = () => {
+    Storage.reset();
     window.open(`${process.env.REACT_APP_GOOGLE}/auth/logout`, "_self");
   };
 

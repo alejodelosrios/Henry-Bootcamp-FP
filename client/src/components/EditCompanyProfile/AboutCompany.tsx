@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { editCompany } from "../../redux/actions/actionCreators";
+import { useDispatch } from "react-redux";
+import { editCompany } from "../../redux/actions/private/companyActions";
 import Carousel from "../Carousel/Carousel";
 import {
     CardTitle,
@@ -48,6 +48,7 @@ export const AboutCompany: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
 
     function saveNewData() {
         setIsEdit(false);
+        console.log("CompanyId:", companyInfo.id)
         dispatch(editCompany(companyInfo, companyInfo.id));
     }
     if (!isEdit) {

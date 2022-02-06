@@ -1,8 +1,8 @@
-import {FC, useEffect, useState} from 'react';
+import {FC, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { setFavApplicant } from '../redux/actions/companyActionCreators';
+import { setFavApplicant } from '../redux/actions/private/companyActions';
 import { checkExistance } from '../services/checkExistance';
 
 interface Props {
@@ -95,7 +95,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
 
     // checkExistance(favorites, applicantId)
     const [isFav, setIsFav] = useState(checkExistance(favorites, applicantId));
-    
+
 
     const handleFav = ()=>{
         dispatch(setFavApplicant(applicantId, postId));

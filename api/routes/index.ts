@@ -1,33 +1,34 @@
 import { Router } from "express";
-
-const applicantRouter = require("./applicant");
-const postsRouter = require("./posts");
-const companyRouter = require("./company");
 const userRouter = require("./user");
-const educationRouter = require("./education");
-const languageRouter = require("./language");
-const experienceRouter = require("./experience");
+
+const companyRouter = require("./company");
+const applicantRouter = require("./applicant");
+
+const postsRouter = require("./posts");
 const tagsRouter = require("./tags");
 const categoryRouter = require("./category");
-const newsRouter = require("./news");
+
 const notificationRouter = require("./notification");
-const paymentRouter = require("./payment");
+const newsRouter = require("./news");
+
+//VALIDADOR DE QUE EXISTE TOKEN
+const validateToken = require("./middlewares/validateToken");
+
 // const notificationTypeRouter = require("./notificationTypes");
 
 const mainRouter = Router();
 
-mainRouter.use("/language", languageRouter);
 mainRouter.use("/user", userRouter);
-mainRouter.use("/applicant", applicantRouter);
+
+mainRouter.use("/company", validateToken(), companyRouter);
+mainRouter.use("/applicant", validateToken(), applicantRouter);
+
 mainRouter.use("/posts", postsRouter);
-mainRouter.use("/company", companyRouter);
-mainRouter.use("/education", educationRouter);
-mainRouter.use("/experience", experienceRouter);
 mainRouter.use("/tag", tagsRouter);
-mainRouter.use("/category", categoryRouter);
-mainRouter.use("/news", newsRouter);
-mainRouter.use("/notification", notificationRouter);
-mainRouter.use("/payment", paymentRouter);
+mainRouter.use("/category", validateToken(), categoryRouter);
+
+mainRouter.use("/notification", validateToken(), notificationRouter);
+mainRouter.use("/news", validateToken(), newsRouter);
 
 // mainRouter.use("/notification/types", notificationTypeRouter);
 

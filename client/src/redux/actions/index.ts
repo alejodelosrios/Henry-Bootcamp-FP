@@ -21,6 +21,10 @@ interface setCurrentPosts {
   type: ActionType.SET_CURRENT_POSTS;
   payload: object[];
 }
+interface setCompanyCurrentPosts {
+  type: ActionType.SET_COMPANY_CURRENT_POSTS;
+  payload: object[];
+}
 interface set_current_items_by_page {
   type: ActionType.SET_CURRENT_ITEMS_BY_PAGE;
   payload: number;
@@ -56,6 +60,7 @@ interface getUser {
     data: {
       id: string;
       role: string;
+      token: string;
       email: string;
       applicant: object;
       company: object;
@@ -184,6 +189,7 @@ export type Action =
   | getPosts
   | set_current_items_by_page
   | setCurrentPosts
+  | setCompanyCurrentPosts
   | editPost
   | filterAndSort
   | getPostsById

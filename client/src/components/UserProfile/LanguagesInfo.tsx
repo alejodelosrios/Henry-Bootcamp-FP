@@ -1,14 +1,16 @@
 import axios from 'axios';
-import React, {FC, useEffect, useState} from 'react';
+import {FC, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {addUserLanguages, deleteUserLanguages, updateUserLanguages} from '../../redux/actions/actionCreators';
-import {Header, Titles, Edit, EachContainer, SubTitles, Education, EducationCard, ParagraphStyle, EditInput, EditTextArea, NoExperience, DateInput, LanguageCard, NoLanguages} from './Styles';
+import {addUserLanguages, deleteUserLanguages, updateUserLanguages} from '../../redux/actions/private/applicantActions';
+import Storage from '../../services/storage';
+import {Header, Titles, Edit, EachContainer, SubTitles, Education, ParagraphStyle, EditInput, LanguageCard, NoLanguages} from './Styles';
 
 type Props = {
     userRole: string;
 };
 
 export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
+    const token = Storage.get("token");
     const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
     let userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
@@ -20,13 +22,17 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
     if (userRole === "company") {
         userId = applicantDetail.id
     }
-    console.log("Role:",userRole);
-    console.log(applicantDetail);
     useEffect(() => {
         if (userRole === "company") {
             setLanguagesArray(applicantDetail.languages)
         } else {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setLanguagesArray(res.data.languages)
                 })
@@ -60,7 +66,13 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         dispatch(updateUserLanguages(userLanguages));
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setLanguagesArray(res.data.languages)
                 })
@@ -110,7 +122,13 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
             applicantId: userId
         })
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setLanguagesArray(res.data.languages)
                 })
@@ -123,7 +141,13 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
         overlayFlag === 'none' ? setOverlayFlag('block') : setOverlayFlag('none');
         displayFlag === 'none' ? setDisplayFlag('flex') : setDisplayFlag('none');
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setLanguagesArray(res.data.languages)
                 })
@@ -208,7 +232,7 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
             }}>
             </div>
 
-            {   userRole === "applicant" && (
+            {userRole === "applicant" && (
                 (languagesArray.length >= 0 && languagesArray.length < 4) ?
 
                     <NoLanguages>

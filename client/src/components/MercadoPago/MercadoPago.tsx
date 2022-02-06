@@ -1,9 +1,7 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { sendMercadoPago, updateInfo } from "../../redux/actions/companyActionCreators";
+import { sendMercadoPago, updateInfo } from "../../redux/actions/private/companyActions";
 import { useQueryParams } from "./useQueryParams";
-import { useEffect, useState } from "react";
-import { getCompany } from "../../redux/actions/actionCreators";
 
 const Button = styled.button`
   background: #c879ff;

@@ -1,12 +1,11 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { set_current_items_by_page } from "../../redux/actions/actionCreators";
+import {useDispatch, useSelector} from "react-redux";
+import {set_current_items_by_page} from "../../redux/actions/public/postsActions";
 
 import arrowLeft from "./../../assets/PaginationBar/arrowLeft.svg";
 import arrowRight from "./../../assets/PaginationBar/arrowRight.svg";
 import PaginationButton from "./PaginationButton";
 
-import { ButtonArrow } from "./styles";
+import {ButtonArrow} from "./styles";
 
 const PaginationBar = () => {
   let currentPage = useSelector((state: any) => state.postsReducer.currentPage);
@@ -29,7 +28,6 @@ const PaginationBar = () => {
 
   const prevPage = () => {
     let number = +currentPage - 1;
-    console.log(number);
     if (number < 1) {
       return null;
     }
@@ -38,7 +36,6 @@ const PaginationBar = () => {
 
   const nextPage = () => {
     let number = +currentPage + 1;
-    console.log(number);
     if (number > pageNumbers.length) {
       return null;
     }
@@ -50,10 +47,6 @@ const PaginationBar = () => {
     dispatch(set_current_items_by_page(number));
   };
 
-  const handlePageButton = (e: any) => {
-    e.preventDefault();
-    dispatch(set_current_items_by_page(+e.target.inputNumberPage.value));
-  };
   return (
     <div>
       <ButtonArrow onClick={() => prevPage()}>

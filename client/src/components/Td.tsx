@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { setFavApplicant } from '../redux/actions/companyActionCreators';
+import { setFavApplicant } from '../redux/actions/private/companyActions';
 import { checkExistance } from '../services/checkExistance';
 
 interface Props {
@@ -30,7 +30,7 @@ const Td: FC <Props> = ({column, row, postId}) => {
 
     useEffect(() => {
         setIsFav(checkExistance(favorites, row.applicantId))
-    }, [favorites]);    
+    }, [favorites]);
 
     const handleFav = ()=>{
         dispatch(setFavApplicant(row.applicantId, postId));
@@ -45,11 +45,11 @@ const Td: FC <Props> = ({column, row, postId}) => {
             </Link>
             : column === 'skillTags'
                 ? row.applicant[column].map((sk:any)=> <p key={sk.id}>{sk.name}</p>)
-                : column === 'favorites' 
+                : column === 'favorites'
                     ? <FavsApp onClick={handleFav}>
                         {isFav ? '★' : '☆' }
                     </FavsApp>
-                    : row.applicant[column] 
+                    : row.applicant[column]
     }</td>
   );
 };

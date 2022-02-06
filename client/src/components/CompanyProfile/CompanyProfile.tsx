@@ -17,12 +17,11 @@ import { Mission } from "./Mission";
 import { CompanyPosts } from "./CompanyPosts";
 import { CompanyRating } from "./CompanyRating";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router";
-import { getCompany } from "../../redux/actions/actionCreators";
+import { useParams } from "react-router";
+import { getCompany } from "../../redux/actions/public/generalActions";
 import HomeLayout from "../../pages/HomeLayout";
 
 export const CompanyProfile = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { companyId } = useParams();
   useEffect(() => {
