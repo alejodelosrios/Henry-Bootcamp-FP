@@ -29,7 +29,6 @@ const Td: FC <Props> = ({column, row, postId}) => {
     )
 
     useEffect(() => {
-        console.log('me rerenderizé');
         setIsFav(checkExistance(favorites, row.applicantId))
     }, [favorites]);
 
