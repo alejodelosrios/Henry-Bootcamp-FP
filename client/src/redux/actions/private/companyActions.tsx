@@ -1,4 +1,5 @@
 import axios from "axios";
+import {useSelector} from "react-redux";
 import {Dispatch} from "redux";
 import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
@@ -131,7 +132,7 @@ export const updateInfo = (payload: any) => {
 export const editCompany =
   (companyData: object, companyId: number) =>
     async (dispatch: Dispatch<Action>) => {
-      console.log("Id: ", companyId)
+      console.log("token: ", token)
       console.log("Data enviada: ", companyData);
       try {
         const {data} = await axios.put(
