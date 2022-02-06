@@ -62,10 +62,6 @@ const companyReducer = (state = initialState, action: Action) => {
       return {
         ...state,
       };
-    case ActionType.UPDATE_PREMIUM:
-      return {
-        ...state,
-      };
     case ActionType.SET_APPLICANT_DETAIL: {
       console.log("Recibido en reducer:", action.payload)
       return {
