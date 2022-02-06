@@ -154,7 +154,7 @@ module.exports = {
       const user = await prisma.user.findFirst({
         where: {
           email: email,
-          password: hashedPassword
+          password: password
         },
         include: {
           applicant: {

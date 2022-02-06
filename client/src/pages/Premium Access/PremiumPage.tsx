@@ -6,9 +6,10 @@ import {
 import HomeLayout from '../HomeLayout';
 import ButtonMELI from '../../components/MercadoPago/MercadoPago';
 import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const PremiumPage: FC = () => {
-    const {companyId} = useParams()
+    const companyId = useSelector((state:any)=> state.userReducer.company.id)
 
     return (
         <HomeLayout>
@@ -29,7 +30,7 @@ const PremiumPage: FC = () => {
 
                         <SubTitle>¿Qué incluye el Premium Access?</SubTitle>
                         <Description>
-                            <p> <SpanPink>Transforma</SpanPink> pone a tu disposición la posibilidad de que la interfaz se adapte a la funcionalidad que se espera para un software personalizado.
+                            <div> <SpanPink>Transforma</SpanPink> pone a tu disposición la posibilidad de que la interfaz se adapte a la funcionalidad que se espera para un software personalizado.
                             Premium Access incluye:
                             <ul>
                                 <Li> <SpanPink>Herramientas administrativas:</SpanPink> la vista de los postulantes asi como el manejo de estados y la posibilidad de resaltar los favoritos, harán que encontrar al postulante perfecto sea una tarea sencilla.</Li>
@@ -38,7 +39,7 @@ const PremiumPage: FC = () => {
                                 <Li><SpanPink>Posicionamiento:</SpanPink>
                                 adquiriendo el Premium Access se garantiza a la empresa un mejor posicionamiento en las busquedas de los usuarios, como la posibilidad de aparecer en el apartado empresas destacadas mejorando el acceso de los postulantes a los puestos abiertos por las mismas.</Li>
                             </ul>
-                            </p>
+                            </div>
                         </Description>
 
                         <SubTitle>Una plataforma accesible para todxs</SubTitle>

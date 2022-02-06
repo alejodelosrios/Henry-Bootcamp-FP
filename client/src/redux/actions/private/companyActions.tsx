@@ -95,7 +95,7 @@ export const setFavApplicant =
 export const sendMercadoPago = (payload: any) => {
   return async function () {
     try {
-      var response = await axios.post("http://localhost:3002/api/v2/payment/checkout", payload,
+      var response = await axios.post("http://localhost:3002/api/v2/company/payment/checkout", payload,
         {
           headers: {
             token: token || "",
@@ -111,9 +111,11 @@ export const sendMercadoPago = (payload: any) => {
 }
 
 export const updateInfo = (payload: any) => {
-  return async function () {
+  return async function (dispatch: Dispatch<Action>) {
+    console.log('updateInfo: ',payload)
+    console.log('token: ',token)
     try {
-      var response = await axios.post("http://localhost:3002/api/v2/payment/checkout", payload,
+      var response = await axios.post("http://localhost:3002/api/v2/company/payment/payment", payload,
         {
           headers: {
             token: token || "",
@@ -121,7 +123,10 @@ export const updateInfo = (payload: any) => {
         }
       )
       console.log('action updateInfo: ', response)
-      return response;
+      return dispatch({
+        type: ActionType.UPDATE_PREMIUM,
+        payload: response.data.premium,
+      });
 
     } catch (error) {
       console.log(error)
