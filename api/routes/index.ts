@@ -20,7 +20,7 @@ const mainRouter = Router();
 
 mainRouter.use("/user", userRouter);
 
-mainRouter.use("/company", validateToken(), companyRouter);
+mainRouter.use("/company", companyRouter);
 mainRouter.use("/applicant", validateToken(), applicantRouter);
 
 mainRouter.use("/posts", postsRouter);
