@@ -106,7 +106,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
     <Card>
         <Photo src={img || testImg}/>
         <Info>
-            <Link to={`/applicant/${applicantId}`}>
+            <Link to={`/company/posts/${postId}/detail/applicant/${applicantId}`}>
                 <Name>{`${firstName} ${lastName}`}</Name>
             </Link>
             <h2>{country}</h2>

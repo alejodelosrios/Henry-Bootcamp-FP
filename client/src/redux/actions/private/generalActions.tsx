@@ -4,14 +4,11 @@ import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
 import {Action} from "../index";
 
-const token = Storage.get("token");
-
 
 export const getNotifications =
   (role: string, applicantId: number) => async (dispatch: Dispatch<Action>) => {
-
-      console.log("getNotifications")
       try {
+        const token = Storage.get("token");
         let {data}: any = await axios.get(`/${role}/${applicantId}`,
           {
             headers: {

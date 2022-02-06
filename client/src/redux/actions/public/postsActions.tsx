@@ -39,7 +39,6 @@ export const filterAndSort =
         data: filters_and_sort,
       });
       //console.log("Data recibida: ", data);
-      console.log("POSTS FILTRADOS", "Se recibe data de la API");
       return dispatch({
         type: ActionType.GET_CURRENT_POSTS,
         payload: {

@@ -116,3 +116,4 @@ api/package-lock.json
 .vscode
 .vscode/settings.json
 api/package-lock.json
+client/package-lock.json

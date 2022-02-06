@@ -4,11 +4,12 @@ import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
 import {Action} from "../index";
 
-const token = Storage.get("token");
+let token:any;
 export const getUser =
   (userData?: any) => async (dispatch: Dispatch<Action>) => {
     //console.log("Data enviada: ", userData);
     try {
+      token = Storage.get("token");
       let res;
       if (token) {
         res = await axios.post(`/user/login`, userData,
@@ -92,7 +93,12 @@ export const setUserCreateModal = (data: any) => {
 export const getCompany =
   (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
     try {
-      let {data}: any = await axios.get(`/company/${companyId}`);
+      token = Storage.get("token");
+      let {data}: any = await axios.get(`/company/${companyId}`, {
+        headers: {
+          token: token,
+        },
+      });
       return dispatch({
         type: ActionType.GET_COMPANY,
         payload: data,
