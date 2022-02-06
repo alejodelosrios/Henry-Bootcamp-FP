@@ -27,7 +27,7 @@ function LoginForm({ type }: any) {
 
   useEffect(() => {
     if (userRole === "company") {
-      navigate(`/company/${companyId}`);
+      navigate(`/edit-company/${companyId}`);
     } else if (userRole === "applicant") {
       navigate("/home");
     }

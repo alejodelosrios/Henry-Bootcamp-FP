@@ -18,7 +18,7 @@ import { CompanyPosts } from "./CompanyPosts";
 import { CompanyRating } from "./CompanyRating";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
-import { getCompany } from "../../redux/actions/actionCreators";
+import { getCompany } from "../../redux/actions/public/generalActions";
 import HomeLayout from "../../pages/HomeLayout";
 
 export const CompanyProfile = () => {

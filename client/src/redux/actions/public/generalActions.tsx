@@ -1,6 +1,5 @@
 import axios from "axios";
 import {Dispatch} from "redux";
-import {setTimeout} from "timers/promises";
 import Storage from "../../../services/storage";
 import {ActionType} from "../actionTypes";
 import {Action} from "../index";
@@ -89,3 +88,17 @@ export const createUser =
 export const setUserCreateModal = (data: any) => {
   return {type: ActionType.SET_USER_CREATE_MODAL, payload: data};
 };
+
+export const getCompany =
+  (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
+    try {
+      let {data}: any = await axios.get(`/company/${companyId}`);
+      return dispatch({
+        type: ActionType.GET_COMPANY,
+        payload: data,
+      });
+    } catch (error) {
+      console.log("Ups! algo salió mal");
+      console.log(error);
+    }
+  };
