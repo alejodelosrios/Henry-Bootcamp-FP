@@ -24,7 +24,7 @@ mainRouter.use("/company", validateToken(), companyRouter);
 mainRouter.use("/applicant", validateToken(), applicantRouter);
 
 mainRouter.use("/posts", postsRouter);
-mainRouter.use("/tag", validateToken(), tagsRouter);
+mainRouter.use("/tag", tagsRouter);
 mainRouter.use("/category", validateToken(), categoryRouter);
 
 mainRouter.use("/notification", validateToken(), notificationRouter);
