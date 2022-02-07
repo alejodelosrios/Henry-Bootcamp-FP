@@ -210,6 +210,7 @@ module.exports = {
           post && post.title
         } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
       });
+      
       res.json(post && post.applicants);
     } catch (error) {
       res.send(error);
