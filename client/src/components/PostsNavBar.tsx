@@ -6,7 +6,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 0.5rem;
   margin: 1rem 0;
 `;
@@ -14,7 +14,7 @@ const Container = styled.div`
 const PostsNavBar = () => {
   return (
     <Container>
-      <SortBar></SortBar>
+      {/* <SortBar></SortBar> */}
       <PaginationBar />
     </Container>
   );
