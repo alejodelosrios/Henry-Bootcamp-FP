@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 const Container = styled.div`
   padding: 1.5rem 0;
   z-index: 999;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 `;
 
 const Button = styled.a`
