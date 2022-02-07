@@ -1,6 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-import { resolveSoa } from "dns";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -160,6 +160,22 @@ module.exports = {
 
       //NOTIFY APPLICANT
 
+      const applicant = await prisma.applicant.findFirst({
+        where: {
+          id: Number(applicantId)
+        }
+      })
+
+      if (!applicant?.userId) {
+        return res.status(400).send("something went wrong");
+      }
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id: applicant.userId
+        }
+      })
+
       const post = await prisma.post.findFirst({
         where: {
           id: Number(postId),
@@ -175,6 +191,17 @@ module.exports = {
           applicantId: Number(applicantId),
           postId: Number(postId),
         },
+      });
+
+      let emailApplicant = await transporter.sendMail({
+        from: '"Transforma" <transformapage@gmail.com>',
+        to: `${user && user.email}`,
+        subject: `${applicant && applicant.firstName} ${
+          applicant && applicant.lastName
+        }`,
+        html: `<p>El estado de tu postulacion para la oferta ${
+          post && post.title
+        } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
       });
 
       if (post && post.companyId) {
