@@ -81,3 +81,10 @@ export const P3 = styled.p`
 font-size: 1.1vw;
 color: #ef5da8;
 `;
+
+export const Modal = styled.div`
+  
+`
+export const Overlay = styled.div`
+
+`

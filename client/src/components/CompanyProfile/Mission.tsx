@@ -20,7 +20,7 @@ export const Mission = () => {
 
             <AboutCompanyContainer className='about-company'>
                 <AboutTitle>Valores</AboutTitle>
-                {company.values.map((v: string) => <SubTags>{v}</SubTags>)}
+                {company.values.map((v: string, i: any) => <SubTags key={i}>{v}</SubTags>)}
                 <AboutParagraph>{company.aboutValues}</AboutParagraph>
             </AboutCompanyContainer>
 
