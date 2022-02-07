@@ -1,5 +1,7 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
+const {faker} = require('@faker-js/faker');
 
 const jwt = require("jsonwebtoken");
 const SHA2 = require("sha2");
@@ -101,6 +103,56 @@ module.exports = {
     try {
       const users = await prisma.user.findMany();
       res.json(users);
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
+    }
+  },
+
+  resetPassword: async (req: Request, res: Response) => {
+    try {
+      const { email } = req.params
+      const newPassword = faker.random.alphaNumeric(15)
+      let hashedPassword = SHA2.SHA_512_t(80, newPassword).toString("hex")
+
+      const user = await prisma.user.findFirst({
+        where: {
+          email: email
+        },
+        include: {
+          applicant: true,
+          company: true
+        }
+      })
+
+      if(!user) return res.status(404).send("El email enviado no existe en la base de datos")
+      let id
+      if(user && user.company) id = user.company.id
+      if(user && user.applicant) id = user.applicant.id
+      const notifyApplicant = await prisma.notification.create({
+        data: {
+          type: "application",
+          message: `Te hemos enviado un correo a ${user.email} con tu nueva contraseña, te recomendamos cambiarla lo antes posible.`,
+          applicantId: Number(id),
+        },
+      });
+
+      let emailApplicant = await transporter.sendMail({
+        from: '"Transforma" <transformapage@gmail.com>',
+        to: `${user.email}`,
+        subject: `Recuperacion de contraseña`,
+        html: `<p>Tu nueva contraseña es '${newPassword}', te recomendamos cambiarla lo antes posible. Saludos, el equipo de Transforma</p>`,
+      });
+
+      let updateUserPassword = await prisma.user.update({
+        where: {
+          email: email
+        },
+        data: {
+          password: hashedPassword
+        }
+      })
+      res.send("Contraseña reseteada con exito, se ha enviado un mail a su casilla de correo")
     } catch (error) {
       console.log(error);
       res.status(400).send(error);

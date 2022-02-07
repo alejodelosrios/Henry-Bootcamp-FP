@@ -11,9 +11,10 @@ Las rutas son las siguientes:
 /user
 
 > POST /register (crea un nuevo user) => recibe objeto user (mirar en /prisma/seed.ts para los modelos)
-> GET /index (devuelve todos los users) => no recibe parametros
 > POST /login (devuelve un user especifico) => recibe email por params
+> GET /index (devuelve todos los users) => no recibe parametros
 > PUT /update/:userId (actualiza la informacion de un user) => recibe userId por params y objeto con todas las propiedades a actualizar
+> PUT /login/reset/:email (resetea la password de un user y le notifica por correo) => recibe email por params
 > DELETE /delete/:userId (borra un user especifico) => recibe userId por params
 
 /applicant

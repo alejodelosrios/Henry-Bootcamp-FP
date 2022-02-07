@@ -1,4 +1,3 @@
-import { getMaxListeners } from "process";
 import { prisma } from "../prisma/database"
 const {faker} = require('@faker-js/faker');
 
@@ -54,7 +53,7 @@ const notificationTypes = [
 
 //CAMBIAR ESTOS VALORES SEGUN CUANTOS QUIEREN DE CADA UNO EN LA DB
 let admin = 1
-let applicants = 50
+let applicants = 49
 let companies = 15
 let users = admin + applicants + companies
 let posts = 10 
@@ -95,6 +94,35 @@ async function main(){
 
 
 
+    
+
+
+    //CREAR ADMIN
+    await prisma.user.createMany({
+        data: [
+            {
+            email: "admin@test.com",
+            password: "password",
+            role: "admin"
+            }
+        ],
+        skipDuplicates: true
+    })
+    //agregarle el profile
+    await prisma.applicant.createMany({
+        data: {
+            userId: 1,
+            firstName: "Admin",
+            lastName: "of Admins",
+            about: "I'm the Alpha and the Omega, Bruce, I'm God.",
+            phoneNumber: "42069",
+            country: "Tierra de Jugosos",
+            image: "https://static.s123-cdn-static-d.com/uploads/4720894/normal_6034cb6f1d192.jpg",
+            showImage: true
+        },
+        skipDuplicates: true
+    })
+
     //////////////////CREAR PERFIL PRUEBA ALE
 
     // await prisma.user.createMany({
@@ -111,7 +139,7 @@ async function main(){
     // await prisma.company.createMany({
     //     data: [
     //         {
-    //             userId: 1,
+    //             userId: 2,
     //             name: faker.random.word(),
     //             legalName: faker.random.words(2),
     //             stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
@@ -245,33 +273,6 @@ async function main(){
 
 
     //////////////////
-
-
-    //CREAR ADMIN
-    await prisma.user.createMany({
-        data: [
-            {
-            email: "admin@test.com",
-            password: "password",
-            role: "admin"
-            }
-        ],
-        skipDuplicates: true
-    })
-    //agregarle el profile
-    await prisma.applicant.createMany({
-        data: {
-            userId: 2,
-            firstName: "Admin",
-            lastName: "of Admins",
-            about: "I'm the Alpha and the Omega, Bruce, I'm God.",
-            phoneNumber: "42069",
-            country: "Tierra de Jugosos",
-            image: "https://static.s123-cdn-static-d.com/uploads/4720894/normal_6034cb6f1d192.jpg",
-            showImage: true
-        },
-        skipDuplicates: true
-    })
     
     //CREAR COMPANIES
     for(let i=0; i<companies; i++){
