@@ -197,7 +197,7 @@ model Notification {
 
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
-  postId      Int
+  postId      Int?
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?
