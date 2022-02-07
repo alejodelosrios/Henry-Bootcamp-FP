@@ -1,5 +1,5 @@
-import {Action} from "../actions";
-import {ActionType} from "../actions/actionTypes";
+import { Action } from "../actions";
+import { ActionType } from "../actions/actionTypes";
 
 const initialState = {
   companyDetail: {
@@ -50,7 +50,7 @@ const companyReducer = (state = initialState, action: Action) => {
       //console.log(action.payload);
       return {
         ...state,
-        companyDetail: {...state.companyDetail, ...action.payload},
+        companyDetail: { ...state.companyDetail, ...action.payload },
       };
     case ActionType.EDIT_COMPANY:
       //console.log("Recibido en reducer: ", action.payload);
@@ -63,7 +63,7 @@ const companyReducer = (state = initialState, action: Action) => {
         ...state,
       };
     case ActionType.SET_APPLICANT_DETAIL: {
-      console.log("Recibido en reducer:", action.payload)
+      //console.log("Recibido en reducer:", action.payload)
       return {
         ...state,
         applicantDetail: action.payload,
