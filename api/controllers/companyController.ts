@@ -180,6 +180,13 @@ module.exports = {
         where: {
           id: Number(postId),
         },
+        include: {
+          applicants: {
+            include: {
+              applicant: true
+            }
+          }
+        }
       });
 
       const notifyApplicant = await prisma.notification.create({
@@ -203,26 +210,7 @@ module.exports = {
           post && post.title
         } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
       });
-
-      if (post && post.companyId) {
-        const companies = await prisma.company.findMany({
-          where: {
-            id: post.companyId,
-          },
-          include: {
-            posts: {
-              include: {
-                applicants: {
-                  include: {
-                    applicant: true,
-                  },
-                },
-              },
-            },
-          },
-        });
-        res.json(companies);
-      }
+      res.json(post && post.applicants);
     } catch (error) {
       res.send(error);
     }
