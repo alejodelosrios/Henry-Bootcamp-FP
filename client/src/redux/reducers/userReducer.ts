@@ -321,7 +321,9 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         admin: {
           ...state.admin,
-          users: sortByProp(action.payload, "id"),
+          users: sortByProp(action.payload, "id").filter(
+            (e: any) => e.email.search("deleted") < 0
+          ),
         },
       };
     case ActionType.DELETE_USER:

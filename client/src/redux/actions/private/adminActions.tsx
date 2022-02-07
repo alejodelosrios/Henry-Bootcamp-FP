@@ -62,14 +62,15 @@ export const deleteUser =
   (id: string) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      let { data } = await axios.get(`/user/delete/${id}`, {
+      let { data } = await axios.delete(`/user/delete/${id}`, {
         headers: {
           token: token || "",
         },
       });
+
       return dispatch({
         type: ActionType.DELETE_USER,
-        payload: id,
+        payload: data.id,
       });
     } catch (error) {
       console.log(error);
