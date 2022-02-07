@@ -53,9 +53,7 @@ const PostCreateForm: FC<Props> = ({mode}) => {
   const company = useSelector((state: any) => state.userReducer.company);
   const token = useSelector((state: any) => state.userReducer.token);
 
-  //console.log("Posts: ", posts);
   const post = posts.find((e: any) => e.id + "" === postId);
-  console.log("Post: ", post);
 
   const [form, setForm] = useState<Form>({
     location: "",
@@ -92,7 +90,6 @@ const PostCreateForm: FC<Props> = ({mode}) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log("submit");
     dispatch(
       createPost(
         {

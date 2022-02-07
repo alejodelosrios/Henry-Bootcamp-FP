@@ -10,9 +10,6 @@ export const createPost =
   (dataPost: any, tokenId: string) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      console.log("Data enviada: ", dataPost);
-      console.log(token);
-
       let {data} = await axios.post(
         `/posts/create/${dataPost.companyId}`,
         dataPost,
@@ -22,8 +19,6 @@ export const createPost =
           },
         }
       );
-      console.log("Data recibida:", data);
-      console.log("CREATE POST", "Se envió la data a la API");
       return dispatch({
         type: ActionType.SET_POST_CREATE_MODAL,
         payload: {
@@ -65,8 +60,6 @@ export const editPost =
           },
         }
       );
-      //console.log(data);
-      console.log("POSTS", "Se recibe data de la API");
       return dispatch({type: ActionType.EDIT_POST, payload: data});
     } catch (error) {
       console.log(error);
@@ -117,8 +110,6 @@ export const updateInfo = (payload: any) => {
   return async function (dispatch: Dispatch<Action>) {
     try {
       token = Storage.get("token");
-      console.log('token: ',token)
-      console.log(payload);
       var response = await axios.post("http://localhost:3002/api/v2/company/payment/payment", payload,
         {
           headers: {
@@ -126,7 +117,6 @@ export const updateInfo = (payload: any) => {
           },
         }
       )
-      console.log('action updateInfoooo: ', response)
       return dispatch({
         type: ActionType.UPDATE_PREMIUM,
         payload: response.data.premium,
@@ -141,8 +131,6 @@ export const updateInfo = (payload: any) => {
 export const editCompany =
   (companyData: object, companyId: number) =>
     async (dispatch: Dispatch<Action>) => {
-      console.log("token: ", token)
-      console.log("Data enviada: ", companyData);
       try {
         token = Storage.get("token");
         const {data} = await axios.put(
@@ -154,8 +142,6 @@ export const editCompany =
             },
           }
         );
-        //console.log("Data recibida: ", data);
-        console.log("Información actualizada");
         return dispatch({
           type: ActionType.EDIT_COMPANY,
           payload: data,

@@ -7,7 +7,6 @@ import {Action} from "../index";
 let token:any;
 export const getUser =
   (userData?: any) => async (dispatch: Dispatch<Action>) => {
-    //console.log("Data enviada: ", userData);
     try {
       token = Storage.get("token");
       let res;
@@ -25,8 +24,6 @@ export const getUser =
         Storage.set('token', token);
       }
       const data = res.data;
-      //console.log("Información actualizada");
-      //console.log("Data recibida: ", data);
       return dispatch({
         type: ActionType.GET_USER,
         payload: {
@@ -49,21 +46,14 @@ export const setUser = (userData: any) => {
 
 export const createUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
-    console.log("Data enviada: ", userData);
     try {
       let {data} = await axios.post(`/user/register`, userData);
-      console.log("Respuesta:", data);
 
       const {token} = data;
       Storage.set('token', token);
       // let resCreate = await axios.post(`/user/create`, userData);
-      // console.log(resCreate.data);
 
       // let resGet = await axios.get(`/user/${userData.email}`);
-      // console.log(resGet.data);
-
-      //console.log("Data recibida: ",data );
-      console.log("CREATE USER", "Se envió la data a la API");
       return dispatch({
         type: ActionType.GET_USER,
         payload: {

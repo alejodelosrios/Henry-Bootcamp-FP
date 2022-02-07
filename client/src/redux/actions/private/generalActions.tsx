@@ -16,7 +16,6 @@ export const getNotifications =
             },
           }
         );
-        //console.log("Notifications actualizadas");
         return dispatch({
           type: ActionType.GET_NOTIFICATIONS,
           payload: {
