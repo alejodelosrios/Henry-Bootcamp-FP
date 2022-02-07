@@ -306,3 +306,25 @@ export const setUserFollows =
       console.log(error);
     }
   };
+
+  export const postReview =
+  (review: any, companyId: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      await axios.post(
+        `applicant/review/${companyId}`,
+        review,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      return dispatch({
+        type: ActionType.POST_REVIEW,
+        payload: review,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };

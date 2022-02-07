@@ -211,6 +211,10 @@ interface createNew {
   type: ActionType.CREATE_NEW;
   payload: object[];
 }
+interface postReview {
+  type: ActionType.POST_REVIEW;
+  payload: any;
+}
 
 export type Action =
   | getPosts
@@ -254,4 +258,5 @@ export type Action =
   | getUsers
   | deleteUser
   | getNews
-  | createNew;
+  | createNew
+  | postReview;

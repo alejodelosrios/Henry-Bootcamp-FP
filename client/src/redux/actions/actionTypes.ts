@@ -41,4 +41,5 @@ export enum ActionType {
   DELETE_USER = "DELETE_USER",
   GET_NEWS = "GET_NEWS",
   CREATE_NEW = "CREATE_NEW",
+  POST_REVIEW = 'POST_REVIEW',
 }
