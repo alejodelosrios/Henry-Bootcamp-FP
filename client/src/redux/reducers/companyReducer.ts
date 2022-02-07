@@ -1,5 +1,5 @@
-import {Action} from "../actions";
-import {ActionType} from "../actions/actionTypes";
+import { Action } from "../actions";
+import { ActionType } from "../actions/actionTypes";
 
 const initialState = {
   companyDetail: {
@@ -49,7 +49,7 @@ const companyReducer = (state = initialState, action: Action) => {
     case ActionType.GET_COMPANY:
       return {
         ...state,
-        companyDetail: {...state.companyDetail, ...action.payload},
+        companyDetail: { ...state.companyDetail, ...action.payload },
       };
     case ActionType.EDIT_COMPANY:
       return {
