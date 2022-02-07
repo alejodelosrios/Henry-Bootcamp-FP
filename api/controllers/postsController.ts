@@ -213,6 +213,14 @@ module.exports = {
               }
             }
           },
+          company: {
+            select: {
+              id: true,
+              name: true,
+              companyLogo: true,
+              location: true
+            }
+          },
           favorites: true,
           favoritedBy: true
         }
