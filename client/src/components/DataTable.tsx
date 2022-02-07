@@ -52,9 +52,12 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
   return (
     <Table cellPadding={0} cellSpacing={0}>
         <thead>
-            <tr>{data.length && colSpanish.map((heading: any) => (
+            <tr>{data.length 
+                ? colSpanish.map((heading: any) => (
                 <th key={heading}>{heading}</th>
-            ))}</tr>
+                ))
+                : <th>No matches found</th>
+            }</tr>
         </thead>
 
         <tbody> 
