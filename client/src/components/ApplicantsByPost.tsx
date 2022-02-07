@@ -87,7 +87,8 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
         <>
             <Container>
                 {company.premium
-                    ? <><Filters>
+                    ? applicants.length 
+                        ? <><Filters>
                             <Search 
                                 type="text" 
                                 placeholder="Search"
@@ -112,22 +113,26 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
                                     </label>
                                 ))
                             }</div>
-                        </Filters>
+                            </Filters>
 
-                        <DataTable 
-                            data={search(applicants)} 
-                            postId={postId} 
-                            favorites={favorites}/>
-                    </>
-                    : applicants.map((ap: any) => (
-                        <ApplicantCard 
-                            key={ap.id}
-                            applicant = {ap.applicant}
-                            applicantId={ap.applicantId}
-                            postId={postId}
-                            companyId={company.id}
-                        /> 
-                    ))
+                            <DataTable 
+                                data={search(applicants)} 
+                                postId={postId} 
+                                favorites={favorites}/>
+                        </>
+                        : 'Este empleo aun no tiene postulaciones...'
+                    
+                    : applicants.length 
+                        ? applicants.map((ap: any) => (
+                            <ApplicantCard 
+                                key={ap.id}
+                                applicant = {ap.applicant}
+                                applicantId={ap.applicantId}
+                                postId={postId}
+                                companyId={company.id}
+                            /> 
+                        ))
+                        : 'Este empleo aun no tiene postulaciones...'
                 }
             </Container>
         </>
