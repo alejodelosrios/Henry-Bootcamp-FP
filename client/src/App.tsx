@@ -1,17 +1,17 @@
-import {Routes, Route, Navigate} from "react-router";
+import { Routes, Route, Navigate } from "react-router";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
-import {Profile} from "./pages/Profile";
+import { Profile } from "./pages/Profile";
 import Home from "./pages/Home";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import GlobalStyles from "./styles/globalStyles";
-import {ThemeProvider} from "styled-components";
+import { ThemeProvider } from "styled-components";
 import light from "./styles/themes/light";
 import CreatePostPage from "./pages/CreatePostPage";
-import {useDispatch, useSelector} from "react-redux";
-import {getUser, setUser} from "./redux/actions/public/generalActions";
-import {getPosts} from "./redux/actions/public/postsActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser, setUser } from "./redux/actions/public/generalActions";
+import { getPosts } from "./redux/actions/public/postsActions";
 import LoginPage from "./pages/LoginPage";
-import {PostDetailPage} from "./pages/PostDetail";
+import { PostDetailPage } from "./pages/PostDetail";
 import ChooseRoleModal from "./components/ChooseRoleModal";
 import AboutUs from "./pages/AboutUs/AboutUs";
 import UserPostulations from "./pages/MyPostulations/UserPostulations";
@@ -22,6 +22,10 @@ import CompanyJobPosts from "./components/CompanyJobPosts";
 import CompanyPostDetail from "./components/CompanyPostDetail";
 import PremiumPage from "./pages/Premium Access/PremiumPage";
 import Storage from "./services/storage";
+import Perfil from "./pages/AdminPages/Perfil";
+import Categories from "./pages/AdminPages/Categories";
+import Users from "./pages/AdminPages/Users";
+import News from "./pages/AdminPages/News";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -101,13 +105,23 @@ function App() {
         <Route path="/frequent-questions" element={<QandA />} />
         <Route path="/company/:companyId" element={<CompanyProfile />} />
         <Route path="/company/posts" element={<CompanyJobPosts />} />
-        <Route path="/company/posts/:postId/detail" element={<CompanyPostDetail />} />
-        <Route path="/edit-company/:companyId" element={<EditCompanyProfile />} />
-        <Route path='/company/premium/:companyId' element={<PremiumPage/>} />
+        <Route
+          path="/company/posts/:postId/detail"
+          element={<CompanyPostDetail />}
+        />
+        <Route
+          path="/edit-company/:companyId"
+          element={<EditCompanyProfile />}
+        />
+        <Route path="/company/premium/:companyId" element={<PremiumPage />} />
         <Route
           path="/company/posts/:postId/detail/applicant/:applicantId"
           element={<Profile user={userLogged} />}
         />
+        <Route path="/admin" element={<Perfil />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/categories" element={<Categories />} />
+        <Route path="/admin/news" element={<News />} />
       </Routes>
     </ThemeProvider>
   );
