@@ -245,12 +245,23 @@ module.exports = {
     try {
       const { userId } = req.params;
       if (!userId) return res.send("Debes enviar el id del usuario por params");
-      const userDelete = await prisma.user.delete({
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id: Number(userId)
+        }
+      })
+
+      const disconnectUser = await prisma.user.update({
         where: {
           id: Number(userId),
         },
+        data: {
+          email: `deleted-${user && user.email}`
+        }
       });
-      res.json(userDelete);
+      
+      res.json(disconnectUser);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
