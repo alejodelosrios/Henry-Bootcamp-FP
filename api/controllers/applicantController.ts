@@ -1,6 +1,7 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-const jwt = require("jsonwebtoken")
+import {transporter} from "../config/mailer";
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -210,6 +211,12 @@ module.exports = {
           },
         });
 
+        const user = await prisma.user.findFirst({
+          where: {
+            id: applicant && applicant.userId
+          }
+        })
+
         // NOTIFICAMOS AL USER QUE APLICO CORRECTAMENTE
 
         const notifyApplicant = await prisma.notification.create({
@@ -221,6 +228,18 @@ module.exports = {
             postId: Number(postId),
             applicantId: Number(applicantId),
           },
+        });
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>', // sender address
+          to: `${user && user.email}`, // list of receivers
+          subject: `${applicant && applicant.firstName} ${
+            applicant && applicant.lastName
+          }`, // Subject line
+          text: `Te has postulado con éxito para la oferta ${
+            post && post.title
+          }. Saludos, el equipo de Transforma`, // plain text body
+          html: "<b>Hello world?</b>", // html body
         });
 
         //NOTIFICAMOS A LA COMPANY QUE RECIBIO UNA POSTULACION
@@ -235,6 +254,14 @@ module.exports = {
             postId: Number(postId),
             companyId: post && post.companyId,
           },
+        });
+
+        let emailCompany = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.firstName} ${applicant && applicant.lastName}`,
+          text: `${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma`,
+          html: "<b>Hello world?</b>",
         });
       }
 
