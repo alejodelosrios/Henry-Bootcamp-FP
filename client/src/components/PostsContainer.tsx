@@ -13,7 +13,16 @@ const Container = styled.div`
   overflow-y: auto;
   flex-direction: column;
   align-items: center;
+  padding: 1vw;
 `;
+
+const P = styled.p`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  margin-top: 10vw;
+  font-size: 2vw;
+  text-align: center;
+`
 
 
 const PostsContainer: FC = () => {
@@ -55,7 +64,7 @@ const PostsContainer: FC = () => {
             />
           ))
         ) : (
-          <p>La empresa aún no ha realizado ninguna publicación</p>
+          <P>Aún no se han realizado Publicaciones</P>
         )}
       </Container>
     </>
