@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import {
+  convertToadminRole,
   createCategory,
   createNew,
   deleteUser,
@@ -69,10 +70,18 @@ const Flex = styled.div`
   justify-content: space-between;
 `;
 
+interface modal {
+  open: boolean;
+  type: string;
+}
 type Props = {
   title: string;
   properties: string[];
-  setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  modal: {
+    open: boolean;
+    type: string;
+  };
+  setModal?: React.Dispatch<React.SetStateAction<modal>>;
   user?: {
     id?: number;
     email?: string;
@@ -87,6 +96,7 @@ type Props = {
 const ModalAdmin: FC<Props> = ({
   title,
   properties,
+  modal,
   setModal,
   user,
   setUser,
@@ -104,8 +114,12 @@ const ModalAdmin: FC<Props> = ({
 
     if (title === "Categorías") dispatch(createCategory(objeto));
     if (title === "News") dispatch(createNew(objeto));
-
-    setModal(false);
+    if (setModal) {
+      setModal({
+        open: false,
+        type: "",
+      });
+    }
   };
 
   const eliminar = () => {
@@ -115,20 +129,44 @@ const ModalAdmin: FC<Props> = ({
     if (setUser) {
       setUser({});
     }
-    setModal(false);
+    if (setModal) {
+      setModal({
+        open: false,
+        type: "",
+      });
+    }
+  };
+  const madeAdmin = () => {
+    if (user) {
+      dispatch(convertToadminRole(user.id + ""));
+    }
+    if (setUser) {
+      setUser({});
+    }
+    if (setModal) {
+      setModal({
+        open: false,
+        type: "",
+      });
+    }
   };
 
   const cancelar = () => {
-    setModal(false);
+    if (setModal) {
+      setModal({
+        open: false,
+        type: "",
+      });
+    }
   };
 
-  if (user) {
+  if (modal.type === "deleteUser" && user) {
     return (
       <Modal>
         <Overlay></Overlay>
         <ModalContent>
           {/* <h2>{title}</h2> */}
-          <p>¿Está seguro de eliminar al usuario:</p>
+          <p>¿Está seguro de eliminar al usuario?</p>
           <p>ID: {user.id}</p>
           <p>EMAIL: {user.email}</p>
           <p>ROLE: {user.role}</p>
@@ -144,29 +182,53 @@ const ModalAdmin: FC<Props> = ({
       </Modal>
     );
   }
-  return (
-    <Modal>
-      <Overlay></Overlay>
-      <ModalContent>
-        {/* <h2>{title}</h2> */}
-        <p>{`Formulario para crear ${title}`}</p>
-        <Flex>
-          <form onSubmit={(e) => guardar(e)}>
-            {properties.map((e, i) => (
-              <div key={i}>
-                <label htmlFor={`${e}`}>{e}</label>
-                <input name={e} type="text" />
-              </div>
-            ))}
-            <button type="submit">Guardar</button>
+  if (modal.type === "changeRoleUser" && user) {
+    return (
+      <Modal>
+        <Overlay></Overlay>
+        <ModalContent>
+          <p>¿Está seguro de convertir en admin al siguiente usuario?</p>
+          <p>ID: {user.id}</p>
+          <p>EMAIL: {user.email}</p>
+          <p>ROLE: {user.role}</p>
+          <Flex>
+            <button type="button" onClick={() => madeAdmin()}>
+              Convertir
+            </button>
             <button type="button" onClick={() => cancelar()}>
               Cancelar
             </button>
-          </form>
-        </Flex>
-      </ModalContent>
-    </Modal>
-  );
+          </Flex>
+        </ModalContent>
+      </Modal>
+    );
+  }
+  if (modal.type === "addNews" || modal.type === "addCategories") {
+    return (
+      <Modal>
+        <Overlay></Overlay>
+        <ModalContent>
+          {/* <h2>{title}</h2> */}
+          <p>{`Formulario para crear ${title}`}</p>
+          <Flex>
+            <form onSubmit={(e) => guardar(e)}>
+              {properties.map((e, i) => (
+                <div key={i}>
+                  <label htmlFor={`${e}`}>{e}</label>
+                  <input name={e} type="text" />
+                </div>
+              ))}
+              <button type="submit">Guardar</button>
+              <button type="button" onClick={() => cancelar()}>
+                Cancelar
+              </button>
+            </form>
+          </Flex>
+        </ModalContent>
+      </Modal>
+    );
+  }
+  return null;
 };
 
 export default ModalAdmin;

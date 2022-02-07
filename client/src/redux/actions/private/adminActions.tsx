@@ -77,6 +77,28 @@ export const deleteUser =
     }
   };
 
+export const convertToadminRole =
+  (id: string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let { data } = await axios.put(
+        `/user/update-role`,
+        { id },
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+
+      return dispatch({
+        type: ActionType.CONVERT_TO_ADMIN_ROLE,
+        payload: data.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 export const getNews = () => async (dispatch: Dispatch<Action>) => {
   try {
     token = Storage.get("token");
