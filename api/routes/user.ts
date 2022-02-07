@@ -11,6 +11,7 @@ userRouter.post("/login", userController.login);
 userRouter.get("/index", userController.index);
 
 //PUT
+userRouter.put("/login/reset/:email", userController.resetPassword)
 userRouter.put("/update/:userId", userController.update);
 
 //DELETE
