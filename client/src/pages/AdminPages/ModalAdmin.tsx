@@ -1,7 +1,11 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { createCategory, createNew } from "./adminActions";
+import {
+  createCategory,
+  createNew,
+  deleteUser,
+} from "../../redux/actions/private/adminActions";
 
 const Modal = styled.div`
   width: 100vw;
@@ -69,9 +73,24 @@ type Props = {
   title: string;
   properties: string[];
   setModal: React.Dispatch<React.SetStateAction<boolean>>;
+  user?: {
+    id?: number;
+    email?: string;
+    password?: string;
+    role?: string;
+    createdAt?: string;
+    updatedAt?: string;
+  };
+  setUser?: React.Dispatch<React.SetStateAction<object>>;
 };
 
-const CreateModal: FC<Props> = ({ title, properties, setModal }) => {
+const ModalAdmin: FC<Props> = ({
+  title,
+  properties,
+  setModal,
+  user,
+  setUser,
+}) => {
   const dispatch = useDispatch();
 
   const guardar = (e: any) => {
@@ -89,10 +108,42 @@ const CreateModal: FC<Props> = ({ title, properties, setModal }) => {
     setModal(false);
   };
 
+  const eliminar = () => {
+    if (user) {
+      dispatch(deleteUser(user.id + ""));
+    }
+    if (setUser) {
+      setUser({});
+    }
+    setModal(false);
+  };
+
   const cancelar = () => {
     setModal(false);
   };
 
+  if (user) {
+    return (
+      <Modal>
+        <Overlay></Overlay>
+        <ModalContent>
+          {/* <h2>{title}</h2> */}
+          <p>¿Está seguro de eliminar al usuario:</p>
+          <p>ID: {user.id}</p>
+          <p>EMAIL: {user.email}</p>
+          <p>ROLE: {user.role}</p>
+          <Flex>
+            <button type="button" onClick={() => eliminar()}>
+              Eliminar
+            </button>
+            <button type="button" onClick={() => cancelar()}>
+              Cancelar
+            </button>
+          </Flex>
+        </ModalContent>
+      </Modal>
+    );
+  }
   return (
     <Modal>
       <Overlay></Overlay>
@@ -118,4 +169,4 @@ const CreateModal: FC<Props> = ({ title, properties, setModal }) => {
   );
 };
 
-export default CreateModal;
+export default ModalAdmin;

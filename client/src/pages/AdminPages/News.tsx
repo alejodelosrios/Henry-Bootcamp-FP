@@ -9,7 +9,7 @@ import {
 
 import styled from "styled-components";
 import DataTable from "./DataTable";
-import CreateModal from "../../redux/actions/private/CreateModal";
+import CreateModal from "./ModalAdmin";
 
 const Container = styled.div`
   width: 100%;

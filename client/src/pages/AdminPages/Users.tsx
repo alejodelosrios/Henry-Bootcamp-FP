@@ -8,7 +8,7 @@ import {
 
 import styled from "styled-components";
 import DataTable from "./DataTable";
-import CreateModal from "../../redux/actions/private/CreateModal";
+import ModalAdmin from "./ModalAdmin";
 
 const Container = styled.div`
   width: 100%;
@@ -70,6 +70,7 @@ const Users = () => {
   const dispatch = useDispatch();
 
   const [modal, setModal] = useState(false);
+  const [user, setUser] = useState({});
 
   const columns = users[0] && Object.keys(users[0]);
   // const filters = ["id", "name"];
@@ -82,10 +83,6 @@ const Users = () => {
           ap[column].toString().toLowerCase().indexOf(q.toLowerCase()) > -1
       )
     );
-  };
-
-  const agregar = () => {
-    setModal(true);
   };
 
   useEffect(() => {
@@ -105,9 +102,19 @@ const Users = () => {
               onChange={(e) => setQ(e.target.value)}
             />
           </TableNavBar>
-          {users.length > 0 && <DataTable type="user" data={search(users)} />}
+          {users.length > 0 && (
+            <DataTable
+              setModal={setModal}
+              setUser={setUser}
+              type="user"
+              data={search(users)}
+            />
+          )}
         </Container>
       </Dashboard>
+      {modal && (
+        <ModalAdmin user={user} title="" properties={[]} setModal={setModal} />
+      )}
     </>
   );
 };

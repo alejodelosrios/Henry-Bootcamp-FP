@@ -27,23 +27,42 @@ const Table = styled.table`
 interface props {
   data: object[];
   type: string;
+  setModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setUser?: React.Dispatch<React.SetStateAction<object>>;
 }
 
-const DataTable: FC<props> = ({ data, type }) => {
+const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
   let columns: string[] = [];
   let colSpanish: string[] = [];
+
   if (type === "category") {
     columns = ["id", "name"];
     colSpanish = ["id", "Categorías"];
   }
   if (type === "user") {
-    columns = ["id", "role", "createdAt", "updatedAt"];
-    colSpanish = ["id", "role", "Fecha de Creación", "Fecha de Actualzación"];
+    columns = ["id", "email", "role", "createdAt", "updatedAt", "options"];
+    colSpanish = [
+      "id",
+      "email",
+      "role",
+      "Fecha de Creación",
+      "Fecha de Actualzación",
+      "Opciones",
+    ];
   }
   if (type === "new") {
     columns = ["id", "title", "description", "image"];
     colSpanish = ["id", "Título", "Descripción", "Imagen"];
   }
+
+  const eliminar = (obj: object) => {
+    if (setModal) {
+      setModal(true);
+    }
+    if (setUser) {
+      setUser(obj);
+    }
+  };
 
   return (
     <Table cellPadding={0} cellSpacing={0}>
@@ -60,9 +79,17 @@ const DataTable: FC<props> = ({ data, type }) => {
       <tbody>
         {data.map((row: any, i: number) => (
           <tr key={i}>
-            {columns.map((colum: any, j: number) => (
-              <td key={j}>{row[colum]}</td>
-            ))}
+            {columns.map((colum: any, j: number) =>
+              colum === "options" ? (
+                <td key={j}>
+                  <button type="button" onClick={() => eliminar(row)}>
+                    ELiminar
+                  </button>
+                </td>
+              ) : (
+                <td key={j}>{row[colum]}</td>
+              )
+            )}
           </tr>
         ))}
       </tbody>
