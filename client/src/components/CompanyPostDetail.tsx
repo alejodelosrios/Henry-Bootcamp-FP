@@ -68,7 +68,7 @@ const CompanyPostDetail = () => {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    const applyers = post.applicants.map((el:any)=>(
+    const applyers = post.applicants?.map((el:any)=>(
         {...el, 
             applicant: {...el.applicant, 
                 skillTags: random[getRandomArbitrary(0,3)] }}

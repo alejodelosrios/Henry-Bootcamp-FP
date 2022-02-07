@@ -10,9 +10,6 @@ export const createPost =
   (dataPost: any, tokenId: string) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      console.log("Data enviada: ", dataPost);
-      console.log(token);
-
       let {data} = await axios.post(
         `/posts/create/${dataPost.companyId}`,
         dataPost,
@@ -22,8 +19,6 @@ export const createPost =
           },
         }
       );
-      console.log("Data recibida:", data);
-      console.log("CREATE POST", "Se envió la data a la API");
       return dispatch({
         type: ActionType.SET_POST_CREATE_MODAL,
         payload: {
