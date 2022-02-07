@@ -81,11 +81,8 @@ export const setFavorite =
 export const setApplicantDetail =
   (applicantId: number) =>
     async (dispatch: Dispatch<Action>) => {
-      console.log("SetApplicantDetai")
-      //console.log("Data enviada: ", applicantId);
       try {
         token = Storage.get("token");
-        console.log(token);
         const {data} = await axios.get(
           `/applicant/${applicantId}`,
           {
@@ -94,8 +91,6 @@ export const setApplicantDetail =
             },
           }
         );
-        //console.log("Data recibida: ", data);
-        console.log("Información actualizada");
         return dispatch({
           type: ActionType.SET_APPLICANT_DETAIL,
           payload: data,
@@ -125,7 +120,6 @@ export const updateUser =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER,
         payload: userData,
@@ -146,7 +140,6 @@ export const updateUserExp =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_EXP,
         payload: userExp,
@@ -167,7 +160,6 @@ export const addUserExp =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_EXP,
         payload: userExp,
@@ -181,7 +173,6 @@ export const deleteUserExp =
   (id: any) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      console.log(id);
       await axios.delete(`/applicant/experience/delete/${id}`,
         {
           headers: {
@@ -189,7 +180,6 @@ export const deleteUserExp =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_EXP,
         payload: id,
@@ -210,7 +200,6 @@ export const updateUserEducation =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_EDUCATION,
         payload: userEducation,
@@ -231,7 +220,6 @@ export const addUserEducation =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_EDUCATION,
         payload: userEducation,
@@ -252,7 +240,6 @@ export const deleteUserEducation =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_EDUCATION,
         payload: id,
@@ -273,7 +260,6 @@ export const updateUserLanguages =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.UPDATE_USER_LANGUAGES,
         payload: userLanguages,
@@ -296,7 +282,6 @@ export const addUserLanguages =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.ADD_USER_LANGUAGES,
         payload: userLanguages,
@@ -317,7 +302,6 @@ export const deleteUserLanguages =
           },
         }
       );
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.DELETE_USER_LANGUAGES,
         payload: id,
@@ -331,7 +315,6 @@ export const setUserFollows =
   (compId: number, userId: number) => async (dispatch: Dispatch<Action>) => {
     try {
       // await axios.delete(`/user/update`, userExp);
-      console.log("Información actualizada");
       return dispatch({
         type: ActionType.SET_USER_FOLLOWS,
       });

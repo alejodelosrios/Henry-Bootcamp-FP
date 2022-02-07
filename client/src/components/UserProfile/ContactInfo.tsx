@@ -25,7 +25,6 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
   const [flag, setFlag] = useState(false);
   const dispatch = useDispatch();
 
-  //console.log("Role: ", userRole)
   const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
   let user = useSelector((state: any) => state.userReducer.applicant);
   let mail = useSelector((state: any) => state.userReducer.email);
@@ -36,7 +35,6 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
     userId = applicantDetail.userId;
   }
 
-  //console.log(user);
   const [userInfo, setUserInfo] = useState({
     phoneNumber: user.phoneNumber,
     country: user.country,
@@ -49,7 +47,6 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
   }
   function updateFunction() {
     flag ? setFlag(false) : setFlag(true);
-    console.log(userId);
     dispatch(
       updateUser(
         {

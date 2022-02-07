@@ -56,7 +56,6 @@ export const CompanyProfile = () => {
         setCompanyInfo(company);
         dispatch(getCompany(companyId));
     }, [dispatch, companyId,company.id]);
-    //console.log("Company: ", company)
 
     if (!company.id) {
         return (

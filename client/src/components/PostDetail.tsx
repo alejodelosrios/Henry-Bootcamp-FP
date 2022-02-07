@@ -136,18 +136,14 @@ const PostDetail: FC = ({}) => {
 
   !company ? (userCompanyId = null) : (userCompanyId = company.id + "");
   !applicant ? (applicantId = null) : (applicantId = applicant.id);
-  //console.log("userCompanyId: ", userCompanyId);
-  //console.log("companyId: ", companyId);
-
+  
   let alreadyApplied = false;
   for (const p of applicant.postulations) {
-    //console.log("P: ", p.id + "", "PostId: ", postId);
     if (p.postId + "" === postId) {
       alreadyApplied = true;
       break;
     }
   }
-  //console.log(alreadyApplied);
 
   useEffect(() => {
     dispatch(getPostsById(postId));

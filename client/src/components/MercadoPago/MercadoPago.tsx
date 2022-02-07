@@ -36,9 +36,6 @@ const ButtonMELI: FC<Props> = ({compId}) => {
   const query:any= useQueryParams();
   const premium = useSelector((state:any)=> state.userReducer.company.premium)
 
-  console.log(query);
-  console.log('compId: ', compId)
-
   useEffect(()=>{
     if(query.status && query.status === 'approved'){
     const premium = {
@@ -46,7 +43,6 @@ const ButtonMELI: FC<Props> = ({compId}) => {
       date: new Date().toISOString(),
       companyId: compId,
     }
-    console.log(premium.mercadopagoCode);
 
     dispatch(updateInfo(premium))
   }}, [compId]) 

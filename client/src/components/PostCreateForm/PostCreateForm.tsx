@@ -90,7 +90,6 @@ const PostCreateForm: FC<Props> = ({mode}) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    console.log("submit");
     dispatch(
       createPost(
         {
