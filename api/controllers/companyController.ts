@@ -328,6 +328,27 @@ module.exports = {
     }
   },
 
+  getPremiumCompanies: async (req: Request, res: Response) => {
+    try {
+      const premiumCompanies = await prisma.company.findMany({
+        where: {
+          premium: true,
+        },
+        select: {
+          id: true,
+          name: true,
+          companyLogo: true,
+          location: true,
+         },
+      });
+      res.json(premiumCompanies);
+    } catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  },
+  
+
   delete: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;
