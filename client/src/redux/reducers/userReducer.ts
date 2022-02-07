@@ -4,8 +4,9 @@ import { ActionType } from "../actions/actionTypes";
 const initialState = {
   id: null,
   role: "",
+  token: "",
   email: "",
-  password:"",
+  password: "",
   company: {
     id: null,
     userId: null,
@@ -50,16 +51,15 @@ const initialState = {
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
+
     case ActionType.GET_USER:
-      console.log("Reducer: ", action.payload);
-      // console.log(action.payload.modal, !action.payload.modal);
 
       if (!action.payload.modal) {
-        //console.log("Entro")
         return {
           ...state,
           id: action.payload.data.id,
           role: action.payload.data.role,
+          token: action.payload.data.token,
           email: action.payload.data.email,
           applicant: {
             ...state.applicant,
@@ -76,6 +76,7 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         id: action.payload.data.id,
         role: action.payload.data.role,
+        token: action.payload.data.token,
         email: action.payload.data.email,
         applicant: {
           ...state.applicant,
@@ -103,7 +104,7 @@ const userReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         id: action.payload.id,
-        password:action.payload.password,
+        password: action.payload.password,
         role: action.payload.role,
         email: action.payload.email,
         applicant: {
@@ -277,16 +278,25 @@ const userReducer = (state = initialState, action: Action) => {
           postulations: action.payload,
         },
       };
-    case ActionType.SUBMIT_TAGS: 
+    case ActionType.SUBMIT_TAGS:
       console.log('en el reducer ', action.payload);
-    return {
-      ...state,
+      return {
+        ...state,
 
-      applicant: { 
-        ...state.applicant,
+        applicant: {
+          ...state.applicant,
           skillTags: action.payload
-      },
-    }; 
+        },
+      };
+    case ActionType.UPDATE_PREMIUM:
+      console.log("Recibido en reducer, userReducer:", action.payload)
+      return {
+        ...state,
+        company:{
+          ...state.company,
+          premium:action.payload
+        } 
+      };
     default:
       return state;
   }

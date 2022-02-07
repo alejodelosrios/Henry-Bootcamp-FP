@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import {FC, useEffect} from "react";
 import {ContactInfoComp} from "./ContactInfo";
 import {EducationInfoComp} from "./EducationInfo";
 import {ExperienceInfoComp} from "./ExperienceInfo";
@@ -8,7 +8,7 @@ import {LangTagsBox, MainDiv} from "./Styles";
 import {SkillTagsComp} from "./SkillTags";
 import {useNavigate, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {setApplicantDetail} from "../../redux/actions/actionCreators";
+import {setApplicantDetail} from "../../redux/actions/private/applicantActions";
 
 export const UserProfile: FC = () => {
     const navigate = useNavigate();

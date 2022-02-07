@@ -4,7 +4,7 @@ import {useParams} from "react-router";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "../pages/Dashboard/Dashboard";
-import {getPostsById} from "../redux/actions/actionCreators";
+import {getPostsById} from "../redux/actions/public/postsActions";
 import ApplicantByPost from "./ApplicantsByPost";
 
 const Title = styled.h1`
@@ -36,13 +36,44 @@ const Return = styled.div`
 const CompanyPostDetail = () => {
     const {postId} = useParams();
     const dispatch = useDispatch();
-    
-    useEffect(() => {
-        dispatch(getPostsById(postId));
-    }, []);
 
     const post = useSelector((state: any) => state.postsReducer.postById);
-    
+
+    useEffect(() => {
+        dispatch(getPostsById(postId));
+    }, [postId]);
+
+    const random = [
+        [{id: 1, name: 'Html'},
+        {id: 2, name: 'Fundaciones'},
+        {id: 3, name: 'Javascript'},
+        {id: 4, name: 'React'}],
+
+        [{id: 5, name: 'Swimmin'},
+        {id: 6, name: 'Fun'},
+        {id: 7, name: 'Hola'}],
+
+        [{id: 9, name: 'No'},
+        {id: 10, name: 'Se'},
+        {id: 11, name: 'Javascript'},
+        {id: 12, name: 'Pochoclos'}],
+
+        [{id: 13, name: 'Hola'},
+        {id: 14, name: 'No'},
+        {id: 15, name: 'Si'},
+        {id: 16, name: 'Talvez'}],
+    ]
+
+    function getRandomArbitrary(min:number, max:number) {
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+
+    const applyers = post.applicants?.map((el:any)=>(
+        {...el, 
+            applicant: {...el.applicant, 
+                skillTags: random[getRandomArbitrary(0,3)] }}
+    ));
+
     return (
         <Dashboard>
             {post.title && <>
@@ -50,7 +81,7 @@ const CompanyPostDetail = () => {
                     <Link style={{textDecoration:'none'}} to='/company/posts'><Return>↤</Return></Link>
                     Postulantes para {post.title.toUpperCase()} en {post.location}:
                 </Title>
-                <ApplicantByPost applicants={post.applicants} postId={post.id} favorites={post.favorites}/>
+                <ApplicantByPost applicants={applyers} postId={post.id} favorites={post.favorites}/>
             </>}
         </Dashboard>
     )

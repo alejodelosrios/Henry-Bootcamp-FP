@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { editCompany } from "../../redux/actions/actionCreators";
+import { useDispatch } from "react-redux";
+import { editCompany } from "../../redux/actions/private/companyActions";
 import {
     CardContainer,
     TextArea,

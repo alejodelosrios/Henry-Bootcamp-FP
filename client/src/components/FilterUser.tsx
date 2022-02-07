@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { filterAndSort } from "../redux/actions/actionCreators";
+import { filterAndSort } from "../redux/actions/public/postsActions";
 import Switcher from "./Switcher";
 
 const FilterContainer = styled.div`

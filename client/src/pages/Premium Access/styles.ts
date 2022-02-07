@@ -25,7 +25,7 @@ line-height: 70px;
 text-align: center;
 align-items: center;
 top: 131px;
-margin-top: vw;
+margin-top: 0.7vw;
 `
 
 export const PT = styled.p`
@@ -116,3 +116,9 @@ export const MiniTitleAside = styled.h3`
 export const Sup = styled.sup`
     font-size: 1vw;
 `
+export const Li = styled.li`
+padding-inline-start: 1vw;
+margin: 0.5vw 0;
+::marker {
+    color: hotpink;
+  }`

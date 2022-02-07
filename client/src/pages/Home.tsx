@@ -4,8 +4,6 @@ import PostsNavBar from "../components/PostsNavBar";
 import PostsContainer from "../components/PostsContainer";
 import styled from "styled-components";
 import HomeLayout from "./HomeLayout";
-import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPosts } from "../redux/actions/actionCreators";
 
 const Container = styled.div`
   margin: auto;
@@ -54,10 +52,6 @@ const TopBackground = styled.div`
 `;
 
 const Home = () => {
-  const posts = useSelector((state: any) => state.postsReducer.posts);
-  console.log("posts");
-  const dispatch = useDispatch();
-  dispatch(setCurrentPosts(posts));
 
   return (
     <HomeLayout>

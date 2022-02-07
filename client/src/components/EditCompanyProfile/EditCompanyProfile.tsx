@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {
     CardContent,
     Input,
@@ -12,27 +12,51 @@ import {
     CardHeader,
     EditButton,
 } from "./Styles";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
-import { editCompany, getCompany } from "../../redux/actions/actionCreators";
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate, useParams} from "react-router";
+import {getCompany} from "../../redux/actions/public/generalActions";
+import {editCompany} from "../../redux/actions/private/companyActions";
 import Dashboard from "../../pages/Dashboard/Dashboard";
-import { AboutCompany } from "./AboutCompany";
-import { Mission } from "./Mission";
-import { Vission } from "./Vission";
-import { Values } from "./Values";
+import {AboutCompany} from "./AboutCompany";
+import {Mission} from "./Mission";
+import {Vission} from "./Vission";
+import {Values} from "./Values";
 
 export const CompanyProfile = () => {
     const dispatch = useDispatch();
-    const { companyId } = useParams();
+    const navigate = useNavigate();
+    const {companyId} = useParams();
+    const userRole = useSelector((state: any) => state.userReducer.role);
+
     const company = useSelector(
         (state: any) => state.companyReducer.companyDetail
     );
-    useEffect(() => {
-        dispatch(getCompany(companyId));
-    }, [dispatch, companyId]);
 
     const [companyInfo, setCompanyInfo] = useState(company);
     const [isEdit, setIsEdit] = useState(false);
+
+    function handleChange(e: any) {
+        let obj = {
+            ...companyInfo,
+            [e.target.name]: e.target.value,
+        };
+        setCompanyInfo(obj);
+    }
+
+    function saveNewData() {
+        setIsEdit(false);
+        dispatch(editCompany(companyInfo, companyInfo.id));
+    }
+
+
+    useEffect(() => {
+        if (userRole === "") {
+            navigate("/login");
+        }
+        setCompanyInfo(company);
+        dispatch(getCompany(companyId));
+    }, [dispatch, companyId,company.id]);
+    //console.log("Company: ", company)
 
     if (!company.id) {
         return (
@@ -42,17 +66,6 @@ export const CompanyProfile = () => {
         );
     }
 
-    function handleChange(e: any) {
-        let obj = {
-            ...companyInfo,
-            [e.target.name]: e.target.value,
-        };
-        setCompanyInfo(obj);
-    }
-    function saveNewData() {
-        setIsEdit(false);
-        dispatch(editCompany(companyInfo, companyInfo.id));
-    }
     if (!isEdit) {
         return (
             <Dashboard>

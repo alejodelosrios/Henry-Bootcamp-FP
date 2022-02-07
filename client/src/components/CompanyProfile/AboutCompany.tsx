@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSelector } from 'react-redux';
 import Carousel from '../Carousel/Carousel';
 import { MainDiv } from '../UserProfile/Styles';

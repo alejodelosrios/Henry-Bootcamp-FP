@@ -1,12 +1,8 @@
 import {FC, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Navigate, useNavigate, useParams} from "react-router";
-import {
-  createPost,
-  getPosts,
-  getPostsById,
-} from "../../redux/actions/actionCreators";
-import {editPost} from "../../redux/actions/companyActionCreators";
+import { useNavigate, useParams} from "react-router";
+import { createPost } from "../../redux/actions/private/companyActions";
+import {editPost} from "../../redux/actions/private/companyActions";
 import PostCreateModal from "../PostCreateModal";
 import {
   Container,
@@ -55,10 +51,9 @@ const PostCreateForm: FC<Props> = ({mode}) => {
   );
   const posts = useSelector((state: any) => state.postsReducer.posts);
   const company = useSelector((state: any) => state.userReducer.company);
+  const token = useSelector((state: any) => state.userReducer.token);
 
-  //console.log("Posts: ", posts);
   const post = posts.find((e: any) => e.id + "" === postId);
-  console.log("Post: ", post);
 
   const [form, setForm] = useState<Form>({
     location: "",
@@ -97,10 +92,13 @@ const PostCreateForm: FC<Props> = ({mode}) => {
     e.preventDefault();
     console.log("submit");
     dispatch(
-      createPost({
-        ...form,
-        category: +form.category,
-      })
+      createPost(
+        {
+          ...form,
+          category: +form.category,
+        },
+        token
+      )
     );
   };
   const edit = (e: any) => {

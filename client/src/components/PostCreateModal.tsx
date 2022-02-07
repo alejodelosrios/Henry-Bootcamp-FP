@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { getPosts, setPostCreateModal } from "../redux/actions/actionCreators";
+import { setPostCreateModal } from "../redux/actions/private/companyActions";
+import { getPosts } from "../redux/actions/public/postsActions";
 
 import styled from "styled-components";
 

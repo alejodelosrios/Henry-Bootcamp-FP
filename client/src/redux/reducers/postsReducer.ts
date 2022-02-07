@@ -60,7 +60,6 @@ const postsReducer = (state = initialState, action: Action) => {
         postCreateModal: action.payload,
       };
     case ActionType.SET_FAV_APPLICANT:
-      console.log("REDUCER => ", action.payload);
       return {
         ...state,
         postById: { ...state.postById, favorites: action.payload },
@@ -82,6 +81,15 @@ const postsReducer = (state = initialState, action: Action) => {
       return {
         ...state,
         currentPosts: action.payload,
+        filters_and_sort: state.filters_and_sort,
+        currentItems: action.payload.slice(0, state.itemsPerPage),
+        currentPage: 1,
+      };
+    case ActionType.SET_COMPANY_CURRENT_POSTS:
+      return {
+        ...state,
+        currentPosts: action.payload,
+        currentItems: action.payload.slice(0, state.itemsPerPage),
         currentPage: 1,
       };
 

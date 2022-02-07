@@ -1,9 +1,12 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-const userValidator = require("./userValidation");
+
+const jwt = require("jsonwebtoken");
+const SHA2 = require("sha2");
+const userValidator = require("./userValidation")
 
 module.exports = {
-  create: async (req: Request, res: Response) => {
+  register: async (req: Request, res: Response) => {
     try {
       const { email, password, role } = req.body;
       if (!email) return res.send("Falta campo 'email'");
@@ -14,10 +17,11 @@ module.exports = {
       const checkIfEmailAvailable = userValidator.checkIfEmailAvailable(email);
       if (!checkIfEmailAvailable) return res.send("Email en uso");
 
+      let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
       const user = await prisma.user.create({
         data: {
           email: email as string,
-          password: password as string,
+          password: hashedPassword as string,
           role: role as string,
         },
       });
@@ -56,7 +60,7 @@ module.exports = {
         });
       }
 
-      const newUser = await prisma.user.findMany({
+      const newUser = await prisma.user.findFirst({
         where: {
           email: email,
         },
@@ -73,7 +77,20 @@ module.exports = {
           },
         },
       });
-      res.json(newUser);
+
+      const userForToken = {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+
+      jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
+        if(err) return res.status(500).send(err)
+        res.json({
+          ...newUser,
+          token: token
+        })
+      })
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -90,14 +107,54 @@ module.exports = {
     }
   },
 
-  userByEmail: async (req: Request, res: Response) => {
+  login: async (req: Request, res: Response) => {
     try {
-      const { email } = req.params;
-      if (!email)
-        return res.send("Debes enviar el email del usuario por params");
+      if(req.headers.token) {
+        const token = jwt.decode(req.headers.token)
+        const user = await prisma.user.findFirst({
+          where: {
+            id: token.id
+          },
+          include: {
+            applicant: {
+              include: {
+                experience: true,
+                education: true,
+                languages: true,
+                skillTags: true,
+                notifications: true,
+                followed: true,
+                postulations: {
+                  include: {
+                    post: true,
+                  },
+                },
+                favorites: true,
+              },
+            },
+            company: {
+              include: {
+                notifications: true,
+                reviews: true,
+                posts: true,
+                followers: true,
+                payment: true,
+              },
+            },
+          },
+        })
+        return res.json(user)
+      }
+      let { email, password } = req.body;
+      if (!email) return res.send("Debes incluir un campo 'email', es un string");
+      if (!password) return res.send("Debes incluir un campo 'password', es un string");
+
+      let hashedPassword = SHA2.SHA_512_t(80, password).toString("hex")
+
       const user = await prisma.user.findFirst({
         where: {
           email: email,
+          password: password
         },
         include: {
           applicant: {
@@ -127,32 +184,25 @@ module.exports = {
           },
         },
       });
-      // let formattedPackageForFront
-      // if(user){
-      //   if(user.applicant && "admin applicant".includes(user.role)){
-      //     let {id, userId, ...rest} = user.applicant
-      //     formattedPackageForFront = {
-      //       userId: user.id,
-      //       applicantId: id,
-      //       email: user.email,
-      //       role: user.role,
-      //       ...rest,
-      //     }
-      //   } else if(user.company && "company".includes(user.role)){
-      //     let {id, userId, ...rest} = user.company
-      //     formattedPackageForFront = {
-      //       userId: user.id,
-      //       companyId: id,
-      //       email: user.email,
-      //       role: user.role,
-      //       ...rest,
-      //     }
-      //   }
-      // }
-      res.json(user);
+
+      if(!user) return res.status(403).send("credenciales invalidas")
+
+      const userForToken = {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      }
+
+      jwt.sign(userForToken, "jugosho", (err: object, token: string) => {
+        if(err) return res.status(500).send(err)
+        res.json({
+          ...user,
+          token: token
+        })
+      })
     } catch (error) {
       console.log(error);
-      res.status(400).send(error);
+      res.status(500).send(error);
     }
   },
 

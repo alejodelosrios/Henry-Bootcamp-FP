@@ -48,20 +48,23 @@ const DataTable:FC <Props> = ({data, postId, favorites}) => {
     // const columns = data[0] && Object.keys(data[0].applicant)
     const columns = ['image', 'firstName', 'lastName', 'skillTags', 'favorites']
     const colSpanish = ['Perfil', 'Nombre', 'Apellido', 'Skills', 'Favoritos']
-
+    
   return (
     <Table cellPadding={0} cellSpacing={0}>
         <thead>
-            <tr>{data.length && colSpanish.map((heading: any) => (
-                <th>{heading}</th>
-            ))}</tr>
+            <tr>{data.length 
+                ? colSpanish.map((heading: any) => (
+                <th key={heading}>{heading}</th>
+                ))
+                : <th>No matches found</th>
+            }</tr>
         </thead>
 
         <tbody> 
-            {data.map((row: any)=> <tr>{
-                columns.map((column: any)=>(
+            {data.map((row: any, j:number)=> <tr key={j}>{
+                columns.map((column: any, ix:number)=>(
                     <Td 
-                        key={row.applicantId}
+                        key={ix}
                         column={column}
                         row={row}
                         postId={postId}

@@ -1,10 +1,8 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
-import { createUser, getUser } from "../../redux/actions/actionCreators";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {getUser, createUser, getCompany} from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import { Login } from "./Login";
-import { useNavigate } from "react-router";
+import {useNavigate} from "react-router";
 import {
   BackgroundCover,
   BackgroundDiv,
@@ -19,18 +17,21 @@ import {
   Title,
 } from "./Styles";
 import logo from "../../assets/logo.svg";
-import backgroundImg from "../../assets/two_people.jpg";
 import logoGoogle from "../../assets/google-logo.png";
-import { Paragraph } from "../../pages/WelcomePage/styles";
+import {Paragraph} from "../../pages/WelcomePage/styles";
+import Storage from "../../services/storage";
 
-function LoginForm({ type }: any) {
+function LoginForm({type}: any) {
   const navigate = useNavigate();
   const userRole = useSelector((state: any) => state.userReducer.role);
   const companyId = useSelector((state: any) => state.userReducer.company.id);
+  const token = useSelector((state: any) => state.userReducer.token);
 
   useEffect(() => {
     if (userRole === "company") {
-      navigate(`/company/${companyId}`);
+      dispatch(getCompany(companyId));
+      Storage.set("token", token);
+      navigate(`/edit-company/${companyId}`);
     } else if (userRole === "applicant") {
       navigate("/home");
     }
@@ -52,7 +53,7 @@ function LoginForm({ type }: any) {
     navigate("/home");
   }
 
-  const handleChange = ({ target: { name, value } }: any) => {
+  const handleChange = ({target: {name, value}}: any) => {
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -61,7 +62,7 @@ function LoginForm({ type }: any) {
   const login = (e: any) => {
     e.preventDefault();
     dispatch(
-      getUser({ email: formInputs.email, password: formInputs.password })
+      getUser({email: formInputs.email, password: formInputs.password})
     );
     setFormInputs({
       email: "",
@@ -107,7 +108,7 @@ function LoginForm({ type }: any) {
                 type="text"
               ></StyledInput>
               {type === "register" && (
-                <div style={{ width: "100%" }}>
+                <div style={{width: "100%"}}>
                   <RegisterSelect
                     onChange={(e) => handleChange(e)}
                     id="role"
@@ -166,7 +167,7 @@ function LoginForm({ type }: any) {
                 >
                   <GoogleLogo src={logoGoogle} alt="google-logo" />
                 </div>
-                <div style={{ marginLeft: "80px" }}>Google</div>
+                <div style={{marginLeft: "80px"}}>Google</div>
               </div>
             </GoogleBtn>
           </FormContainer>

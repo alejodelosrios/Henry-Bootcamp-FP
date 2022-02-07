@@ -1,14 +1,15 @@
 import { FC } from 'react';
 import {
     TopBackground, Container, Title, PT, MiniTitle, Div, SubTitle,
-    Section, Description, SpanPink, Span, P, Aside, AsideTitle, AsideTitlePrice, MiniTitleAside, Sup,
+    Section, Description, SpanPink, Span, P, Aside, AsideTitle, AsideTitlePrice, MiniTitleAside, Sup,Li
 } from './styles'
 import HomeLayout from '../HomeLayout';
 import ButtonMELI from '../../components/MercadoPago/MercadoPago';
 import { useParams } from 'react-router';
+import { useSelector } from 'react-redux';
 
 const PremiumPage: FC = () => {
-    const {companyId} = useParams()
+    const companyId = useSelector((state:any)=> state.userReducer.company.id)
 
     return (
         <HomeLayout>
@@ -24,17 +25,26 @@ const PremiumPage: FC = () => {
                     <Div>
                         <SubTitle>¿Qué es Premium Access?</SubTitle>
                         <Description>
-                            <p> <SpanPink>Transforma</SpanPink> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quisquam non aliquam libero minima sunt esse et dolores minus atque ipsa voluptates quo dolor enim iste, maxime consequatur, accusantium porro. Atque!</p>
+                            <p> <SpanPink>Transforma</SpanPink> brinda la posibilidad de tener una mejor accesibilidad a la plataforma y mejorar la experiencia del usuario, facilita la relación entre la empresa y el postulante para qué la relación siente las mejores bases. Es por eso que te ofrecemos la posibilidad de una plataforma mas a la medida de los requerimientos de nuestros usuarios mas exigentes.</p>
                         </Description>
 
                         <SubTitle>¿Qué incluye el Premium Access?</SubTitle>
                         <Description>
-                            <p> <SpanPink>Transforma</SpanPink>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Maiores nostrum iste rerum magnam impedit neque? Non beatae nihil facere suscipit, quasi quibusdam nam consequatur, quo saepe explicabo incidunt, amet vel?</p>
+                            <div> <SpanPink>Transforma</SpanPink> pone a tu disposición la posibilidad de que la interfaz se adapte a la funcionalidad que se espera para un software personalizado.
+                            Premium Access incluye:
+                            <ul>
+                                <Li> <SpanPink>Herramientas administrativas:</SpanPink> la vista de los postulantes asi como el manejo de estados y la posibilidad de resaltar los favoritos, harán que encontrar al postulante perfecto sea una tarea sencilla.</Li>
+                                <Li><SpanPink>Filtrado sensible:</SpanPink>
+                                la posibilidad de generar una lista mas escueta a trevés de un filtrado mas especifico.</Li>
+                                <Li><SpanPink>Posicionamiento:</SpanPink>
+                                adquiriendo el Premium Access se garantiza a la empresa un mejor posicionamiento en las busquedas de los usuarios, como la posibilidad de aparecer en el apartado empresas destacadas mejorando el acceso de los postulantes a los puestos abiertos por las mismas.</Li>
+                            </ul>
+                            </div>
                         </Description>
 
-                        <SubTitle>Una plataforma adaptada a sus necesidades</SubTitle>
+                        <SubTitle>Una plataforma accesible para todxs</SubTitle>
                         <Description>
-                            <p> <SpanPink>Transforma</SpanPink> Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe molestias aliquid magnam ipsum, officia accusantium. Earum assumenda, tempore ex nihil repellat, laborum, necessitatibus illo voluptates aspernatur veritatis neque quam non.</p>
+                            <p> <SpanPink>Transforma</SpanPink> a la vez que ofrece un servicio a la comunidad se preocupa constantemente en crecer y mejorar la experiencia para todos aquellos que desean transformar el mercado. De esta forma surge la necesidad de crear una opcion para que las empresas se sientan mas comodas en el uso de nuestra aplicación. Estamos en constante creciemiento y nos llena de orgullo que nos elijas para dar el primer paso a una comunidad mas inclusiva.</p>
                         </Description>
                     </Div>
 

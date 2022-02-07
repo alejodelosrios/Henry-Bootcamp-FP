@@ -257,12 +257,53 @@ module.exports = {
     try {
       const { postId } = req.params;
       if (!postId) return res.send("Debes enviar el postId por params");
-      const deletedPost = await prisma.post.delete({
+      const post = await prisma.post.findFirst({
         where: {
           id: Number(postId),
         },
+        include: {
+          applicants: {
+            include: {
+              applicant: true
+            }
+          }
+        }
       });
-      res.json(deletedPost);
+
+      const applicants = post && post.applicants
+
+      applicants && applicants.forEach(async (applicant) => {
+
+        let updateApplicantStatus = await prisma.applicantPool.updateMany({
+          where: {
+            applicantId: Number(applicant.applicantId),
+            postId: Number(post && post.id)
+          },
+          data: {
+            status: "complete"
+          }
+        })
+
+        let notifyApplicant = await prisma.notification.create({
+          data: {
+            type: "update",
+            message: `La oferta ${post && post.title} ha sido dada de baja`,
+            postId: Number(post && postId),
+            applicantId: Number(applicant.applicantId),
+          },
+        })
+      })
+      
+      const hidePost = await prisma.post.update({
+        where: {
+          id: Number(postId)
+        },
+        data: {
+          active: false
+        }
+      })
+
+      res.send("Post eliminado exitosamente");
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
