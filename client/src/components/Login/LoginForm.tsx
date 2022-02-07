@@ -1,8 +1,12 @@
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getUser, createUser, getCompany} from "../../redux/actions/public/generalActions";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUser,
+  createUser,
+  getCompany,
+} from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import {useNavigate} from "react-router";
+import { useNavigate } from "react-router";
 import {
   BackgroundCover,
   BackgroundDiv,
@@ -18,10 +22,10 @@ import {
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import logoGoogle from "../../assets/google-logo.png";
-import {Paragraph} from "../../pages/WelcomePage/styles";
+import { Paragraph } from "../../pages/WelcomePage/styles";
 import Storage from "../../services/storage";
 
-function LoginForm({type}: any) {
+function LoginForm({ type }: any) {
   const navigate = useNavigate();
   const userRole = useSelector((state: any) => state.userReducer.role);
   const companyId = useSelector((state: any) => state.userReducer.company.id);
@@ -34,6 +38,8 @@ function LoginForm({type}: any) {
       navigate(`/edit-company/${companyId}`);
     } else if (userRole === "applicant") {
       navigate("/home");
+    } else if (userRole === "admin") {
+      navigate("/admin");
     }
   }, [userRole]);
 
@@ -53,7 +59,7 @@ function LoginForm({type}: any) {
     navigate("/home");
   }
 
-  const handleChange = ({target: {name, value}}: any) => {
+  const handleChange = ({ target: { name, value } }: any) => {
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -62,7 +68,7 @@ function LoginForm({type}: any) {
   const login = (e: any) => {
     e.preventDefault();
     dispatch(
-      getUser({email: formInputs.email, password: formInputs.password})
+      getUser({ email: formInputs.email, password: formInputs.password })
     );
     setFormInputs({
       email: "",
@@ -108,7 +114,7 @@ function LoginForm({type}: any) {
                 type="text"
               ></StyledInput>
               {type === "register" && (
-                <div style={{width: "100%"}}>
+                <div style={{ width: "100%" }}>
                   <RegisterSelect
                     onChange={(e) => handleChange(e)}
                     id="role"
@@ -140,11 +146,15 @@ function LoginForm({type}: any) {
                 )}
               </div>
             </Form>
-            <Paragraph style={{
-              marginTop: '1rem',
-              marginBottom: '7px',
-              fontSize: '17px'
-            }}>O ingresa con:</Paragraph>
+            <Paragraph
+              style={{
+                marginTop: "1rem",
+                marginBottom: "7px",
+                fontSize: "17px",
+              }}
+            >
+              O ingresa con:
+            </Paragraph>
             <GoogleBtn onClick={google}>
               <div
                 style={{
@@ -167,7 +177,7 @@ function LoginForm({type}: any) {
                 >
                   <GoogleLogo src={logoGoogle} alt="google-logo" />
                 </div>
-                <div style={{marginLeft: "80px"}}>Google</div>
+                <div style={{ marginLeft: "80px" }}>Google</div>
               </div>
             </GoogleBtn>
           </FormContainer>
