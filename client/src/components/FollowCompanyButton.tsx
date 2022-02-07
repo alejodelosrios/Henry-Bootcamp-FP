@@ -29,7 +29,6 @@ const FavouritesButton: FC<Props> = ({ companyId }) => {
     setIsFollowed(checkExistance(followings, companyId))
   }, []);
 
-  // console.log(isFollowed);
   const handleClick = ()=>{
     // dispatch(setFollows(companyId))
     setIsFollowed(!isFollowed);

@@ -49,7 +49,6 @@ const ButtonMELI: FC<Props> = ({ compId }) => {
         date: new Date().toISOString(),
         companyId: compId,
       };
-
       dispatch(updateInfo(premium));
     }
   }, [compId]);

@@ -48,7 +48,6 @@ export const AboutCompany: FC<Props> = ({ companyInfo, setCompanyInfo }) => {
 
     function saveNewData() {
         setIsEdit(false);
-        console.log("CompanyId:", companyInfo.id)
         dispatch(editCompany(companyInfo, companyInfo.id));
     }
     if (!isEdit) {
