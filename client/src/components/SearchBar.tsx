@@ -152,8 +152,6 @@ const SearchBar: FC = () => {
       ...search,
       [name]: value,
     });
-    // console.log(name, value);
-    // console.log(cities);
 
     if (name === "postulacion") {
       setList({

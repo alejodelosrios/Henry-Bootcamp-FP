@@ -127,7 +127,7 @@ export const SubTitle = styled.h2`
     line-height: 36px;
     letter-spacing: 0em;
     text-align: left;
-    color #757577;
+    color: #757577;
     margin-top: -5px;
 `
 

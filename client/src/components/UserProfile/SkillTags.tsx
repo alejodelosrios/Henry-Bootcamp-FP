@@ -142,7 +142,6 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
 
         for (let i = 0; i < skillsArray.length; i++) {
             if (skillsArray[i].name.toLowerCase() === newTag.toLowerCase()) {
-                console.log(skillsArray[i].name)
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
                     applicantId: Number(userId),
                     tagId: Number(skillsArray[i].id)

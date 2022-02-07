@@ -54,9 +54,7 @@ function App() {
           throw new Error("authentication has been failed!");
         })
         .then((resObject) => {
-          // console.log("Respuesta: ", resObject);
           if (!resObject.user.role) {
-            console.log("Set Email", resObject.user);
             setUserLogged(resObject.user);
             let userData = {
               email: resObject.user.emails[0].value,
@@ -64,7 +62,6 @@ function App() {
             };
             dispatch(setUser(userData));
           } else {
-            // console.log("SetUser");
             dispatch(setUser(resObject.user));
           }
         })

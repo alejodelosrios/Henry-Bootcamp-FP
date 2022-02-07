@@ -75,7 +75,6 @@ const userReducer = (state = initialState, action: Action) => {
           },
         };
       }
-      console.log("No entro");
       return {
         ...state,
         id: action.payload.data.id,
@@ -104,7 +103,6 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      // console.log(action.payload);
       return {
         ...state,
         id: action.payload.id,
@@ -121,7 +119,6 @@ const userReducer = (state = initialState, action: Action) => {
         },
       };
     case ActionType.UPDATE_USER:
-      //console.log(action.payload);
       return {
         ...state,
         applicant: {
@@ -130,7 +127,6 @@ const userReducer = (state = initialState, action: Action) => {
         },
       };
     case ActionType.UPDATE_MAIL:
-      console.log(action.payload);
       return {
         ...state,
         email: action.payload,

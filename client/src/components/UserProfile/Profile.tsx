@@ -15,7 +15,6 @@ export const UserProfile: FC = () => {
     const userRole = useSelector((state: any) => state.userReducer.role);
     const dispatch = useDispatch();
     const {postId, applicantId} = useParams();
-    //console.log("Params: ",Number(applicantId))
     useEffect(() => {
         if (userRole === "") {
             navigate("/login");

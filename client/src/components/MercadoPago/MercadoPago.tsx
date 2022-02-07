@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { sendMercadoPago, updateInfo } from "../../redux/actions/private/companyActions";
+import {
+  sendMercadoPago,
+  updateInfo,
+} from "../../redux/actions/private/companyActions";
 import { useQueryParams } from "./useQueryParams";
 import { FC, useEffect } from "react";
 
@@ -14,7 +17,8 @@ const Button = styled.button`
   color: white;
   font-family: Open sans/Regular;
   margin-top: 2vw;
-  z-index: 200;`
+  z-index: 200;
+`;
 
 const SubscribedBtn = styled.div`
   background: ${(props) => props.theme.colors.details.secondary};
@@ -24,49 +28,50 @@ const SubscribedBtn = styled.div`
   color: white;
   font-family: Open sans/Regular;
   margin-top: 2vw;
-  z-index: 200;`
+  z-index: 200;
+`;
 
 type Props = {
   compId: number;
-}
+};
 
-const ButtonMELI: FC<Props> = ({compId}) => {
+const ButtonMELI: FC<Props> = ({ compId }) => {
+  const dispatch = useDispatch();
+  const query: any = useQueryParams();
+  const premium = useSelector(
+    (state: any) => state.userReducer.company.premium
+  );
 
-  const dispatch= useDispatch();
-  const query:any= useQueryParams();
-  const premium = useSelector((state:any)=> state.userReducer.company.premium)
-
-  console.log(query);
-  console.log('compId: ', compId)
-
-  useEffect(()=>{
-    if(query.status && query.status === 'approved'){
-    const premium = {
-      mercadopagoCode: query.payment_id,
-      date: new Date().toISOString(),
-      companyId: compId,
+  useEffect(() => {
+    if (query.status && query.status === "approved") {
+      const premium = {
+        mercadopagoCode: query.payment_id,
+        date: new Date().toISOString(),
+        companyId: compId,
+      };
+      dispatch(updateInfo(premium));
     }
-    console.log(premium.mercadopagoCode);
-
-    dispatch(updateInfo(premium))
-  }}, [compId]) 
+  }, [compId]);
 
   const send = {
-    title: 'Premium Access',
-    price: 2500
-  }
+    title: "Premium Access",
+    price: 2500,
+  };
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    dispatch(sendMercadoPago(send))
-  }
+    dispatch(sendMercadoPago(send));
+  };
 
-
-return (
-  <>
-  {premium?  <SubscribedBtn>Suscrito</SubscribedBtn> : <Button onClick={(e)=>handleSubmit(e)} >Suscribirse</Button>}
-  </>
-)
-}
+  return (
+    <>
+      {premium ? (
+        <SubscribedBtn>Suscrito</SubscribedBtn>
+      ) : (
+        <Button onClick={(e) => handleSubmit(e)}>Suscribirse</Button>
+      )}
+    </>
+  );
+};
 
 export default ButtonMELI;
