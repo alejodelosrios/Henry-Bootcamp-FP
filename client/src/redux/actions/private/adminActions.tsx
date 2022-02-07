@@ -58,6 +58,24 @@ export const getUsers = () => async (dispatch: Dispatch<Action>) => {
   }
 };
 
+export const deleteUser =
+  (id: string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let { data } = await axios.get(`/user/delete/${id}`, {
+        headers: {
+          token: token || "",
+        },
+      });
+      return dispatch({
+        type: ActionType.DELETE_USER,
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export const getNews = () => async (dispatch: Dispatch<Action>) => {
   try {
     token = Storage.get("token");

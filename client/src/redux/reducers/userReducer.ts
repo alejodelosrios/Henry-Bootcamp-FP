@@ -328,6 +328,17 @@ const userReducer = (state = initialState, action: Action) => {
           users: sortByProp(action.payload, "id"),
         },
       };
+    case ActionType.DELETE_USER:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.filter((e: any) => e.id !== action.payload),
+            "id"
+          ),
+        },
+      };
     case ActionType.GET_NEWS:
       return {
         ...state,

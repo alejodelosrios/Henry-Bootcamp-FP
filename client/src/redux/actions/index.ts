@@ -198,6 +198,11 @@ interface getUsers {
   payload: object[];
 }
 
+interface deleteUser {
+  type: ActionType.DELETE_USER;
+  payload: string;
+}
+
 interface getNews {
   type: ActionType.GET_NEWS;
   payload: object[];
@@ -247,5 +252,6 @@ export type Action =
   | getCategories
   | createCategory
   | getUsers
+  | deleteUser
   | getNews
   | createNew;
