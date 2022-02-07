@@ -1,5 +1,6 @@
 import { Action } from "../actions";
 import { ActionType } from "../actions/actionTypes";
+import { sortByProp } from "../../services/sort";
 
 const initialState = {
   id: null,
@@ -7,6 +8,11 @@ const initialState = {
   token: "",
   email: "",
   password: "",
+  admin: {
+    categories: [],
+    users: [],
+    news: [],
+  },
   company: {
     id: null,
     userId: null,
@@ -51,9 +57,7 @@ const initialState = {
 
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
-
     case ActionType.GET_USER:
-
       if (!action.payload.modal) {
         return {
           ...state,
@@ -279,23 +283,66 @@ const userReducer = (state = initialState, action: Action) => {
         },
       };
     case ActionType.SUBMIT_TAGS:
-      console.log('en el reducer ', action.payload);
+      console.log("en el reducer ", action.payload);
       return {
         ...state,
 
         applicant: {
           ...state.applicant,
-          skillTags: action.payload
+          skillTags: action.payload,
         },
       };
     case ActionType.UPDATE_PREMIUM:
-      console.log("Recibido en reducer, userReducer:", action.payload)
+      console.log("Recibido en reducer, userReducer:", action.payload);
       return {
         ...state,
-        company:{
+        company: {
           ...state.company,
-          premium:action.payload
-        } 
+          premium: action.payload,
+        },
+      };
+    case ActionType.GET_CATEGORIES:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          categories: sortByProp(action.payload, "id"),
+        },
+      };
+    case ActionType.CREATE_CATEGORY:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          categories: sortByProp(
+            [...state.admin.categories, action.payload],
+            "id"
+          ),
+        },
+      };
+    case ActionType.GET_USERS:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(action.payload, "id"),
+        },
+      };
+    case ActionType.GET_NEWS:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          news: sortByProp(action.payload, "id"),
+        },
+      };
+    case ActionType.CREATE_NEW:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          news: sortByProp([...state.admin.news, action.payload], "id"),
+        },
       };
     default:
       return state;

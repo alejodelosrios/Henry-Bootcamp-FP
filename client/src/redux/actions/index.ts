@@ -184,6 +184,28 @@ interface updateInfo {
   type: ActionType.UPDATE_PREMIUM;
   payload: object;
 }
+interface getCategories {
+  type: ActionType.GET_CATEGORIES;
+  payload: object[];
+}
+interface createCategory {
+  type: ActionType.CREATE_CATEGORY;
+  payload: object;
+}
+
+interface getUsers {
+  type: ActionType.GET_USERS;
+  payload: object[];
+}
+
+interface getNews {
+  type: ActionType.GET_NEWS;
+  payload: object[];
+}
+interface createNew {
+  type: ActionType.CREATE_NEW;
+  payload: object[];
+}
 
 export type Action =
   | getPosts
@@ -221,4 +243,9 @@ export type Action =
   | sendMercadoPago
   | updateInfo
   | editCompany
-  | setApplicantDetail;
+  | setApplicantDetail
+  | getCategories
+  | createCategory
+  | getUsers
+  | getNews
+  | createNew;
