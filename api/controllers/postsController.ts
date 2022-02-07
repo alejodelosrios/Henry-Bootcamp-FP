@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -233,7 +234,8 @@ module.exports = {
           id: Number(postId),
         },
         data: {
-          endDate: endDate
+          endDate: endDate,
+          notifiedEndDate: false
         }
       });
 
@@ -292,7 +294,25 @@ module.exports = {
             applicantId: Number(applicant.applicantId),
           },
         })
+  
+        //ENVIAR EMAIL A LOS APPLICANTS
+
+        const user = await prisma.user.findFirst({
+          where: {
+            id: applicant && applicant.applicant.userId
+          }
+        })
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.applicant.firstName} ${
+            applicant && applicant.applicant.lastName
+          }`,
+          html: `<p>La oferta ${post && post.title} ha sido dada de baja. Saludos, el equipo de Transforma</p>`,
+        });
       })
+      
       
       const hidePost = await prisma.post.update({
         where: {

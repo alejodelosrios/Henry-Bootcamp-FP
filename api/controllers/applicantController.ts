@@ -59,8 +59,7 @@ module.exports = {
 
   review: async (req: Request, res: Response) => {
     try {
-      const { companyId } = req.params
-      const { description, score } = req.body;
+      const { companyId, description, score } = req.body;
       if(!description) return res.send("Debes incluir un campo 'description' en el body")
       if(!score) return res.send("Debes incluir un campo 'score' en el body")
       if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
@@ -211,9 +210,13 @@ module.exports = {
           },
         });
 
+        if (!applicant?.userId) {
+          return res.status(400).send("something went wrong");
+        }
+
         const user = await prisma.user.findFirst({
           where: {
-            id: applicant && applicant.userId
+            id: applicant.userId
           }
         })
 
@@ -231,15 +234,14 @@ module.exports = {
         });
 
         let emailApplicant = await transporter.sendMail({
-          from: '"Transforma" <transformapage@gmail.com>', // sender address
-          to: `${user && user.email}`, // list of receivers
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
           subject: `${applicant && applicant.firstName} ${
             applicant && applicant.lastName
-          }`, // Subject line
-          text: `Te has postulado con éxito para la oferta ${
+          }`,
+          html: `<p>Te has postulado con éxito para la oferta ${
             post && post.title
-          }. Saludos, el equipo de Transforma`, // plain text body
-          html: "<b>Hello world?</b>", // html body
+          }. Saludos, el equipo de Transforma</p>`,
         });
 
         //NOTIFICAMOS A LA COMPANY QUE RECIBIO UNA POSTULACION
@@ -260,8 +262,7 @@ module.exports = {
           from: '"Transforma" <transformapage@gmail.com>',
           to: `${user && user.email}`,
           subject: `${applicant && applicant.firstName} ${applicant && applicant.lastName}`,
-          text: `${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma`,
-          html: "<b>Hello world?</b>",
+          html: `<p>${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma</p>`,
         });
       }
 
