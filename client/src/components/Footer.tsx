@@ -19,6 +19,7 @@ const ContainerSup = styled.div`
     display: flex;
     justify-content: space-evenly;
     position: relative;
+    width: 70%;
 `;
 const ContainerInf = styled.div`
     display: flex;
@@ -42,7 +43,6 @@ padding: 30px 24px;
 position: relative;
 width: 437px;
 height: 300px;
-left: 40px;
 top: -120px;
 
 background: #FFFFFF;
@@ -62,6 +62,7 @@ margin: 20px;
 `
 const LastContainer = styled.div`
 display:flex;
+align-items: baseline;
 justify-content: space-between;
 width: 100%;
 padding: 20px;
@@ -150,8 +151,9 @@ line-height: 20px;
 color: #757577
 `
 const Img = styled.img`
+border-radius: 10px;
 width: 40px;
-height: auto;
+height: 40px;
 box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
 `
 
