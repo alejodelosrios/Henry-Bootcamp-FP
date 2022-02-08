@@ -50,27 +50,31 @@ const Count = styled.div`
 
 const Modal = styled.div`
     position: absolute;
+    margin-top: 7px;
     bottom: -1;
     right: 0;
     background-color: white;
     width: 300px;
-    max-height: 500px;
+    max-height: 500;
     overflow: auto;
-    border-radius: 10px;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+    z-index: 1000;
 `;
 
-const Noti = styled.li<{ viewed?: boolean }>`
+const Noti = styled.div<{ viewed?: boolean }>`
+    display: flex;
+    align-items: center;
+    padding: 2%;
     width: 100%;
     height: 50px;
     margin: 2px 0;
-    background-color: ${(p) => p.theme.colors.details.secondary1};
+    background-color: ${(p) => p.theme.colors.typography.lighter};
     border-radius: 10px;
     cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: ${p => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
     }
@@ -80,6 +84,12 @@ const Noti = styled.li<{ viewed?: boolean }>`
         css`
             background-color: white;
         `}
+
+    p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 const Notifications: FC<Props> = ({ role }) => {
@@ -134,7 +144,7 @@ const Notifications: FC<Props> = ({ role }) => {
                     {notifications.length
                         ? notifications.map((not: any) => (
                               <Noti key={not.id} viewed={not.viewed}>
-                                  {not.message}
+                                  <p>{not.message}</p>
                               </Noti>
                           ))
                         : "Aún no tienes notificaciones..."}
