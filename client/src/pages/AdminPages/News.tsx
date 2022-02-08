@@ -1,68 +1,19 @@
 import Dashboard from "../Dashboard/Dashboard";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCategories,
-  getNews,
-  getUsers,
-} from "../../redux/actions/private/adminActions";
+import { getNews } from "../../redux/actions/private/adminActions";
 
-import styled from "styled-components";
+import {
+  Container,
+  TableNavBar,
+  Flex,
+  Title,
+  Search,
+  AddButton,
+} from "./styles";
+
 import DataTable from "./DataTable";
 import CreateModal from "./ModalAdmin";
-
-const Container = styled.div`
-  width: 100%;
-  height: 90%;
-  display: flex;
-  overflow-y: auto;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const TableNavBar = styled.div`
-  width: 100%;
-  margin: 2% 0;
-  display: flex;
-  align-items: center;
-
-  div {
-    height: 100%;
-    width: 65%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-
-    label {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    input {
-      margin: 0 5px;
-    }
-  }
-`;
-
-const Search = styled.input`
-  height: 50px;
-  width: 30%;
-  background: none;
-  border: none;
-  border-radius: 20px;
-  padding-left: 4%;
-  box-shadow: -3px -3px 5px 3px rgb(255 255 255),
-    2px 2px 5px 2px rgb(190 190 190);
-
-  &:focus {
-    color: ${(p) => p.theme.colors.typography.dark};
-    outline: none;
-    box-shadow: inset -3px -3px 5px 3px rgb(255 255 255),
-      inset 2px 2px 5px 2px rgb(190 190 190);
-  }
-`;
 
 const Categories = () => {
   const {
@@ -104,15 +55,17 @@ const Categories = () => {
       {" "}
       <Dashboard>
         <Container>
-          news
           <TableNavBar>
+            <Flex>
+              <Title>News</Title>
+              <AddButton onClick={() => agregar()}>Agregar</AddButton>
+            </Flex>
             <Search
               type="text"
               placeholder="Search"
               value={q}
               onChange={(e) => setQ(e.target.value)}
             />
-            <button onClick={() => agregar()}>Agregar</button>
           </TableNavBar>
           {news.length > 0 && <DataTable type="new" data={search(news)} />}
         </Container>
