@@ -46,11 +46,11 @@ const Table = styled.table`
 const DataTable:FC <Props> = ({data, postId, favorites}) => {
 
     // const columns = data[0] && Object.keys(data[0].applicant)
-    const columns = ['image', 'firstName', 'lastName', 'skillTags', 'favorites']
-    const colSpanish = ['Perfil', 'Nombre', 'Apellido', 'Skills', 'Favoritos']
+    const columns = ['image', 'firstName', 'lastName', 'skillTags', 'actions']
+    const colSpanish = ['Perfil', 'Nombre', 'Apellido', 'Skills', 'Acciones']
     
   return (
-    <Table cellPadding={0} cellSpacing={0}>
+    <Table cellPadding={0} cellSpacing={0} data-order=''>
         <thead>
             <tr>{data.length 
                 ? colSpanish.map((heading: any) => (
