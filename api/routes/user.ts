@@ -1,5 +1,6 @@
 import { Router } from "express";
 const userController = require("../controllers/userController");
+const isAuthorized = require("./middlewares/isAuthorized");
 
 const userRouter = Router();
 
@@ -11,6 +12,7 @@ userRouter.post("/login", userController.login);
 userRouter.get("/index", userController.index);
 
 //PUT
+userRouter.put("/admin", isAuthorized(["admin"]), userController.userToAdmin)
 userRouter.put("/login/reset/:email", userController.resetPassword)
 userRouter.put("/update/:userId", userController.update);
 
