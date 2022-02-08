@@ -65,7 +65,7 @@ const Titles = styled.h2`
   line-height: 22px;
   letter-spacing: 0.2px;
   text-align: center;
-  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
 `;
 
 const Inputs = styled.input`
@@ -139,8 +139,6 @@ const SearchBar: FC = () => {
     }
   }
 
-
-
   const [search, setSearch] = useState<Search>({
     postulacion: "",
     localizacion: "",
@@ -163,6 +161,9 @@ const SearchBar: FC = () => {
       });
     }
   };
+  const onlyUnique = (value: string, index: number, self: string[]) => {
+    return self.indexOf(value) === index;
+  };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -173,7 +174,10 @@ const SearchBar: FC = () => {
       dispatch(
         filterAndSort({
           ...filters_and_sort,
-          inputNames: [...filters_and_sort.inputNames, search.postulacion],
+          inputNames: [
+            ...filters_and_sort.inputNames,
+            search.postulacion,
+          ].filter(onlyUnique),
         })
       );
     }
@@ -183,7 +187,10 @@ const SearchBar: FC = () => {
           ...filters_and_sort,
           location: {
             ...filters_and_sort.location,
-            city: [...filters_and_sort.location.city, search.localizacion],
+            city: [
+              ...filters_and_sort.location.city,
+              search.localizacion,
+            ].filter(onlyUnique),
           },
         })
       );
@@ -192,10 +199,16 @@ const SearchBar: FC = () => {
       dispatch(
         filterAndSort({
           ...filters_and_sort,
-          inputNames: [...filters_and_sort.inputNames, search.postulacion],
+          inputNames: [
+            ...filters_and_sort.inputNames,
+            search.postulacion,
+          ].filter(onlyUnique),
           location: {
             ...filters_and_sort.location,
-            city: [...filters_and_sort.location.city, search.localizacion],
+            city: [
+              ...filters_and_sort.location.city,
+              search.localizacion,
+            ].filter(onlyUnique),
           },
         })
       );

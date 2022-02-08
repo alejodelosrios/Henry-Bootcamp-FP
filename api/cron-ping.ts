@@ -9,7 +9,10 @@ cron.schedule('* * * * *', async function() {
 
       const post = await prisma.post.findFirst({
           where: {
-              endDate: {gte:date,lt: datePlusOneDay},
+              endDate: {
+                gte:date,
+                lt: datePlusOneDay
+              },
               notifiedEndDate: false
           },
           include: {
@@ -58,9 +61,9 @@ cron.schedule('* * * * *', async function() {
           subject: `${post && post.company.name}`,
           html: `<p>Tu publicación para la oferta de ${post && post.title} vencera en menos de 24hs</p>`,
         });
-      }
 
-      console.log(post)
+        console.log(updatePost)
+      }
     } catch(error){
       console.log(error)
     }

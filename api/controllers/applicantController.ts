@@ -214,9 +214,19 @@ module.exports = {
           return res.status(400).send("something went wrong");
         }
 
-        const user = await prisma.user.findFirst({
+        const applicantUser = await prisma.user.findFirst({
           where: {
             id: applicant.userId
+          }
+        })
+
+        if (!post?.companyId) {
+          return res.status(400).send("something went wrong");
+        }
+
+        const companyUser = await prisma.user.findFirst({
+          where: {
+            id: post.companyId
           }
         })
 
@@ -235,7 +245,7 @@ module.exports = {
 
         let emailApplicant = await transporter.sendMail({
           from: '"Transforma" <transformapage@gmail.com>',
-          to: `${user && user.email}`,
+          to: `${applicantUser && applicantUser.email}`,
           subject: `${applicant && applicant.firstName} ${
             applicant && applicant.lastName
           }`,
@@ -260,7 +270,7 @@ module.exports = {
 
         let emailCompany = await transporter.sendMail({
           from: '"Transforma" <transformapage@gmail.com>',
-          to: `${user && user.email}`,
+          to: `${companyUser && companyUser.email}`,
           subject: `${applicant && applicant.firstName} ${applicant && applicant.lastName}`,
           html: `<p>${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma</p>`,
         });
