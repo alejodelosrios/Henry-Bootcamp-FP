@@ -70,7 +70,10 @@ const Categories = () => {
   } = useSelector((state: any) => state.userReducer);
   const dispatch = useDispatch();
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+  });
 
   const columns = news[0] && Object.keys(news[0]);
   // const filters = ["id", "name"];
@@ -86,7 +89,10 @@ const Categories = () => {
   };
 
   const agregar = () => {
-    setModal(true);
+    setModal({
+      open: true,
+      type: "addNews",
+    });
   };
 
   useEffect(() => {
@@ -111,8 +117,9 @@ const Categories = () => {
           {news.length > 0 && <DataTable type="new" data={search(news)} />}
         </Container>
       </Dashboard>
-      {modal && (
+      {modal.open && (
         <CreateModal
+          modal={modal}
           title="News"
           properties={["title", "description", "image"]}
           setModal={setModal}

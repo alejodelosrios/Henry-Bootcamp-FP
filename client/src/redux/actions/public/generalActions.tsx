@@ -1,27 +1,25 @@
 import axios from "axios";
-import {Dispatch} from "redux";
+import { Dispatch } from "redux";
 import Storage from "../../../services/storage";
-import {ActionType} from "../actionTypes";
-import {Action} from "../index";
+import { ActionType } from "../actionTypes";
+import { Action } from "../index";
 
-let token:any;
+let token: any;
 export const getUser =
   (userData?: any) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
       let res;
       if (token) {
-        res = await axios.post(`/user/login`, userData,
-          {
-            headers: {
-              token: token,
-            },
-          }
-        );
+        res = await axios.post(`/user/login`, userData, {
+          headers: {
+            token: token,
+          },
+        });
       } else {
         res = await axios.post(`/user/login`, userData);
-        const {token} = res.data;
-        Storage.set('token', token);
+        const { token } = res.data;
+        Storage.set("token", token);
       }
       const data = res.data;
       return dispatch({
@@ -36,7 +34,6 @@ export const getUser =
     }
   };
 
-
 export const setUser = (userData: any) => {
   return {
     type: ActionType.SET_USER,
@@ -47,10 +44,10 @@ export const setUser = (userData: any) => {
 export const createUser =
   (userData: any) => async (dispatch: Dispatch<Action>) => {
     try {
-      let {data} = await axios.post(`/user/register`, userData);
+      let { data } = await axios.post(`/user/register`, userData);
 
-      const {token} = data;
-      Storage.set('token', token);
+      const { token } = data;
+      Storage.set("token", token);
       // let resCreate = await axios.post(`/user/create`, userData);
 
       // let resGet = await axios.get(`/user/${userData.email}`);
@@ -77,14 +74,14 @@ export const createUser =
   };
 
 export const setUserCreateModal = (data: any) => {
-  return {type: ActionType.SET_USER_CREATE_MODAL, payload: data};
+  return { type: ActionType.SET_USER_CREATE_MODAL, payload: data };
 };
 
 export const getCompany =
   (companyId: string | undefined) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      let {data}: any = await axios.get(`/company/${companyId}`, {
+      let { data }: any = await axios.get(`/company/${companyId}`, {
         headers: {
           token: token,
         },
@@ -98,3 +95,11 @@ export const getCompany =
       console.log(error);
     }
   };
+export const resetPassword = (email: string) => async () => {
+  try {
+    token = Storage.get("token");
+    await axios.put(`/user/login/reset/${email}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
