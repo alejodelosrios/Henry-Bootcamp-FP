@@ -251,8 +251,9 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
                     flexDirection: "column",
                     alignItems: "flex-start",
                     padding: "40px",
-                    width: "45%",
-                    height: "55%",
+                    minWidth: '40%',
+                    width: "auto",
+                    height: "auto",
                     background: "#FFFFFF",
                     zIndex: "1001",
                     top: "50%",
@@ -315,6 +316,7 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
             </div>
             <div
                 className="overlay"
+                onClick={addExperience}
                 style={{
                     position: "fixed",
                     opacity: flag,
@@ -351,8 +353,9 @@ export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
                     flexDirection: "column",
                     alignItems: "flex-start",
                     padding: "40px",
-                    width: "40%",
-                    height: "55%",
+                    minWidth: '40%',
+                    width: "auto",
+                    height: "auto",
                     background: "#FFFFFF",
                     zIndex: "1001",
                     top: "50%",
