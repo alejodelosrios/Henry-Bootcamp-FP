@@ -48,8 +48,8 @@ module.exports = {
           modality: modality as string,
           contractType: contractType as string,
           salary: salary as string,
-          startDate: startDate as string,
-          endDate: endDate as string,
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
           tags: tags as string[],
           categoryId: Number(category),
           companyRating: company && company.rating

@@ -506,7 +506,7 @@ async function main(){
                     ]),
                     salary: `${faker.datatype.number()}usd`,
                     startDate: new Date(),
-                    endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+                    endDate: faker.random.arrayElement([new Date(new Date().getTime()+(23*60*60*1000)), new Date(new Date().getTime()+(2*23*60*60*1000)), new Date(new Date().getTime()+(4*23*60*60*1000))]),
                     tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
                     categoryId: 1+Math.floor(Math.random()*(categories.length-1))
                 }
