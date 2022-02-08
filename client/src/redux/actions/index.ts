@@ -144,6 +144,9 @@ interface getNotifications {
     role: string;
   };
 }
+interface setNotification {
+  type: ActionType.SET_NOTIFICATION;
+}
 interface getFavorite {
   type: ActionType.GET_FAVORITES;
   payload: object[];
@@ -258,6 +261,7 @@ export type Action =
   | deleteUserLanguages
   | setUserFollows
   | getNotifications
+  | setNotification
   | getFavorite
   | jobApplication
   | getCompany
