@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {
   getUser,
   createUser,
@@ -7,7 +7,7 @@ import {
   resetPassword,
 } from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import { useNavigate } from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {
   BackgroundCover,
   BackgroundDiv,
@@ -23,11 +23,12 @@ import {
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import logoGoogle from "../../assets/google-logo.png";
-import { Paragraph } from "../../pages/WelcomePage/styles";
+import {Paragraph} from "../../pages/WelcomePage/styles";
 import Storage from "../../services/storage";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
-function LoginForm({ type }: any) {
+function LoginForm({type}: any) {
+  let location = useLocation();
   const userRole = useSelector((state: any) => state.userReducer.role);
   const companyId = useSelector((state: any) => state.userReducer.company.id);
   const token = useSelector((state: any) => state.userReducer.token);
@@ -62,7 +63,7 @@ function LoginForm({ type }: any) {
     navigate("/home");
   }
 
-  const handleChange = ({ target: { name, value } }: any) => {
+  const handleChange = ({target: {name, value}}: any) => {
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -71,7 +72,7 @@ function LoginForm({ type }: any) {
   const login = (e: any) => {
     e.preventDefault();
     dispatch(
-      getUser({ email: formInputs.email, password: formInputs.password })
+      getUser({email: formInputs.email, password: formInputs.password})
     );
     setFormInputs({
       email: "",
@@ -109,15 +110,25 @@ function LoginForm({ type }: any) {
         <BackgroundDiv className="background"></BackgroundDiv>
         <BackgroundCover className="background-cover">
           <FormContainer>
-            <img src={logo} alt="" className="logo" />
-            <Title>Acceder</Title>
+            <Link
+              to="/home"
+              style={{textDecoration: "none", marginTop: "16px"}}
+            >
+              <img src={logo} alt="" className="logo" />
+            </Link>
+
+            {location.pathname === "/login" ? (
+              <Title>Ingreso</Title>
+            ) : location.pathname === "/register" ? (
+              <Title>Registro</Title>
+            ) : null}
             <Form
               onSubmit={
                 type === "register"
                   ? register
                   : type === "login"
-                  ? login
-                  : reset
+                    ? login
+                    : reset
               }
             >
               <StyledInput
@@ -133,12 +144,12 @@ function LoginForm({ type }: any) {
                   value={formInputs.password}
                   onChange={(e) => handleChange(e)}
                   name="password"
-                  type="text"
+                  type="password"
                 ></StyledInput>
               )}
 
               {type === "register" && (
-                <div style={{ width: "100%" }}>
+                <div style={{width: "100%"}}>
                   <RegisterSelect
                     onChange={(e) => handleChange(e)}
                     id="role"
@@ -154,7 +165,7 @@ function LoginForm({ type }: any) {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   alignItems: "center",
                   width: "100%",
                 }}
@@ -178,49 +189,65 @@ function LoginForm({ type }: any) {
               <>
                 <Paragraph
                   style={{
-                    marginTop: "1rem",
-                    marginBottom: "7px",
-                    fontSize: "17px",
+                    margin: "2rem 0",
+                    fontSize: "1rem",
                   }}
                 >
                   O ingresa con:
                 </Paragraph>
                 <GoogleBtn onClick={google}>
                   <div
+                    className="google-btn"
                     style={{
                       display: "flex",
+                      justifyContent: "center",
                       alignItems: "center",
+                      padding: "0.2rem",
+                      background: "white",
+                      zIndex: "3",
+                      textAlign: "center",
+                      borderRadius: "0.3rem",
                     }}
                   >
-                    <div
-                      className="google-btn"
-                      style={{
-                        width: "38px",
-                        height: "38px",
-                        background: "white",
-                        zIndex: "3",
-                        alignItems: "center",
-                        textAlign: "center",
-                        paddingTop: "7px",
-                        borderRadius: "2px",
-                      }}
-                    >
-                      <GoogleLogo src={logoGoogle} alt="google-logo" />
-                    </div>
-                    <div style={{ marginLeft: "80px" }}>Google</div>
+                    <GoogleLogo src={logoGoogle} alt="google-logo" />
                   </div>
+                  <div style={{width: "100%"}}>Google</div>
                 </GoogleBtn>
               </>
             )}
             {type !== "reset" ? (
-              <Link to="/reset-password" style={{ marginTop: "16px" }}>
-                ¿Olvidaste tu contraseña?
-              </Link>
+              <>
+                <Link
+                  to="/reset-password"
+                  style={{textDecoration: "none", marginTop: "16px"}}
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </>
             ) : (
-              <Link to="/login" style={{ marginTop: "16px" }}>
+              <Link
+                to="/login"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
                 Ingresar
               </Link>
             )}
+
+            {location.pathname === "/login" ? (
+              <Link
+                to="/register"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
+                Registrarse
+              </Link>
+            ) : location.pathname === "/register" ? (
+              <Link
+                to="/login"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
+                Ingresar
+              </Link>
+            ) : null}
           </FormContainer>
         </BackgroundCover>
       </MainDiv>
