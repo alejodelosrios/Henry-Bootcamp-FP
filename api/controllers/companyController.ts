@@ -210,8 +210,18 @@ module.exports = {
           post && post.title
         } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
       });
+
+      const sortedApplicants = post && post.applicants.sort(function(a, b) {
+        if(a.applicant.firstName > b.applicant.firstName){
+            return 1
+        }
+        if(b.applicant.firstName > a.applicant.firstName) {
+            return -1
+        }
+        return 0
+      })
       
-      res.json(post && post.applicants);
+      res.json(sortedApplicants && sortedApplicants);
     } catch (error) {
       res.send(error);
     }
