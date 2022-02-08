@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { getFavorite } from "../redux/actions/private/applicantActions";
+import Star from '../assets/Star.svg';
 
 type Props = {
     role: string;
@@ -105,7 +106,7 @@ const Favorites: FC<Props> = ({ role }) => {
                 onClick={() => setModal((oldState) => !oldState)}
                 modal={modal}
             >
-                {"★"}
+                <img src={Star} alt='favorites'/>
             </FavBut>
 
             {modal && (

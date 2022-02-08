@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { getNotifications, setNotification } from "../redux/actions/private/generalActions";
+import Bell from '../assets/Bell.svg';
 
 type Props = {
     role: string;
@@ -149,7 +150,7 @@ const Notifications: FC<Props> = ({ role }) => {
                 onClick={() => setModal((oldState) => !oldState)}
                 modal={modal}
             >
-                {"●"}
+                <img src={Bell} alt='notifications'/>
                 {viewed && !modal ? <Count>{viewed}</Count> : null}
             </NotBut>
 

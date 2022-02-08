@@ -3,6 +3,7 @@ import {Logout} from "./Logout";
 import {Link} from "react-router-dom";
 import styled, {css} from "styled-components";
 import {useSelector} from "react-redux";
+import User from '../assets/User.svg';
 
 type P = {
     user: any;
@@ -95,7 +96,7 @@ const ProfModalButton: FC<P> = ({user}) => {
     return (
         <NotCont ref={divRef}>
             <NotBut onClick={handleNotif} modal={modal}>
-                {"+"}
+                <img src={User} alt='user options' />
             </NotBut>
 
             {modal && (
