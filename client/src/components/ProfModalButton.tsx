@@ -36,6 +36,7 @@ const NotBut = styled.button<{modal?: boolean}>`
 
 const Modal = styled.div`
     position: absolute;
+    margin-top: 7px;
     bottom: -1;
     right: 0;
     background-color: white;
@@ -51,12 +52,15 @@ const Modal = styled.div`
 
 const Noti = styled.div`
     width: 100%;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     padding: 0.3rem 0.5rem;
+    margin: 2px 0;
     border-radius: 5px;
     cursor: pointer;
+    color: ${p => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
     }
