@@ -225,7 +225,19 @@ module.exports = {
           favoritedBy: true
         }
       });
-      res.json(post);
+      if(post){
+        post.applicants = post && post.applicants.sort(function(a, b) {
+          if(a.applicant.firstName > b.applicant.firstName){
+              return 1
+          }
+          if(b.applicant.firstName > a.applicant.firstName) {
+              return -1
+          }
+          return 0
+        })
+      }
+      
+      res.json(post && post);
     } catch (error) {
       console.log(error);
       res.send(error);
