@@ -69,7 +69,10 @@ const Users = () => {
   } = useSelector((state: any) => state.userReducer);
   const dispatch = useDispatch();
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+  });
   const [user, setUser] = useState({});
 
   const columns = users[0] && Object.keys(users[0]);
@@ -112,8 +115,14 @@ const Users = () => {
           )}
         </Container>
       </Dashboard>
-      {modal && (
-        <ModalAdmin user={user} title="" properties={[]} setModal={setModal} />
+      {modal.open && (
+        <ModalAdmin
+          modal={modal}
+          user={user}
+          title=""
+          properties={[]}
+          setModal={setModal}
+        />
       )}
     </>
   );

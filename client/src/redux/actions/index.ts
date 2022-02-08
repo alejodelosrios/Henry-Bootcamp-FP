@@ -200,9 +200,13 @@ interface getUsers {
 
 interface deleteUser {
   type: ActionType.DELETE_USER;
-  payload: string;
+  payload: number;
 }
 
+interface convertToAdminRole {
+  type: ActionType.CONVERT_TO_ADMIN_ROLE;
+  payload: number;
+}
 interface getNews {
   type: ActionType.GET_NEWS;
   payload: object[];
@@ -257,6 +261,7 @@ export type Action =
   | createCategory
   | getUsers
   | deleteUser
+  | convertToAdminRole
   | getNews
   | createNew
   | postReview;

@@ -337,6 +337,22 @@ const userReducer = (state = initialState, action: Action) => {
           ),
         },
       };
+    case ActionType.CONVERT_TO_ADMIN_ROLE:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.map((e: any) => {
+              if (e.id === action.payload) {
+                e.role = "admin";
+              }
+              return e;
+            }),
+            "id"
+          ),
+        },
+      };
     case ActionType.GET_NEWS:
       return {
         ...state,
