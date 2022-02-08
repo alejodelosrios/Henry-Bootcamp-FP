@@ -1,11 +1,6 @@
 import styled from "styled-components";
 import backgroundImg from "../../assets/two_people.jpg";
 
-let white = "white";
-let boxShadow = "box-shadow: 4px 4px 12px 6px rgba(93, 95, 239, 0.1);";
-let inputPlaceholderColor = "#AFB0E9";
-let cardRadius = "30px";
-
 export const MainDiv = styled.div`
     display: flex;
     align-items: center;
@@ -17,7 +12,7 @@ export const MainDiv = styled.div`
 `;
 
 export const FormContainer = styled.div`
-    background: ${white};
+    background: white;
     width: 400px;
     height: auto;
     display: flex;
@@ -25,8 +20,8 @@ export const FormContainer = styled.div`
     justify-content: center;
     align-items: center;
     padding: 50px 30px;
-    ${boxShadow};
-    border-radius: ${cardRadius};
+    box-shadow: 4px 4px 12px 6px rgba(93, 95, 239, 0.1);
+    border-radius: 1.5rem;
     z-index: 3;
 `;
 export const BackgroundDiv = styled.div`
@@ -69,7 +64,7 @@ export const StyledInput = styled.input`
     font-family: ${(props) => props.theme.colors.typography.openSans};
     color: ${(props) => props.theme.colors.typography.darkest};
     ::placeholder {
-        color: ${inputPlaceholderColor};
+        color: ${(props) => props.theme.colors.typography.darkest};
     }
     border-radius: 0.5rem;
     border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
