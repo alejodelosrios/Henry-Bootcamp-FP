@@ -46,18 +46,19 @@ const ContenedorB2 = styled.div`
 const ContenedorC = styled.div`
   display: flex;
   padding: 0px;
-  justify-content: space-evenly;
-  flex-direction: column;
+  justify-content: start;
+  /* flex-direction: column; */
   width: 458px;
   height: 76px;
   margin-right: 10px;
+  
 `;
 const ContenedorD = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
 const ContenedorE = styled.div`
-  width: 146.68px;
+  width: 10vw;
   height: 28px;
 `;
 const ContenedorF = styled.div`
@@ -73,17 +74,17 @@ const ContenedorF = styled.div`
 `;
 
 const Title = styled.h4`
-  margin: 0px;
-  font-size: 20px;
+  margin-right: 2vw;
+  font-size: 1.3vw;
   font-weight: 30px;
   color: #757577;
 `;
 const P = styled.p`
-  font-size: 12px;
+  font-size: 0.9vw;
   color: #757577;
 `;
 const P2 = styled.p`
-  font-size: 10px;
+  font-size: 1vw;
   color: #bbbabc;
 `;
 const P3 = styled.p`
@@ -139,12 +140,12 @@ const Post = ({
             <P>{location}</P>
           </div>
           <ContenedorB2>
-            <ContenedorD>
+            {/* <ContenedorD>
               <ContenedorE>
                 <P2>Experiencia:</P2>
                 <P></P>
               </ContenedorE>
-            </ContenedorD>
+            </ContenedorD> */}
             <ContenedorD>
               <ContenedorE>
                 <P2>Modalidad:</P2>
@@ -161,7 +162,7 @@ const Post = ({
         </ContenedorC>
       </ContenedorB>
       <ContenedorF>
-        <P3>{startDate}</P3>
+        <P3>See More!</P3>
         <FavouritesButton postId={postId} />
       </ContenedorF>
     </ContenedorA>

@@ -216,6 +216,12 @@ interface postReview {
   payload: any;
 }
 
+interface getPremiums {
+  type: ActionType.GET_PREMIUMS;
+  payload: any;
+}
+
+
 export type Action =
   | getPosts
   | set_current_items_by_page
@@ -259,4 +265,5 @@ export type Action =
   | deleteUser
   | getNews
   | createNew
-  | postReview;
+  | postReview
+  | getPremiums;
