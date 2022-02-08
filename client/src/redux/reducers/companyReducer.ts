@@ -66,6 +66,14 @@ const companyReducer = (state = initialState, action: Action) => {
         applicantDetail: action.payload,
       };
     }
+    case ActionType.POST_REVIEW:
+      return {
+        ...state,
+        companyDetail: {
+          ...state.companyDetail,
+          reviews: [...state.companyDetail.reviews, action.payload],
+        },
+      };
     default:
       return state;
   }

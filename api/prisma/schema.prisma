@@ -101,8 +101,9 @@ model Post {
   modality      String
   contractType  String
   salary        String
-  startDate     String
-  endDate       String
+  startDate     DateTime        @default(now())
+  endDate       DateTime
+  notifiedEndDate Boolean         @default(false)
   companyRating Int?            @default(0)
   tags          String[]
   active        Boolean?        @default(true)
@@ -196,7 +197,7 @@ model Notification {
 
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
-  postId      Int
+  postId      Int?
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?

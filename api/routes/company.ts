@@ -23,12 +23,14 @@ companyRouter.get(
   isAuthorized(["admin", "company"]),
   companyController.index
 );
+companyRouter.get("/premium", companyController.getPremiumCompanies);
 companyRouter.get("/:companyId", companyController.companyById);
 companyRouter.get(
   "/posts/:companyId",
   isAuthorized(["admin", "company"]),
   companyController.getPosts
 );
+
 
 //PUT
 companyRouter.put(
