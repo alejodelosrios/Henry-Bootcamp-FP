@@ -28,3 +28,25 @@ export const getNotifications =
         console.log(error);
       }
   };
+
+export const setNotification = (notificationId:number, object:object) => async (dispatch: Dispatch<Action>)=>{
+  try {
+    const token = Storage.get("token");
+    let {data}: any = await axios.put(`/notification/update/${notificationId}`, object,
+      {
+        headers: {
+          token: token || "",
+        },
+      }
+    );
+
+    console.log(data);
+
+    return dispatch({
+      type: ActionType.SET_NOTIFICATION
+    });
+  } catch (error) {
+    console.log("Ups! algo salió mal");
+    console.log(error);
+  }
+}

@@ -1,7 +1,8 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { getNotifications } from "../redux/actions/private/generalActions";
+import { getNotifications, setNotification } from "../redux/actions/private/generalActions";
 
 type Props = {
     role: string;
@@ -77,6 +78,13 @@ const Noti = styled.div<{ viewed?: boolean }>`
     color: ${p => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
+        height: 100%;
+        border: solid 1px ${p => p.theme.colors.details.secondary2};
+        
+        p{
+            white-space: pre-wrap;
+            font-size: 85%;
+        }
     }
 
     ${(p) =>
@@ -129,6 +137,12 @@ const Notifications: FC<Props> = ({ role }) => {
             document.removeEventListener("mousedown", checkIfClickedOutside);
         };
     }, [modal]);
+
+    const handleNotif = (not:any)=>{
+        // dispatch(setNotification(not.id, {viewed: true, message: 'hola'}))
+        console.log(not);
+    }
+
     return (
         <NotCont ref={divRef}>
             <NotBut
@@ -143,9 +157,22 @@ const Notifications: FC<Props> = ({ role }) => {
                 <Modal>
                     {notifications.length
                         ? notifications.map((not: any) => (
-                              <Noti key={not.id} viewed={not.viewed}>
-                                  <p>{not.message}</p>
-                              </Noti>
+                                <Noti 
+                                    key={not.id}
+                                    onClick={()=> handleNotif(not)}
+                                    viewed={not.viewed}>
+                                    <p>{not.message}</p>
+                                </Noti>
+                                // <Link 
+                                //     to={`/company/${not.companyId}/post/${not.postId}`}
+                                //     key={not.id} 
+                                //     style={{textDecoration:'none'}} 
+                                //     onClick={()=> handleNotif(not)}
+                                // >
+                                //     <Noti viewed={not.viewed}>
+                                //         <p>{not.message}</p>
+                                //     </Noti>
+                                // </Link>
                           ))
                         : "Aún no tienes notificaciones..."}
                 </Modal>
