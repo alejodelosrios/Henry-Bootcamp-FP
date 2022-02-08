@@ -146,6 +146,10 @@ interface getNotifications {
 }
 interface setNotification {
   type: ActionType.SET_NOTIFICATION;
+  payload: {
+    data: object[],
+    role: string
+  };
 }
 interface getFavorite {
   type: ActionType.GET_FAVORITES;

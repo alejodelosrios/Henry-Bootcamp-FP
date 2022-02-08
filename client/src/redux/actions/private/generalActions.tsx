@@ -29,10 +29,10 @@ export const getNotifications =
       }
   };
 
-export const setNotification = (notificationId:number, object:object) => async (dispatch: Dispatch<Action>)=>{
+export const setNotification = (notificationId:number, role:string) => async (dispatch: Dispatch<Action>)=>{
   try {
     const token = Storage.get("token");
-    let {data}: any = await axios.put(`/notification/update/${notificationId}`, object,
+    let {data}: any = await axios.put(`/notification/update/${notificationId}`,null,
       {
         headers: {
           token: token || "",
@@ -40,10 +40,9 @@ export const setNotification = (notificationId:number, object:object) => async (
       }
     );
 
-    console.log(data);
-
     return dispatch({
-      type: ActionType.SET_NOTIFICATION
+      type: ActionType.SET_NOTIFICATION,
+      payload: {data, role}
     });
   } catch (error) {
     console.log("Ups! algo salió mal");

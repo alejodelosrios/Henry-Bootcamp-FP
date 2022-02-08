@@ -72,7 +72,7 @@ const Noti = styled.div<{ viewed?: boolean }>`
     width: 100%;
     height: 50px;
     margin: 2px 0;
-    background-color: ${(p) => p.theme.colors.typography.lighter};
+    background-color: ${(p) => p.theme.colors.backgrounds.cards};
     border-radius: 10px;
     cursor: pointer;
     color: ${p => p.theme.colors.details.secondary2};
@@ -118,7 +118,7 @@ const Notifications: FC<Props> = ({ role }) => {
         } else if (role === "company") {
             dispatch(getNotifications(role, company.id));
         }
-    }, []);
+    }, [applicant, company]);
 
     const [modal, setModal] = useState(false);
 
@@ -139,8 +139,7 @@ const Notifications: FC<Props> = ({ role }) => {
     }, [modal]);
 
     const handleNotif = (not:any)=>{
-        // dispatch(setNotification(not.id, {viewed: true, message: 'hola'}))
-        console.log(not);
+        dispatch(setNotification(not.id, role))
     }
 
     return (
