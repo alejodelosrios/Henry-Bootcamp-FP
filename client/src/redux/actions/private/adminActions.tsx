@@ -62,20 +62,43 @@ export const deleteUser =
   (id: string) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
-      let { data } = await axios.get(`/user/delete/${id}`, {
+      let { data } = await axios.delete(`/user/delete/${id}`, {
         headers: {
           token: token || "",
         },
       });
+
       return dispatch({
         type: ActionType.DELETE_USER,
-        payload: id,
+        payload: data.id,
       });
     } catch (error) {
       console.log(error);
     }
   };
 
+export const convertToadminRole =
+  (id: number) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let { data } = await axios.put(
+        `/user/admin`,
+        { userId: id },
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+
+      return dispatch({
+        type: ActionType.CONVERT_TO_ADMIN_ROLE,
+        payload: data.id,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 export const getNews = () => async (dispatch: Dispatch<Action>) => {
   try {
     token = Storage.get("token");

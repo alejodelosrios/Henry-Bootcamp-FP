@@ -1,5 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { StarRating } from "../StarRating";
+import { RatingGraph } from "./RatingGraph";
 import {
   MainDiv,
   Rating,
@@ -11,42 +13,21 @@ import {
   UserRatingText,
   UserRatingTitle,
 } from "./Styles";
+import { VisualRating } from "./VisualRating";
 
 export const CompanyRating = () => {
+  const company = useSelector((state: any) => state.companyReducer.companyDetail);
   return (
     <MainDiv>
-      <RatingCompContainer className="row">
-        <RatingContaier className="rating-container">
-          <div className="title">
-            <RatingTitle>Evaluación general de Pedidos Ya</RatingTitle>
-          </div>
-          <div className="componente-rating">
-            <Rating className="rating-stars">
-              <div>estrellas numero '</div>
-              <div>estrellas comp clickeable</div>
-            </Rating>
-            <div className="rating-description">Basado en 514 evaluaciones</div>
-            <div className="rating-graph">Grafico de rating</div>
-          </div>
-        </RatingContaier>
-        <UserRateContainer className="user-rate-contaier">
-          <div className="title">
-            <UserRatingTitle>Tu opinión cuenta</UserRatingTitle>
-          </div>
-          <div className="text">
-            <UserRatingText>
-              Califica a la empresa según te experiencia como empleade o
-              postulante
-            </UserRatingText>
-          </div>
-          <StarRating />
-          <div className="recomendation">
-            <UserRatingText>
-              profesionales recomioendan trabajar aqui
-            </UserRatingText>
-          </div>
-        </UserRateContainer>
-      </RatingCompContainer>
+      <RatingContaier className="rating-container">
+        <div className="title">
+          <RatingTitle>Evaluación general de {company.name}</RatingTitle>
+          <VisualRating/>
+        </div>
+        <div className="componente-rating">
+          <RatingGraph/>
+        </div>
+      </RatingContaier>
     </MainDiv>
   );
 };

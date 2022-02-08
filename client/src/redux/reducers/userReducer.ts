@@ -321,7 +321,9 @@ const userReducer = (state = initialState, action: Action) => {
         ...state,
         admin: {
           ...state.admin,
-          users: sortByProp(action.payload, "id"),
+          users: sortByProp(action.payload, "id").filter(
+            (e: any) => e.email.search("deleted") < 0
+          ),
         },
       };
     case ActionType.DELETE_USER:
@@ -331,6 +333,22 @@ const userReducer = (state = initialState, action: Action) => {
           ...state.admin,
           users: sortByProp(
             state.admin.users.filter((e: any) => e.id !== action.payload),
+            "id"
+          ),
+        },
+      };
+    case ActionType.CONVERT_TO_ADMIN_ROLE:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.map((e: any) => {
+              if (e.id === action.payload) {
+                e.role = "admin";
+              }
+              return e;
+            }),
             "id"
           ),
         },

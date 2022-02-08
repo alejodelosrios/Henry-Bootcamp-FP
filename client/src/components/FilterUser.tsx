@@ -21,8 +21,11 @@ const Types = styled.div`
 `;
 
 const TypeTitle = styled.div`
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-size: 1vw;
   font-weight: bold;
   margin-bottom: 5%;
+  color: #EF5DA8;
 `;
 
 const Option = styled.div`
@@ -32,6 +35,27 @@ const Option = styled.div`
   justify-content: space-between;
   margin-bottom: 2%;
 `;
+
+const Select = styled.select`
+border: 0.5px solid grey;
+padding: 0.5vw;
+border-radius: 10px;
+color: grey;
+`
+const H2 = styled.h2`
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-size: 2vw;
+  color: grey;
+`
+
+const Label = styled.label`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};`
+
+const OptionSelect = styled.option`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};
+`
 
 interface Filters {
   inputName: string;
@@ -92,19 +116,19 @@ const FilterUser: FC = () => {
 
   return (
     <FilterContainer>
-      <h3>Filtros</h3>
+      <H2>Filtros</H2>
       <Types>
         <TypeTitle>Score</TypeTitle>
         <Option>
-          <label htmlFor="score">Score</label>
-          <select onChange={(e) => handleScore(e)}>
-            <option value="">todos</option>
-            <option value="5">5 ⭐</option>
-            <option value="4">4 ⭐</option>
-            <option value="3">3 ⭐</option>
-            <option value="2">2 ⭐</option>
-            <option value="1">1 ⭐</option>
-          </select>
+          <Label htmlFor="score">Score</Label>
+          <Select onChange={(e) => handleScore(e)}>
+            <OptionSelect value="">Todos</OptionSelect>
+            <OptionSelect value="5">5 ⭐</OptionSelect>
+            <OptionSelect value="4">4 ⭐</OptionSelect>
+            <OptionSelect value="3">3 ⭐</OptionSelect>
+            <OptionSelect value="2">2 ⭐</OptionSelect>
+            <OptionSelect value="1">1 ⭐</OptionSelect>
+          </Select>
         </Option>
       </Types>
       {filter.inputNames.length > 0 && (
@@ -112,7 +136,7 @@ const FilterUser: FC = () => {
           <TypeTitle>Puestos buscados</TypeTitle>
           {filter.inputNames.map((e: string, index: number) => (
             <Option key={index}>
-              <label htmlFor={`inputNames${index}`}>{e}</label>
+              <Label htmlFor={`inputNames${index}`}>{e}</Label>
               <Switcher
                 checkedProp={true}
                 id="inputNames"
@@ -128,7 +152,7 @@ const FilterUser: FC = () => {
           <TypeTitle>Ubicación</TypeTitle>
           {filter.location.city.map((city: string, index: number) => (
             <Option key={index}>
-              <label htmlFor={`location${index}`}>{city}</label>
+              <Label htmlFor={`location${index}`}>{city}</Label>
               <Switcher
                 checkedProp={true}
                 id="location"
@@ -142,22 +166,22 @@ const FilterUser: FC = () => {
       <Types>
         <TypeTitle>Modalidad</TypeTitle>
         <Option>
-          <label htmlFor="presencial">Presencial</label>
+          <Label htmlFor="presencial">Presencial</Label>
           <Switcher id="modality" name="onSite" handleFilter={handleFilter} />
         </Option>
         <Option>
-          <label htmlFor="remota">Remota</label>
+          <Label htmlFor="remota">Remota</Label>
           <Switcher id="modality" name="remote" handleFilter={handleFilter} />
         </Option>
         <Option>
-          <label htmlFor="hibrida">Híbrida</label>
+          <Label htmlFor="hibrida">Híbrida</Label>
           <Switcher id="modality" name="hybrid" handleFilter={handleFilter} />
         </Option>
       </Types>
       <Types>
         <TypeTitle>Tipo de contrado</TypeTitle>
         <Option>
-          <label htmlFor="fullTime">Full Time</label>
+          <Label htmlFor="fullTime">Full Time</Label>
           <Switcher
             id="contractType"
             name="fullTime"
@@ -165,7 +189,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="partTime">Part Time</label>
+          <Label htmlFor="partTime">Part Time</Label>
           <Switcher
             id="contractType"
             name="partTime"
@@ -173,7 +197,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="temporary">Temporal</label>
+          <Label htmlFor="temporary">Temporal</Label>
           <Switcher
             id="contractType"
             name="temporary"
@@ -181,7 +205,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="perHour">por Hora</label>
+          <Label htmlFor="perHour">por Hora</Label>
           <Switcher
             id="contractType"
             name="perHour"
