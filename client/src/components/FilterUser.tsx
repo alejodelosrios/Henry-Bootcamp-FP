@@ -44,8 +44,9 @@ color: grey;
 `
 const H2 = styled.h2`
   font-family: ${p=> p.theme.colors.typography.poppins};
-  font-size: 2vw;
+  font-size: 1.3vw;
   color: grey;
+  font-weight: 500;
 `
 
 const Label = styled.label`
@@ -55,6 +56,7 @@ const Label = styled.label`
 const OptionSelect = styled.option`
   color: grey;
   font-family: ${p=> p.theme.colors.typography.poppins};
+  font-size: 1vw;
 `
 
 interface Filters {
@@ -118,16 +120,16 @@ const FilterUser: FC = () => {
     <FilterContainer>
       <H2>Filtros</H2>
       <Types>
-        <TypeTitle>Score</TypeTitle>
+        <TypeTitle>Puntuación de Empresa</TypeTitle>
         <Option>
-          <Label htmlFor="score">Score</Label>
+          <Label htmlFor="score">Puntuación</Label>
           <Select onChange={(e) => handleScore(e)}>
             <OptionSelect value="">Todos</OptionSelect>
-            <OptionSelect value="5">5 ⭐</OptionSelect>
-            <OptionSelect value="4">4 ⭐</OptionSelect>
-            <OptionSelect value="3">3 ⭐</OptionSelect>
-            <OptionSelect value="2">2 ⭐</OptionSelect>
-            <OptionSelect value="1">1 ⭐</OptionSelect>
+            <OptionSelect value="5">5★</OptionSelect>
+            <OptionSelect value="4">4★</OptionSelect>
+            <OptionSelect value="3">3★</OptionSelect>
+            <OptionSelect value="2">2★</OptionSelect>
+            <OptionSelect value="1">1★</OptionSelect>
           </Select>
         </Option>
       </Types>
@@ -179,7 +181,7 @@ const FilterUser: FC = () => {
         </Option>
       </Types>
       <Types>
-        <TypeTitle>Tipo de contrado</TypeTitle>
+        <TypeTitle>Tipo de contrato</TypeTitle>
         <Option>
           <Label htmlFor="fullTime">Full Time</Label>
           <Switcher

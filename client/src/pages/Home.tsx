@@ -8,7 +8,7 @@ import OutstandingCompany from "../components/OutstandingCompany";
 
 const Container = styled.div`
   margin: auto;
-  width: 70vw;
+  width: 80vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,17 +19,17 @@ const Content = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: start;
 `;
 const Sidebar = styled.aside`
   width: 20%;
   height: 100%;
-  padding: 3.25rem 0;
+  /* padding: 3.25rem 0; */
 `;
 const RightSidebar = styled.div`
-  width: 20%;
+  width: 25%;
   height: 100%;
-  padding: 3.25rem 0;
+  /* padding: 3.25rem 0; */
   display: flex;
   justify-content: start;
   flex-direction: column;
@@ -39,10 +39,10 @@ const SidebarTitle = styled.aside`
   font-family: ${p => p.theme.colors.typography.poppins};
   color: grey;
   font-style: normal;
+  font-weight: 500;
   text-align: center;
-  font-weight: bold;
-  font-size: 2vw;
-  line-height: 2.2vw;
+  /* font-weight: bold; */
+  font-size: 1.3vw;
   letter-spacing: -0.02em;
 `;
 const PostSection = styled.div`
@@ -84,7 +84,6 @@ const Home = () => {
           <RightSidebar>
             <SidebarTitle>
               Empresas
-              <br />
               Destacadas
             </SidebarTitle>
             <OutstandingCompany />

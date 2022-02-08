@@ -90,7 +90,6 @@ const PrivateMenu: FC<Props> = ({role}) => {
             >
               <A About={isAbout}>{"Preguntas Frecuentes"}</A>
             </Link>
-            <A About={isAbout}>{"Empresas"}</A>
           </>
         ) : (
           <>
