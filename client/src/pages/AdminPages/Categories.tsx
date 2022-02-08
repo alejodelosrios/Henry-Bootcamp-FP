@@ -69,7 +69,10 @@ const Categories = () => {
   } = useSelector((state: any) => state.userReducer);
   const dispatch = useDispatch();
 
-  const [modal, setModal] = useState(false);
+  const [modal, setModal] = useState({
+    open: false,
+    type: "",
+  });
 
   const columns = categories[0] && Object.keys(categories[0]);
   // const filters = ["id", "name"];
@@ -85,7 +88,12 @@ const Categories = () => {
   };
 
   const agregar = () => {
-    setModal(true);
+    if (setModal) {
+      setModal({
+        open: true,
+        type: "addCategories",
+      });
+    }
   };
 
   useEffect(() => {
@@ -112,8 +120,9 @@ const Categories = () => {
           )}
         </Container>
       </Dashboard>
-      {modal && (
+      {modal.open && (
         <CreateModal
+          modal={modal}
           title="Categorías"
           properties={["name"]}
           setModal={setModal}

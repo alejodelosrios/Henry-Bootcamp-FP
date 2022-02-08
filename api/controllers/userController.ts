@@ -23,7 +23,7 @@ module.exports = {
       const user = await prisma.user.create({
         data: {
           email: email as string,
-          password: hashedPassword as string,
+          password: password as string,
           role: role as string,
         },
       });
@@ -149,7 +149,7 @@ module.exports = {
           email: email
         },
         data: {
-          password: hashedPassword
+          password: newPassword
         }
       })
       res.send("Contraseña reseteada con exito, se ha enviado un mail a su casilla de correo")
@@ -293,6 +293,23 @@ module.exports = {
     }
   },
 
+  userToAdmin: async (req: Request, res: Response) => {
+    try {
+      const { userId } = req.body;
+      if (!userId) return res.send("Debes enviar userId por body");
+      const newAdmin = await prisma.user.update({
+        where: {
+          id: userId,
+        },
+        data: {
+          role: "admin",
+        },
+      });
+      res.json(newAdmin);
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
   delete: async (req: Request, res: Response) => {
     try {
       const { userId } = req.params;

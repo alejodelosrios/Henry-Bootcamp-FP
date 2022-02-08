@@ -150,3 +150,38 @@ export const editCompany =
         console.log(error);
       }
     };
+
+    export const getPremiums = () => async (dispatch: Dispatch<Action>) => {
+      try {
+        token = Storage.get("token");
+        let { data } = await axios.get(`http://localhost:3002/api/v2/company/premium`, {
+          headers: {
+            token: token || "",
+          },
+        });
+        console.log('esto es data:',data)
+        return dispatch({
+          type: ActionType.GET_PREMIUMS,
+          payload: data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+export const setPostStatus =
+  (postId:number, applicantId:number, newStatus:string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let {data} = await axios.put(`/company/application`, 
+      {applicantId, postId, newStatus},
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      return dispatch({type: ActionType.SET_POST_STATUS, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  }

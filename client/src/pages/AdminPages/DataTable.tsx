@@ -24,10 +24,15 @@ const Table = styled.table`
     }
   }
 `;
+
+interface modal {
+  open: boolean;
+  type: string;
+}
 interface props {
   data: object[];
   type: string;
-  setModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModal?: React.Dispatch<React.SetStateAction<modal>>;
   setUser?: React.Dispatch<React.SetStateAction<object>>;
 }
 
@@ -57,7 +62,21 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
 
   const eliminar = (obj: object) => {
     if (setModal) {
-      setModal(true);
+      setModal({
+        open: true,
+        type: "deleteUser",
+      });
+    }
+    if (setUser) {
+      setUser(obj);
+    }
+  };
+  const changeRole = (obj: object) => {
+    if (setModal) {
+      setModal({
+        open: true,
+        type: "changeRoleUser",
+      });
     }
     if (setUser) {
       setUser(obj);
@@ -85,6 +104,11 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
                   <button type="button" onClick={() => eliminar(row)}>
                     ELiminar
                   </button>
+                  {row.role !== "admin" && (
+                    <button type="button" onClick={() => changeRole(row)}>
+                      Made admin
+                    </button>
+                  )}
                 </td>
               ) : (
                 <td key={j}>{row[colum]}</td>
