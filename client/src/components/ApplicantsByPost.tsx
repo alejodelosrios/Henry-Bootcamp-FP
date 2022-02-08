@@ -86,7 +86,7 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
     return (
         <>
             <Container>
-                {company.premium
+                {true
                     ? applicants.length 
                         ? <><Filters>
                             <Search 
