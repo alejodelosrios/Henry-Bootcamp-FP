@@ -279,14 +279,13 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
             <SkillTags>
                 <Header>
                     <Titles>Skill tags</Titles>
-                    <Edit onClick={() => switchFlag()}>Editar</Edit>
                 </Header>
                 <TagsContainer>
                     {applicantSkills.length
                         ? applicantSkills.map((e: any) => (
                             <Tag key={e.id}>{upperCase(e.name)}</Tag>
                         ))
-                        : null}
+                        : 'Aplicante sin skill tags'}
                 </TagsContainer>
             </SkillTags>
         );

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   CompanyInfo,
   CompanyName,
-  FollowButton,
   Location,
   Logo,
   MainDiv,
@@ -72,9 +71,6 @@ export const CompanyProfile = () => {
               <div className="componente-rating">
                 <VisualRating/>
               </div>
-              {role === "applicant" ? (
-                <FollowButton>+ Seguir</FollowButton>
-              ) : null}
             </RatingContainer>
           </CompanyInfo>
         </PresentationCard>

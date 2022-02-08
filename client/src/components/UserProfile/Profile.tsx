@@ -33,8 +33,6 @@ export const UserProfile: FC = () => {
                 <LanguagesInfoComp userRole={userRole} />
             </LangTagsBox>
             <SkillTagsComp userRole={userRole} />
-            {/*
-            */}
         </MainDiv>
     );
 };
