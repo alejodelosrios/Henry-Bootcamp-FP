@@ -212,8 +212,8 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 padding: '40px',
-                width: '45%',
-                height: '55%',
+                width: 'auto',
+                height: 'auto',
                 background: '#FFFFFF',
                 zIndex: '1001',
                 top: '50%',
@@ -271,7 +271,8 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
                     <Edit onClick={() => updateFunction()}>Guardar</Edit>
                 </Header>
             </div>
-            <div className='overlay' style={{
+            <div onClick={addEducation}
+            className='overlay' style={{
                 position: 'fixed',
                 opacity: flag,
                 display: overlayFlag,
@@ -302,8 +303,9 @@ export const EducationInfoComp: FC<Props> = ({userRole}) => {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 padding: '40px',
-                width: '40%',
-                height: '55%',
+                minWidth: '40%',
+                width: 'auto',
+                height: 'auto',
                 background: '#FFFFFF',
                 zIndex: '1001',
                 top: '50%',
