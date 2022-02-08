@@ -1,9 +1,6 @@
-import {FC, useState} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {FC} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { setFavApplicant } from '../redux/actions/private/companyActions';
-import { checkExistance } from '../services/checkExistance';
 
 interface Props {
     applicant: {
@@ -83,24 +80,9 @@ const Sk = styled.div`
 
 const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId }) => {
 
-    const dispatch = useDispatch();
     const testImg = 'https://i.pinimg.com/564x/f4/8f/0a/f48f0aaac7925f65c5224951d5153b76.jpg'
 
     const {firstName, lastName, country, img, skillTags } = applicant;
-
-    const {favorites} = useSelector(
-        (state:any)=> state.postsReducer.postById
-    )
-
-
-    // checkExistance(favorites, applicantId)
-    const [isFav, setIsFav] = useState(checkExistance(favorites, applicantId));
-
-
-    const handleFav = ()=>{
-        dispatch(setFavApplicant(applicantId, postId));
-        setIsFav(!isFav);
-    }
 
   return (
     <Card>
@@ -115,7 +97,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
                 <Sk key={s.id}>{s.name}</Sk>
         ))}</Skills>
         <Link to={`/company/premium/${companyId}`}>
-            <FavsApp>{/*isFav ? '★' : '☆' */ '☆'}</FavsApp>
+            <FavsApp>{'☆'}</FavsApp>
         </Link>
     </Card>
   );
