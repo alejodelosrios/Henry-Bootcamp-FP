@@ -78,6 +78,13 @@ const Noti = styled.div<{ viewed?: boolean }>`
     color: ${p => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
+        height: 100%;
+        border: solid 1px ${p => p.theme.colors.details.secondary2};
+        
+        p{
+            white-space: pre-wrap;
+            font-size: 85%;
+        }
     }
 
     ${(p) =>
