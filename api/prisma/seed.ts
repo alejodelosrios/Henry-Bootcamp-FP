@@ -56,7 +56,7 @@ let admin = 1
 let applicants = 49
 let companies = 15
 let users = admin + applicants + companies
-let posts = 10 
+let posts = 100 
 
 //CUANDO TENGAN ESOS NUMEROS PACTADOS EJECUTEN 'npx prisma db seed'
 
@@ -557,7 +557,7 @@ async function main(){
     for(let i=0; i<posts*3; i++){
         await prisma.applicantPool.create({
             data: {
-                    status: faker.random.arrayElement(["applied", "completed", "inTouch"]),
+                    status: faker.random.arrayElement(["applied", "inProcess", "inTouch"]),
                     applicantId: 1+Math.floor(Math.random()*(applicants-1)),
                     postId: 1+Math.floor(Math.random()*(posts-1))
                 }

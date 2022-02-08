@@ -226,6 +226,11 @@ interface getPremiums {
 }
 
 
+interface setPostStatus {
+  type: ActionType.SET_POST_STATUS;
+  payload: object;
+}
+
 export type Action =
   | getPosts
   | set_current_items_by_page
@@ -271,4 +276,5 @@ export type Action =
   | getNews
   | createNew
   | postReview
-  | getPremiums;
+  | getPremiums
+  | setPostStatus;

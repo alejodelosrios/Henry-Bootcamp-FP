@@ -7,6 +7,7 @@ interface Props {
   estilo: string;
 }
 const Button = styled.button<{ estilo?: String }>`
+  width: 100%;
   background: ${(props: any) =>
     props.estilo === "primary" ? "#c879ff" : "#9DD6FD"};
   border: none;
