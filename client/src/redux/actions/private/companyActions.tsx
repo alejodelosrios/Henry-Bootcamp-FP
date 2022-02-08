@@ -91,7 +91,7 @@ export const sendMercadoPago = (payload: any) => {
   return async function () {
     try {
       token = Storage.get("token");
-      var response = await axios.post("http://localhost:3002/api/v2/company/payment/checkout", payload,
+      var response = await axios.post(`/company/payment/checkout`, payload,
         {
           headers: {
             token: token || "",
@@ -110,7 +110,7 @@ export const updateInfo = (payload: any) => {
   return async function (dispatch: Dispatch<Action>) {
     try {
       token = Storage.get("token");
-      var response = await axios.post("http://localhost:3002/api/v2/company/payment/payment", payload,
+      var response = await axios.post(`/company/payment/payment`, payload,
         {
           headers: {
             token: token || "",
@@ -154,7 +154,7 @@ export const editCompany =
     export const getPremiums = () => async (dispatch: Dispatch<Action>) => {
       try {
         token = Storage.get("token");
-        let { data } = await axios.get(`http://localhost:3002/api/v2/company/premium`, {
+        let { data } = await axios.get(`/company/premium`, {
           headers: {
             token: token || "",
           },
