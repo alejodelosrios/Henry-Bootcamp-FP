@@ -40,12 +40,13 @@ let buttonDefault = `
 `
 
 let inputDefault = `
-    ${inputBackground};
-    ${inputBorderRadius};
-    ${inputBorders};
-    ${inputPlaceholder};
-    color: ${textGray};
-    ${inputFocus};
+    width: 100%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    font-family: "'Open Sans', sans-serif"
+    color: "#757577";
+    border-radius: 0.5rem;
+    border: 0.5px solid #F0F1F5;
 `
 
 
@@ -381,7 +382,9 @@ export const TagInput = styled.input`
     border-radius: 15px 0 0 15px;
     margin-top: 1rem;
     margin-bottom: 1rem;
-
+    :focus {
+        outline: none
+    }
 `
 
 export const AddTagBtn = styled.button`
