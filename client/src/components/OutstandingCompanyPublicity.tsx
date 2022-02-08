@@ -1,11 +1,13 @@
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import img from '../assets/publicity2.jpg'
 
 const Div = styled.div`
 width: 14vw;
-height: 25vw;
+height: 30vw;
 background-image: url(${img});
-background-size: 10vw 30vw;
+/* background-size: 10vw 30vw; */
 border-radius: 1vw;
 background-size: cover;
 display: flex;
@@ -22,7 +24,7 @@ font-size: 1.1vw;
 font-family: ${p => p.theme.colors.typography.poppins};
 line-height: 1.3vw;
 margin-bottom: 1vw;
-margin-top: 0.5vw;
+margin-top: 0vw;
 color: rgba(239, 93, 168, 0.8);
 `
 
@@ -36,18 +38,23 @@ border: none;
 background-color: rgba(239, 93, 168);
 font-family:${p => p.theme.colors.typography.poppins};
 padding: 10px;
-width: 80%;
+width: 100%;
 border-radius: 10px;
 color: #FFF;
-margin-top: 10vw;
-font-size: 1vw;`
+margin-top: 13vw;
+font-size: 0.9vw;
+cursor: pointer;`
 
 const OCPublicity = () =>{
+    const id = useSelector((state:any) => state.userReducer.company.id)
+    console.log('id:', id)
     return(
         <Div>
             <H1>¿CONOCÉS NUESTRO <br/> PREMIUM ACCESS? </H1>
             <P>Buscamos mejorar la experiencia del usuario y el modo en que interactua con nuestra aplicación.</P>
+            <Link to={`/company/premium/${id}`}>
             <Button>Hazte Premium</Button>
+            </Link>
         </Div>
     )
 };

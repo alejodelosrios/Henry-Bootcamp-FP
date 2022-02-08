@@ -35,7 +35,7 @@ const OutstandingCompany = () => {
 
     return (
         <Container>
-            {premiums.length === 0 ?
+            {premiums.length !== 0 ?
                 <OCPublicity />
                 : premiums.map((p: any) =>
                     <Link to={`/company/${p.id}`} key={p.id} style={divStyle}>

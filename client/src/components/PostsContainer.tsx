@@ -46,6 +46,9 @@ const PostsContainer: FC = () => {
       dispatch(filterAndSort(filters))
     }
   }, [])
+
+  console.log('this is post:', currentItems)
+
   return (
     <>
       <Container>
@@ -58,7 +61,7 @@ const PostsContainer: FC = () => {
               title={post.title}
               location={post.location}
               modality={post.modality}
-              salary={post.salary}
+              contract={post.contractType}
               startDate={post.startDate}
               companyLogo={post.company.companyLogo}
             />

@@ -56,15 +56,16 @@ const IndDivs = styled.div`
 
 const Titles = styled.h2`
   padding: 13px 0 10px 0;
-  font-weight: 100;
+  /* font-weight: 300; */
   color: #757577;
   padding-left: 7px;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
+  font-size: 1.2vw;
+  /* font-style: normal; */
+  font-weight: 500;
   line-height: 22px;
   letter-spacing: 0.2px;
   text-align: center;
+  font-family: ${p=> p.theme.colors.typography.poppins};
 `;
 
 const Inputs = styled.input`
