@@ -89,7 +89,7 @@ export const Aside = styled.div`
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-color:rgba(200, 121, 255, 0.1);
+    background-color:rgba(252, 221, 236);
     border-radius: 15px;
     /* z-index: -10; */
    `
