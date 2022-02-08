@@ -88,7 +88,6 @@ export const Input = styled.input`
     font-family: ${(props) => props.theme.colors.typography.openSans};
     color: ${(props) => props.theme.colors.typography.darkest};
     border-radius: 0.5rem;
-    border-radius: 0.5rem;
     border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `;
 export const TextArea = styled.textarea`
