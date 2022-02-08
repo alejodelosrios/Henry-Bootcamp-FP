@@ -78,12 +78,12 @@ export const deleteUser =
   };
 
 export const convertToadminRole =
-  (id: string) => async (dispatch: Dispatch<Action>) => {
+  (id: number) => async (dispatch: Dispatch<Action>) => {
     try {
       token = Storage.get("token");
       let { data } = await axios.put(
-        `/user/update-role`,
-        { id },
+        `/user/admin`,
+        { userId: id },
         {
           headers: {
             token: token || "",

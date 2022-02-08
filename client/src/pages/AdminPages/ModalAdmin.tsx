@@ -138,7 +138,9 @@ const ModalAdmin: FC<Props> = ({
   };
   const madeAdmin = () => {
     if (user) {
-      dispatch(convertToadminRole(user.id + ""));
+      if (user.id) {
+        dispatch(convertToadminRole(user.id));
+      }
     }
     if (setUser) {
       setUser({});
