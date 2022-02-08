@@ -93,6 +93,14 @@ const postsReducer = (state = initialState, action: Action) => {
         currentPage: 1,
       };
 
+    case ActionType.SET_POST_STATUS:
+      // return state;
+      return {...state,
+        postById: {...state.postById,
+          applicants: action.payload
+        }
+      }
+
     default:
       return state;
   }
