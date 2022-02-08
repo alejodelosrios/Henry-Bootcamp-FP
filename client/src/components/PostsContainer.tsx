@@ -1,88 +1,74 @@
-import { FC, useState } from "react";
-import { useSelector } from "react-redux";
+import {FC, useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router";
 import styled from "styled-components";
-import Paginated from "./Paginated/Paginated";
+import {setCompanyCurrentPosts} from "../redux/actions/private/companyActions";
+import {filterAndSort} from "../redux/actions/public/postsActions";
 import Post from "./Post";
 
 const Container = styled.div`
-    margin: auto;
-    width: 100%;
-    display: flex;
-    overflow-y: auto;
-    flex-direction: column;
-    align-items: center;
+  margin: auto;
+  width: 100%;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+  align-items: center;
+  padding: 1vw;
 `;
 
-interface Props {
-    companyId?: number;
-}
+const P = styled.p`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  margin-top: 10vw;
+  font-size: 2vw;
+  text-align: center;
+`
 
-const PostsContainer: FC<Props> = ({ companyId }) => {
-    const currentPosts = useSelector(
-        (state: any) => state.postsReducer.currentPosts
-    );
-    const companyPosts = currentPosts.filter(
-        (post: any) => post.companyId === companyId
-    );
 
-    //PAGINADO ////////////////////////////////////////////
-    const [currPage, setCurrPage] = useState(1);
-    const PostsPerPage = 4;
-    const ixLastPost = currPage * PostsPerPage;
-    const ixFirstPost = ixLastPost - PostsPerPage;
-    const currPost = currentPosts.slice(ixFirstPost, ixLastPost);
-    const currentCompanyPosts = companyPosts.slice(ixFirstPost, ixLastPost);
+const PostsContainer: FC = () => {
 
-    const paginado = (pagNum: number) => {
-        setCurrPage(pagNum);
-    };
-
-    //console.log(currentCompanyPosts);
-    return (
-        <>
-            <Container>
-                {companyId
-                    ? currentCompanyPosts.map((post: any) => (
-                          <Post
-                              key={post.id}
-                              postId={post.id}
-                              companyId={post.companyId}
-                              title={post.title}
-                              location={post.location}
-                              modality={post.modality}
-                              salary={post.salary}
-                              startDate={post.startDate}
-                          />
-                      ))
-                    : currPost.map((post: any) => (
-                          <Post
-                              key={post.id}
-                              postId={post.id}
-                              companyId={post.companyId}
-                              title={post.title}
-                              location={post.location}
-                              modality={post.modality}
-                              salary={post.salary}
-                              startDate={post.startDate}
-                          />
-                      ))}
-            </Container>
-
-            {companyId ? (
-                <Paginated
-                    PostsPerPage={PostsPerPage}
-                    AllPostsLength={companyPosts.length}
-                    paginado={paginado}
-                />
-            ) : (
-                <Paginated
-                    PostsPerPage={PostsPerPage}
-                    AllPostsLength={currentPosts.length}
-                    paginado={paginado}
-                />
-            )}
-        </>
-    );
+  const {companyId} = useParams();
+  const dispatch = useDispatch();
+  let currentItems = useSelector(
+    (state: any) => state.postsReducer.currentItems
+  );
+  let filters = useSelector(
+    (state: any) => state.postsReducer.filters_and_sort
+  );
+  let posts = useSelector(
+    (state: any) => state.postsReducer.posts
+  );
+  useEffect(() => {
+    if (companyId) {
+      let companyPosts = posts.filter((post: any) => post.companyId + "" === companyId)
+      dispatch(setCompanyCurrentPosts(companyPosts))
+    } else {
+      dispatch(filterAndSort(filters))
+    }
+  }, [])
+  return (
+    <>
+      <Container>
+        {currentItems.length > 0 ? (
+          currentItems.map((post: any) => (
+            <Post
+              key={post.id}
+              postId={post.id}
+              companyId={post.companyId}
+              title={post.title}
+              location={post.location}
+              modality={post.modality}
+              salary={post.salary}
+              startDate={post.startDate}
+              companyLogo={post.company.companyLogo}
+            />
+          ))
+        ) : (
+          <P>Aún no se han realizado Publicaciones</P>
+        )}
+      </Container>
+    </>
+  );
 };
 
 export default PostsContainer;

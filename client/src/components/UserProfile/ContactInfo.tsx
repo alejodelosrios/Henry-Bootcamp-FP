@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateMail, updateUser } from "../../redux/actions/actionCreators";
+import {FC, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../../redux/actions/private/applicantActions";
 import {
   ContactInfo,
   Header,
@@ -10,7 +10,6 @@ import {
   EachContainer,
   SubTitles,
   EditInput,
-  EditTextArea,
   NameDiv,
   NameTag,
   RolTag,
@@ -18,16 +17,29 @@ import {
   ParagraphStyle,
 } from "./Styles";
 
-export const ContactInfoComp = () => {
+type Props = {
+  userRole: string;
+};
+
+export const ContactInfoComp: FC<Props> = ({userRole}) => {
   const [flag, setFlag] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector((state: any) => state.userReducer.applicant);
-  const mail = useSelector((state: any) => state.userReducer.email);
-  //console.log(user);
+
+  const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+  let user = useSelector((state: any) => state.userReducer.applicant);
+  let mail = useSelector((state: any) => state.userReducer.email);
+  let userId = useSelector((state: any) => state.userReducer.applicant.id);
+  if (userRole === "company") {
+    user = applicantDetail;
+    mail = applicantDetail.email;
+    userId = applicantDetail.userId;
+  }
+
   const [userInfo, setUserInfo] = useState({
     phoneNumber: user.phoneNumber,
     country: user.country,
-    email: mail,
+    firstName: user.firstName,
+    lastName: user.lastName,
   });
 
   function editFunction() {
@@ -36,12 +48,16 @@ export const ContactInfoComp = () => {
   function updateFunction() {
     flag ? setFlag(false) : setFlag(true);
     dispatch(
-      updateUser({
-        phoneNumber: userInfo.phoneNumber,
-        country: userInfo.country,
-      })
+      updateUser(
+        {
+          phoneNumber: userInfo.phoneNumber,
+          country: userInfo.country,
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+        },
+        userId
+      )
     );
-    dispatch(updateMail(userInfo.email));
   }
 
   function handleChange(e: any) {
@@ -60,15 +76,16 @@ export const ContactInfoComp = () => {
             {user.firstName} {user.lastName}
           </NameTag>
           {user.experience.length > 0 && (
-            <RolTag>{user.experience[0].position}</RolTag>
+            <RolTag>{user?.education[0]?.degree}</RolTag>
           )}
-          <ContactButton>Contactar</ContactButton>
         </NameDiv>
 
         <ContactCard className="contact-card">
           <Header>
             <Titles>Contacto</Titles>
-            <Edit onClick={() => editFunction()}>Editar</Edit>
+            {userRole === "applicant" &&
+              <Edit onClick={() => editFunction()}>Editar</Edit>
+            }
           </Header>
           <EachContainer>
             <SubTitles>Mail:</SubTitles>
@@ -76,11 +93,11 @@ export const ContactInfoComp = () => {
           </EachContainer>
           <EachContainer>
             <SubTitles>Teléfono:</SubTitles>
-            <ParagraphStyle>{user.phoneNumber}</ParagraphStyle>
+            <ParagraphStyle>{user?.phoneNumber}</ParagraphStyle>
           </EachContainer>
           <EachContainer>
             <SubTitles>Localidad:</SubTitles>
-            <ParagraphStyle>{user.country}</ParagraphStyle>
+            <ParagraphStyle>{user?.country}</ParagraphStyle>
           </EachContainer>
         </ContactCard>
       </ContactInfo>
@@ -92,7 +109,7 @@ export const ContactInfoComp = () => {
           <NameTag>
             {user.firstName} {user.lastName}
           </NameTag>
-          <RolTag>Full Stack Developer</RolTag>
+          <RolTag>{user?.education[0]?.degree}</RolTag>
           <ContactButton>Contactar</ContactButton>
         </NameDiv>
 
@@ -103,31 +120,21 @@ export const ContactInfoComp = () => {
               Guardar
             </Edit>
           </Header>
-          {/* <EachContainer>
-                    <SubTitles>Nombre:</SubTitles>
-                    <EditInput
-                        placeholder={userInfo.firstName}
-                        value={userInfo.firstName}
-                        name="firstName"
-                        onChange={(e) => handleChange(e)}
-                    ></EditInput>
-                </EachContainer>
-                <EachContainer>
-                    <SubTitles>Apellido:</SubTitles>
-                    <EditInput
-                        placeholder={userInfo.lastName}
-                        value={userInfo.lastName}
-                        name="lastName"
-                        onChange={(e) => handleChange(e)}
-                    ></EditInput>
-                </EachContainer> */}
           <EachContainer>
-            <SubTitles>Mail:</SubTitles>
+            <SubTitles>Nombre:</SubTitles>
             <EditInput
-              placeholder={userInfo.email}
-              value={userInfo.email}
-              name="email"
-              disabled
+              placeholder={userInfo.firstName}
+              value={userInfo.firstName}
+              name="firstName"
+              onChange={(e) => handleChange(e)}
+            ></EditInput>
+          </EachContainer>
+          <EachContainer>
+            <SubTitles>Apellido:</SubTitles>
+            <EditInput
+              placeholder={userInfo.lastName}
+              value={userInfo.lastName}
+              name="lastName"
               onChange={(e) => handleChange(e)}
             ></EditInput>
           </EachContainer>

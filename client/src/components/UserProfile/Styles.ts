@@ -15,7 +15,7 @@ let editButtonText = '#EF5DA8';
 let editButtonTextHover = '#ff0083';
 let headerNameColor = '#757577';
 let buttonTextColor = '#FEFEFF';
-let boxShadow = 'box-shadow: 0px 0px 27px -2px #00000040';
+let boxShadow = 'box-shadow: 0px 0px 0px 0px #00000040';
 let cardBorderRadius = 'border-radius: 13px';
 let inputBorderRadius = 'border-radius: 15px';
 let buttonBorderRadius = 'border-radius: 4px';
@@ -51,22 +51,21 @@ let inputDefault = `
 
 
 export const MainDiv = styled.div`
-    margin: 20px 200px;
     display: flex;
     flex-direction: column;
     align-items: center;
 `
 
 export const ContactCard = styled.div`
-    display: flex;
-    background: ${cardBackgroundColor};
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
-    margin-top: 4rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+align-items: start;
+padding: 2rem 1.5rem;
+border-radius: 1rem;
+margin: 1vw 0;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `
 export const ContactInfo = styled.div`
     display: flex;
@@ -80,42 +79,38 @@ export const EachContainer = styled.div`
     flex-direction: row;
 `
 export const Experience = styled.div`
-    display: flex;
-    margin-top: 2rem;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    background: ${cardBackgroundColor};
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
-    margin-top: 4rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+align-items: start;
+padding: 2rem 1.5rem;
+border-radius: 1rem;
+margin: 1vw 0;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
     `
 
 export const ExperienceCard = styled.div`
-    width: 45%;
-    height: 100%;
-    padding: 15px;
-    margin: 10px 5px;
-    display: flex;
-    background: ${cardBackgroundColor};
-    flex-direction: column;
-    align-items: flex-start;
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+align-items: start;
+padding: 2rem 1.5rem;
+border-radius: 1rem;
+margin: 1vw 0;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `
 export const NoExperience = styled.div`
-    display: flex;
-    width: 45%;
-    height: 160px;
-    background: ${noCardBackgroundColor};
-    ${cardBorderRadius};
-    padding: 15px;
-    margin: 10px 5px;
-    align-items: center;
-    justify-content: center;
+display: flex;
+width: 100%;
+height: 60px;
+background: ${noCardBackgroundColor};
+${cardBorderRadius};
+padding: 15px;
+margin: 10px 5px;
+align-items: center;
+justify-content: center;
 `
 export const NoLanguages = styled.div`
     display: flex;
@@ -130,30 +125,28 @@ export const NoLanguages = styled.div`
 `
 
 export const Education = styled.div`
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
-    margin: 10px 5px;
-    margin-top: 4rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+align-items: start;
+padding: 2rem 1.5rem;
+
+border-radius: 1rem;
+margin: 1vw 0;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `
 
 export const EducationCard = styled.div`
-    width: 45%;
-    height: 100%;
-    padding: 15px;
-    margin: 10px 5px;
-    display: flex;
-    background: ${cardBackgroundColor};
-    flex-direction: column;
-    align-items: flex-start;
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+align-items: start;
+padding: 2rem 1.5rem;
+margin: 1vw 0;
+border-radius: 1rem;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `
 
 export const Languages = styled.div`
@@ -164,30 +157,23 @@ export const Languages = styled.div`
 `
 
 export const LanguageCard = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    padding: 15px;
-    margin: 10px 5px;
-    display: flex;
-    background: ${cardBackgroundColor};
-    flex-direction: column;
-    align-items: flex-start;
-    ${cardBorderRadius};
-    padding: 20px 40px 30px 40px;
-    ${boxShadow};
+display: flex;
+flex-direction: column;
+justify-content: center;
+width: 100%;
+/* gap: 2rem; */
+align-items: start;
+padding: 2rem 1.5rem;
+border-radius: 1rem;
+margin: 1vw 0;
+border: 0.5px solid ${(props) => props.theme.colors.backgrounds.base};
 `
 
-export const Titles = styled.h3`
-    font-family: Poppins;
-    font-size: 38px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 56px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: ${primary};    
+export const Titles = styled.h2`
+width: 100%;
+font-size: 1.7rem;
+font-weight: bold;
+color: ${(props) => props.theme.colors.typography.light};
 `
 
 export const SubTitles = styled.h4`
@@ -205,10 +191,10 @@ export const SubTitles = styled.h4`
 `
 export const ParagraphStyle = styled.p`
     font-family: Open Sans;
-    font-size: 24px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: 35px;
+    line-height: 20px;
     letter-spacing: 0em;
     text-align: left;
     color: ${textGray};
@@ -230,7 +216,7 @@ export const EditInput = styled.input`
     font-weight: 400;
     line-height: 35px;
     letter-spacing: 0em;
-    text-align: left;   
+    text-align: left;
     ${inputDefault};
 `
 export const DateInput = styled.input`
@@ -248,7 +234,7 @@ export const DateInput = styled.input`
     font-weight: 400;
     line-height: 35px;
     letter-spacing: 0em;
-    text-align: left;   
+    text-align: left;
     ${inputDefault};
 `
 
@@ -303,7 +289,6 @@ export const EachLang = styled.div`
 `
 export const NameDiv = styled.div`
     width: 100%;
-    font-size: 5rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -312,23 +297,22 @@ export const NameDiv = styled.div`
 
 export const NameTag = styled.h1`
     font-family: Poppins;
-    font-size: 99px;
+    font-size: 3rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 25px;
+    line-height: auto;
     letter-spacing: 0em;
     text-align: left;
 `
 
 export const RolTag = styled.h5`
-    margin-left: 3.8px;
     font-family: Roboto;
-    font-size: 36px;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 120px;
     letter-spacing: 0em;
     text-align: left;
+    text-transform: capitalize;
 `
 
 export const ContactButton = styled.button`
@@ -372,7 +356,7 @@ export const TagsContainer = styled.div`
     justify-content: space-around;
     width: 80%;
     align-items: center;
-    text-align: center;    
+    text-align: center;
     flex-wrap: wrap;
 `
 
@@ -397,7 +381,7 @@ export const TagInput = styled.input`
     border-radius: 15px 0 0 15px;
     margin-top: 1rem;
     margin-bottom: 1rem;
-    
+
 `
 
 export const AddTagBtn = styled.button`
@@ -424,6 +408,3 @@ export const TagsSelect = styled.select`
     width: 100%;
 
 `
-
-
-

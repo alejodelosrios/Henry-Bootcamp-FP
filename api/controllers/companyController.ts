@@ -1,6 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-import { resolveSoa } from "dns";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -49,13 +49,13 @@ module.exports = {
           "Debes incluir un campo 'values', es un arreglo que contiene strings, puede estar vacío"
         );
       if (!aboutValues)
-      return res.send(
-        "Debes incluir un campo 'aboutValues', puede contener una string vacía"
-      );
+        return res.send(
+          "Debes incluir un campo 'aboutValues', puede contener una string vacía"
+        );
       if (!about)
-      return res.send(
-        "Debes incluir un campo 'about', puede contener una string vacía"
-      );
+        return res.send(
+          "Debes incluir un campo 'about', puede contener una string vacía"
+        );
       if (!mission)
         return res.send(
           "Debes incluir un campo 'mission', puede contener una string vacía"
@@ -87,28 +87,6 @@ module.exports = {
     }
   },
 
-  review: async (req: Request, res: Response) => {
-    try {
-      const { companyId } = req.params
-      const { description, score } = req.body;
-      if(!description) return res.send("Debes incluir un campo 'description' en el body")
-      if(!score) return res.send("Debes incluir un campo 'score' en el body")
-      if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
-
-      const review = await prisma.review.create({
-        data: {
-          description: description,
-          score: score,
-          companyId: Number(companyId),
-        },
-      });
-      res.json(review);
-    } catch (error) {
-      console.log(error)
-      res.status(400).send(error);
-    }
-  },
-
   index: async (req: Request, res: Response) => {
     try {
       const companies = await prisma.company.findMany();
@@ -131,7 +109,8 @@ module.exports = {
           reviews: true,
           posts: true,
           followers: true,
-          images: true
+          images: true,
+          payment: true,
         },
       });
       res.json(company);
@@ -149,7 +128,11 @@ module.exports = {
           id: Number(companyId),
         },
         include: {
-          posts: true,
+          posts: {
+            where: {
+              active: true
+            }
+          },
         },
       });
       if (company) {
@@ -172,47 +155,125 @@ module.exports = {
         },
         data: {
           status: newStatus,
-        }
+        },
       });
 
       //NOTIFY APPLICANT
 
-      const post = await prisma.post.findFirst({
+      const applicant = await prisma.applicant.findFirst({
         where: {
-          id: Number(postId)
+          id: Number(applicantId)
         }
       })
+
+      if (!applicant?.userId) {
+        return res.status(400).send("something went wrong");
+      }
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id: applicant.userId
+        }
+      })
+
+      const post = await prisma.post.findFirst({
+        where: {
+          id: Number(postId),
+        },
+        include: {
+          applicants: {
+            include: {
+              applicant: true
+            }
+          }
+        }
+      });
 
       const notifyApplicant = await prisma.notification.create({
         data: {
-          message: `Se ha modificado el estado de tu postulacion para ${post && post.title}`,
+          message: `Se ha modificado el estado de tu postulacion para ${
+            post && post.title
+          }`,
           type: "statusUpdate",
           applicantId: Number(applicantId),
           postId: Number(postId),
-        }
-      })
+        },
+      });
 
-      if(post && post.companyId) {
-        const companies = await prisma.company.findMany({
-          where: {
-            id: post.companyId,
-          },
-          include: {
-            posts: {
-              include: {
-                applicants: {
-                  include: {
-                    applicant: true,
-                  },
-                },
-              },
-            },
-          },
-        });
-        res.json(companies);
-      }
+      let emailApplicant = await transporter.sendMail({
+        from: '"Transforma" <transformapage@gmail.com>',
+        to: `${user && user.email}`,
+        subject: `${applicant && applicant.firstName} ${
+          applicant && applicant.lastName
+        }`,
+        html: `<p>El estado de tu postulacion para la oferta ${
+          post && post.title
+        } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
+      });
+      
+      res.json(post && post.applicants);
     } catch (error) {
       res.send(error);
+    }
+  },
+
+  addFavoriteApplicant: async (req: Request, res: Response) => {
+    try {
+      const { applicantId, postId } = req.body;
+      if (!applicantId)
+        return res.send("Debes incluir un campo 'applicantId', es un number");
+      if (!postId)
+        return res.send("Debes incluir un campo 'postId', es un number");
+
+      const post = await prisma.post.findFirst({
+        where: {
+          id: Number(postId),
+        },
+        include: {
+          favorites: true,
+        },
+      });
+
+      const checkIfApplicantAlreadyFavorite =
+        post &&
+        post.favorites.filter((applicant) => applicant.id === applicantId);
+
+      if (checkIfApplicantAlreadyFavorite) {
+        if (!checkIfApplicantAlreadyFavorite.length) {
+          const addApplicantToFavorites = await prisma.post.update({
+            where: {
+              id: postId,
+            },
+            data: {
+              favorites: {
+                connect: [{ id: applicantId }],
+              },
+            },
+            include: {
+              favorites: true,
+            },
+          });
+          res.json(addApplicantToFavorites);
+        } else {
+          const removeApplicantFromFavorites = await prisma.post.update({
+            where: {
+              id: postId,
+            },
+            data: {
+              favorites: {
+                disconnect: [{ id: applicantId }],
+              },
+            },
+            include: {
+              favorites: true,
+            },
+          });
+          res.json(removeApplicantFromFavorites);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(400).send(error);
     }
   },
 
@@ -220,21 +281,21 @@ module.exports = {
     try {
       const { companyId } = req.params;
       const { name = "", url } = req.body;
-      if(!companyId) return res.send("Debes enviar el companyId por params")
-      if(!url) return res.send("Debes incluir un campo 'url'")
+      if (!companyId) return res.send("Debes enviar el companyId por params");
+      if (!url) return res.send("Debes incluir un campo 'url'");
       const newImage = await prisma.image.create({
         data: {
           name: name as string,
           url: url as string,
-          companyId: Number(companyId)
-        }
-      })
+          companyId: Number(companyId),
+        },
+      });
       const images = await prisma.image.findMany({
         where: {
-          companyId: Number(companyId)
-        }
-      })
-      res.json(images)
+          companyId: Number(companyId),
+        },
+      });
+      res.json(images);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -282,7 +343,28 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
+  getPremiumCompanies: async (req: Request, res: Response) => {
+    try {
+      const premiumCompanies = await prisma.company.findMany({
+        where: {
+          premium: true,
+        },
+        select: {
+          id: true,
+          name: true,
+          companyLogo: true,
+          location: true,
+         },
+      });
+      res.json(premiumCompanies);
+    } catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  },
   
+
   delete: async (req: Request, res: Response) => {
     try {
       const { companyId } = req.params;

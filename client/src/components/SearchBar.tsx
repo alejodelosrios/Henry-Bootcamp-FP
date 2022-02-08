@@ -2,18 +2,13 @@ import styled from "styled-components";
 import { FC } from "react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { filterAndSort } from "../redux/actions/actionCreators";
+import { filterAndSort } from "../redux/actions/public/postsActions";
 import { useNavigate } from "react-router";
-
-interface Search {
-  postulacion?: string | undefined;
-  localizacion?: string | undefined;
-}
 
 const Container = styled.div`
   padding: 1.5rem 0;
   z-index: 999;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
 `;
 
 const Button = styled.a`
@@ -59,7 +54,7 @@ const IndDivs = styled.div`
   align-items: flex-start;
 `;
 
-const Titles = styled.h3`
+const Titles = styled.h2`
   padding: 13px 0 10px 0;
   font-weight: 100;
   color: #757577;
@@ -94,6 +89,33 @@ const Inputs = styled.input`
   }
 `;
 
+const Select = styled.select`
+  width: 306px;
+  height: 42px;
+  border-radius: 15px;
+  border: 1px solid #ffb7ff;
+  background: #ffb7ff1a;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: -0.04em;
+  text-align: left;
+  padding-left: 1rem;
+  ::placeholder {
+    color: #afb0e9;
+  }
+  :focus {
+    background: #ffb7ff30;
+    outline: none;
+  }
+`;
+
+interface Search {
+  postulacion?: string | undefined;
+  localizacion?: string | undefined;
+}
+
 const SearchBar: FC = () => {
   let navigate = useNavigate();
 
@@ -102,21 +124,58 @@ const SearchBar: FC = () => {
     (state: any) => state.postsReducer.filters_and_sort
   );
 
+  const posts = useSelector((state: any) => state.postsReducer.posts);
+
+  let cities: any[] = [];
+  let jobs: any[] = [];
+
+  for (const obj of posts) {
+    if (!cities.includes(obj.location)) {
+      cities.push(obj.location);
+    }
+    if (!jobs.includes(obj.title)) {
+      jobs.push(obj.title);
+    }
+  }
+
+
+
   const [search, setSearch] = useState<Search>({
     postulacion: "",
     localizacion: "",
   });
 
-  const handleChange = (e: any) => {
-    e.preventDefault();
+  const [lists, setList] = useState({ postulacion: [] });
+
+  const handleChange = ({ target: { name, value } }: any) => {
     setSearch({
       ...search,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
+
+    if (name === "postulacion") {
+      setList({
+        ...lists,
+        [name]: value
+          ? jobs.filter((e) => e.toLowerCase().search(value.toLowerCase()) >= 0)
+          : [],
+      });
+    }
   };
 
-  const handleClick = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
+    if (!search.postulacion && !search.localizacion) {
+      return null;
+    }
+    if (!search.localizacion) {
+      dispatch(
+        filterAndSort({
+          ...filters_and_sort,
+          inputNames: [...filters_and_sort.inputNames, search.postulacion],
+        })
+      );
+    }
     if (!search.postulacion) {
       dispatch(
         filterAndSort({
@@ -127,18 +186,12 @@ const SearchBar: FC = () => {
           },
         })
       );
-    } else if (!search.localizacion) {
+    }
+    if (search.postulacion && search.localizacion) {
       dispatch(
         filterAndSort({
           ...filters_and_sort,
-          inputName: search.postulacion,
-        })
-      );
-    } else {
-      dispatch(
-        filterAndSort({
-          ...filters_and_sort,
-          inputName: search.postulacion,
+          inputNames: [...filters_and_sort.inputNames, search.postulacion],
           location: {
             ...filters_and_sort.location,
             city: [...filters_and_sort.location.city, search.localizacion],
@@ -150,12 +203,16 @@ const SearchBar: FC = () => {
       postulacion: "",
       localizacion: "",
     });
+    setList({
+      postulacion: [],
+    });
+
     navigate("/home");
   };
 
   return (
     <Container>
-      <form onSubmit={(e) => handleClick(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <MainFlexDiv>
           <IndDivs>
             <Titles>Buscar trabajo</Titles>
@@ -165,20 +222,34 @@ const SearchBar: FC = () => {
               placeholder="Ingrese palabras clave"
               onChange={handleChange}
               value={search?.postulacion}
+              list="postulacion"
+              autoComplete="off"
             />
+            <datalist id="postulacion">
+              {lists.postulacion.slice(0, 4).map((e, i) => (
+                <option key={i} value={e} />
+              ))}
+            </datalist>
           </IndDivs>
           <IndDivs>
             <Titles>Localización</Titles>
-            <Inputs
-              type="text"
+            <Select
               name="localizacion"
-              placeholder="Ingrese ciudad"
-              onChange={handleChange}
               value={search?.localizacion}
-            />
+              onChange={(e) => handleChange(e)}
+            >
+              <option key={0}>Elegir ciudad</option>
+              {cities.map((e, i) => (
+                <option key={i} value={e}>
+                  {e}
+                </option>
+              ))}
+            </Select>
           </IndDivs>
-          <button type="submit"></button>
-          <Button onClick={(e) => handleClick(e)}>Buscar</Button>
+          <Button onClick={(e) => handleSubmit(e)}>Buscar</Button>
+          <button style={{ display: "none" }} onClick={(e) => handleSubmit(e)}>
+            Buscar
+          </button>
         </MainFlexDiv>
       </form>
     </Container>

@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { filterAndSort } from "../redux/actions/actionCreators";
+import { filterAndSort } from "../redux/actions/public/postsActions";
 import Switcher from "./Switcher";
 
 const FilterContainer = styled.div`
@@ -17,13 +17,15 @@ const Types = styled.div`
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-
   margin-top: 15%;
 `;
 
 const TypeTitle = styled.div`
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-size: 1vw;
   font-weight: bold;
   margin-bottom: 5%;
+  color: #EF5DA8;
 `;
 
 const Option = styled.div`
@@ -33,6 +35,27 @@ const Option = styled.div`
   justify-content: space-between;
   margin-bottom: 2%;
 `;
+
+const Select = styled.select`
+border: 0.5px solid grey;
+padding: 0.5vw;
+border-radius: 10px;
+color: grey;
+`
+const H2 = styled.h2`
+  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-size: 2vw;
+  color: grey;
+`
+
+const Label = styled.label`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};`
+
+const OptionSelect = styled.option`
+  color: grey;
+  font-family: ${p=> p.theme.colors.typography.poppins};
+`
 
 interface Filters {
   inputName: string;
@@ -63,7 +86,7 @@ const FilterUser: FC = () => {
 
   const handleFilter = (id: string, name: string, checked: boolean) => {
     if (id === "location") {
-      dispatch(
+      return dispatch(
         filterAndSort({
           ...filter,
           location: {
@@ -72,98 +95,93 @@ const FilterUser: FC = () => {
           },
         })
       );
-    } else {
-      dispatch(
-        filterAndSort({ ...filter, [id]: { ...filter[id], [name]: checked } })
+    }
+
+    if (id === "inputNames") {
+      return dispatch(
+        filterAndSort({
+          ...filter,
+          inputNames: filter.inputNames.filter((elem: any) => elem !== name),
+        })
       );
     }
 
-    //switch (id) {
-    //case "categories":
-    //checked
-    //? setFilter({
-    //...filter,
-    //categories: filter.categories.filter((cat) => cat !== name),
-    //})
-    //: setFilter({
-    //...filter,
-    //categories: [...filter.categories, name],
-    //});
-    //break;
-    //case "location":
-    //checked
-    //? setFilter({
-    //...filter,
-    //location: {
-    //city: [...filter.location.city, name],
-    //},
-    //})
-    //: setFilter({
-    //...filter,
-    //location: {
-    //city: filter.location.city.filter((c) => c !== name),
-    //},
-    //});
-    //break;
-    //case "modality":
-    //setFilter({
-    //...filter,
-    //modality: {
-    //...filter.modality,
-    //[name]: checked,
-    //},
-    //});
-    //break;
-    //case "contractType":
-    //setFilter({
-    //...filter,
-    //contractType: {
-    //...filter.contractType,
-    //[name]: checked,
-    //},
-    //});
-    //break;
-    //default:
-    //break;
-    //}
+    dispatch(
+      filterAndSort({ ...filter, [id]: { ...filter[id], [name]: checked } })
+    );
+  };
+  const handleScore = ({ target: { value } }: any) => {
+    dispatch(filterAndSort({ ...filter, score: value }));
   };
 
   return (
     <FilterContainer>
-      <h3>Filtros</h3>
+      <H2>Filtros</H2>
       <Types>
-        <TypeTitle>Ubicación</TypeTitle>
-        {filter.location.city.map((city: string, index: number) => (
-          <Option key={index}>
-            <label htmlFor="location1">{city}</label>
-            <Switcher
-              checkedProp={true}
-              id="location"
-              name={city}
-              handleFilter={handleFilter}
-            />
-          </Option>
-        ))}
+        <TypeTitle>Score</TypeTitle>
+        <Option>
+          <Label htmlFor="score">Score</Label>
+          <Select onChange={(e) => handleScore(e)}>
+            <OptionSelect value="">Todos</OptionSelect>
+            <OptionSelect value="5">5 ⭐</OptionSelect>
+            <OptionSelect value="4">4 ⭐</OptionSelect>
+            <OptionSelect value="3">3 ⭐</OptionSelect>
+            <OptionSelect value="2">2 ⭐</OptionSelect>
+            <OptionSelect value="1">1 ⭐</OptionSelect>
+          </Select>
+        </Option>
       </Types>
+      {filter.inputNames.length > 0 && (
+        <Types>
+          <TypeTitle>Puestos buscados</TypeTitle>
+          {filter.inputNames.map((e: string, index: number) => (
+            <Option key={index}>
+              <Label htmlFor={`inputNames${index}`}>{e}</Label>
+              <Switcher
+                checkedProp={true}
+                id="inputNames"
+                name={e}
+                handleFilter={handleFilter}
+              />
+            </Option>
+          ))}
+        </Types>
+      )}
+      {filter.location.city.length > 0 && (
+        <Types>
+          <TypeTitle>Ubicación</TypeTitle>
+          {filter.location.city.map((city: string, index: number) => (
+            <Option key={index}>
+              <Label htmlFor={`location${index}`}>{city}</Label>
+              <Switcher
+                checkedProp={true}
+                id="location"
+                name={city}
+                handleFilter={handleFilter}
+              />
+            </Option>
+          ))}
+        </Types>
+      )}
       <Types>
         <TypeTitle>Modalidad</TypeTitle>
         <Option>
-          <label htmlFor="presencial">Presencial</label>
+          <Label htmlFor="presencial">Presencial</Label>
           <Switcher id="modality" name="onSite" handleFilter={handleFilter} />
         </Option>
         <Option>
-          <label htmlFor="remota">Remota</label>
+          <Label htmlFor="remota">Remota</Label>
           <Switcher id="modality" name="remote" handleFilter={handleFilter} />
         </Option>
         <Option>
-          <label htmlFor="hibrida">Híbrida</label>
+          <Label htmlFor="hibrida">Híbrida</Label>
           <Switcher id="modality" name="hybrid" handleFilter={handleFilter} />
         </Option>
       </Types>
       <Types>
         <TypeTitle>Tipo de contrado</TypeTitle>
         <Option>
-          <label htmlFor="fullTime">Full Time</label>
+          <Label htmlFor="fullTime">Full Time</Label>
           <Switcher
             id="contractType"
             name="fullTime"
@@ -171,7 +189,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="partTime">Part Time</label>
+          <Label htmlFor="partTime">Part Time</Label>
           <Switcher
             id="contractType"
             name="partTime"
@@ -179,7 +197,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="temporary">Temporal</label>
+          <Label htmlFor="temporary">Temporal</Label>
           <Switcher
             id="contractType"
             name="temporary"
@@ -187,7 +205,7 @@ const FilterUser: FC = () => {
           />
         </Option>
         <Option>
-          <label htmlFor="perHour">por Hora</label>
+          <Label htmlFor="perHour">por Hora</Label>
           <Switcher
             id="contractType"
             name="perHour"
@@ -195,31 +213,8 @@ const FilterUser: FC = () => {
           />
         </Option>
       </Types>
-      {/* <div>
-        <h4>Categorías</h4>
-        <div>
-          <input type="checkbox" id="cat1" name="cat1" value="CAT1" />
-          <label htmlFor="location">Categoría 1</label>
-          <br />
-          <input type="checkbox" id="cat2" name="cat2" value="CAT2" />
-          <label htmlFor="cat2">Categoría 2</label>
-        </div>
-      </div> */}
     </FilterContainer>
   );
 };
 
 export default FilterUser;
-
-//<Option>
-//<label htmlFor="location1">Buenos Aires</label>
-//<Switcher
-//id="location"
-//name="Buenos Aires"
-//handleFilter={handleFilter}
-///>
-//</Option>
-//<Option>
-//<label htmlFor="location2">Mendoza</label>
-//<Switcher id="location" name="Mendoza" handleFilter={handleFilter} />
-//</Option>

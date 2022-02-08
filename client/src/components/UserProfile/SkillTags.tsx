@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {FC, useEffect, useState} from "react";
+import {useSelector} from "react-redux";
+import Storage from "../../services/storage";
 import {
     AddTagBtn,
     Edit,
@@ -12,67 +14,178 @@ import {
     Titles,
 } from "./Styles";
 
-export const SkillTagsComp = () => {
-    const dispatch = useDispatch();
-    const skillsArray = useSelector(
-        (state: any) => state.userReducer.applicant.skillTags
-    );
+type Props = {
+    userRole: string;
+};
+
+export const SkillTagsComp: FC<Props> = ({userRole}) => {
+    const token = Storage.get("token");
+    const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+    let userId = useSelector((state: any) => state.userReducer.applicant.id);
+    const [skillsArray, setSkillsArray] = useState<any[]>([]);
+    const [applicantSkills, setApplicantSkills] = useState<any[]>([])
+    if (userRole === "company") {
+        userId = applicantDetail.id
+    }
+
+    useEffect(() => {
+        if (userRole === "company") {
+            setApplicantSkills(applicantDetail.skillTags)
+        } else {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
+        }
+    }, [applicantDetail.id])
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/tag/index`)
+            .then((res) => {
+                setSkillsArray(res.data)
+            })
+    }, [])
+
+    const upperCase = (string: string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1)
+    }
+
     const [flag, setFlag] = useState(false);
 
     const switchFlag = () => {
         flag === false ? setFlag(true) : setFlag(false);
     };
 
-    const [skillsSelected, setSkillsSelected] = useState<any>({
-        skills: [],
-    });
-
-    const [newTag, setNewTag] = useState("");
+    const [newTag, setNewTag] = useState('');
 
     const selectSkill = (e: any) => {
         e.preventDefault();
-        for (let i = 0; i < skillsSelected.skills.length; i++) {
-            if (e.target.value === skillsSelected.skills[i]) {
-                alert(`Ya seleccionaste ${e.target.value}`);
-                return;
+        for (let i = 0; i < applicantSkills.length; i++) {
+            if (applicantSkills[i].id == e.target.value) {
+                return alert(`Ya seleccionaste ${applicantSkills[i].name}`)
             }
         }
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: [...skillsSelected.skills, e.target.value],
-        });
+        axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+            applicantId: Number(userId),
+            tagId: Number(e.target.value)
+        },
+            {
+                headers: {
+                    token: token || "",
+                },
+            }
+        )
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
+        }, 400);
     };
 
     const deleteSkill = (e: any) => {
-        console.log(e);
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: skillsSelected.skills.filter((s: any) => s !== e),
-        });
+        axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+            applicantId: Number(userId),
+            tagId: Number(e)
+        },
+            {
+                headers: {
+                    token: token || "",
+                },
+            }
+        )
+            .catch((err) => {
+                console.log(err)
+            })
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
+        }, 400);
     };
 
     const handleSubmit = () => {
-        // dispatch(tagsSelected(skillsSelected.skills));
         switchFlag();
     };
 
     const handleOnChange = (e: any) => {
-        setNewTag(e.target.value);
+        setNewTag(e.target.value)
     };
 
     const addSkillByInput = (e: any) => {
         e.preventDefault();
-        for (let i = 0; i < skillsSelected.skills.length; i++) {
-            if (newTag === skillsSelected.skills[i]) {
-                alert(`Ya seleccionaste ${newTag}`);
-                setNewTag("");
-                return;
+
+        for (let i = 0; i < applicantSkills.length; i++) {
+            if (applicantSkills[i].name.toLowerCase() == newTag.toLowerCase()) {
+                return alert(`Ya seleccionaste ${applicantSkills[i].name}`), setNewTag("");
             }
         }
-        setSkillsSelected({
-            ...skillsSelected,
-            skills: [...skillsSelected.skills, newTag],
-        });
+
+        for (let i = 0; i < skillsArray.length; i++) {
+            if (skillsArray[i].name.toLowerCase() === newTag.toLowerCase()) {
+                axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+                    applicantId: Number(userId),
+                    tagId: Number(skillsArray[i].id)
+                },
+                    {
+                        headers: {
+                            token: token || "",
+                        },
+                    }
+                )
+                    .catch((err) => {
+                        console.log(err)
+                    })
+                return setTimeout(() => {
+                    axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                        {
+                            headers: {
+                                token: token || "",
+                            },
+                        }
+                    )
+                        .then((res) => {
+                            setApplicantSkills(res.data.skillTags)
+                        })
+                }, 400);
+            }
+
+        }
+        axios.post(`${process.env.REACT_APP_API}/tag/create`, {
+            name: newTag
+        })
+            .then((res) => {
+                axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
+                    applicantId: Number(userId),
+                    tagId: Number(res.data.id)
+                })
+            })
+
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+                .then((res) => {
+                    setApplicantSkills(res.data.skillTags)
+                })
+        }, 400);
         setNewTag("");
     };
 
@@ -96,15 +209,14 @@ export const SkillTagsComp = () => {
                     }}
                 >
                     <TagsSelect
-                        style={{ gridArea: "2 / 1 / 3 / 5" }}
+                        style={{gridArea: "2 / 1 / 3 / 5"}}
                         className="skills-select"
-                        value={skillsSelected}
                         onChange={(e) => selectSkill(e)}
                     >
                         <option>Selecciona tags</option>
                         {skillsArray.map((tag: any) => (
-                            <option value={tag} key={tag}>
-                                {tag.charAt(0).toUpperCase() + tag.slice(1)}
+                            <option value={tag.id} key={tag.id}>
+                                {upperCase(tag.name)}
                             </option>
                         ))}
                     </TagsSelect>
@@ -117,7 +229,7 @@ export const SkillTagsComp = () => {
                     >
                         <TagInput
                             type="text"
-                            className="addSkill"
+                            className="newTag"
                             value={newTag}
                             onChange={(e) => handleOnChange(e)}
                         ></TagInput>
@@ -128,13 +240,13 @@ export const SkillTagsComp = () => {
                             Add
                         </AddTagBtn>
                     </form>
-                    <TagsContainer style={{ gridArea: "3 / 1 / 5 / 5" }}>
-                        {skillsSelected.skills.length
-                            ? skillsSelected.skills.map((e: any) => (
-                                  <Tag onClick={() => deleteSkill(e)} key={e}>
-                                      {e}
-                                  </Tag>
-                              ))
+                    <TagsContainer style={{gridArea: "3 / 1 / 5 / 5"}}>
+                        {applicantSkills.length
+                            ? applicantSkills.map((e: any) => (
+                                <Tag onClick={() => deleteSkill(e.id)} key={e.id}>
+                                    {upperCase(e.name)}
+                                </Tag>
+                            ))
                             : null}
                     </TagsContainer>
                 </div>
@@ -148,10 +260,10 @@ export const SkillTagsComp = () => {
                     <Edit onClick={() => switchFlag()}>Editar</Edit>
                 </Header>
                 <TagsContainer>
-                    {skillsSelected.skills.length
-                        ? skillsSelected.skills.map((e: any) => (
-                              <Tag key={e}>{e}</Tag>
-                          ))
+                    {applicantSkills.length
+                        ? applicantSkills.map((e: any) => (
+                            <Tag key={e.id}>{upperCase(e.name)}</Tag>
+                        ))
                         : null}
                 </TagsContainer>
             </SkillTags>

@@ -22,15 +22,63 @@ const initialState = {
     posts: [],
     followers: [],
   },
+  applicantDetail: {
+    email: "",
+    id: null,
+    userId: null,
+    firstName: "",
+    lastName: "",
+    about: "",
+    phoneNumber: "",
+    country: "",
+    image: "",
+    showImage: true,
+    experience: [],
+    education: [],
+    languages: [],
+    skillTags: [],
+    notifications: [],
+    followed: [],
+    postulations: [],
+    favorites: [],
+  },
+  totalPremiums: [],
 };
 
 const companyReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_COMPANY:
-      //console.log(action.payload);
       return {
         ...state,
         companyDetail: { ...state.companyDetail, ...action.payload },
+      };
+    case ActionType.EDIT_COMPANY:
+      return {
+        ...state,
+        companyDetail: action.payload,
+      };
+    case ActionType.POST_MELI:
+      return {
+        ...state,
+      };
+    case ActionType.SET_APPLICANT_DETAIL: {
+      return {
+        ...state,
+        applicantDetail: action.payload,
+      };
+    }
+    case ActionType.POST_REVIEW:
+      return {
+        ...state,
+        companyDetail: {
+          ...state.companyDetail,
+          reviews: [...state.companyDetail.reviews, action.payload],
+        },
+      };
+    case ActionType.GET_PREMIUMS:
+      return {
+        ...state,
+        totalPremiums: action.payload,
       };
     default:
       return state;

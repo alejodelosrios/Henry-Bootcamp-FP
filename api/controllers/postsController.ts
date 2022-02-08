@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -31,6 +32,13 @@ module.exports = {
     if (typeof category !== "number") return res.send("Debes incluir un campo 'category', es un number");
 
     try {
+
+      const company = await prisma.company.findFirst({
+        where: {
+          id: Number(companyId)
+        }
+      })
+
       const newPost = await prisma.post.create({
         data: {
           companyId: Number(companyId),
@@ -44,6 +52,7 @@ module.exports = {
           endDate: endDate as string,
           tags: tags as string[],
           categoryId: Number(category),
+          companyRating: company && company.rating
         },
       });
       res.send(newPost);
@@ -56,7 +65,7 @@ module.exports = {
   filter: async (req: Request, res: Response) => {
     try {
       const {
-        inputName,
+        inputNames,
         categories,
         score,
         orderBy,
@@ -65,7 +74,7 @@ module.exports = {
         contractType,
       } = req.body;
 
-      if (typeof inputName !== "string") return res.send("Debes incluir un campo 'inputName', contiene una string, puede estar vacia");
+      if (typeof inputNames !== "object") return res.send("Debes incluir un campo 'inputName', es un arreglo que contiene strings, puede estar vacio");
       if (typeof categories !== "object") return res.send("Debes incluir un campo 'categories', es un arreglo que contiene numbers");
       
       if (typeof location !== "object") return res.send("Debes incluir un campo 'location', que es un objeto con propiedad 'city', que contiene un arreglo");
@@ -85,56 +94,36 @@ module.exports = {
       if (typeof score !== "string") return res.send("Debes incluir un campo 'score', puede contener una string vacía");
       if (typeof orderBy !== "string") return res.send("Debes incluir un campo 'orderBy', puede contener una string vacía");
 
-      const posts = await prisma.post.findMany();
-
-      // async function getScore(companyId: number){
-      //     const company = await prisma.company.findUnique({
-      //         where: {
-      //             id: companyId
-      //         },
-      //         select: {
-      //             reviews: true
-      //         }
-      //     })
-      //     let totalScore = 0
-      //     company.reviews.map(review => totalScore += review.score)
-      //     return totalScore/company.reviews.length
-      // }
-
-      let formattedPosts = posts.map((post) => {
-        return {
-          id: post.id as number,
-          companyId: post.companyId as number,
-          title: post.title as string,
-          location: post.location as string,
-          modality: post.modality as string,
-          contractType: post.contractType as string,
-          salary: post.salary as string,
-          startDate: post.startDate as string,
-          endDate: post.endDate as string,
-          tags: post.tags as string[],
-          categoryId: post.categoryId as number,
-          // score: getScore(post.companyId)
-        };
+      let posts = await prisma.post.findMany({
+        include: {
+          company: {
+            select: {
+              companyLogo: true
+            }
+          }
+        }
       });
 
       // FILTRO INPUTNAME
-      inputName
-        ? (formattedPosts = formattedPosts.filter((post) =>
-            post.title.toLowerCase().includes(inputName.toLowerCase())
+      inputNames.length
+        ? (posts = posts.filter((post) => {
+            for(let i=0; i<inputNames.length; i++){
+              if(post.title.toLowerCase().includes(inputNames[i].toLowerCase())) return post
+            }
+          }
           ))
         : null;
 
       // FILTRO CATEGORY
       categories.length
-        ? (formattedPosts = formattedPosts.filter((post) =>
+        ? (posts = posts.filter((post) =>
             categories.includes(post.categoryId)
           ))
         : null;
     
       // FILTRO LOCATION
       location.city.length
-        ? (formattedPosts = formattedPosts.filter((post) =>
+        ? (posts = posts.filter((post) =>
             location.city
               .join(" ")
               .toLowerCase()
@@ -150,7 +139,7 @@ module.exports = {
         }
       }
       modalities
-        ? (formattedPosts = formattedPosts.filter((post) =>
+        ? (posts = posts.filter((post) =>
             modalities.toLowerCase().includes(post.modality.toLowerCase())
           ))
         : null;
@@ -163,21 +152,20 @@ module.exports = {
         }
       }
       contractTypes
-        ? (formattedPosts = formattedPosts.filter((post) =>
+        ? (posts = posts.filter((post) =>
             contractTypes
               .toLowerCase()
               .includes(post.contractType.toLowerCase())
           ))
         : null;
     
-      //FILTRO SCORE
-      // score ? formattedPosts = formattedPosts.filter(post => post.score < score+0.5 && post.score > score-0.5) : null
-    
-      //FILTRO ORDER
+      // FILTRO SCORE
+      score ? posts = posts.filter(post => post.companyRating === Number(score)) : null
       
-      formattedPosts.length
-        ? res.send(formattedPosts)
-        : res.send("No se encontraron resultados");
+      //FILTRO ORDER
+
+      
+      res.json(posts);
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -186,10 +174,17 @@ module.exports = {
 
   index: async (req: Request, res: Response) => {
     try {
-      const getAllPost = await prisma.post.findMany();
-      getAllPost.length
-        ? res.status(200).json(getAllPost)
-        : res.status(404).send("No posts found");
+      const getAllPosts = await prisma.post.findMany({
+        include: {
+          company: {
+            select: {
+              companyLogo: true
+            }
+          }
+        }
+      });
+
+      res.json(getAllPosts)
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -207,9 +202,26 @@ module.exports = {
         include: {
           applicants: {
             include: {
-              applicant: true
+              applicant:  {
+                select: {
+                  firstName: true,
+                  lastName: true,
+                  country: true,
+                  image: true,
+                  skillTags: true,
+                }
+              }
             }
           },
+          company: {
+            select: {
+              id: true,
+              name: true,
+              companyLogo: true,
+              location: true
+            }
+          },
+          favorites: true,
           favoritedBy: true
         }
       });
@@ -230,7 +242,8 @@ module.exports = {
           id: Number(postId),
         },
         data: {
-          endDate: endDate
+          endDate: endDate,
+          notifiedEndDate: false
         }
       });
 
@@ -254,12 +267,71 @@ module.exports = {
     try {
       const { postId } = req.params;
       if (!postId) return res.send("Debes enviar el postId por params");
-      const deletedPost = await prisma.post.delete({
+      const post = await prisma.post.findFirst({
         where: {
           id: Number(postId),
         },
+        include: {
+          applicants: {
+            include: {
+              applicant: true
+            }
+          }
+        }
       });
-      res.json(deletedPost);
+
+      const applicants = post && post.applicants
+
+      applicants && applicants.forEach(async (applicant) => {
+
+        let updateApplicantStatus = await prisma.applicantPool.updateMany({
+          where: {
+            applicantId: Number(applicant.applicantId),
+            postId: Number(post && post.id)
+          },
+          data: {
+            status: "complete"
+          }
+        })
+
+        let notifyApplicant = await prisma.notification.create({
+          data: {
+            type: "update",
+            message: `La oferta ${post && post.title} ha sido dada de baja`,
+            postId: Number(post && postId),
+            applicantId: Number(applicant.applicantId),
+          },
+        })
+  
+        //ENVIAR EMAIL A LOS APPLICANTS
+
+        const user = await prisma.user.findFirst({
+          where: {
+            id: applicant && applicant.applicant.userId
+          }
+        })
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.applicant.firstName} ${
+            applicant && applicant.applicant.lastName
+          }`,
+          html: `<p>La oferta ${post && post.title} ha sido dada de baja. Saludos, el equipo de Transforma</p>`,
+        });
+      })
+      
+      
+      const hidePost = await prisma.post.update({
+        where: {
+          id: Number(postId)
+        },
+        data: {
+          active: false
+        }
+      })
+
+      res.send("Post eliminado exitosamente");
     } catch (error) {
       console.log(error);
       res.status(400).send(error);

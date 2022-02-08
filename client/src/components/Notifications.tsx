@@ -1,7 +1,7 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled, { css } from "styled-components";
-import { getNotifications } from "../redux/actions/actionCreators";
+import { getNotifications } from "../redux/actions/private/generalActions";
 
 type Props = {
     role: string;
@@ -14,8 +14,8 @@ const NotCont = styled.div`
 
 const NotBut = styled.button<{ modal?: boolean }>`
     position: relative;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
     display: flex;

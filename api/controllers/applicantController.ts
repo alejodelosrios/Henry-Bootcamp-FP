@@ -1,5 +1,7 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -55,6 +57,64 @@ module.exports = {
     }
   },
 
+  review: async (req: Request, res: Response) => {
+    try {
+      const { companyId, description, score } = req.body;
+      if(!description) return res.send("Debes incluir un campo 'description' en el body")
+      if(!score) return res.send("Debes incluir un campo 'score' en el body")
+      if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
+
+      const review = await prisma.review.create({
+        data: {
+          description: description,
+          score: score,
+          companyId: Number(companyId),
+        },
+      });
+
+      const company = await prisma.company.findFirst({
+        where: {
+          id: Number(companyId)
+        },
+        include: {
+          reviews: true
+        }
+      })
+
+      let rating: number = 0
+      company && company.reviews.map(review => {
+        if(review && review.score) return rating += review.score
+      })
+
+      if(company){
+        rating /= company.reviews.length
+      }
+
+      const updateCompanyRating = await prisma.company.update({
+        where: {
+          id: Number(companyId)
+        },
+        data: {
+          rating: Math.round(rating)
+        }
+      })
+
+      const updateCompanyPosts = await prisma.post.updateMany({
+        where: {
+          companyId: Number(companyId)
+        },
+        data: {
+          companyRating: Math.round(rating)
+        }
+      })
+      
+      res.json(company && company.reviews);
+    } catch (error) {
+      console.log(error)
+      res.status(400).send(error);
+    }
+  },
+
   index: async (req: Request, res: Response) => {
     try {
       const applicants = await prisma.applicant.findMany();
@@ -84,7 +144,23 @@ module.exports = {
           favorites: true,
         },
       });
-      res.json(userProfile);
+      let formattedApplicantForFront
+      if(userProfile) {
+        const getEmail = await prisma.user.findFirst({
+          where: {
+            id: userProfile.userId
+          },
+          select: {
+            email: true
+          }
+        })
+        formattedApplicantForFront = {
+          ...getEmail,
+          ...userProfile
+        }
+      }
+      
+      res.json(formattedApplicantForFront);
     } catch (error) {
       res.status(400).send(error);
     }
@@ -93,8 +169,8 @@ module.exports = {
   apply: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
-      if(!applicantId) return res.send("Debes incluir el campo 'applicantId'")
-      if(!postId) return res.send("Debes incluir el campo 'postId'")
+      if (!applicantId) return res.send("Debes incluir el campo 'applicantId'");
+      if (!postId) return res.send("Debes incluir el campo 'postId'");
 
       //CONSEGUIMOS EL APPLICANT Y POST PARA USAR SUS DATOS PARA PERSONALIZAR LA NOTIFICACION
       const applicant = await prisma.applicant.findFirst({
@@ -104,29 +180,43 @@ module.exports = {
         include: {
           postulations: {
             include: {
-              post: true
-            }
-          }
-        }
+              post: true,
+            },
+          },
+        },
       });
 
-      const postulation = applicant && applicant.postulations.filter(postulation => postulation.postId === postId)
+      const postulation =
+        applicant &&
+        applicant.postulations.filter(
+          (postulation) => postulation.postId === postId
+        );
 
       //SI NO APLICO ENTONCES CREAMOS SU APLICACION
-      if(postulation){
-        if(!postulation.length){
+      if (postulation) {
+        if (!postulation.length) {
           const applicantPool = await prisma.applicantPool.create({
             data: {
               applicantId: Number(applicantId),
               postId: Number(postId),
-              status: "applied"
-            }
-          })
+              status: "applied",
+            },
+          });
         }
 
         const post = await prisma.post.findFirst({
           where: {
-            id: Number(postId)
+            id: Number(postId),
+          },
+        });
+
+        if (!applicant?.userId) {
+          return res.status(400).send("something went wrong");
+        }
+
+        const user = await prisma.user.findFirst({
+          where: {
+            id: applicant.userId
           }
         })
 
@@ -135,72 +225,98 @@ module.exports = {
         const notifyApplicant = await prisma.notification.create({
           data: {
             type: "application",
-            message: `Te has postulado existosamente para la oferta ${post && post.title}`,
+            message: `Te has postulado existosamente para la oferta ${
+              post && post.title
+            }`,
             postId: Number(postId),
-            applicantId: Number(applicantId)
-          }
-        })
+            applicantId: Number(applicantId),
+          },
+        });
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.firstName} ${
+            applicant && applicant.lastName
+          }`,
+          html: `<p>Te has postulado con éxito para la oferta ${
+            post && post.title
+          }. Saludos, el equipo de Transforma</p>`,
+        });
 
         //NOTIFICAMOS A LA COMPANY QUE RECIBIO UNA POSTULACION
         const notifyCompany = await prisma.notification.create({
           data: {
             type: "application",
-            message: `Has recibido una postulacion de ${applicant && applicant.firstName} ${applicant && applicant.lastName} para la oferta $${post && post.title}`,
+            message: `Has recibido una postulacion de ${
+              applicant && applicant.firstName
+            } ${applicant && applicant.lastName} para la oferta $${
+              post && post.title
+            }`,
             postId: Number(postId),
-            companyId: post && post.companyId
-          }
-        })
+            companyId: post && post.companyId,
+          },
+        });
+
+        let emailCompany = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.firstName} ${applicant && applicant.lastName}`,
+          html: `<p>${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma</p>`,
+        });
       }
 
       //RECUPERAMOS TODAS LAS NOTIFICACIONES ASOCIADAS AL APPLICANT
       const notifications = await prisma.notification.findMany({
         where: {
-          applicantId: Number(applicantId)
-        }
-      })
+          applicantId: Number(applicantId),
+        },
+      });
 
       const updatedApplicant = await prisma.applicant.findFirst({
         where: {
-          id: applicantId
+          id: applicantId,
         },
         include: {
           postulations: {
             include: {
-              post: true
-            }
-          }
-        }
-      })
+              post: true,
+            },
+          },
+        },
+      });
 
       // FORMATEAMOS EL OBJETO COMO PIDIO EL FRONT
       const response = {
         postulation: updatedApplicant && updatedApplicant,
-        notifications: notifications
-      }
-    
+        notifications: notifications,
+      };
+
       res.json(response);
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
     }
   },
-  
+
   addfavorite: async (req: Request, res: Response) => {
     try {
       const { applicantId, postId } = req.body;
 
       const applicant = await prisma.applicant.findFirst({
-        where:{
-          id: Number(applicantId)
+        where: {
+          id: Number(applicantId),
         },
         include: {
-          favorites: true
-        }
-      })
+          favorites: true,
+        },
+      });
 
-      const isAlreadyFavourite = applicant && applicant.favorites.find(favourite => favourite.id === postId)
+      const isAlreadyFavourite =
+        applicant &&
+        applicant.favorites.find((favourite) => favourite.id === postId);
 
-      if(isAlreadyFavourite) {
+      if (isAlreadyFavourite) {
         const favouriteUpdate = await prisma.applicant.update({
           where: {
             id: Number(applicantId),
@@ -211,8 +327,8 @@ module.exports = {
             },
           },
           include: {
-            favorites: true
-          }
+            favorites: true,
+          },
         });
         res.json(favouriteUpdate.favorites);
       } else {
@@ -226,8 +342,8 @@ module.exports = {
             },
           },
           include: {
-            favorites: true
-          }
+            favorites: true,
+          },
         });
         res.json(favouriteUpdate.favorites);
       }
@@ -235,7 +351,7 @@ module.exports = {
       console.log(error);
       res.status(400).send(error);
     }
-  }, 
+  },
 
   follow: async (req: Request, res: Response) => {
     try {
@@ -260,18 +376,51 @@ module.exports = {
 
   tags: async (req: Request, res: Response) => {
     try {
-      const { applicantId, tagIds } = req.body;
-      const applicantUpdate = await prisma.applicant.update({
+      const { applicantId, tagId } = req.body;
+
+      const applicant = await prisma.applicant.findFirst({
         where: {
-          id: Number(applicantId),
+          id: applicantId
         },
-        data: {
-          skillTags: {
-            connect: tagIds.map((tag: number) => ({ id: Number(tag) })),
+        include: {
+          skillTags: true
+        }
+      })
+
+      const checkIfTagAlreadyExists = applicant && applicant.skillTags.filter(tag => tag.id === tagId)
+
+      if(checkIfTagAlreadyExists && checkIfTagAlreadyExists.length) {
+        const applicantUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
           },
-        },
-      });
-      res.json(applicantUpdate);
+          data: {
+            skillTags: {
+              disconnect: [{id: tagId}],
+            },
+          },
+          include: {
+            skillTags: true
+          }
+        });
+        res.json(applicantUpdate);
+      }
+      else {
+        const applicantUpdate = await prisma.applicant.update({
+          where: {
+            id: Number(applicantId),
+          },
+          data: {
+            skillTags: {
+              connect: [{id: tagId}],
+            },
+          },
+          include: {
+            skillTags: true
+          }
+        });
+        res.json(applicantUpdate);
+      }
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
@@ -311,7 +460,7 @@ module.exports = {
       res.status(400).send(error);
     }
   },
-  
+
   delete: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;

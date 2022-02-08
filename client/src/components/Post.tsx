@@ -3,27 +3,6 @@ import styled from "styled-components";
 import img from "../assets/iStock-1.jpg";
 import FavouritesButton from "./FavouritesButton";
 
-type PostArgs = {
-  postId: number;
-  companyId: number;
-  title: String;
-  location: {
-    country: String;
-    state: String;
-  };
-  //experience: {
-  //min: Number;
-  //max: Number;
-  //};
-  modality: String;
-  salary: String;
-  //salary: {
-  //min: Number;
-  //max: Number;
-  //};
-  startDate: String;
-};
-
 const Box = styled.div`
   width: 80px;
   height: 60px;
@@ -67,18 +46,19 @@ const ContenedorB2 = styled.div`
 const ContenedorC = styled.div`
   display: flex;
   padding: 0px;
-  justify-content: space-evenly;
-  flex-direction: column;
+  justify-content: start;
+  /* flex-direction: column; */
   width: 458px;
   height: 76px;
   margin-right: 10px;
+  
 `;
 const ContenedorD = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
 const ContenedorE = styled.div`
-  width: 146.68px;
+  width: 10vw;
   height: 28px;
 `;
 const ContenedorF = styled.div`
@@ -94,17 +74,17 @@ const ContenedorF = styled.div`
 `;
 
 const Title = styled.h4`
-  margin: 0px;
-  font-size: 20px;
+  margin-right: 2vw;
+  font-size: 1.3vw;
   font-weight: 30px;
   color: #757577;
 `;
 const P = styled.p`
-  font-size: 12px;
+  font-size: 0.9vw;
   color: #757577;
 `;
 const P2 = styled.p`
-  font-size: 10px;
+  font-size: 1vw;
   color: #bbbabc;
 `;
 const P3 = styled.p`
@@ -112,6 +92,28 @@ const P3 = styled.p`
   font-size: 12px;
   color: #ef5da8;
 `;
+
+type PostArgs = {
+  postId: number;
+  companyId: number;
+  title: String;
+  location: {
+    country: string;
+    state: string;
+  };
+  //experience: {
+  //min: Number;
+  //max: Number;
+  //};
+  modality: string;
+  salary: string;
+  //salary: {
+  //min: Number;
+  //max: Number;
+  //};
+  startDate: string;
+  companyLogo: string;
+};
 
 const Post = ({
   postId,
@@ -122,12 +124,13 @@ const Post = ({
   modality,
   salary,
   startDate,
+  companyLogo,
 }: PostArgs) => {
   return (
     <ContenedorA>
       <ContenedorB>
         <Box>
-          <Img src={img} alt="img-logo-company" />
+          <Img src={companyLogo} alt="img-logo-company" />
         </Box>
         <ContenedorC>
           <div>
@@ -137,12 +140,12 @@ const Post = ({
             <P>{location}</P>
           </div>
           <ContenedorB2>
-            <ContenedorD>
+            {/* <ContenedorD>
               <ContenedorE>
                 <P2>Experiencia:</P2>
                 <P></P>
               </ContenedorE>
-            </ContenedorD>
+            </ContenedorD> */}
             <ContenedorD>
               <ContenedorE>
                 <P2>Modalidad:</P2>
@@ -159,7 +162,7 @@ const Post = ({
         </ContenedorC>
       </ContenedorB>
       <ContenedorF>
-        <P3>{startDate}</P3>
+        <P3>See More!</P3>
         <FavouritesButton postId={postId} />
       </ContenedorF>
     </ContenedorA>

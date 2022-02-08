@@ -17,6 +17,18 @@ interface getCurrentPosts {
   };
 }
 
+interface setCurrentPosts {
+  type: ActionType.SET_CURRENT_POSTS;
+  payload: object[];
+}
+interface setCompanyCurrentPosts {
+  type: ActionType.SET_COMPANY_CURRENT_POSTS;
+  payload: object[];
+}
+interface set_current_items_by_page {
+  type: ActionType.SET_CURRENT_ITEMS_BY_PAGE;
+  payload: number;
+}
 interface getPostsById {
   type: ActionType.GET_POSTS_BY_ID;
   payload: object;
@@ -48,6 +60,7 @@ interface getUser {
     data: {
       id: string;
       role: string;
+      token: string;
       email: string;
       applicant: object;
       company: object;
@@ -144,9 +157,80 @@ interface getCompany {
   type: ActionType.GET_COMPANY;
   payload: object;
 }
+interface submitTags {
+  type: ActionType.SUBMIT_TAGS;
+  payload: any;
+}
+
+interface setFavApplicant {
+  type: ActionType.SET_FAV_APPLICANT;
+  payload: object[];
+}
+interface editCompany {
+  type: ActionType.EDIT_COMPANY;
+  payload: object[];
+}
+
+interface sendMercadoPago {
+  type: ActionType.POST_MELI;
+  payload: object;
+}
+interface setApplicantDetail {
+  type: ActionType.SET_APPLICANT_DETAIL;
+  payload: object;
+}
+
+interface updateInfo {
+  type: ActionType.UPDATE_PREMIUM;
+  payload: object;
+}
+interface getCategories {
+  type: ActionType.GET_CATEGORIES;
+  payload: object[];
+}
+interface createCategory {
+  type: ActionType.CREATE_CATEGORY;
+  payload: object;
+}
+
+interface getUsers {
+  type: ActionType.GET_USERS;
+  payload: object[];
+}
+
+interface deleteUser {
+  type: ActionType.DELETE_USER;
+  payload: number;
+}
+
+interface convertToAdminRole {
+  type: ActionType.CONVERT_TO_ADMIN_ROLE;
+  payload: number;
+}
+interface getNews {
+  type: ActionType.GET_NEWS;
+  payload: object[];
+}
+interface createNew {
+  type: ActionType.CREATE_NEW;
+  payload: object[];
+}
+interface postReview {
+  type: ActionType.POST_REVIEW;
+  payload: any;
+}
+
+interface getPremiums {
+  type: ActionType.GET_PREMIUMS;
+  payload: any;
+}
+
 
 export type Action =
   | getPosts
+  | set_current_items_by_page
+  | setCurrentPosts
+  | setCompanyCurrentPosts
   | editPost
   | filterAndSort
   | getPostsById
@@ -172,4 +256,19 @@ export type Action =
   | getFavorite
   | jobApplication
   | getCompany
-  | setFavorites;
+  | setFavorites
+  | submitTags
+  | setFavApplicant
+  | sendMercadoPago
+  | updateInfo
+  | editCompany
+  | setApplicantDetail
+  | getCategories
+  | createCategory
+  | getUsers
+  | deleteUser
+  | convertToAdminRole
+  | getNews
+  | createNew
+  | postReview
+  | getPremiums;

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../../redux/actions/actionCreators";
+import {FC, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../../redux/actions/private/applicantActions";
 import {
     ContactInfo,
     Header,
@@ -12,11 +12,22 @@ import {
     ParagraphStyle,
 } from "./Styles";
 
-export const AboutMe = () => {
+type Props = {
+    userRole: string;
+};
+
+export const AboutMe: FC<Props> = ({userRole}) => {
     const [flag, setFlag] = useState(false);
     const dispatch = useDispatch();
-    const user = useSelector((state: any) => state.userReducer.applicant);
-    //console.log(user)
+    const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+    let user = useSelector((state: any) => state.userReducer.applicant);
+    let userId = useSelector((state: any) => state.userReducer.applicant.id);
+
+    if (userRole === "company") {
+        user = applicantDetail;
+        userId = applicantDetail.userId;
+    }
+
     const [userInfo, setUserInfo] = useState({
         about: user.about,
     });
@@ -26,7 +37,7 @@ export const AboutMe = () => {
     }
     function updateFunction() {
         flag ? setFlag(false) : setFlag(true);
-        dispatch(updateUser(userInfo));
+        dispatch(updateUser(userInfo, userId));
     }
 
     function handleChange(e: any) {
@@ -43,7 +54,9 @@ export const AboutMe = () => {
                 <ContactCard>
                     <Header>
                         <Titles>Sobre mí</Titles>
-                        <Edit onClick={() => editFunction()}>Editar</Edit>
+                        {userRole === "applicant" &&
+                            <Edit onClick={() => editFunction()}>Editar</Edit>
+                        }
                     </Header>
                     <EachContainer>
                         <ParagraphStyle>{user.about}</ParagraphStyle>

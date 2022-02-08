@@ -2,10 +2,10 @@ import { useEffect, FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router";
 import styled from "styled-components";
-import { getPosts, getPostsById } from "../redux/actions/actionCreators";
+import { getPostsById } from "../redux/actions/public/postsActions";
 import CompanyLogo from "../assets/company-logo.svg";
 import { Link } from "react-router-dom";
-import { jobApplication } from "../redux/actions/applicantActionCreators";
+import { jobApplication } from "../redux/actions/private/applicantActions";
 
 const TopBackground = styled.div`
   position: absolute;
@@ -136,18 +136,14 @@ const PostDetail: FC = ({}) => {
 
   !company ? (userCompanyId = null) : (userCompanyId = company.id + "");
   !applicant ? (applicantId = null) : (applicantId = applicant.id);
-  //console.log("userCompanyId: ", userCompanyId);
-  //console.log("companyId: ", companyId);
-
+  
   let alreadyApplied = false;
   for (const p of applicant.postulations) {
-    //console.log("P: ", p.id + "", "PostId: ", postId);
     if (p.postId + "" === postId) {
       alreadyApplied = true;
       break;
     }
   }
-  //console.log(alreadyApplied);
 
   useEffect(() => {
     dispatch(getPostsById(postId));
@@ -237,12 +233,3 @@ const PostDetail: FC = ({}) => {
 };
 
 export default PostDetail;
-//Mínimo {post.experience.min} años - $ Máximo{" "}
-//{post.experience.max} años
-//$ Mínimo {post.salary.min} - $ Máximo {post.salary.max}
-
-//<ul>
-//{post.tags.map((tag) => (
-//<li>{tag}</li>
-//))}
-//</ul>

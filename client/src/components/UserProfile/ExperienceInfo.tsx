@@ -1,10 +1,12 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import {FC, useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {
     updateUserExp,
     addUserExp,
     deleteUserExp,
-} from "../../redux/actions/actionCreators";
+} from "../../redux/actions/private/applicantActions";
+import Storage from "../../services/storage";
 import {
     Experience,
     Header,
@@ -17,20 +19,39 @@ import {
     EditInput,
     EditTextArea,
     DateInput,
-    FlexEndDiv,
     ParagraphStyle,
 } from "./Styles";
 
-export const ExperienceInfoComp = () => {
+type Props = {
+    userRole: string;
+};
+
+export const ExperienceInfoComp: FC<Props> = ({userRole}) => {
+    const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
+    let userId = useSelector((state: any) => state.userReducer.applicant.id);
     const dispatch = useDispatch();
     const [flag, setFlag] = useState(0);
     const [displayFlag, setDisplayFlag] = useState("none");
     const [overlayFlag, setOverlayFlag] = useState("none");
-    const expArray = useSelector(
-        (state: any) => state.userReducer.applicant.experience
-    );
-    //console.log(expArray);
+    const [expArray, setExpArray] = useState([]);
 
+    const token = Storage.get("token");
+    useEffect(() => {
+        if (userRole === "company") {
+            setExpArray(applicantDetail.experience)
+        } else {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setExpArray(res.data.experience)
+                })
+        }
+    }, [applicantDetail.id])
     const [userExperience, setUserExperience] = useState({
         id: "",
         company: "",
@@ -38,6 +59,7 @@ export const ExperienceInfoComp = () => {
         startDate: "",
         endDate: "",
         description: "",
+        applicantId: userId
     });
 
     function editFunction(exp: any) {
@@ -55,6 +77,7 @@ export const ExperienceInfoComp = () => {
             startDate: exp.startDate,
             endDate: exp.endDate,
             description: exp.description,
+            applicantId: userId
         });
     }
 
@@ -67,6 +90,18 @@ export const ExperienceInfoComp = () => {
             ? setDisplayFlag("flex")
             : setDisplayFlag("none");
         dispatch(updateUserExp(userExperience));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setExpArray(res.data.experience)
+                })
+        }, 500)
     }
 
     function closeModal() {
@@ -101,7 +136,6 @@ export const ExperienceInfoComp = () => {
     const [id, setId] = useState(2);
 
     function addHandleChange(e: any) {
-        setId(id + 1);
         setAddUserExperience({
             ...addUserExperience,
             [e.target.name]: e.target.value,
@@ -118,7 +152,7 @@ export const ExperienceInfoComp = () => {
     });
 
     function saveExperience() {
-        setId(id + 1);
+        setId(Math.floor(Math.random() * 98127319));
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === "none"
             ? setOverlayFlag("block")
@@ -126,7 +160,7 @@ export const ExperienceInfoComp = () => {
         addDisplayFlag === "none"
             ? setAddDisplayFlag("flex")
             : setAddDisplayFlag("none");
-        dispatch(addUserExp(addUserExperience));
+        dispatch(addUserExp(addUserExperience, userId));
         setAddUserExperience({
             id: id,
             company: "",
@@ -135,10 +169,34 @@ export const ExperienceInfoComp = () => {
             endDate: "",
             description: "",
         });
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setExpArray(res.data.experience)
+                })
+        }, 500)
     }
 
     function deleteFunction(id: any) {
         dispatch(deleteUserExp(id));
+        setTimeout(() => {
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
+                .then((res) => {
+                    setExpArray(res.data.experience)
+                })
+        }, 500)
         flag === 0 ? setFlag(100) : setFlag(0);
         overlayFlag === "none"
             ? setOverlayFlag("block")
@@ -146,6 +204,7 @@ export const ExperienceInfoComp = () => {
         displayFlag === "none"
             ? setDisplayFlag("flex")
             : setDisplayFlag("none");
+
     }
 
     return (
@@ -157,7 +216,9 @@ export const ExperienceInfoComp = () => {
                 <ExperienceCard className="experience-card" key={exp.id}>
                     <Header>
                         <div></div>
-                        <Edit onClick={() => editFunction(exp)}>Editar</Edit>
+                        {userRole === "applicant" &&
+                            <Edit onClick={() => editFunction(exp)}>Editar</Edit>
+                        }
                     </Header>
                     <EachContainer>
                         <SubTitles>Empresa:</SubTitles>
@@ -268,15 +329,19 @@ export const ExperienceInfoComp = () => {
                 }}
             ></div>
 
-            {expArray.length >= 0 && expArray.length < 4 ? (
-                <NoExperience className="experience-card">
-                    <Edit onClick={() => addExperience()}>
-                        Añadir experiencia
-                    </Edit>
-                </NoExperience>
-            ) : (
-                <></>
-            )}
+            {userRole === "applicant" &&
+                (
+                    expArray.length >= 0 && expArray.length < 4 ? (
+                        <NoExperience className="experience-card">
+                            <Edit onClick={() => addExperience()}>
+                                Añadir experiencia
+                            </Edit>
+                        </NoExperience>
+                    ) : (
+                        <></>
+                    )
+                )
+            }
             <div
                 className="add-experience"
                 style={{

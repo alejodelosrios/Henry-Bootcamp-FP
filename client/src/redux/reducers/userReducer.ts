@@ -1,11 +1,18 @@
 import { Action } from "../actions";
 import { ActionType } from "../actions/actionTypes";
+import { sortByProp } from "../../services/sort";
 
 const initialState = {
   id: null,
   role: "",
+  token: "",
   email: "",
-  password:"",
+  password: "",
+  admin: {
+    categories: [],
+    users: [],
+    news: [],
+  },
   company: {
     id: null,
     userId: null,
@@ -51,15 +58,12 @@ const initialState = {
 const userReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.GET_USER:
-      console.log("Reducer: ", action.payload);
-      // console.log(action.payload.modal, !action.payload.modal);
-
       if (!action.payload.modal) {
-        //console.log("Entro")
         return {
           ...state,
           id: action.payload.data.id,
           role: action.payload.data.role,
+          token: action.payload.data.token,
           email: action.payload.data.email,
           applicant: {
             ...state.applicant,
@@ -71,11 +75,11 @@ const userReducer = (state = initialState, action: Action) => {
           },
         };
       }
-      console.log("No entro");
       return {
         ...state,
         id: action.payload.data.id,
         role: action.payload.data.role,
+        token: action.payload.data.token,
         email: action.payload.data.email,
         applicant: {
           ...state.applicant,
@@ -99,11 +103,10 @@ const userReducer = (state = initialState, action: Action) => {
         email: action.payload,
       };
     case ActionType.SET_USER:
-      // console.log(action.payload);
       return {
         ...state,
         id: action.payload.id,
-        password:action.payload.password,
+        password: action.payload.password,
         role: action.payload.role,
         email: action.payload.email,
         applicant: {
@@ -116,7 +119,6 @@ const userReducer = (state = initialState, action: Action) => {
         },
       };
     case ActionType.UPDATE_USER:
-      //console.log(action.payload);
       return {
         ...state,
         applicant: {
@@ -125,7 +127,6 @@ const userReducer = (state = initialState, action: Action) => {
         },
       };
     case ActionType.UPDATE_MAIL:
-      console.log(action.payload);
       return {
         ...state,
         email: action.payload,
@@ -275,6 +276,97 @@ const userReducer = (state = initialState, action: Action) => {
         company: {
           ...state.company,
           postulations: action.payload,
+        },
+      };
+    case ActionType.SUBMIT_TAGS:
+      console.log("en el reducer ", action.payload);
+      return {
+        ...state,
+
+        applicant: {
+          ...state.applicant,
+          skillTags: action.payload,
+        },
+      };
+    case ActionType.UPDATE_PREMIUM:
+      console.log("Recibido en reducer, userReducer:", action.payload);
+      return {
+        ...state,
+        company: {
+          ...state.company,
+          premium: action.payload,
+        },
+      };
+    case ActionType.GET_CATEGORIES:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          categories: sortByProp(action.payload, "id"),
+        },
+      };
+    case ActionType.CREATE_CATEGORY:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          categories: sortByProp(
+            [...state.admin.categories, action.payload],
+            "id"
+          ),
+        },
+      };
+    case ActionType.GET_USERS:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(action.payload, "id").filter(
+            (e: any) => e.email.search("deleted") < 0
+          ),
+        },
+      };
+    case ActionType.DELETE_USER:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.filter((e: any) => e.id !== action.payload),
+            "id"
+          ),
+        },
+      };
+    case ActionType.CONVERT_TO_ADMIN_ROLE:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.map((e: any) => {
+              if (e.id === action.payload) {
+                e.role = "admin";
+              }
+              return e;
+            }),
+            "id"
+          ),
+        },
+      };
+    case ActionType.GET_NEWS:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          news: sortByProp(action.payload, "id"),
+        },
+      };
+    case ActionType.CREATE_NEW:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          news: sortByProp([...state.admin.news, action.payload], "id"),
         },
       };
     default:

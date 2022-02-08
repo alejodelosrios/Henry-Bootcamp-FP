@@ -12,35 +12,38 @@ datasource db {
 model User {
   id        Int        @id @default(autoincrement())
   email     String     @unique
-  password  String     
-  role      String     
+  password  String
+  role      String
   applicant Applicant?
   company   Company?
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
 }
 
 model Applicant {
-  id            Int            @id @default(autoincrement())
+  id              Int             @id @default(autoincrement())
   //RELACION CON USER
-  userId        Int            @unique @default(1)
-  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          Int             @unique @default(1)
+  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   //=============
-  firstName     String
-  lastName      String
-  about         String
-  phoneNumber   String
-  country       String
-  image         String
-  showImage     Boolean
-  experience    Experience[]
-  education     Education[]
-  languages     Language[]
-  skillTags     Tag[]
-  notifications Notification[]
-  followed      Company[]
-  postulations  ApplicantPool[]
-  favorites     Post[]         @relation("_UserToFavorites")
+  //RELACION CON POSTS
+  favoritedOnPost Post[]
+  //=============
+  firstName       String
+  lastName        String
+  about           String
+  phoneNumber     String
+  country         String
+  image           String
+  showImage       Boolean
+  experience      Experience[]
+  education       Education[]
+  languages       Language[]
+  skillTags       Tag[]
+  notifications   Notification[]
+  followed        Company[]
+  postulations    ApplicantPool[]
+  favorites       Post[]          @relation("_UserToFavorites")
 }
 
 model Company {
@@ -52,63 +55,78 @@ model Company {
   name            String
   legalName       String
   stin            String
-  companyLogo            String
+  companyLogo     String
   location        String
   values          String[]
   aboutValues     String
   about           String
   mission         String
   vision          String
+  rating          Int?           @default(0)
   accountManagers String[]
   images          Image[]
   notifications   Notification[]
   reviews         Review[]
   posts           Post[]
   followers       Applicant[]
+  payment         Payment[]
+  premium         Boolean        @default(false)
 }
 
 model Image {
-  id              Int            @id @default(autoincrement())
-  name            String?
-  url             String
+  id        Int     @id @default(autoincrement())
+  name      String?
+  url       String
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id])
+}
+
+model Payment {
+  id              Int     @id @default(autoincrement())
+  mercadopagoCode String
+  date            String
   companyId       Int
-  company         Company       @relation(fields: [companyId], references: [id])
+  company         Company @relation(fields: [companyId], references: [id])
 }
 
 model Post {
-  id           Int         @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   //RELACION CON COMPANY
-  companyId    Int
-  company      Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId     Int
+  company       Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
   //=============
-  title        String
-  description  String
-  location     String
-  modality     String
-  contractType String
-  salary       String
-  startDate    String
-  endDate      String
-  tags         String[]
-  applicants   ApplicantPool[]
-  favoritedBy  Applicant[] @relation("_UserToFavorites")
+  title         String
+  description   String
+  location      String
+  modality      String
+  contractType  String
+  salary        String
+  startDate     DateTime        @default(now())
+  endDate       DateTime
+  notifiedEndDate Boolean         @default(false)
+  companyRating Int?            @default(0)
+  tags          String[]
+  active        Boolean?        @default(true)
+  favorites     Applicant[]
+  applicants    ApplicantPool[]
+  favoritedBy   Applicant[]     @relation("_UserToFavorites")
   //RELACION CON CATEGORY
-  categoryId   Int
-  category     Category    @relation(fields: [categoryId], references: [id])
+  categoryId    Int
+  category      Category        @relation(fields: [categoryId], references: [id])
   //=============
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
 
 model ApplicantPool {
-  id            Int           @id @default(autoincrement())
-  status        String?       @default("inProcess")
-  applicant     Applicant     @relation(fields: [applicantId], references: [id])
-  applicantId   Int
-  post          Post          @relation(fields: [postId], references: [id])
-  postId        Int
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id          Int       @id @default(autoincrement())
+  status      String?   @default("inProcess")
+  applicant   Applicant @relation(fields: [applicantId], references: [id])
+  applicantId Int
+  post        Post      @relation(fields: [postId], references: [id])
+  postId      Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Experience {
@@ -170,24 +188,24 @@ model Tag {
 }
 
 model Notification {
-  id          Int               @id @default(autoincrement())
-  message     String
-  viewed      Boolean?          @default(false)
-  type        String
+  id      Int      @id @default(autoincrement())
+  message String
+  viewed  Boolean? @default(false)
+  type    String
 
   // typeId      Int    //la relacion esta debajo por si despues queremos agregarla de nuevo
 
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
-  postId      Int
+  postId      Int?
   //=============
   //RELACION NOTIFICACIONES Y APPLICANT
   applicantId Int?
-  applicant   Applicant?        @relation(fields: [applicantId], references: [id])
+  applicant   Applicant? @relation(fields: [applicantId], references: [id])
   //=============
   //RELACION NOTIFICACIONES Y COMPANY
   companyId   Int?
-  company     Company?          @relation(fields: [companyId], references: [id])
+  company     Company?   @relation(fields: [companyId], references: [id])
   //=============
 }
 
