@@ -13,7 +13,6 @@ import {
   NameDiv,
   NameTag,
   RolTag,
-  ContactButton,
   ParagraphStyle,
 } from "./Styles";
 
