@@ -46,7 +46,13 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
     }, [applicantDetail.id])
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/tag/index`)
+        axios.get(`${process.env.REACT_APP_API}/tag/index`,
+            {
+                headers: {
+                    token: token || "",
+                },
+            }
+        )
             .then((res) => {
                 setSkillsArray(res.data)
             })
@@ -172,16 +178,32 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
         }
         axios.post(`${process.env.REACT_APP_API}/tag/create`, {
             name: newTag
+        },
+        {
+            headers: {
+                token: token || "",
+            },
         })
             .then((res) => {
                 axios.put(`${process.env.REACT_APP_API}/applicant/tags`, {
                     applicantId: Number(userId),
                     tagId: Number(res.data.id)
+                },
+                {
+                    headers: {
+                        token: token || "",
+                    },
                 })
             })
 
         setTimeout(() => {
-            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`)
+            axios.get(`${process.env.REACT_APP_API}/applicant/${userId}`,
+                {
+                    headers: {
+                        token: token || "",
+                    },
+                }
+            )
                 .then((res) => {
                     setApplicantSkills(res.data.skillTags)
                 })
@@ -257,14 +279,13 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
             <SkillTags>
                 <Header>
                     <Titles>Skill tags</Titles>
-                    <Edit onClick={() => switchFlag()}>Editar</Edit>
                 </Header>
                 <TagsContainer>
                     {applicantSkills.length
                         ? applicantSkills.map((e: any) => (
                             <Tag key={e.id}>{upperCase(e.name)}</Tag>
                         ))
-                        : null}
+                        : 'Aplicante sin skill tags'}
                 </TagsContainer>
             </SkillTags>
         );

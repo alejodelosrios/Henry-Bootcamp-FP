@@ -15,6 +15,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const FavouritesButton: FC<Props> = ({ postId }) => {
+  const userRole = useSelector((state: any) => state.userReducer.role)
   const dispatch = useDispatch();
   const { favorites, id } = useSelector(
     (state: any) => state.userReducer.applicant
@@ -26,7 +27,9 @@ const FavouritesButton: FC<Props> = ({ postId }) => {
     setIsFav(!isFav);
   };
 
-  return <Button onClick={handleFav}>{isFav ? "Retirar" : "Guardar"}</Button>;
-};
+  if (userRole === 'applicant') {
+    return <Button onClick={handleFav}>{isFav ? "Retirar" : "Guardar"}</Button>
+  } else return null
+}
 
 export default FavouritesButton;

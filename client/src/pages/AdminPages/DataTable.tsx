@@ -1,29 +1,5 @@
 import { FC } from "react";
-import styled from "styled-components";
-
-const Container = styled.div`
-  width: 100%;
-  height: 90%;
-  display: flex;
-  overflow-y: auto;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Table = styled.table`
-  width: 100%;
-
-  tbody {
-    td {
-      min-width: 100px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      padding: 1rem;
-      border: solid 1px lightgrey;
-    }
-  }
-`;
+import { TableButton, Table } from "./styles";
 
 interface modal {
   open: boolean;
@@ -101,13 +77,17 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
             {columns.map((colum: any, j: number) =>
               colum === "options" ? (
                 <td key={j}>
-                  <button type="button" onClick={() => eliminar(row)}>
+                  <TableButton type="button" onClick={() => eliminar(row)}>
                     ELiminar
-                  </button>
+                  </TableButton>
                   {row.role !== "admin" && (
-                    <button type="button" onClick={() => changeRole(row)}>
+                    <TableButton
+                      mode="secondary"
+                      type="button"
+                      onClick={() => changeRole(row)}
+                    >
                       Made admin
-                    </button>
+                    </TableButton>
                   )}
                 </td>
               ) : (

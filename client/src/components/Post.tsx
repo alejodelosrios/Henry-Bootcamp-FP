@@ -3,12 +3,18 @@ import styled from "styled-components";
 import img from "../assets/iStock-1.jpg";
 import FavouritesButton from "./FavouritesButton";
 
+const divStyle = {
+  textDecoration: "none",
+  padding: 0
+};
+
 const Box = styled.div`
-  width: 80px;
-  height: 60px;
+  width: 100px;
+  height: 80px;
   overflow: hidden;
   border-radius: 0;
   margin-bottom: 3px;
+  margin-right: 1vw;
   vertical-align: middle;
   object-position: center;
 `;
@@ -42,24 +48,27 @@ const ContenedorB2 = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  flex-wrap: wrap;
 `;
 const ContenedorC = styled.div`
   display: flex;
   padding: 0px;
-  justify-content: start;
+  justify-content: flex-start;
   /* flex-direction: column; */
   width: 458px;
   height: 76px;
   margin-right: 10px;
-  
+  align-items: flex-end;
 `;
 const ContenedorD = styled.div`
   display: flex;
   justify-content: space-evenly;
 `;
 const ContenedorE = styled.div`
-  width: 10vw;
-  height: 28px;
+  width: auto;
+  height: auto;
+  margin: 0.3vw;
+  margin-right: 1vw;
 `;
 const ContenedorF = styled.div`
   width: 612px;
@@ -75,17 +84,19 @@ const ContenedorF = styled.div`
 
 const Title = styled.h4`
   margin-right: 2vw;
-  font-size: 1.3vw;
+  font-size: 2vw;
   font-weight: 30px;
   color: #757577;
+  text-transform: capitalize;
 `;
-const P = styled.p`
+const P = styled.span`
   font-size: 0.9vw;
   color: #757577;
+  text-transform: capitalize;
 `;
 const P2 = styled.p`
   font-size: 1vw;
-  color: #bbbabc;
+  color: grey;
 `;
 const P3 = styled.p`
   font-size: 10px;
@@ -106,7 +117,7 @@ type PostArgs = {
   //max: Number;
   //};
   modality: string;
-  salary: string;
+  contract: string;
   //salary: {
   //min: Number;
   //max: Number;
@@ -122,7 +133,7 @@ const Post = ({
   location,
   //experience,
   modality,
-  salary,
+  contract,
   startDate,
   companyLogo,
 }: PostArgs) => {
@@ -134,35 +145,29 @@ const Post = ({
         </Box>
         <ContenedorC>
           <div>
-            <Link to={`/company/${companyId}/post/${postId}`}>
+            <Link to={`/company/${companyId}/post/${postId}` } style={divStyle}>
               <Title>{title}</Title>
             </Link>
             <P>{location}</P>
           </div>
           <ContenedorB2>
-            {/* <ContenedorD>
-              <ContenedorE>
-                <P2>Experiencia:</P2>
-                <P></P>
-              </ContenedorE>
-            </ContenedorD> */}
             <ContenedorD>
               <ContenedorE>
-                <P2>Modalidad:</P2>
-                <P>{modality}</P>
+                <P2>Modalidad: <P>{modality}</P></P2>
               </ContenedorE>
             </ContenedorD>
             <ContenedorD>
               <ContenedorE>
-                <P2>Salario:</P2>
-                <P>{salary}</P>
+                <P2>Tipo de Contrato:<P>{contract}</P></P2>
               </ContenedorE>
             </ContenedorD>
           </ContenedorB2>
         </ContenedorC>
       </ContenedorB>
       <ContenedorF>
-        <P3>See More!</P3>
+        <Link to={`/company/${companyId}/post/${postId}`} style={divStyle}>
+          <P3>Conocé más!</P3>
+        </Link>
         <FavouritesButton postId={postId} />
       </ContenedorF>
     </ContenedorA>

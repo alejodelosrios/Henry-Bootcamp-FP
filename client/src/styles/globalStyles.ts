@@ -1,5 +1,4 @@
 import { createGlobalStyle } from "styled-components";
-import { DefaultTheme } from "styled-components";
 
 export default createGlobalStyle`
   * {
@@ -9,7 +8,7 @@ export default createGlobalStyle`
   }
 
   body {
-    background: ${props => props.theme.colors.backgrounds.white};
+    background: ${(props) => props.theme.colors.backgrounds.white};
     font-family: sans-serif;
   }
 `;
