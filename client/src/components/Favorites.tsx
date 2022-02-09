@@ -125,7 +125,7 @@ const Favorites: FC<Props> = ({ role }) => {
                                 </Detail>
                             </Link>
                         </FavNot>
-                    )) : 'Aun no tienes favoritos'}
+                    )) : 'Aún no tienes favoritos...'}
                 </Modal>
             )}
         </FavCont>
