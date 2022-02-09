@@ -279,6 +279,9 @@ export const SkillTagsComp: FC<Props> = ({userRole}) => {
             <SkillTags>
                 <Header>
                     <Titles>Skill tags</Titles>
+                    {userRole === 'applicant' &&
+                        <Edit onClick={() => switchFlag()}>Editar</Edit>
+                    }
                 </Header>
                 <TagsContainer>
                     {applicantSkills.length

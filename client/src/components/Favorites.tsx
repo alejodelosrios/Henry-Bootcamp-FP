@@ -57,6 +57,7 @@ const FavNot = styled.div`
     padding: 0.3rem 0.5rem;
     border-radius: 5px;
     cursor: pointer;
+    text-transform: capitalize;
     &:hover {
         background-color: #c779ff32;
     }
