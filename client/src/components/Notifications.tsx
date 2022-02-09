@@ -101,9 +101,9 @@ const Noti = styled.div<{ viewed?: boolean }>`
     }
 `;
 
-const Notifications: FC<Props> = ({ role }) => {
+const Notifications: FC<Props> = () => {
     const divRef = useRef<HTMLDivElement>(null);
-    const { applicant, company } = useSelector(
+    const { applicant, company, role } = useSelector(
         (state: any) => state.userReducer
     );
 
@@ -119,7 +119,7 @@ const Notifications: FC<Props> = ({ role }) => {
         } else if (role === "company") {
             dispatch(getNotifications(role, company.id));
         }
-    }, [applicant, company]);
+    }, []);
 
     const [modal, setModal] = useState(false);
 
