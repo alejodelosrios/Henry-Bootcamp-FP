@@ -28,7 +28,7 @@ mainRouter.use("/tag", tagsRouter);
 mainRouter.use("/category", validateToken(), categoryRouter);
 
 mainRouter.use("/notification", validateToken(), notificationRouter);
-mainRouter.use("/news", validateToken(), newsRouter);
+mainRouter.use("/news", newsRouter);
 
 // mainRouter.use("/notification/types", notificationTypeRouter);
 
