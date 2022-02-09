@@ -98,6 +98,8 @@ Las rutas son las siguientes:
 /news
 
 > POST /create (crea una news) => recibe objeto news (mirar en /prisma/seed.ts para los modelos)
+> POST /subscribe/:email (subscribe al usuario a la newsletter) => recibe email por params
+> POST /unsubscribe/:email (elimina al usuario de las suscripciones a la newsletter) => recibe email por params
 > GET /index (devuelve todas las news existentes) => no recibe parametros
 > GET /:newsId (devuelve una news especifica) => recibe newsId por params
 > PUT /update/:newsId (actualiza una news) => recibe newsId por params y objeto con todas las propiedades a actualizar

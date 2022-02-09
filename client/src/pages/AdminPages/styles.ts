@@ -3,11 +3,19 @@ import styled from "styled-components";
  * Estilos  GENERALES
  */
 export const Flex = styled.div<{ mode?: string }>`
+  text-transform: capitalize;
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
+  gap: 0.5rem;
+  flex-direction: column;
   justify-content: ${(props) =>
     props.mode === "start" ? "flex-start" : "space-between"};
+`;
+
+export const Flex2 = styled.div<{ mode?: string }>`
+  text-transform: capitalize;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-evenly;
 `;
 
 /**
@@ -133,11 +141,11 @@ export const Table = styled.table`
 
 export const Modal = styled.div`
   width: 100vw;
-  height: 100vh;
-  top: 0;
+  height: auto;
+  top: 50%;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 50%;
   position: fixed;
 `;
 
@@ -159,12 +167,13 @@ export const ModalContent = styled.div`
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   line-height: 1.4;
-  background: #f0f1f5;
+  background: #fff;
   color: #002448;
   padding: 2rem 3rem;
   border-radius: 1rem;
   max-width: 600px;
   min-width: 300px;
+
   h2 {
     margin-bottom: 20px;
     font-size: bold;
@@ -176,32 +185,76 @@ export const ModalContent = styled.div`
   label {
     font-size: 17px;
   }
-  input {
-    min-width: 300px;
-    padding: 0.2rem 1rem;
-    font-family: "Open Sans", sans-serif;
-    color: #757577;
+
+  input, textarea {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-family: ${(props) => props.theme.colors.typography.openSans};
+    color: ${(props) => props.theme.colors.typography.darkest};
     border-radius: 0.5rem;
-    border-radius: 0.5rem;
-    border: 0.5px solid #f0f1f5;
-    padding-right: 0px;
-    margin-bottom: 10px;
+    border: 0.5px solid ${(props) => props.theme.colors.backgrounds.cards};
+    ::placeholder {
+        color: ${(props) => props.theme.colors.typography.darkest};
+    }
+    :focus {
+    outline: none;
+    }
   }
 
-  button {
+  .cancel{
     font-family: "Poppins", sans-serif;
     padding: 10px;
     margin-top: 10px;
     border-radius: 10px;
     color: black;
-    border-color: ${(props) => props.theme.colors.details.primary};
+    border-color: ${(props) => props.theme.colors.details.secondary};
     background-color: transparent;
     cursor: pointer;
     transition-duration: 0.3s;
 
     &:hover {
-      background-color: ${(props) => props.theme.colors.details.primary};
+      background-color: ${(props) => props.theme.colors.details.secondary};
       color: ${(props) => props.theme.colors.typography.lighter};
+    }
+  }
+
+  .button {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: ${(props) => props.theme.colors.details.primary};
+    border: none;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
+    cursor: pointer;
+    font-family: ${(props) => props.theme.colors.typography.light};
+    &:hover {
+      background-color: transparent;
+      border: 0.5px solid ${(props) => props.theme.colors.details.primary};
+      color: ${(props) => props.theme.colors.details.primary};
+    }
+  }
+
+  .button2 {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: ${(props) => props.theme.colors.details.secondary};
+    border: none;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
+    cursor: pointer;
+    font-family: ${(props) => props.theme.colors.typography.light};
+    &:hover {
+      background-color: transparent;
+      border: 0.5px solid ${(props) => props.theme.colors.details.secondary};
+      color: ${(props) => props.theme.colors.details.secondary};
     }
   }
 `;

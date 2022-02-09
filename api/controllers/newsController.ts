@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -16,6 +17,31 @@ module.exports = {
           description: description as string,
         },
       });
+
+      const getAllSubscribedUsers = await prisma.subscribedUser.findMany()
+
+      getAllSubscribedUsers && getAllSubscribedUsers.forEach( async user => {
+        let emailUser = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user.email}`,
+          subject: `Newsletter`,
+          html: `
+            <section>
+              <h2>
+                Te contamos de las nuevas novedades de transforma!
+              </h2>
+              <img src=${image}>
+              <h3>
+                ${title}
+              </h3>
+              <p>
+                ${description}
+              </p>
+            </section>
+          `,
+        });
+      })
+
       res.json(newNews);
     } catch (error) {
       console.log(error);
@@ -23,12 +49,55 @@ module.exports = {
     }
   },
 
+  subscribe: async (req: Request, res: Response) => {
+    try {
+      const {email} = req.params
+      if(!email) return res.send("Debes enviar el email del user por params")
+      const checkIfUserAlreadySubscribed = await prisma.subscribedUser.findMany({
+        where: {
+          email: email
+        }
+      })
+      if(checkIfUserAlreadySubscribed && checkIfUserAlreadySubscribed.length) return res.send("Ya estas suscrito a la newsletter")
+      const subscribeUserToNewsletter = await prisma.subscribedUser.create({
+        data: {
+          email: email
+        }
+      })
+      res.send("Te has suscrito a la newsletter con exito")
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  unsubscribe: async (req: Request, res: Response) => {
+    try {
+      const {email} = req.params
+      if(!email) return res.send("Debes enviar el email del user por params")
+      const checkIfUserIsSubscribed = await prisma.subscribedUser.findMany({
+        where: {
+          email: email
+        }
+      })
+      if(checkIfUserIsSubscribed && checkIfUserIsSubscribed.length) {
+        const unsubscribeUserFromNewsletter = await prisma.subscribedUser.delete({
+          where: {
+            email: email
+          }
+        })
+        res.send("Ya no estas suscrito a la newsletter")
+      } else {
+        return res.send("No te encuentras suscrito a la newsletter")
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
   index: async (req: Request, res: Response) => {
     try {
       const getAllNews = await prisma.news.findMany();
-      getAllNews.length
-        ? res.status(200).json(getAllNews)
-        : res.status(404).send("No news found");
+      res.json(getAllNews)
     } catch (error) {
       res.status(400).send(error);
     }
