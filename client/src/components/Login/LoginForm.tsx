@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getUser,
   createUser,
@@ -7,7 +7,7 @@ import {
   resetPassword,
 } from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import {useLocation, useNavigate} from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import {
   BackgroundCover,
   BackgroundDiv,
@@ -23,15 +23,17 @@ import {
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import logoGoogle from "../../assets/google-logo.png";
-import {Paragraph} from "../../pages/WelcomePage/styles";
+import { Paragraph } from "../../pages/WelcomePage/styles";
 import Storage from "../../services/storage";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import ModalError from "../ModalError/ModaErrorl";
 
-function LoginForm({type}: any) {
+function LoginForm({ type }: any) {
   let location = useLocation();
   const userRole = useSelector((state: any) => state.userReducer.role);
   const companyId = useSelector((state: any) => state.userReducer.company.id);
   const token = useSelector((state: any) => state.userReducer.token);
+  const modal = useSelector((state: any) => state.modalReducer.modal);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -63,7 +65,7 @@ function LoginForm({type}: any) {
     navigate("/home");
   }
 
-  const handleChange = ({target: {name, value}}: any) => {
+  const handleChange = ({ target: { name, value } }: any) => {
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -72,7 +74,7 @@ function LoginForm({type}: any) {
   const login = (e: any) => {
     e.preventDefault();
     dispatch(
-      getUser({email: formInputs.email, password: formInputs.password})
+      getUser({ email: formInputs.email, password: formInputs.password })
     );
     setFormInputs({
       email: "",
@@ -112,7 +114,7 @@ function LoginForm({type}: any) {
           <FormContainer>
             <Link
               to="/home"
-              style={{textDecoration: "none", marginTop: "16px"}}
+              style={{ textDecoration: "none", marginTop: "16px" }}
             >
               <img src={logo} alt="" className="logo" />
             </Link>
@@ -127,8 +129,8 @@ function LoginForm({type}: any) {
                 type === "register"
                   ? register
                   : type === "login"
-                    ? login
-                    : reset
+                  ? login
+                  : reset
               }
             >
               <StyledInput
@@ -149,7 +151,7 @@ function LoginForm({type}: any) {
               )}
 
               {type === "register" && (
-                <div style={{width: "100%"}}>
+                <div style={{ width: "100%" }}>
                   <RegisterSelect
                     onChange={(e) => handleChange(e)}
                     id="role"
@@ -211,7 +213,7 @@ function LoginForm({type}: any) {
                   >
                     <GoogleLogo src={logoGoogle} alt="google-logo" />
                   </div>
-                  <div style={{width: "100%"}}>Google</div>
+                  <div style={{ width: "100%" }}>Google</div>
                 </GoogleBtn>
               </>
             )}
@@ -219,7 +221,7 @@ function LoginForm({type}: any) {
               <>
                 <Link
                   to="/reset-password"
-                  style={{textDecoration: "none", marginTop: "16px"}}
+                  style={{ textDecoration: "none", marginTop: "16px" }}
                 >
                   ¿Olvidaste tu contraseña?
                 </Link>
@@ -227,7 +229,7 @@ function LoginForm({type}: any) {
             ) : (
               <Link
                 to="/login"
-                style={{textDecoration: "none", marginTop: "16px"}}
+                style={{ textDecoration: "none", marginTop: "16px" }}
               >
                 Ingresar
               </Link>
@@ -236,14 +238,14 @@ function LoginForm({type}: any) {
             {location.pathname === "/login" ? (
               <Link
                 to="/register"
-                style={{textDecoration: "none", marginTop: "16px"}}
+                style={{ textDecoration: "none", marginTop: "16px" }}
               >
                 Registrarse
               </Link>
             ) : location.pathname === "/register" ? (
               <Link
                 to="/login"
-                style={{textDecoration: "none", marginTop: "16px"}}
+                style={{ textDecoration: "none", marginTop: "16px" }}
               >
                 Ingresar
               </Link>
@@ -254,6 +256,7 @@ function LoginForm({type}: any) {
       {userCreateModal.val && (
         <UserCreateModal setForm={setFormInputs} title="Message" />
       )}
+      {modal.open && <ModalError />}
     </>
   );
 }

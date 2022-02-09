@@ -71,7 +71,23 @@ module.exports = {
           viewed: true
         },
       });
-      res.json(notificationUpdated);
+      if (notificationUpdated.companyId) {
+        const companyNotification = await prisma.notification.findMany({
+          where:{
+            companyId: notificationUpdated.companyId
+          }
+        })
+        res.json(companyNotification)
+      }
+      if (notificationUpdated.applicantId) {
+        const applicantNotification = await prisma.notification.findMany({
+          where:{
+            applicantId: notificationUpdated.applicantId
+          }
+        })
+        res.json(applicantNotification)
+      }
+      
     } catch (error) {
       console.log(error)
       res.status(400).send(error);
