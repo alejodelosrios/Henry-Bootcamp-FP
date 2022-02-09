@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -16,6 +17,31 @@ module.exports = {
           description: description as string,
         },
       });
+
+      const getAllSubscribedUsers = await prisma.subscribedUser.findMany()
+
+      getAllSubscribedUsers && getAllSubscribedUsers.forEach( async user => {
+        let emailUser = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user.email}`,
+          subject: `Newsletter`,
+          html: `
+            <section>
+              <h2>
+                Te contamos de las nuevas novedades de transforma!
+              </h2>
+              <img src=${image}>
+              <h3>
+                ${title}
+              </h3>
+              <p>
+                ${description}
+              </p>
+            </section>
+          `,
+        });
+      })
+
       res.json(newNews);
     } catch (error) {
       console.log(error);

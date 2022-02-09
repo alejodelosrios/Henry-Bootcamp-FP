@@ -440,7 +440,7 @@ module.exports = {
   update: async (req: Request, res: Response) => {
     try {
       const { applicantId } = req.params;
-      const { firstName, lastName, email, phoneNumber, country, about } =
+      const { firstName, lastName, email, phoneNumber, country, about, showImage } =
         req.body;
       if (!applicantId)
         return res.send("Debes enviar el id del applicant por params");
@@ -454,6 +454,7 @@ module.exports = {
           phoneNumber: phoneNumber as string,
           country: country as string,
           about: about as string,
+          showImage: showImage as boolean,
         },
       });
 
@@ -464,6 +465,9 @@ module.exports = {
         data: {
           email: email as string,
         },
+        include: {
+          applicant: true
+        }
       });
       res.send(updatedUser);
     } catch (error) {

@@ -39,8 +39,8 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
     ];
   }
   if (type === "new") {
-    columns = ["id", "title", "description", "image"];
-    colSpanish = ["id", "Título", "Descripción", "Imagen"];
+    columns = ["id", "title"];
+    colSpanish = ["id", "Título"];
   }
 
   const eliminar = (obj: object) => {
