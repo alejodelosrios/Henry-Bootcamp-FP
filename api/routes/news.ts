@@ -5,6 +5,8 @@ const newsRouter = Router();
 
 //POST
 newsRouter.post("/create", newsController.create);
+newsRouter.post("/subscribe/:email", newsController.subscribe);
+newsRouter.post("/unsubscribe/:email", newsController.unsubscribe);
 
 //GET
 newsRouter.get("/index", newsController.index);
