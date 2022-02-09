@@ -21,11 +21,11 @@ const Types = styled.div`
 `;
 
 const TypeTitle = styled.div`
-  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
   font-size: 1vw;
   font-weight: bold;
   margin-bottom: 5%;
-  color: #EF5DA8;
+  color: #ef5da8;
 `;
 
 const Option = styled.div`
@@ -33,31 +33,32 @@ const Option = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 2%;
+  gap: 0.5rem;
 `;
 
 const Select = styled.select`
-border: 0.5px solid grey;
-padding: 0.5vw;
-border-radius: 10px;
-color: grey;
-`
+  border: 0.5px solid grey;
+  padding: 0.5vw;
+  border-radius: 10px;
+  color: grey;
+`;
 const H2 = styled.h2`
-  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
   font-size: 1.3vw;
   color: grey;
   font-weight: 500;
-`
+`;
 
 const Label = styled.label`
   color: grey;
-  font-family: ${p=> p.theme.colors.typography.poppins};`
+  font-family: ${(p) => p.theme.colors.typography.poppins};
+`;
 
 const OptionSelect = styled.option`
   color: grey;
-  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
   font-size: 1vw;
-`
+`;
 
 interface Filters {
   inputName: string;
