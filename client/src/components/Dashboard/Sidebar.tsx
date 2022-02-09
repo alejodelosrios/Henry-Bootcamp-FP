@@ -40,6 +40,16 @@ const CustomNavLink2 = styled.li`
   border-radius: 0.5rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
+const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+const Logo = styled.img`
+  width: 120px;
+  height: 120px;
+`;
 const LinkImg = styled.div`
   display: flex;
   align-items: center;
@@ -73,7 +83,9 @@ const Sidebar: FC = () => {
   return (
     <Container>
       <NavLink to="/">
-        <img src={logo} alt="logo" />
+        <ImgContainer>
+          <Logo src={logo} alt="logo" />
+        </ImgContainer>
       </NavLink>
       <Nav>
         <NavLink to="/home" style={{ textDecoration: "none" }}>
