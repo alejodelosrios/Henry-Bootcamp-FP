@@ -25,7 +25,7 @@ const Return = styled.button`
     align-items: center;
     justify-content: center;
     transition: .5s;
-    background-color: rgba(239, 93, 168, 0.5);
+    background-color: ${p => p.theme.colors.details.primary};
     color: #FFF;
     padding: 10px;
     font-size: 1.2rem;
@@ -53,40 +53,40 @@ const CompanyPostDetail = () => {
         dispatch(getPostsById(postId));
     }, [postId]);
 
-    const random = [
-        [{ id: 1, name: 'Html' },
-        { id: 2, name: 'Fundaciones' },
-        { id: 3, name: 'Javascript' },
-        { id: 4, name: 'React' }],
+    // const random = [
+    //     [{ id: 1, name: 'Html' },
+    //     { id: 2, name: 'Fundaciones' },
+    //     { id: 3, name: 'Javascript' },
+    //     { id: 4, name: 'React' }],
 
-        [{ id: 5, name: 'Swimmin' },
-        { id: 6, name: 'Fun' },
-        { id: 7, name: 'Hola' }],
+    //     [{ id: 5, name: 'Swimmin' },
+    //     { id: 6, name: 'Fun' },
+    //     { id: 7, name: 'Hola' }],
 
-        [{ id: 9, name: 'No' },
-        { id: 10, name: 'Se' },
-        { id: 11, name: 'Javascript' },
-        { id: 12, name: 'Pochoclos' }],
+    //     [{ id: 9, name: 'No' },
+    //     { id: 10, name: 'Se' },
+    //     { id: 11, name: 'Javascript' },
+    //     { id: 12, name: 'Pochoclos' }],
 
-        [{ id: 13, name: 'Hola' },
-        { id: 14, name: 'No' },
-        { id: 15, name: 'Si' },
-        { id: 16, name: 'Talvez' }],
-    ]
+    //     [{ id: 13, name: 'Hola' },
+    //     { id: 14, name: 'No' },
+    //     { id: 15, name: 'Si' },
+    //     { id: 16, name: 'Talvez' }],
+    // ]
 
     function getRandomArbitrary(min: number, max: number) {
         return Math.floor(Math.random() * (max - min) + min);
     }
 
-    const applyers = post.applicants?.map((el: any) => (
-        {
-            ...el,
-            applicant: {
-                ...el.applicant,
-                skillTags: random[getRandomArbitrary(0, 3)]
-            }
-        }
-    ));
+    // const applyers = post.applicants?.map((el: any) => (
+    //     {
+    //         ...el,
+    //         applicant: {
+    //             ...el.applicant,
+    //             skillTags: random[getRandomArbitrary(0, 3)]
+    //         }
+    //     }
+    // ));
 
     return (
         <Dashboard>

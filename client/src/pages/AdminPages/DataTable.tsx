@@ -94,7 +94,7 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
               colum === "options" ? (
                 <td key={j}>
                   <TableButton type="button" onClick={() => eliminar(row)}>
-                    ELiminar
+                    Eliminar
                   </TableButton>
                   {row.role !== "admin" && (
                     <TableButton
