@@ -4,9 +4,14 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "../pages/Dashboard/Dashboard";
 
+const divStyle = {
+  textDecoration: "none",
+  padding: 0,
+};
+
 const CompPosts = styled.div`
   height: 100%;
-  overflow-y: auto;
+  margin-bottom: 50px;
 `;
 
 const JobPosts = styled.div`
@@ -15,10 +20,11 @@ const JobPosts = styled.div`
   background-color: ${p => p.theme.colors.backgrounds.white};
   margin-bottom: 10px;
   margin-left: 50px;
-  border-radius: 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 10px;
   
   h1{
     margin-left: 50px;
@@ -31,10 +37,25 @@ const JobPosts = styled.div`
     margin-right: 50px;
   }
 
-  &:hover{
+ /*  &:hover{
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
-  }
+  } */
+`
+
+const Title = styled.h2`
+    color: ${p => p.theme.colors.typography.dark};
+    font-family: ${p => p.theme.colors.typography.poppins};
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    font-weight: bold;
+    color: #BBBABC;
+`
+
+const P = styled.div`
+color: ${p => p.theme.colors.typography.dark};
+font-family: ${p => p.theme.colors.typography.poppins};
 `
 
 const CompanyJobPosts: FC = () => {
@@ -47,10 +68,10 @@ const CompanyJobPosts: FC = () => {
         {
           posts.map((post: any, i: number) => (
             <JobPosts key={i}>
-              <Link to={`/company/posts/${post.id}/detail`}>
-                <h1>{post.title}</h1>
+              <Link to={`/company/posts/${post.id}/detail`} style={divStyle}>
+                <Title>{post.title}</Title>
               </Link>
-              <p>{post.location}</p>
+              <P>{post.location}</P>
             </JobPosts>
           ))
         }
