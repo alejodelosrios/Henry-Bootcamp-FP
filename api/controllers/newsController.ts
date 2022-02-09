@@ -23,6 +23,51 @@ module.exports = {
     }
   },
 
+  subscribe: async (req: Request, res: Response) => {
+    try {
+      const {email} = req.params
+      if(!email) return res.send("Debes enviar el email del user por params")
+      const checkIfUserAlreadySubscribed = await prisma.subscribedUser.findMany({
+        where: {
+          email: email
+        }
+      })
+      if(checkIfUserAlreadySubscribed && checkIfUserAlreadySubscribed.length) return res.send("Ya estas suscrito a la newsletter")
+      const subscribeUserToNewsletter = await prisma.subscribedUser.create({
+        data: {
+          email: email
+        }
+      })
+      res.send("Te has suscrito a la newsletter con exito")
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
+  unsubscribe: async (req: Request, res: Response) => {
+    try {
+      const {email} = req.params
+      if(!email) return res.send("Debes enviar el email del user por params")
+      const checkIfUserIsSubscribed = await prisma.subscribedUser.findMany({
+        where: {
+          email: email
+        }
+      })
+      if(checkIfUserIsSubscribed && checkIfUserIsSubscribed.length) {
+        const unsubscribeUserFromNewsletter = await prisma.subscribedUser.delete({
+          where: {
+            email: email
+          }
+        })
+        res.send("Ya no estas suscrito a la newsletter")
+      } else {
+        return res.send("No te encuentras suscrito a la newsletter")
+      }
+    } catch (error) {
+      res.status(400).send(error);
+    }
+  },
+
   index: async (req: Request, res: Response) => {
     try {
       const getAllNews = await prisma.news.findMany();
