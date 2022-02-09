@@ -1,7 +1,7 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.png";
 import { useSelector } from "react-redux";
 import PrivateMenu from "./Menus/PrivateMenu";
 import PublicMenu from "./Menus/PublicMenu";
@@ -26,7 +26,8 @@ const FlexDiv = styled.div`
 `;
 
 const Img = styled.img`
-width: 100%;`
+  width: 180px;
+`;
 
 export const NavBar: FC = () => {
   const role = useSelector((state: any) => state.userReducer.role);

@@ -9,10 +9,11 @@ const divStyle = {
 
 const Box = styled.div`
   width: 100px;
-  height: 80px;
+  height: 100px;
   overflow: hidden;
-  vertical-align: middle;
   object-position: center;
+  display: flex;
+  justify-content: center;
 `;
 const Img = styled.img`
   object-fit: cover;
@@ -22,7 +23,7 @@ const ContenedorA = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 15px;
+  border-radius: 15px 15px 0px 0px;
   width: 100%;
   height: 140px;
   margin-bottom: 1rem;
