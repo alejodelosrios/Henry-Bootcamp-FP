@@ -25,6 +25,7 @@ import Storage from "./services/storage";
 import Categories from "./pages/AdminPages/Categories";
 import Users from "./pages/AdminPages/Users";
 import News from "./pages/AdminPages/News";
+import { NewsPage } from "./pages/News/NewsPage";
 
 function App() {
   const [userLogged, setUserLogged] = useState(false);
@@ -122,6 +123,7 @@ function App() {
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/news" element={<News />} />
+        <Route path='/news' element={<NewsPage/>}/>
       </Routes>
     </ThemeProvider>
   );
