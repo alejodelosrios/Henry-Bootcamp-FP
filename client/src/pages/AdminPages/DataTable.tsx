@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { formatDate } from "../../services/formatDate";
 import { TableButton, Table } from "./styles";
 
 interface modal {
@@ -6,7 +7,13 @@ interface modal {
   type: string;
 }
 interface props {
-  data: object[];
+  data: {
+    id: number;
+    email: string;
+    password: string;
+    createdAt: string;
+    updatedAt: string;
+  }[];
   type: string;
   setModal?: React.Dispatch<React.SetStateAction<modal>>;
   setUser?: React.Dispatch<React.SetStateAction<object>>;
@@ -26,8 +33,8 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
       "id",
       "email",
       "role",
-      "Fecha de Creación",
-      "Fecha de Actualzación",
+      "Creación",
+      "Actualzación",
       "Opciones",
     ];
   }
@@ -58,6 +65,15 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
       setUser(obj);
     }
   };
+
+  for (const obj of data) {
+    if (obj.createdAt) {
+      obj.createdAt = formatDate(obj.createdAt);
+    }
+    if (obj.updatedAt) {
+      obj.updatedAt = formatDate(obj.updatedAt);
+    }
+  }
 
   return (
     <Table cellPadding={0} cellSpacing={0}>
