@@ -119,7 +119,7 @@ function App() {
           path="/company/posts/:postId/detail/applicant/:applicantId"
           element={<Profile user={userLogged} />}
         />
-        <Route path="/admin" element={<Perfil />} />
+        <Route path="/admin" element={<Profile user={userLogged} />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/categories" element={<Categories />} />
         <Route path="/admin/news" element={<News />} />
