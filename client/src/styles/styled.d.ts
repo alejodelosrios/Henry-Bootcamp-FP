@@ -10,6 +10,7 @@ declare module "styled-components" {
         cards: string;
         base: string;
         pink: string;
+        softPink: string;
       };
       typography: {
         darkest: string;

@@ -1,11 +1,10 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import img from "../assets/iStock-1.jpg";
 import FavouritesButton from "./FavouritesButton";
 
 const divStyle = {
   textDecoration: "none",
-  padding: 0
+  padding: 0,
 };
 
 const Box = styled.div`
@@ -14,7 +13,7 @@ const Box = styled.div`
   overflow: hidden;
   border-radius: 0;
   margin-bottom: 3px;
-  margin-right: 1vw;
+  margin-right: 1rem;
   vertical-align: middle;
   object-position: center;
 `;
@@ -45,30 +44,21 @@ const ContenedorB = styled.div`
 `;
 
 const ContenedorB2 = styled.div`
+  width: 50%;
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
   flex-wrap: wrap;
 `;
 const ContenedorC = styled.div`
   display: flex;
-  padding: 0px;
-  justify-content: flex-start;
-  /* flex-direction: column; */
+  justify-content: space-between;
   width: 458px;
   height: 76px;
-  margin-right: 10px;
   align-items: flex-end;
 `;
-const ContenedorD = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-`;
 const ContenedorE = styled.div`
-  width: auto;
-  height: auto;
-  margin: 0.3vw;
-  margin-right: 1vw;
+  display: flex;
+  flex-direction: column;
 `;
 const ContenedorF = styled.div`
   width: 612px;
@@ -79,29 +69,29 @@ const ContenedorF = styled.div`
   padding: 20px;
   padding-top: 10px;
   padding-bottom: 10px;
-  background-color: #fff8ff;
+  background-color: ${(props) => props.theme.colors.backgrounds.softPink};
 `;
 
 const Title = styled.h4`
-  margin-right: 2vw;
-  font-size: 2vw;
+  margin-right: 1rem;
+  font-size: 1.3rem;
   font-weight: 30px;
-  color: #757577;
+  color: ${(props) => props.theme.colors.typography.darkest};
   text-transform: capitalize;
 `;
 const P = styled.span`
-  font-size: 0.9vw;
-  color: #757577;
+  font-size: 1rem;
+  color: ${(props) => props.theme.colors.typography.darkest};
   text-transform: capitalize;
 `;
 const P2 = styled.p`
-  font-size: 1vw;
-  color: grey;
+  font-size: 0.8rem;
+  color: ${(props) => props.theme.colors.typography.light};
 `;
 const P3 = styled.p`
   font-size: 10px;
   font-size: 12px;
-  color: #ef5da8;
+  color: ${(props) => props.theme.colors.details.primary};
 `;
 
 type PostArgs = {
@@ -118,8 +108,6 @@ type PostArgs = {
   //};
   modality: string;
   contract: string;
-  //salary: {
-  //min: Number;
   //max: Number;
   //};
   startDate: string;
@@ -145,22 +133,20 @@ const Post = ({
         </Box>
         <ContenedorC>
           <div>
-            <Link to={`/company/${companyId}/post/${postId}` } style={divStyle}>
+            <Link to={`/company/${companyId}/post/${postId}`} style={divStyle}>
               <Title>{title}</Title>
             </Link>
             <P>{location}</P>
           </div>
           <ContenedorB2>
-            <ContenedorD>
-              <ContenedorE>
-                <P2>Modalidad: <P>{modality}</P></P2>
-              </ContenedorE>
-            </ContenedorD>
-            <ContenedorD>
-              <ContenedorE>
-                <P2>Tipo de Contrato:<P>{contract}</P></P2>
-              </ContenedorE>
-            </ContenedorD>
+            <ContenedorE>
+              <P2>Modalidad:</P2>
+              <P>{modality}</P>
+            </ContenedorE>
+            <ContenedorE>
+              <P2>Tipo de Contrato:</P2>
+              <P>{contract}</P>
+            </ContenedorE>
           </ContenedorB2>
         </ContenedorC>
       </ContenedorB>
