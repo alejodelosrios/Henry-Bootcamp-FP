@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const Flex = styled.div<{ mode?: string }>`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: ${(props) =>
     props.mode === "start" ? "flex-start" : "space-between"};
 `;
@@ -47,19 +48,21 @@ export const Search = styled.input`
 `;
 
 export const AddButton = styled.button<{}>`
-  font-family: "Poppins", sans-serif;
-  padding: 10px;
-  border-radius: 10px;
-  color: black;
-  border-color: ${(props) => props.theme.colors.details.primary};
-  background-color: transparent;
-  margin-right: 10px;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: ${(props) => props.theme.colors.details.primary};
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
   cursor: pointer;
-  transition-duration: 0.3s;
-
+  font-family: ${(props) => props.theme.colors.typography.light};
   &:hover {
-    background-color: ${(props) => props.theme.colors.details.primary};
-    color: ${(props) => props.theme.colors.typography.lighter};
+    background-color: transparent;
+    border: 0.5px solid ${(props) => props.theme.colors.details.primary};
+    color: ${(props) => props.theme.colors.details.primary};
   }
 `;
 
@@ -68,28 +71,34 @@ export const AddButton = styled.button<{}>`
  */
 
 export const TableButton = styled.button<{ mode?: string }>`
-  font-family: "Poppins", sans-serif;
-  padding: 10px;
-  border-radius: 10px;
-  color: black;
-  border-color: ${(props) =>
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: ${(props) =>
     props.mode === "secondary"
       ? props.theme.colors.details.secondary
       : props.theme.colors.details.primary};
-  background-color: transparent;
-  margin-right: 10px;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
+  cursor: pointer;
+  font-family: ${(props) => props.theme.colors.typography.light};
+  margin-right: 0.5rem;
   cursor: pointer;
   transition-duration: 0.3s;
 
   &:hover {
-    background-color: ${(props) =>
+    background-color: transparent;
+    border: ${(props) =>
+      props.mode === "secondary"
+        ? `0.5px solid ${props.theme.colors.details.secondary}`
+        : `0.5px solid ${props.theme.colors.details.primary}`};
+    color: ${(props) =>
       props.mode === "secondary"
         ? props.theme.colors.details.secondary
         : props.theme.colors.details.primary};
-    color: ${(props) =>
-      props.mode === "secondary"
-        ? props.theme.colors.typography.dark
-        : props.theme.colors.typography.lighter};
   }
 `;
 
