@@ -7,7 +7,7 @@ const Container = styled.div`
     margin: auto;
     margin-top: 150px;
     width: 80vw;
-    height: 600px;
+    height: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -19,13 +19,14 @@ const ContainerSup = styled.div`
     display: flex;
     justify-content: space-evenly;
     position: relative;
-    width: 70%;
+    width: 80%;
 `;
 const ContainerInf = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: flex-end;
+    width: 80%;
 `;
 const Logos = styled.div`
     display: flex;
@@ -198,7 +199,7 @@ const Footer = () => {
                     </a>
                 </Logos>
                 <LastContainer>
-                    <Text3>Copyright © 2021 jobsportal.com</Text3>
+                    <Text3>Copyright © 2021 transforma.com</Text3>
                     <LittleCont>
                         <Button2>Privacy policy</Button2>
                         <Button2>-</Button2>
