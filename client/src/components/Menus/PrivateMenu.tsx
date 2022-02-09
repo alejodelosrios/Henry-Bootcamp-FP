@@ -21,7 +21,7 @@ const A = styled.button<{About?: boolean}>`
   border: none;
   background: transparent;
   font-size: 20px;
-  color: ${(props) => (props.About ? "#FFFFFF" : "black")};
+  color: ${(props) => (props.About ? "#FFFFFF" : "grey")};
   font-weight: bolder;
   margin: 0 2rem;
   font-family: Open sans/bold;
