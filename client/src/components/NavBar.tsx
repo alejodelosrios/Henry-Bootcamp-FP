@@ -22,7 +22,11 @@ const FlexDiv = styled.div`
   flex-direction: row;
   align-items: center;
   z-index: 1000;
+  width: 5vw;
 `;
+
+const Img = styled.img`
+width: 100%;`
 
 export const NavBar: FC = () => {
   const role = useSelector((state: any) => state.userReducer.role);
@@ -31,7 +35,7 @@ export const NavBar: FC = () => {
       <MainFlexDiv className="flex-container">
         <FlexDiv className="imagen-logo">
           <Link to="/" style={{ textDecoration: "none" }}>
-            <img src={logo} alt="logo" />
+            <Img src={logo} alt="logo" />
           </Link>
         </FlexDiv>
         {role ? <PrivateMenu role={role} /> : <PublicMenu />}

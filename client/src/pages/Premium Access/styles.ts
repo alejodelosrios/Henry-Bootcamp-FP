@@ -20,12 +20,12 @@ export const TopBackground = styled.div`
 `;
 
 export const Title = styled.h1`
-font-size: 5vw;
-line-height: 70px;
+font-size: 4vw;
+line-height: 60px;
 text-align: center;
 align-items: center;
 top: 131px;
-margin-top: 0.7vw;
+margin-top: 1vw;
 `
 
 export const PT = styled.p`

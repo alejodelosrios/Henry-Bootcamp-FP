@@ -31,6 +31,22 @@ const PageTitle = styled.h1`
   z-index: 1000;
   margin-top: 2rem;
 `;
+
+const Title = styled.h1`
+font-size: 4vw;
+line-height: 3vw;
+text-align: center;
+align-items: center;
+top: 131px;
+margin-top: 2vw;
+`
+
+const PT = styled.p`
+  color: ${props => props.theme.colors.details.primary};
+  margin-bottom: 30px;;
+  text-align: center;
+`;
+
 const PageTitleTwo = styled.h1`
   font-family: Poppins;
   font-style: normal;
@@ -55,14 +71,15 @@ const Container = styled.div`
 const Sidebar = styled.aside`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   width: 30%;
   height: 100%;
   padding: 3.25rem 0;
+  gap: 20px;
 `;
 const SidebarTitle = styled.p`
   font-weight: bold;
   font-size: 1rem;
+  
 `;
 const Group = styled.div`
   display: flex;
@@ -72,10 +89,18 @@ const Group = styled.div`
 const GroupTitle = styled.p`
   font-weight: bold;
   color: ${(props) => props.theme.colors.typography.darkest};
+  margin-bottom: 10px;
 `;
+
 const Text = styled.p`
   font-weight: regular;
-  color: ${(props) => props.theme.colors.typography.light};
+  color: ${props=> props.theme.colors.typography.dark};
+`;
+
+const TextSubTitle = styled.p`
+  font-weight: regular;
+  color:  ${props=> props.theme.colors.typography.dark};
+  text-transform: capitalize;
 `;
 
 const Content = styled.div`
@@ -101,16 +126,37 @@ const PostTitle = styled.h1`
   line-height: 24px;
   letter-spacing: -0.04em;
   margin-top: 0;
-  margin-bottom: 1.5rem;
+  margin-bottom: 10px;
   text-transform: capitalize;
   color: ${(props) => props.theme.colors.typography.darkest};
+  text-transform: capitalize;
 `;
+
+const PostTitleSide = styled.h1`
+  width: 100%;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2vw;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+  margin-top: 1rem;
+  text-transform: capitalize;
+  color: ${(props) => props.theme.colors.typography.darkest};
+  text-transform: capitalize;
+`;
+
 const TitleContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
+
+const TitleDiv = styled.div`
+margin-bottom: 1.5rem;
+`
+
 const PostSubtitle = styled.h3`
   width: 100%;
   font-family: Poppins;
@@ -120,9 +166,46 @@ const PostSubtitle = styled.h3`
   margin-top: 0;
   margin-bottom: 1.5rem;
   color: ${(props) => props.theme.colors.typography.darkest};
+  text-transform: capitalize;
 `;
 
-const PostDetail: FC = ({}) => {
+const PostSubtitleAside = styled.p`
+  width: 100%;
+  font-family: Poppins;
+  font-style: normal;
+  letter-spacing: -0.04em;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: ${(props) => props.theme.colors.typography.darkest};
+  text-transform: capitalize;
+`;
+
+const ContTags = styled.div`
+display:flex;
+width:50%;
+flex-wrap: wrap;
+justify-content: space-evenly;
+margin: 2vw;
+`
+
+const Tags = styled.button`
+border: none;
+background-color: rgba(200, 121, 255, 0.5);
+family-font: ${p => p.theme.colors.typography.poppins};
+padding: 10px;
+color: #FFF;
+border-radius: 1vw;
+font-size: 1vw;
+text-transform: capitalize;
+`
+const ContSubgrupos = styled.div`
+display:flex;
+justify-content: space-between;
+width: 100%;
+margin-top: 2vw;
+`
+
+const PostDetail: FC = ({ }) => {
   const { postId, companyId } = useParams();
   const dispatch = useDispatch();
 
@@ -131,12 +214,14 @@ const PostDetail: FC = ({}) => {
   const company = useSelector((state: any) => state.userReducer.company);
   const applicant = useSelector((state: any) => state.userReducer.applicant);
 
+  console.log('detalles del post: ', post)
+
   let userCompanyId: string | null;
   let applicantId: number | null;
 
   !company ? (userCompanyId = null) : (userCompanyId = company.id + "");
   !applicant ? (applicantId = null) : (applicantId = applicant.id);
-  
+
   let alreadyApplied = false;
   for (const p of applicant.postulations) {
     if (p.postId + "" === postId) {
@@ -147,7 +232,7 @@ const PostDetail: FC = ({}) => {
 
   useEffect(() => {
     dispatch(getPostsById(postId));
-  }, [postId]);
+  }, []);
   const navigate = useNavigate();
 
   const apply = () => {
@@ -167,45 +252,28 @@ const PostDetail: FC = ({}) => {
   return (
     <Container>
       <TopBackground></TopBackground>
-      <PageTitle>Detalle</PageTitle>
-      <PageTitleTwo>Publicación</PageTitleTwo>
+      <Title>
+        <PT>Detalle</PT> Publicación
+      </Title>
       <Content>
         <Sidebar>
           <Link to={`/company/${companyId}`}>
-            <CompLogo src={CompanyLogo} alt="company-logo-img" />
+            <CompLogo src={post.company.companyLogo} alt="company-logo-img" />
           </Link>
-          <Group>
-            <GroupTitle>Publicado el:</GroupTitle>
-            <Text>{post.startDate}</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Finaliza el:</GroupTitle>
-            <Text>{post.endDate}</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Category:</GroupTitle>
-            <Text>{post.category}</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Experiencia necesaria:</GroupTitle>
-            <Text>Experiencia necesaria:</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Modalidad:</GroupTitle>
-            <Text>{post.modality}</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Tipo de Contrato:</GroupTitle>
-            <Text>{post.contractType}</Text>
-          </Group>
-          <Group>
-            <GroupTitle>Salario:</GroupTitle>
-            <Text>{post.salary}</Text>
-          </Group>
+          <PostTitleSide>{post.company.name}</PostTitleSide>
+          <PostSubtitleAside>{post.company.location}</PostSubtitleAside>
+          <GroupTitle>Sobre Nosotros:</GroupTitle>
+          <TextSubTitle>Nostrum sit est nisi adipisci quis nostrum. Rerum similique sit facilis ut. Dolor odit nihil laboriosam aut. Ut nihil facere sed.</TextSubTitle>
+          
         </Sidebar>
+
         <MainSection>
           <TitleContainer>
-            <PostTitle>{post.title}</PostTitle>
+            <TitleDiv>
+              <PostTitle>{post.title}</PostTitle>
+              <TextSubTitle>{post.company.name} - {post.company.location}</TextSubTitle>
+            </TitleDiv>
+
             {role === "" ? (
               <button onClick={() => apply()}>Aplicar</button>
             ) : role === "applicant" && !alreadyApplied ? (
@@ -225,7 +293,25 @@ const PostDetail: FC = ({}) => {
           </TitleContainer>
           <PostSubtitle>Descripción:</PostSubtitle>
           <Text>{post.description}</Text>
-          <p>Etiquetas (Keywords) </p>
+          <ContSubgrupos>
+            <Group>
+              <GroupTitle>Modalidad:</GroupTitle>
+              <TextSubTitle>{post.modality}</TextSubTitle>
+            </Group>
+            <Group>
+              <GroupTitle>Tipo de Contrato:</GroupTitle>
+              <TextSubTitle>{post.contractType}</TextSubTitle>
+            </Group>
+            <Group>
+              <GroupTitle>Salario:</GroupTitle>
+              <TextSubTitle>{post.salary}</TextSubTitle>
+            </Group>
+          </ContSubgrupos>
+          <ContTags>
+            {post.tags.map((el: any) =>
+              <Tags key={el}>{el}</Tags>
+            )}
+          </ContTags>
         </MainSection>
       </Content>
     </Container>

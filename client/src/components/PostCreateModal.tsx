@@ -92,7 +92,7 @@ const PostCreateModal = ({ title, setForm, post, user }: any) => {
         modality: "remote",
         contractType: "fullTime",
         startDate: "2022-01-22",
-        salary: "3000",
+        salary: "",
       });
     } else if (user) {
       setForm({
