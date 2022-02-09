@@ -16,6 +16,11 @@ interface Props {
     companyId: number
 }
 
+const divStyle = {
+    textDecoration: "none",
+    padding: 0,
+  };
+
 const Card = styled.div`
     position: relative;
     width: 100%;
@@ -53,7 +58,7 @@ const Info = styled.div`
 `;
 
 const Name = styled.p`
-    text-decoration: ${p => p.theme.colors.backgrounds.cards} underline;
+    /* text-decoration: ${p => p.theme.colors.backgrounds.cards} underline; */
     color: ${p => p.theme.colors.typography.dark};
     font-size: 1.5rem;
     font-weight: bold;
@@ -89,7 +94,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
     <Card>
         <Photo src={img || testImg}/>
         <Info>
-            <Link to={`/company/posts/${postId}/detail/applicant/${applicantId}`}>
+            <Link to={`/company/posts/${postId}/detail/applicant/${applicantId}`} style={divStyle}>
                 <Name>{`${firstName} ${lastName}`}</Name>
             </Link>
             <span>{country}</span>

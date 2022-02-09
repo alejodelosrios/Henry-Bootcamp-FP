@@ -71,9 +71,7 @@ module.exports = {
   index: async (req: Request, res: Response) => {
     try {
       const getAllNews = await prisma.news.findMany();
-      getAllNews.length
-        ? res.status(200).json(getAllNews)
-        : res.status(404).send("No news found");
+      res.json(getAllNews)
     } catch (error) {
       res.status(400).send(error);
     }
