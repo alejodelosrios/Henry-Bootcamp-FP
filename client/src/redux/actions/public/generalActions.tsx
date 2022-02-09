@@ -95,11 +95,28 @@ export const getCompany =
       console.log(error);
     }
   };
-export const resetPassword = (email: string) => async () => {
-  try {
-    token = Storage.get("token");
-    await axios.put(`/user/login/reset/${email}`);
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const resetPassword =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let { data } = await axios.put(`/user/login/reset/${email}`);
+      console.log(data);
+      return dispatch({
+        type: ActionType.SET_MODAL,
+        payload: {
+          title: "Mensaje:",
+          message: data,
+          open: true,
+        },
+      });
+    } catch (error) {
+      return dispatch({
+        type: ActionType.SET_MODAL,
+        payload: {
+          title: "Mensaje:",
+          message: "El correo ingresado es inválido",
+          open: true,
+        },
+      });
+    }
+  };
