@@ -2,6 +2,7 @@ import {FC} from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import user from '../assets/user.png'
+import PostStatusButton from './PostStatusButton';
 
 interface Props {
     applicant: {
@@ -37,9 +38,7 @@ const Card = styled.div`
 `;
 
 const FavsApp = styled.div`
-    position: absolute;
-    top: 10%;
-    right: 2%;
+    margin-left: 30px;
     font-size: 30px;
     cursor: pointer;
     color: ${p => p.theme.colors.details.secondary2};
@@ -102,7 +101,9 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
         <Skills>{skillTags.map((s: any) => (
                 <Sk key={s.id}>{s.name}</Sk>
         ))}</Skills>
-        <Link to={`/company/premium/${companyId}`}>
+
+        <PostStatusButton postId={postId} applicantId={applicantId}/>
+        <Link style={{textDecoration:'none'}} to={`/company/premium/${companyId}`}>
             <FavsApp>{'☆'}</FavsApp>
         </Link>
     </Card>
