@@ -112,7 +112,7 @@ const Favorites: FC<Props> = ({ role }) => {
 
             {modal && (
                 <Modal>
-                    {favs?.map((post: any) => (
+                    {favs.length ? favs.map((post: any) => (
                         <FavNot
                             key={post.id}
                             onClick={() => setModal((oldState) => !oldState)}
@@ -125,7 +125,7 @@ const Favorites: FC<Props> = ({ role }) => {
                                 </Detail>
                             </Link>
                         </FavNot>
-                    ))}
+                    )) : 'Aun no tienes favoritos'}
                 </Modal>
             )}
         </FavCont>
