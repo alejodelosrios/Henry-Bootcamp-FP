@@ -5,14 +5,14 @@ export const MainDiv = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
+`;
 
 export const PresentationCard = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
     width: 100%;
-`
+`;
 
 export const Logo = styled.img`
     width: 300px;
@@ -23,40 +23,38 @@ export const Logo = styled.img`
     text-indent: 10000px;
     border-radius: 50%;
     margin-right: 3.5rem;
-`
+`;
 export const CompanyInfo = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-`
+`;
 
 export const CompanyName = styled.h1`
     font-size: 5rem;
     color: #757577;
-    `
+`;
 export const Location = styled.h5`
     color: #757577;
-
-`
+`;
 export const RatingContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-end;
-`
+`;
 
 export const Rating = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    
-`
+`;
 export const FollowButton = styled.button`
     width: 237.77px;
     height: 63.13px;
     border-radius: 4px;
-    background: #EF5DA8;
-    color: #FEFEFF;
+    background: #ef5da8;
+    color: #fefeff;
     font-family: Poppins;
     font-size: 32px;
     font-style: normal;
@@ -68,41 +66,39 @@ export const FollowButton = styled.button`
     cursor: pointer;
     transition-duration: 0.5s;
     margin-left: 3.8px;
-    :hover  {
+    :hover {
         background: #ef419b;
         transform: scale(1.01, 1.01);
         transition-duration: 0.5s;
     }
-`
+`;
 export const PaginateButtonsDiv = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 80%;
-`
+`;
 
 export const PaginateButtons = styled.div`
     width: auto;
-    padding: 20px 20px;
+    padding: 10px 20px;
     border-radius: 4px;
-    background: #FFB7FF;
-    color: #FEFEFF;
+    background: #ffb7ff;
+    color: #fefeff;
     font-family: Poppins;
-    font-size: 32px;
+    font-size: 1.5rem;
     font-style: normal;
-    line-height: 17px;
-    letter-spacing: 0em;
     text-align: left;
     margin-top: 5rem;
     border: none;
     cursor: pointer;
     transition-duration: 0.5s;
-    :hover  {
-        background: #9DD6FD;
+    :hover {
+        background: #9dd6fd;
         transform: scale(1.01, 1.01);
         transition-duration: 0.5s;
     }
-`
+`;
 
 export const AboutCompanyContainer = styled.div`
     display: flex;
@@ -110,7 +106,7 @@ export const AboutCompanyContainer = styled.div`
     justify-content: flex-start;
     width: 80%;
     margin-top: 5rem;
-`
+`;
 
 export const AboutTitle = styled.h1`
     font-family: Poppins;
@@ -121,7 +117,7 @@ export const AboutTitle = styled.h1`
     letter-spacing: 0em;
     text-align: left;
     color: #757577;
-`
+`;
 export const SubTitle = styled.h2`
     font-family: Roboto;
     font-size: 24px;
@@ -132,7 +128,7 @@ export const SubTitle = styled.h2`
     text-align: left;
     color: #757577;
     margin-top: -5px;
-`
+`;
 
 export const SubTags = styled.h2`
     font-family: Poppins;
@@ -142,9 +138,8 @@ export const SubTags = styled.h2`
     line-height: 29px;
     letter-spacing: 0em;
     text-align: left;
-    color: #EF5DA8;
-
-`
+    color: #ef5da8;
+`;
 
 export const AboutParagraph = styled.p`
     font-family: Open Sans;
@@ -156,19 +151,19 @@ export const AboutParagraph = styled.p`
     letter-spacing: 0em;
     text-align: left;
     color: #444444;
-`
+`;
 
 export const RatingContaier = styled.div`
     height: 565px;
     width: 100%;
     border-radius: 13px;
     box-shadow: 0px 0px 27px -2px #00000040;
-    background: #FFFFFF;
+    background: #ffffff;
     padding: 40px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-`
+`;
 
 export const UserRateContainer = styled.div`
     height: 500px;
@@ -178,12 +173,12 @@ export const UserRateContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-`
+`;
 
 export const RatingCompContainer = styled.div`
     display: flex;
     width: 100%;
-`
+`;
 
 export const RatingTitle = styled.h1`
     font-family: Poppins;
@@ -194,7 +189,7 @@ export const RatingTitle = styled.h1`
     letter-spacing: 0em;
     text-align: left;
     color: #757577;
-`
+`;
 export const UserRatingTitle = styled.h1`
     font-family: Poppins;
     font-size: 38px;
@@ -205,7 +200,7 @@ export const UserRatingTitle = styled.h1`
     text-align: center;
     color: #757577;
     margin: 30px 0;
-`
+`;
 export const UserRatingText = styled.p`
     font-family: Roboto;
     font-size: 24px;
@@ -215,7 +210,7 @@ export const UserRatingText = styled.p`
     letter-spacing: 0em;
     text-align: center;
     color: #757577;
-    `
+`;
 export const RatingPercentage = styled.i`
     font-family: Poppins;
     font-size: 75px;
@@ -224,7 +219,7 @@ export const RatingPercentage = styled.i`
     line-height: 112px;
     letter-spacing: 0em;
     text-align: left;
-    color: #C879FF;
+    color: #c879ff;
     transition: 200ms;
     // color: #8f8f8f
-`
+`;

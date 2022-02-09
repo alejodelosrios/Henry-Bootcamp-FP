@@ -279,13 +279,13 @@ const Sidebar: FC = () => {
                 <CustomNavLinkContainer
                   select={true}
                   svg_path="perfil"
-                  text="perfil"
+                  text="Perfil"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
                   svg_path="perfil"
-                  text="perfil"
+                  text="Perfil"
                 />
               )}
             </NavLink>
@@ -294,13 +294,13 @@ const Sidebar: FC = () => {
                 <CustomNavLinkContainer
                   select={true}
                   svg_path="users"
-                  text="users"
+                  text="Usuarios"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
                   svg_path="users"
-                  text="users"
+                  text="Usuarios"
                 />
               )}
             </NavLink>
@@ -309,13 +309,13 @@ const Sidebar: FC = () => {
                 <CustomNavLinkContainer
                   select={true}
                   svg_path="categories"
-                  text="categorías"
+                  text="Categorías"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
                   svg_path="categories"
-                  text="categorías"
+                  text="Categorías"
                 />
               )}
             </NavLink>
@@ -324,13 +324,13 @@ const Sidebar: FC = () => {
                 <CustomNavLinkContainer
                   select={true}
                   svg_path="news"
-                  text="news"
+                  text="Artículos & Noticias"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
                   svg_path="news"
-                  text="news"
+                  text="Artículos & Noticias"
                 />
               )}
             </NavLink>
