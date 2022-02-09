@@ -1,6 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-import { resolveSoa } from "dns";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -160,10 +160,33 @@ module.exports = {
 
       //NOTIFY APPLICANT
 
+      const applicant = await prisma.applicant.findFirst({
+        where: {
+          id: Number(applicantId)
+        }
+      })
+
+      if (!applicant?.userId) {
+        return res.status(400).send("something went wrong");
+      }
+
+      const user = await prisma.user.findFirst({
+        where: {
+          id: applicant.userId
+        }
+      })
+
       const post = await prisma.post.findFirst({
         where: {
           id: Number(postId),
         },
+        include: {
+          applicants: {
+            include: {
+              applicant: true
+            }
+          }
+        }
       });
 
       const notifyApplicant = await prisma.notification.create({
@@ -177,25 +200,28 @@ module.exports = {
         },
       });
 
-      if (post && post.companyId) {
-        const companies = await prisma.company.findMany({
-          where: {
-            id: post.companyId,
-          },
-          include: {
-            posts: {
-              include: {
-                applicants: {
-                  include: {
-                    applicant: true,
-                  },
-                },
-              },
-            },
-          },
-        });
-        res.json(companies);
-      }
+      let emailApplicant = await transporter.sendMail({
+        from: '"Transforma" <transformapage@gmail.com>',
+        to: `${user && user.email}`,
+        subject: `${applicant && applicant.firstName} ${
+          applicant && applicant.lastName
+        }`,
+        html: `<p>El estado de tu postulacion para la oferta ${
+          post && post.title
+        } ha cambiado a ${newStatus}. Saludos, el equipo de Transforma</p>`,
+      });
+
+      const sortedApplicants = post && post.applicants.sort(function(a, b) {
+        if(a.applicant.firstName > b.applicant.firstName){
+            return 1
+        }
+        if(b.applicant.firstName > a.applicant.firstName) {
+            return -1
+        }
+        return 0
+      })
+      
+      res.json(sortedApplicants && sortedApplicants);
     } catch (error) {
       res.send(error);
     }
@@ -327,6 +353,27 @@ module.exports = {
       res.status(400).send(error);
     }
   },
+
+  getPremiumCompanies: async (req: Request, res: Response) => {
+    try {
+      const premiumCompanies = await prisma.company.findMany({
+        where: {
+          premium: true,
+        },
+        select: {
+          id: true,
+          name: true,
+          companyLogo: true,
+          location: true,
+         },
+      });
+      res.json(premiumCompanies);
+    } catch (error) {
+      console.log(error)
+      res.send(error);
+    }
+  },
+  
 
   delete: async (req: Request, res: Response) => {
     try {

@@ -1,7 +1,9 @@
 import { FC, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { getNotifications } from "../redux/actions/private/generalActions";
+import { getNotifications, setNotification } from "../redux/actions/private/generalActions";
+import Bell from '../assets/Bell.svg';
 
 type Props = {
     role: string;
@@ -50,29 +52,40 @@ const Count = styled.div`
 
 const Modal = styled.div`
     position: absolute;
+    margin-top: 7px;
     bottom: -1;
     right: 0;
     background-color: white;
     width: 300px;
-    max-height: 500px;
+    max-height: 500;
     overflow: auto;
-    border-radius: 10px;
+    border-radius: 1rem;
     display: flex;
     flex-direction: column;
+    padding: 1rem;
+    z-index: 1000;
 `;
 
-const Noti = styled.li<{ viewed?: boolean }>`
+const Noti = styled.div<{ viewed?: boolean }>`
+    display: flex;
+    align-items: center;
+    padding: 2%;
     width: 100%;
     height: 50px;
     margin: 2px 0;
-    background-color: ${(p) => p.theme.colors.details.secondary1};
+    background-color: ${(p) => p.theme.colors.backgrounds.cards};
     border-radius: 10px;
     cursor: pointer;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    color: ${p => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
+        height: 100%;
+        border: solid 1px ${p => p.theme.colors.details.secondary2};
+        
+        p{
+            white-space: pre-wrap;
+            font-size: 85%;
+        }
     }
 
     ${(p) =>
@@ -80,6 +93,12 @@ const Noti = styled.li<{ viewed?: boolean }>`
         css`
             background-color: white;
         `}
+
+    p{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 `;
 
 const Notifications: FC<Props> = ({ role }) => {
@@ -100,7 +119,7 @@ const Notifications: FC<Props> = ({ role }) => {
         } else if (role === "company") {
             dispatch(getNotifications(role, company.id));
         }
-    }, []);
+    }, [applicant, company]);
 
     const [modal, setModal] = useState(false);
 
@@ -119,13 +138,18 @@ const Notifications: FC<Props> = ({ role }) => {
             document.removeEventListener("mousedown", checkIfClickedOutside);
         };
     }, [modal]);
+
+    const handleNotif = (not:any)=>{
+        dispatch(setNotification(not.id, role))
+    }
+
     return (
         <NotCont ref={divRef}>
             <NotBut
                 onClick={() => setModal((oldState) => !oldState)}
                 modal={modal}
             >
-                {"●"}
+                <img src={Bell} alt='notifications'/>
                 {viewed && !modal ? <Count>{viewed}</Count> : null}
             </NotBut>
 
@@ -133,9 +157,22 @@ const Notifications: FC<Props> = ({ role }) => {
                 <Modal>
                     {notifications.length
                         ? notifications.map((not: any) => (
-                              <Noti key={not.id} viewed={not.viewed}>
-                                  {not.message}
-                              </Noti>
+                                <Noti 
+                                    key={not.id}
+                                    onClick={()=> handleNotif(not)}
+                                    viewed={not.viewed}>
+                                    <p>{not.message}</p>
+                                </Noti>
+                                // <Link 
+                                //     to={`/company/${not.companyId}/post/${not.postId}`}
+                                //     key={not.id} 
+                                //     style={{textDecoration:'none'}} 
+                                //     onClick={()=> handleNotif(not)}
+                                // >
+                                //     <Noti viewed={not.viewed}>
+                                //         <p>{not.message}</p>
+                                //     </Noti>
+                                // </Link>
                           ))
                         : "Aún no tienes notificaciones..."}
                 </Modal>

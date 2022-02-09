@@ -1,5 +1,6 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
+import {transporter} from "../config/mailer";
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -47,8 +48,8 @@ module.exports = {
           modality: modality as string,
           contractType: contractType as string,
           salary: salary as string,
-          startDate: startDate as string,
-          endDate: endDate as string,
+          startDate: new Date(startDate),
+          endDate: new Date(endDate),
           tags: tags as string[],
           categoryId: Number(category),
           companyRating: company && company.rating
@@ -212,11 +213,31 @@ module.exports = {
               }
             }
           },
+          company: {
+            select: {
+              id: true,
+              name: true,
+              companyLogo: true,
+              location: true
+            }
+          },
           favorites: true,
           favoritedBy: true
         }
       });
-      res.json(post);
+      if(post){
+        post.applicants = post && post.applicants.sort(function(a, b) {
+          if(a.applicant.firstName > b.applicant.firstName){
+              return 1
+          }
+          if(b.applicant.firstName > a.applicant.firstName) {
+              return -1
+          }
+          return 0
+        })
+      }
+      
+      res.json(post && post);
     } catch (error) {
       console.log(error);
       res.send(error);
@@ -233,7 +254,8 @@ module.exports = {
           id: Number(postId),
         },
         data: {
-          endDate: endDate
+          endDate: endDate,
+          notifiedEndDate: false
         }
       });
 
@@ -292,7 +314,25 @@ module.exports = {
             applicantId: Number(applicant.applicantId),
           },
         })
+  
+        //ENVIAR EMAIL A LOS APPLICANTS
+
+        const user = await prisma.user.findFirst({
+          where: {
+            id: applicant && applicant.applicant.userId
+          }
+        })
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${user && user.email}`,
+          subject: `${applicant && applicant.applicant.firstName} ${
+            applicant && applicant.applicant.lastName
+          }`,
+          html: `<p>La oferta ${post && post.title} ha sido dada de baja. Saludos, el equipo de Transforma</p>`,
+        });
       })
+      
       
       const hidePost = await prisma.post.update({
         where: {

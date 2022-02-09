@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import {
   CompanyInfo,
   CompanyName,
-  FollowButton,
   Location,
   Logo,
   MainDiv,
@@ -20,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router";
 import { getCompany } from "../../redux/actions/public/generalActions";
 import HomeLayout from "../../pages/HomeLayout";
+import { VisualRating } from "./VisualRating";
 
 export const CompanyProfile = () => {
   const dispatch = useDispatch();
@@ -69,17 +69,8 @@ export const CompanyProfile = () => {
             </div>
             <RatingContainer className="rating-container">
               <div className="componente-rating">
-                <Rating className="rating-stars">
-                  <div>estrellas numero '</div>
-                  <div>estrellas comp clickeable</div>
-                </Rating>
-                <div className="rating-description">
-                  Basado en 514 evaluaciones
-                </div>
+                <VisualRating/>
               </div>
-              {role === "applicant" ? (
-                <FollowButton>+ Seguir</FollowButton>
-              ) : null}
             </RatingContainer>
           </CompanyInfo>
         </PresentationCard>

@@ -185,7 +185,8 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 padding: '40px',
-                width: '45%',
+                minWidth: '40%',
+                width: 'auto',
                 height: 'auto',
                 background: '#FFFFFF',
                 zIndex: '1001',
@@ -218,7 +219,9 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
                     <Edit onClick={() => updateFunction()}>Guardar</Edit>
                 </Header>
             </div>
-            <div className='overlay' style={{
+            <div className='overlay'
+            onClick={addLaguages}
+            style={{
                 position: 'fixed',
                 opacity: flag,
                 display: overlayFlag,
@@ -251,7 +254,8 @@ export const LanguagesInfoComp: FC<Props> = ({userRole}) => {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 padding: '40px',
-                width: '40%',
+                minWidth: '40%',
+                width: 'auto',
                 height: 'auto',
                 background: '#FFFFFF',
                 zIndex: '1001',

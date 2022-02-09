@@ -144,6 +144,13 @@ interface getNotifications {
     role: string;
   };
 }
+interface setNotification {
+  type: ActionType.SET_NOTIFICATION;
+  payload: {
+    data: object[],
+    role: string
+  };
+}
 interface getFavorite {
   type: ActionType.GET_FAVORITES;
   payload: object[];
@@ -200,9 +207,13 @@ interface getUsers {
 
 interface deleteUser {
   type: ActionType.DELETE_USER;
-  payload: string;
+  payload: number;
 }
 
+interface convertToAdminRole {
+  type: ActionType.CONVERT_TO_ADMIN_ROLE;
+  payload: number;
+}
 interface getNews {
   type: ActionType.GET_NEWS;
   payload: object[];
@@ -210,6 +221,21 @@ interface getNews {
 interface createNew {
   type: ActionType.CREATE_NEW;
   payload: object[];
+}
+interface postReview {
+  type: ActionType.POST_REVIEW;
+  payload: any;
+}
+
+interface getPremiums {
+  type: ActionType.GET_PREMIUMS;
+  payload: any;
+}
+
+
+interface setPostStatus {
+  type: ActionType.SET_POST_STATUS;
+  payload: object;
 }
 
 export type Action =
@@ -239,6 +265,7 @@ export type Action =
   | deleteUserLanguages
   | setUserFollows
   | getNotifications
+  | setNotification
   | getFavorite
   | jobApplication
   | getCompany
@@ -253,5 +280,9 @@ export type Action =
   | createCategory
   | getUsers
   | deleteUser
+  | convertToAdminRole
   | getNews
-  | createNew;
+  | createNew
+  | postReview
+  | getPremiums
+  | setPostStatus;

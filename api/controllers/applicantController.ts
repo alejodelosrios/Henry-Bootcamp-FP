@@ -1,6 +1,7 @@
 import { prisma } from "../prisma/database";
 import { Request, Response } from "express";
-const jwt = require("jsonwebtoken")
+import {transporter} from "../config/mailer";
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   create: async (req: Request, res: Response) => {
@@ -58,8 +59,7 @@ module.exports = {
 
   review: async (req: Request, res: Response) => {
     try {
-      const { companyId } = req.params
-      const { description, score } = req.body;
+      const { companyId, description, score } = req.body;
       if(!description) return res.send("Debes incluir un campo 'description' en el body")
       if(!score) return res.send("Debes incluir un campo 'score' en el body")
       if(!companyId) return res.send("Debes incluir un campo 'companyId' por params")
@@ -210,6 +210,26 @@ module.exports = {
           },
         });
 
+        if (!applicant?.userId) {
+          return res.status(400).send("something went wrong");
+        }
+
+        const applicantUser = await prisma.user.findFirst({
+          where: {
+            id: applicant.userId
+          }
+        })
+
+        if (!post?.companyId) {
+          return res.status(400).send("something went wrong");
+        }
+
+        const companyUser = await prisma.user.findFirst({
+          where: {
+            id: post.companyId
+          }
+        })
+
         // NOTIFICAMOS AL USER QUE APLICO CORRECTAMENTE
 
         const notifyApplicant = await prisma.notification.create({
@@ -221,6 +241,17 @@ module.exports = {
             postId: Number(postId),
             applicantId: Number(applicantId),
           },
+        });
+
+        let emailApplicant = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${applicantUser && applicantUser.email}`,
+          subject: `${applicant && applicant.firstName} ${
+            applicant && applicant.lastName
+          }`,
+          html: `<p>Te has postulado con éxito para la oferta ${
+            post && post.title
+          }. Saludos, el equipo de Transforma</p>`,
         });
 
         //NOTIFICAMOS A LA COMPANY QUE RECIBIO UNA POSTULACION
@@ -235,6 +266,13 @@ module.exports = {
             postId: Number(postId),
             companyId: post && post.companyId,
           },
+        });
+
+        let emailCompany = await transporter.sendMail({
+          from: '"Transforma" <transformapage@gmail.com>',
+          to: `${companyUser && companyUser.email}`,
+          subject: `${applicant && applicant.firstName} ${applicant && applicant.lastName}`,
+          html: `<p>${applicant && applicant.firstName} ${applicant && applicant.lastName} se ha postulado para la oferta ${post && post.title}. Saludos, el equipo de Transforma</p>`,
         });
       }
 

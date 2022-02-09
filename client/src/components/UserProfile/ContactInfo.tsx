@@ -13,7 +13,6 @@ import {
   NameDiv,
   NameTag,
   RolTag,
-  ContactButton,
   ParagraphStyle,
 } from "./Styles";
 
@@ -110,7 +109,6 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
             {user.firstName} {user.lastName}
           </NameTag>
           <RolTag>{user?.education[0]?.degree}</RolTag>
-          <ContactButton>Contactar</ContactButton>
         </NameDiv>
 
         <ContactCard className="contact-card">

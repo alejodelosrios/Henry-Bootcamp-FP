@@ -1,33 +1,14 @@
 import { FC } from "react";
-import styled from "styled-components";
+import { TableButton, Table } from "./styles";
 
-const Container = styled.div`
-  width: 100%;
-  height: 90%;
-  display: flex;
-  overflow-y: auto;
-  flex-direction: column;
-  align-items: center;
-`;
-
-const Table = styled.table`
-  width: 100%;
-
-  tbody {
-    td {
-      min-width: 100px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      overflow: hidden;
-      padding: 1rem;
-      border: solid 1px lightgrey;
-    }
-  }
-`;
+interface modal {
+  open: boolean;
+  type: string;
+}
 interface props {
   data: object[];
   type: string;
-  setModal?: React.Dispatch<React.SetStateAction<boolean>>;
+  setModal?: React.Dispatch<React.SetStateAction<modal>>;
   setUser?: React.Dispatch<React.SetStateAction<object>>;
 }
 
@@ -57,7 +38,21 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
 
   const eliminar = (obj: object) => {
     if (setModal) {
-      setModal(true);
+      setModal({
+        open: true,
+        type: "deleteUser",
+      });
+    }
+    if (setUser) {
+      setUser(obj);
+    }
+  };
+  const changeRole = (obj: object) => {
+    if (setModal) {
+      setModal({
+        open: true,
+        type: "changeRoleUser",
+      });
     }
     if (setUser) {
       setUser(obj);
@@ -82,9 +77,18 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
             {columns.map((colum: any, j: number) =>
               colum === "options" ? (
                 <td key={j}>
-                  <button type="button" onClick={() => eliminar(row)}>
+                  <TableButton type="button" onClick={() => eliminar(row)}>
                     ELiminar
-                  </button>
+                  </TableButton>
+                  {row.role !== "admin" && (
+                    <TableButton
+                      mode="secondary"
+                      type="button"
+                      onClick={() => changeRole(row)}
+                    >
+                      Made admin
+                    </TableButton>
+                  )}
                 </td>
               ) : (
                 <td key={j}>{row[colum]}</td>

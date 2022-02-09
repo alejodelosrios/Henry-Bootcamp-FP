@@ -53,10 +53,10 @@ const notificationTypes = [
 
 //CAMBIAR ESTOS VALORES SEGUN CUANTOS QUIEREN DE CADA UNO EN LA DB
 let admin = 1
-let applicants = 50
+let applicants = 49
 let companies = 15
 let users = admin + applicants + companies
-let posts = 100
+let posts = 100 
 
 //CUANDO TENGAN ESOS NUMEROS PACTADOS EJECUTEN 'npx prisma db seed'
 
@@ -92,6 +92,11 @@ async function main(){
     // })
 
 
+
+
+    
+
+
     //CREAR ADMIN
     await prisma.user.createMany({
         data: [
@@ -118,6 +123,156 @@ async function main(){
         skipDuplicates: true
     })
 
+    //////////////////CREAR PERFIL PRUEBA ALE
+
+    // await prisma.user.createMany({
+    //     data: [
+    //         {
+    //         email: "ramalejandro@gmail.com",
+    //         password: "password",
+    //         role: "company"
+    //         }
+    //     ],
+    //     skipDuplicates: true
+    // })
+
+    // await prisma.company.createMany({
+    //     data: [
+    //         {
+    //             userId: 2,
+    //             name: faker.random.word(),
+    //             legalName: faker.random.words(2),
+    //             stin: `${faker.datatype.number({min: 10, max: 99})}-${faker.datatype.number({min: 10000000, max: 99999999})}-${faker.datatype.number({min: 0, max: 9})}`, //esto seria el cuit
+    //             accountManagers: [`${faker.name.firstName()} ${faker.name.lastName()}`, `${faker.name.firstName()} ${faker.name.lastName()}`],
+    //             companyLogo: faker.image.image(),
+    //             location: faker.random.words(2),
+    //             values: [faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word(), faker.random.word()],
+    //             aboutValues: faker.lorem.paragraph(),
+    //             about: faker.lorem.paragraph(),
+    //             mission: faker.lorem.paragraph(),
+    //             vision: faker.lorem.paragraph()
+    //         }
+    //     ],
+    //     skipDuplicates: true
+    // })
+
+    // await prisma.post.createMany({
+    //     data: [
+    //         {
+    //             companyId: 1,
+    //             title: faker.random.word(),
+    //             description: faker.lorem.paragraph(),
+    //             location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
+    //             modality: faker.random.arrayElement([
+    //                 "onSite",
+    //                 "remote",
+    //                 "hybrid",
+    //             ]),
+    //             contractType: faker.random.arrayElement([
+    //                 "fullTime",
+    //                 "partTime",
+    //                 "temporary",
+    //                 "perHour",
+    //             ]),
+    //             salary: `${faker.datatype.number()}usd`,
+    //             startDate: new Date(),
+    //             endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+    //             tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+    //             categoryId: 1+Math.floor(Math.random()*(categories.length-1))
+    //         },
+    //         {
+    //             companyId: 1,
+    //             title: faker.random.word(),
+    //             description: faker.lorem.paragraph(),
+    //             location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
+    //             modality: faker.random.arrayElement([
+    //                 "onSite",
+    //                 "remote",
+    //                 "hybrid",
+    //             ]),
+    //             contractType: faker.random.arrayElement([
+    //                 "fullTime",
+    //                 "partTime",
+    //                 "temporary",
+    //                 "perHour",
+    //             ]),
+    //             salary: `${faker.datatype.number()}usd`,
+    //             startDate: new Date(),
+    //             endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+    //             tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+    //             categoryId: 1+Math.floor(Math.random()*(categories.length-1))
+    //         },
+    //         {
+    //             companyId: 1,
+    //             title: faker.random.word(),
+    //             description: faker.lorem.paragraph(),
+    //             location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
+    //             modality: faker.random.arrayElement([
+    //                 "onSite",
+    //                 "remote",
+    //                 "hybrid",
+    //             ]),
+    //             contractType: faker.random.arrayElement([
+    //                 "fullTime",
+    //                 "partTime",
+    //                 "temporary",
+    //                 "perHour",
+    //             ]),
+    //             salary: `${faker.datatype.number()}usd`,
+    //             startDate: new Date(),
+    //             endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+    //             tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+    //             categoryId: 1+Math.floor(Math.random()*(categories.length-1))
+    //         },
+    //         {
+    //             companyId: 1,
+    //             title: faker.random.word(),
+    //             description: faker.lorem.paragraph(),
+    //             location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
+    //             modality: faker.random.arrayElement([
+    //                 "onSite",
+    //                 "remote",
+    //                 "hybrid",
+    //             ]),
+    //             contractType: faker.random.arrayElement([
+    //                 "fullTime",
+    //                 "partTime",
+    //                 "temporary",
+    //                 "perHour",
+    //             ]),
+    //             salary: `${faker.datatype.number()}usd`,
+    //             startDate: new Date(),
+    //             endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+    //             tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+    //             categoryId: 1+Math.floor(Math.random()*(categories.length-1))
+    //         },
+    //         {
+    //             companyId: 1,
+    //             title: faker.random.word(),
+    //             description: faker.lorem.paragraph(),
+    //             location: `${faker.address.cityPrefix()} ${faker.address.citySuffix()}`,
+    //             modality: faker.random.arrayElement([
+    //                 "onSite",
+    //                 "remote",
+    //                 "hybrid",
+    //             ]),
+    //             contractType: faker.random.arrayElement([
+    //                 "fullTime",
+    //                 "partTime",
+    //                 "temporary",
+    //                 "perHour",
+    //             ]),
+    //             salary: `${faker.datatype.number()}usd`,
+    //             startDate: new Date(),
+    //             endDate: new Date(new Date().getTime()+(23*60*60*1000)),
+    //             tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
+    //             categoryId: 1+Math.floor(Math.random()*(categories.length-1))
+    //         }
+    //     ]
+    // })
+
+
+    //////////////////
     
     //CREAR COMPANIES
     for(let i=0; i<companies; i++){
@@ -350,8 +505,8 @@ async function main(){
                         "perHour",
                     ]),
                     salary: `${faker.datatype.number()}usd`,
-                    startDate: "",
-                    endDate: "",
+                    startDate: new Date(),
+                    endDate: faker.random.arrayElement([new Date(new Date().getTime()+(23*60*60*1000)), new Date(new Date().getTime()+(2*23*60*60*1000)), new Date(new Date().getTime()+(4*23*60*60*1000))]),
                     tags: [faker.random.arrayElement(tags), faker.random.arrayElement(tags), faker.random.arrayElement(tags)],
                     categoryId: 1+Math.floor(Math.random()*(categories.length-1))
                 }
@@ -397,12 +552,12 @@ async function main(){
           })
     }
 
-    //AGREGAR POSTULATIONS A APPLICANTS Y COMPANIES
+    // AGREGAR POSTULATIONS A APPLICANTS Y COMPANIES
 
     for(let i=0; i<posts*3; i++){
         await prisma.applicantPool.create({
             data: {
-                    status: faker.random.arrayElement(["applied", "completed", "inTouch"]),
+                    status: faker.random.arrayElement(["applied", "inProcess", "inTouch"]),
                     applicantId: 1+Math.floor(Math.random()*(applicants-1)),
                     postId: 1+Math.floor(Math.random()*(posts-1))
                 }

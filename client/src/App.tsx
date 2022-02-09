@@ -101,6 +101,7 @@ function App() {
         <Route path="/create-post" element={<CreatePostPage mode="create" />} />
         <Route path="/login" element={<LoginPage type="login" />} />
         <Route path="/register" element={<LoginPage type="register" />} />
+        <Route path="/reset-password" element={<LoginPage type="reset" />} />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/frequent-questions" element={<QandA />} />
         <Route path="/company/:companyId" element={<CompanyProfile />} />

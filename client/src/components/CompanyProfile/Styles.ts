@@ -48,6 +48,8 @@ export const RatingContainer = styled.div`
 export const Rating = styled.div`
     display: flex;
     flex-direction: row;
+    align-items: center;
+    
 `
 export const FollowButton = styled.button`
     width: 237.77px;
@@ -81,15 +83,16 @@ export const PaginateButtonsDiv = styled.div`
 
 export const PaginateButtons = styled.div`
     width: auto;
-    padding: 10px 20px;
+    padding: 20px 20px;
     border-radius: 4px;
     background: #FFB7FF;
     color: #FEFEFF;
     font-family: Poppins;
+    font-size: 32px;
     font-style: normal;
-    font-weight: 400;
+    line-height: 17px;
     letter-spacing: 0em;
-    text-align: center;
+    text-align: left;
     margin-top: 5rem;
     border: none;
     cursor: pointer;
@@ -157,26 +160,29 @@ export const AboutParagraph = styled.p`
 
 export const RatingContaier = styled.div`
     height: 565px;
-    width: 550px;
+    width: 100%;
     border-radius: 13px;
     box-shadow: 0px 0px 27px -2px #00000040;
     background: #FFFFFF;
     padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 `
 
 export const UserRateContainer = styled.div`
-    height: 565px;
+    height: 500px;
     width: 550px;
     background: transparent;
     padding: 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 `
 
 export const RatingCompContainer = styled.div`
     display: flex;
+    width: 100%;
 `
 
 export const RatingTitle = styled.h1`
@@ -198,6 +204,7 @@ export const UserRatingTitle = styled.h1`
     letter-spacing: 0em;
     text-align: center;
     color: #757577;
+    margin: 30px 0;
 `
 export const UserRatingText = styled.p`
     font-family: Roboto;

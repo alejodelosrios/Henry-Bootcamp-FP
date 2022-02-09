@@ -42,6 +42,7 @@ const initialState = {
     postulations: [],
     favorites: [],
   },
+  totalPremiums: [],
 };
 
 const companyReducer = (state = initialState, action: Action) => {
@@ -66,6 +67,19 @@ const companyReducer = (state = initialState, action: Action) => {
         applicantDetail: action.payload,
       };
     }
+    case ActionType.POST_REVIEW:
+      return {
+        ...state,
+        companyDetail: {
+          ...state.companyDetail,
+          reviews: [...state.companyDetail.reviews, action.payload],
+        },
+      };
+    case ActionType.GET_PREMIUMS:
+      return {
+        ...state,
+        totalPremiums: action.payload,
+      };
     default:
       return state;
   }

@@ -28,3 +28,24 @@ export const getNotifications =
         console.log(error);
       }
   };
+
+export const setNotification = (notificationId:number, role:string) => async (dispatch: Dispatch<Action>)=>{
+  try {
+    const token = Storage.get("token");
+    let {data}: any = await axios.put(`/notification/update/${notificationId}`,null,
+      {
+        headers: {
+          token: token || "",
+        },
+      }
+    );
+
+    return dispatch({
+      type: ActionType.SET_NOTIFICATION,
+      payload: {data, role}
+    });
+  } catch (error) {
+    console.log("Ups! algo salió mal");
+    console.log(error);
+  }
+}

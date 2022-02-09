@@ -337,6 +337,22 @@ const userReducer = (state = initialState, action: Action) => {
           ),
         },
       };
+    case ActionType.CONVERT_TO_ADMIN_ROLE:
+      return {
+        ...state,
+        admin: {
+          ...state.admin,
+          users: sortByProp(
+            state.admin.users.map((e: any) => {
+              if (e.id === action.payload) {
+                e.role = "admin";
+              }
+              return e;
+            }),
+            "id"
+          ),
+        },
+      };
     case ActionType.GET_NEWS:
       return {
         ...state,
@@ -353,6 +369,18 @@ const userReducer = (state = initialState, action: Action) => {
           news: sortByProp([...state.admin.news, action.payload], "id"),
         },
       };
+
+    case ActionType.SET_NOTIFICATION:
+      return state;
+      // return action.payload.role === 'applicant'
+      //   ? {...state, applicant: {
+      //               ...state.applicant,
+      //               notifications: [action.payload.data]
+      //             }}
+      //   : {...state, company: {
+      //               ...state.company,
+      //               notifications: [action.payload.data]
+      //   }};
     default:
       return state;
   }

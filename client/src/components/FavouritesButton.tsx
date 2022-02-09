@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { setFavorite } from "../redux/actions/private/applicantActions";
 import { checkExistance } from "../services/checkExistance";
@@ -15,6 +16,8 @@ const Button = styled.button`
   cursor: pointer;
 `;
 const FavouritesButton: FC<Props> = ({ postId }) => {
+  const navigate = useNavigate()
+  const userRole = useSelector((state: any) => state.userReducer.role)
   const dispatch = useDispatch();
   const { favorites, id } = useSelector(
     (state: any) => state.userReducer.applicant
@@ -26,7 +29,11 @@ const FavouritesButton: FC<Props> = ({ postId }) => {
     setIsFav(!isFav);
   };
 
-  return <Button onClick={handleFav}>{isFav ? "Retirar" : "Guardar"}</Button>;
-};
+  if (userRole === 'applicant') {
+    return <Button onClick={handleFav}>{isFav ? "Retirar" : "Guardar"}</Button>
+  } else if (userRole === '') {
+    return <Button onClick={() => navigate('/login')}>Guardar</Button>
+  } else return null
+}
 
 export default FavouritesButton;

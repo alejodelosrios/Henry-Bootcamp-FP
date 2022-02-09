@@ -81,7 +81,7 @@ const CompanyPostDetail = () => {
                     <Link style={{textDecoration:'none'}} to='/company/posts'><Return>↤</Return></Link>
                     Postulantes para {post.title.toUpperCase()} en {post.location}:
                 </Title>
-                <ApplicantByPost applicants={applyers} postId={post.id} favorites={post.favorites}/>
+                <ApplicantByPost applicants={post.applicants} postId={post.id} favorites={post.favorites}/>
             </>}
         </Dashboard>
     )

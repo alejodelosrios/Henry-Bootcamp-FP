@@ -1,12 +1,13 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {
   getUser,
   createUser,
   getCompany,
+  resetPassword,
 } from "../../redux/actions/public/generalActions";
 import UserCreateModal from "../UserCreateModal";
-import { useNavigate } from "react-router";
+import {useLocation, useNavigate} from "react-router";
 import {
   BackgroundCover,
   BackgroundDiv,
@@ -22,14 +23,18 @@ import {
 } from "./Styles";
 import logo from "../../assets/logo.svg";
 import logoGoogle from "../../assets/google-logo.png";
-import { Paragraph } from "../../pages/WelcomePage/styles";
+import {Paragraph} from "../../pages/WelcomePage/styles";
 import Storage from "../../services/storage";
+import {Link} from "react-router-dom";
 
-function LoginForm({ type }: any) {
-  const navigate = useNavigate();
+function LoginForm({type}: any) {
+  let location = useLocation();
   const userRole = useSelector((state: any) => state.userReducer.role);
   const companyId = useSelector((state: any) => state.userReducer.company.id);
   const token = useSelector((state: any) => state.userReducer.token);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userRole === "company") {
@@ -48,7 +53,6 @@ function LoginForm({ type }: any) {
     (state: any) => state.userReducer.userCreateModal
   );
 
-  const dispatch = useDispatch();
   const [formInputs, setFormInputs] = useState({
     email: "",
     password: "",
@@ -59,7 +63,7 @@ function LoginForm({ type }: any) {
     navigate("/home");
   }
 
-  const handleChange = ({ target: { name, value } }: any) => {
+  const handleChange = ({target: {name, value}}: any) => {
     setFormInputs({
       ...formInputs,
       [name]: value,
@@ -68,7 +72,7 @@ function LoginForm({ type }: any) {
   const login = (e: any) => {
     e.preventDefault();
     dispatch(
-      getUser({ email: formInputs.email, password: formInputs.password })
+      getUser({email: formInputs.email, password: formInputs.password})
     );
     setFormInputs({
       email: "",
@@ -82,7 +86,17 @@ function LoginForm({ type }: any) {
     setFormInputs({
       email: "",
       password: "",
-      role: "",
+      role: "1",
+    });
+  };
+
+  const reset = (e: any) => {
+    e.preventDefault();
+    dispatch(resetPassword(formInputs.email));
+    setFormInputs({
+      email: "",
+      password: "",
+      role: "1",
     });
   };
 
@@ -96,9 +110,27 @@ function LoginForm({ type }: any) {
         <BackgroundDiv className="background"></BackgroundDiv>
         <BackgroundCover className="background-cover">
           <FormContainer>
-            <img src={logo} alt="" className="logo" />
-            <Title>Acceder</Title>
-            <Form onSubmit={type === "register" ? register : login}>
+            <Link
+              to="/home"
+              style={{textDecoration: "none", marginTop: "16px"}}
+            >
+              <img src={logo} alt="" className="logo" />
+            </Link>
+
+            {location.pathname === "/login" ? (
+              <Title>Ingreso</Title>
+            ) : location.pathname === "/register" ? (
+              <Title>Registro</Title>
+            ) : null}
+            <Form
+              onSubmit={
+                type === "register"
+                  ? register
+                  : type === "login"
+                    ? login
+                    : reset
+              }
+            >
               <StyledInput
                 placeholder="Email..."
                 value={formInputs.email}
@@ -106,15 +138,18 @@ function LoginForm({ type }: any) {
                 name="email"
                 type="text"
               ></StyledInput>
-              <StyledInput
-                placeholder="Contraseña..."
-                value={formInputs.password}
-                onChange={(e) => handleChange(e)}
-                name="password"
-                type="text"
-              ></StyledInput>
+              {type !== "reset" && (
+                <StyledInput
+                  placeholder="Contraseña..."
+                  value={formInputs.password}
+                  onChange={(e) => handleChange(e)}
+                  name="password"
+                  type="password"
+                ></StyledInput>
+              )}
+
               {type === "register" && (
-                <div style={{ width: "100%" }}>
+                <div style={{width: "100%"}}>
                   <RegisterSelect
                     onChange={(e) => handleChange(e)}
                     id="role"
@@ -130,7 +165,7 @@ function LoginForm({ type }: any) {
                 style={{
                   display: "flex",
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "center",
                   alignItems: "center",
                   width: "100%",
                 }}
@@ -139,47 +174,80 @@ function LoginForm({ type }: any) {
                   <StyledButton onClick={(e) => login(e)} type="submit">
                     Entrar
                   </StyledButton>
-                ) : (
+                ) : type === "register" ? (
                   <StyledButton onClick={(e) => register(e)} type="submit">
                     Registrarse
+                  </StyledButton>
+                ) : (
+                  <StyledButton onClick={(e) => reset(e)} type="submit">
+                    Reset Password
                   </StyledButton>
                 )}
               </div>
             </Form>
-            <Paragraph
-              style={{
-                marginTop: "1rem",
-                marginBottom: "7px",
-                fontSize: "17px",
-              }}
-            >
-              O ingresa con:
-            </Paragraph>
-            <GoogleBtn onClick={google}>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <div
-                  className="google-btn"
+            {type !== "reset" && (
+              <>
+                <Paragraph
                   style={{
-                    width: "38px",
-                    height: "38px",
-                    background: "white",
-                    zIndex: "3",
-                    alignItems: "center",
-                    textAlign: "center",
-                    paddingTop: "7px",
-                    borderRadius: "2px",
+                    margin: "2rem 0",
+                    fontSize: "1rem",
                   }}
                 >
-                  <GoogleLogo src={logoGoogle} alt="google-logo" />
-                </div>
-                <div style={{ marginLeft: "80px" }}>Google</div>
-              </div>
-            </GoogleBtn>
+                  O ingresa con:
+                </Paragraph>
+                <GoogleBtn onClick={google}>
+                  <div
+                    className="google-btn"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "0.2rem",
+                      background: "white",
+                      zIndex: "3",
+                      textAlign: "center",
+                      borderRadius: "0.3rem",
+                    }}
+                  >
+                    <GoogleLogo src={logoGoogle} alt="google-logo" />
+                  </div>
+                  <div style={{width: "100%"}}>Google</div>
+                </GoogleBtn>
+              </>
+            )}
+            {type !== "reset" ? (
+              <>
+                <Link
+                  to="/reset-password"
+                  style={{textDecoration: "none", marginTop: "16px"}}
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
+                Ingresar
+              </Link>
+            )}
+
+            {location.pathname === "/login" ? (
+              <Link
+                to="/register"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
+                Registrarse
+              </Link>
+            ) : location.pathname === "/register" ? (
+              <Link
+                to="/login"
+                style={{textDecoration: "none", marginTop: "16px"}}
+              >
+                Ingresar
+              </Link>
+            ) : null}
           </FormContainer>
         </BackgroundCover>
       </MainDiv>

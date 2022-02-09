@@ -1,7 +1,15 @@
 import styled from "styled-components";
 import OCCard from "./OutstandingCompanyCard";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import OCPublicity from "./OutstandingCompanyPublicity";
+import { useEffect } from "react";
+import { getPremiums } from "../redux/actions/private/companyActions";
 
+const divStyle = {
+    textDecoration: "none",
+    padding: 0
+};
 
 const Container = styled.div`
   width: 100%;
@@ -14,11 +22,30 @@ const Container = styled.div`
 `;
 
 const OutstandingCompany = () => {
+    const dispatch = useDispatch();
+    const premiums = useSelector(
+        (state: any) => state.companyReducer.totalPremiums
+    );
+    console.log('premiums: ', premiums)
+
+    useEffect(() => {
+        dispatch(getPremiums());
+    }, [dispatch]);
+
+
     return (
         <Container>
-            {/* <Link to={`/company/${companyId}`}>
-                <OCCard />
-            </Link> */}
+            {premiums.length === 0 ?
+                <OCPublicity />
+                : premiums.map((p: any) =>
+                    <Link to={`/company/${p.id}`} key={p.id} style={divStyle}>
+                        <OCCard
+                            id={p.id}
+                            img={p.companyLogo}
+                            name={p.name}
+                            location={p.location} />
+                    </Link>)}
+
         </Container>
     );
 };
