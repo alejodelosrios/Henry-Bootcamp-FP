@@ -16,14 +16,35 @@ export const getUser =
         Storage.set("token", token);
         let data = res.data;
         console.log(data);
-
-        return dispatch({
-          type: ActionType.GET_USER,
-          payload: {
-            data: data,
-            modal: false,
-          },
-        });
+        if (typeof data === "string") {
+          if (data.includes("email")) {
+            return dispatch({
+              type: ActionType.SET_MODAL,
+              payload: {
+                title: "Mensaje:",
+                message: "No se ha ingresado email",
+                open: true,
+              },
+            });
+          } else {
+            return dispatch({
+              type: ActionType.SET_MODAL,
+              payload: {
+                title: "Mensaje:",
+                message: "No se ha ingresado password",
+                open: true,
+              },
+            });
+          }
+        } else {
+          return dispatch({
+            type: ActionType.GET_USER,
+            payload: {
+              data: data,
+              modal: false,
+            },
+          });
+        }
       } catch (error) {
         return dispatch({
           type: ActionType.SET_MODAL,
