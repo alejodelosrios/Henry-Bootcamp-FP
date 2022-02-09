@@ -15,6 +15,7 @@ export const getPosts = () => async (dispatch: Dispatch<Action>) => {
 export const getPostsById = (id: any) => async (dispatch: Dispatch<Action>) => {
   try {
     let {data} = await axios.get(`/posts/${id}`);
+    console.log('data: ',data)
     return dispatch({type: ActionType.GET_POSTS_BY_ID, payload: data});
   } catch (error) {
     console.log(error);
