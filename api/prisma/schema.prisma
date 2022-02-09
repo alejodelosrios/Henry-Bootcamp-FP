@@ -221,3 +221,8 @@ model News {
   title       String
   description String
 }
+
+model SubscribedUser {
+  id          Int    @id @default(autoincrement())
+  email       String @unique
+}
