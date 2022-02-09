@@ -1,33 +1,30 @@
-import {FC, useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router";
+import { FC, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 import styled from "styled-components";
-import {setCompanyCurrentPosts} from "../redux/actions/private/companyActions";
-import {filterAndSort} from "../redux/actions/public/postsActions";
+import { setCompanyCurrentPosts } from "../redux/actions/private/companyActions";
+import { filterAndSort } from "../redux/actions/public/postsActions";
 import Post from "./Post";
 
 const Container = styled.div`
   margin: auto;
   width: 100%;
   display: flex;
-  overflow-y: auto;
   flex-direction: column;
   align-items: center;
-  padding: 1vw;
+  gap: 1.5rem;
 `;
 
 const P = styled.p`
   color: grey;
-  font-family: ${p=> p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
   margin-top: 10vw;
-  font-size: 2vw;
+  font-size: 2rem;
   text-align: center;
-`
-
+`;
 
 const PostsContainer: FC = () => {
-
-  const {companyId} = useParams();
+  const { companyId } = useParams();
   const dispatch = useDispatch();
   let currentItems = useSelector(
     (state: any) => state.postsReducer.currentItems
@@ -35,19 +32,19 @@ const PostsContainer: FC = () => {
   let filters = useSelector(
     (state: any) => state.postsReducer.filters_and_sort
   );
-  let posts = useSelector(
-    (state: any) => state.postsReducer.posts
-  );
+  let posts = useSelector((state: any) => state.postsReducer.posts);
   useEffect(() => {
     if (companyId) {
-      let companyPosts = posts.filter((post: any) => post.companyId + "" === companyId)
-      dispatch(setCompanyCurrentPosts(companyPosts))
+      let companyPosts = posts.filter(
+        (post: any) => post.companyId + "" === companyId
+      );
+      dispatch(setCompanyCurrentPosts(companyPosts));
     } else {
-      dispatch(filterAndSort(filters))
+      dispatch(filterAndSort(filters));
     }
-  }, [])
+  }, []);
 
-  console.log('this is post:', currentItems)
+  console.log("this is post:", currentItems);
 
   return (
     <>

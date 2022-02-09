@@ -8,9 +8,9 @@ const Container = styled.div`
     width: 100%;
     height: 90%;
     display: flex;
-    overflow-y: auto;
     flex-direction: column;
     align-items: center;
+    margin-top: 2rem;
 `;
 
 const Filters = styled.div`

@@ -7,6 +7,7 @@ export default {
       cards: "#E3E7E8",
       base: "#F0F1F5",
       pink: "#EF5DA8",
+      softPink: "#fff8ff",
     },
     typography: {
       darkest: "#757577",

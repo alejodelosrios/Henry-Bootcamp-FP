@@ -1,9 +1,9 @@
-import {FC} from "react";
-import {NavLink} from "react-router-dom";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
-import {useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CustomNavLinkContainer from "./CustomNavLinkContainer";
 
 const Container = styled.div`
@@ -40,6 +40,16 @@ const CustomNavLink2 = styled.li`
   border-radius: 0.5rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
+const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+const Logo = styled.img`
+  width: 120px;
+  height: 120px;
+`;
 const LinkImg = styled.div`
   display: flex;
   align-items: center;
@@ -65,6 +75,7 @@ const LinkImg2 = styled.div`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
+
 const Sidebar: FC = () => {
   const location = useLocation();
   const role = useSelector((state: any) => state.userReducer.role);
@@ -73,10 +84,12 @@ const Sidebar: FC = () => {
   return (
     <Container>
       <NavLink to="/">
-        <img src={logo} alt="logo" />
+        <ImgContainer>
+          <Logo src={logo} alt="logo" />
+        </ImgContainer>
       </NavLink>
       <Nav>
-        <NavLink to="/home" style={{textDecoration: "none"}}>
+        <NavLink to="/home" style={{ textDecoration: "none" }}>
           <CustomNavLink>
             <LinkImg>
               <svg
@@ -94,7 +107,7 @@ const Sidebar: FC = () => {
         </NavLink>
         {role === "applicant" ? (
           <>
-            <NavLink to="/profile" style={{textDecoration: "none"}}>
+            <NavLink to="/profile" style={{ textDecoration: "none" }}>
               {location.pathname === "/profile" ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -125,7 +138,7 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/my-applications" style={{textDecoration: "none"}}>
+            <NavLink to="/my-applications" style={{ textDecoration: "none" }}>
               {location.pathname === "/my-applications" ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -135,7 +148,7 @@ const Sidebar: FC = () => {
                       height="24"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm7 7.457l-9.005 9.565-4.995-5.865.761-.649 4.271 5.016 8.24-8.752.728.685z" />
+                      <path d="M13.403 24h-13.403v-22h3c1.231 0 2.181-1.084 3-2h8c.821.916 1.772 2 3 2h3v9.15c-.485-.098-.987-.15-1.5-.15l-.5.016v-7.016h-4l-2 2h-3.897l-2.103-2h-4v18h9.866c.397.751.919 1.427 1.537 2zm5.097-11c3.035 0 5.5 2.464 5.5 5.5s-2.465 5.5-5.5 5.5c-3.036 0-5.5-2.464-5.5-5.5s2.464-5.5 5.5-5.5zm0 2c1.931 0 3.5 1.568 3.5 3.5s-1.569 3.5-3.5 3.5c-1.932 0-3.5-1.568-3.5-3.5s1.568-3.5 3.5-3.5zm2.5 4h-3v-3h1v2h2v1zm-15.151-4.052l-1.049-.984-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.385zm6.151 1.052h-2v-1h2v1zm2-2h-4v-1h4v1zm-8.151-4.025l-1.049-.983-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.384zm8.151 1.025h-4v-1h4v1zm0-2h-4v-1h4v1zm-5-6c0 .552.449 1 1 1 .553 0 1-.448 1-1s-.447-1-1-1c-.551 0-1 .448-1 1z" />
                     </svg>
                   </LinkImg2>
                   Postulaciones
@@ -149,7 +162,7 @@ const Sidebar: FC = () => {
                       height="24"
                       xmlns="http://www.w3.org/2000/svg"
                     >
-                      <path d="M12 0c6.623 0 12 5.377 12 12s-5.377 12-12 12-12-5.377-12-12 5.377-12 12-12zm0 1c6.071 0 11 4.929 11 11s-4.929 11-11 11-11-4.929-11-11 4.929-11 11-11zm7 7.457l-9.005 9.565-4.995-5.865.761-.649 4.271 5.016 8.24-8.752.728.685z" />
+                      <path d="M13.403 24h-13.403v-22h3c1.231 0 2.181-1.084 3-2h8c.821.916 1.772 2 3 2h3v9.15c-.485-.098-.987-.15-1.5-.15l-.5.016v-7.016h-4l-2 2h-3.897l-2.103-2h-4v18h9.866c.397.751.919 1.427 1.537 2zm5.097-11c3.035 0 5.5 2.464 5.5 5.5s-2.465 5.5-5.5 5.5c-3.036 0-5.5-2.464-5.5-5.5s2.464-5.5 5.5-5.5zm0 2c1.931 0 3.5 1.568 3.5 3.5s-1.569 3.5-3.5 3.5c-1.932 0-3.5-1.568-3.5-3.5s1.568-3.5 3.5-3.5zm2.5 4h-3v-3h1v2h2v1zm-15.151-4.052l-1.049-.984-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.385zm6.151 1.052h-2v-1h2v1zm2-2h-4v-1h4v1zm-8.151-4.025l-1.049-.983-.8.823 1.864 1.776 3.136-3.192-.815-.808-2.336 2.384zm8.151 1.025h-4v-1h4v1zm0-2h-4v-1h4v1zm-5-6c0 .552.449 1 1 1 .553 0 1-.448 1-1s-.447-1-1-1c-.551 0-1 .448-1 1z" />
                     </svg>
                   </LinkImg>
                   Postulaciones
@@ -161,7 +174,7 @@ const Sidebar: FC = () => {
           <>
             <NavLink
               to={`/edit-company/${companyId}`}
-              style={{textDecoration: "none"}}
+              style={{ textDecoration: "none" }}
             >
               {location.pathname === `/edit-company/${companyId}` ? (
                 <CustomNavLink2>
@@ -193,7 +206,7 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/create-post" style={{textDecoration: "none"}}>
+            <NavLink to="/create-post" style={{ textDecoration: "none" }}>
               {location.pathname === `/create-post` ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -224,9 +237,9 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/company/posts" style={{textDecoration: "none"}}>
+            <NavLink to="/company/posts" style={{ textDecoration: "none" }}>
               {location.pathname === `/company/posts` ||
-                location.pathname === `/company/posts/${post.id}/detail` ? (
+              location.pathname === `/company/posts/${post.id}/detail` ? (
                 <CustomNavLink2>
                   <LinkImg2>
                     <svg
@@ -261,7 +274,7 @@ const Sidebar: FC = () => {
           </>
         ) : role === "admin" ? (
           <>
-            <NavLink to={`/admin`} style={{textDecoration: "none"}}>
+            <NavLink to={`/admin`} style={{ textDecoration: "none" }}>
               {location.pathname === `/admin` ? (
                 <CustomNavLinkContainer
                   select={true}
@@ -276,47 +289,47 @@ const Sidebar: FC = () => {
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/users" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/users" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/users` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="users"
                   text="users"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="users"
                   text="users"
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/categories" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/categories" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/categories` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="categories"
                   text="categorías"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="categories"
                   text="categorías"
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/news" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/news" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/news` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="news"
                   text="news"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="news"
                   text="news"
                 />
               )}

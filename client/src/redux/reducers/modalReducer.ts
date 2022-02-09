@@ -12,7 +12,6 @@ const initialState = {
 const modalReducer = (state = initialState, action: Action) => {
   switch (action.type) {
     case ActionType.SET_MODAL:
-      console.log(action.payload);
       return {
         ...state,
         modal: action.payload,
