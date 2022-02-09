@@ -147,8 +147,8 @@ interface getNotifications {
 interface setNotification {
   type: ActionType.SET_NOTIFICATION;
   payload: {
-    data: object[],
-    role: string
+    data: object[];
+    role: string;
   };
 }
 interface getFavorite {
@@ -232,9 +232,13 @@ interface getPremiums {
   payload: any;
 }
 
-
 interface setPostStatus {
   type: ActionType.SET_POST_STATUS;
+  payload: object;
+}
+
+interface setModal {
+  type: ActionType.SET_MODAL;
   payload: object;
 }
 
@@ -285,4 +289,5 @@ export type Action =
   | createNew
   | postReview
   | getPremiums
-  | setPostStatus;
+  | setPostStatus
+  | setModal;
