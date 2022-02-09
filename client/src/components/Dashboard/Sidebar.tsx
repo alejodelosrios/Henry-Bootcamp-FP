@@ -40,6 +40,16 @@ const CustomNavLink2 = styled.li`
   border-radius: 0.5rem;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 `;
+const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+const Logo = styled.img`
+  width: 120px;
+  height: 120px;
+`;
 const LinkImg = styled.div`
   display: flex;
   align-items: center;
@@ -66,10 +76,6 @@ const LinkImg2 = styled.div`
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
 
-const Img = styled.img`
-width: 60%;
-`
-
 
 const Sidebar: FC = () => {
   const location = useLocation();
@@ -78,9 +84,11 @@ const Sidebar: FC = () => {
   const post = useSelector((state: any) => state.postsReducer.postById);
   return (
     <Container>
-        <NavLink to="/">
-          <Img src={logo} alt="logo" />
-        </NavLink>
+      <NavLink to="/">
+        <ImgContainer>
+          <Logo src={logo} alt="logo" />
+        </ImgContainer>
+      </NavLink>
       <Nav>
         <NavLink to="/home" style={{ textDecoration: "none" }}>
           <CustomNavLink>
@@ -232,7 +240,7 @@ const Sidebar: FC = () => {
             </NavLink>
             <NavLink to="/company/posts" style={{ textDecoration: "none" }}>
               {location.pathname === `/company/posts` ||
-                location.pathname === `/company/posts/${post.id}/detail` ? (
+              location.pathname === `/company/posts/${post.id}/detail` ? (
                 <CustomNavLink2>
                   <LinkImg2>
                     <svg
@@ -286,13 +294,13 @@ const Sidebar: FC = () => {
               {location.pathname === `/admin/users` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="users"
                   text="users"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="users"
                   text="users"
                 />
               )}
@@ -301,13 +309,13 @@ const Sidebar: FC = () => {
               {location.pathname === `/admin/categories` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="categories"
                   text="categorías"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="categories"
                   text="categorías"
                 />
               )}
@@ -316,13 +324,13 @@ const Sidebar: FC = () => {
               {location.pathname === `/admin/news` ? (
                 <CustomNavLinkContainer
                   select={true}
-                  svg_path="work"
+                  svg_path="news"
                   text="news"
                 />
               ) : (
                 <CustomNavLinkContainer
                   select={false}
-                  svg_path="work"
+                  svg_path="news"
                   text="news"
                 />
               )}

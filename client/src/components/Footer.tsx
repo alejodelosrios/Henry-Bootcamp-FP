@@ -1,7 +1,10 @@
-import styled from "styled-components";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import styled, { css } from "styled-components";
 import facebook from '../assets/Facebook.svg'
 import instagram from '../assets/instagram.svg'
 import youtube from '../assets/Youtube.svg'
+import { suscrNewsLetter } from "../redux/actions/public/generalActions";
 
 const Container = styled.div`
     margin: auto;
@@ -50,6 +53,10 @@ border-radius: 20px;
 box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
   -webkit-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
   -moz-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
+  div{
+      display: flex;
+      align-items: center;
+  }
 `
 const DivDerecha = styled.div`
 display: flex;
@@ -117,9 +124,26 @@ const Button = styled.button`
   color: white;
   margin-left: 2px;
   border-radius: 10px;
+  cursor: pointer;
   box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
 
   font-family: ${(props) => props.theme.colors.typography.light};
+  &:hover{
+    background: #99c8d8;
+  }
+`
+const Msg = styled.p<{suscr:boolean}>`
+    margin-left: 10px;
+    color: #2e8b2e;
+    font-size: 16px;
+    font-family: ${p => p.theme.colors.typography.poppins};
+
+    ${props => !props.suscr &&
+        (css `
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 2s, opacity 2s linear;`)
+    }
 `
 const Titulo2 = styled.div`
 font-weight: bold;
@@ -159,14 +183,38 @@ box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
 
 
 const Footer = () => {
+    const dispatch = useDispatch();
+    const [suscr, setSuscr] = useState(false);
+    const [mail, setMail] = useState('');
+
+    const handleMail = (e:any)=>{
+        setMail(e.target.value);
+    }
+
+    const handleSubs = ()=>{
+        if(mail.length > 3 && mail.includes("@")) {
+            dispatch(suscrNewsLetter(mail));
+            setMail('');
+            setSuscr(true);
+            setTimeout(()=>setSuscr(false),1000);
+        }
+    }
+
     return (
         <Container>
             <ContainerSup>
                 <NewsLetter>
                     <Titulo1>Newsletter</Titulo1>
                     <Texto1>Subscribite para obtener todas las novedades, alertas de puestos de trabajo nuevos, capacitaciones y toda la info de nuestra App!</Texto1>
-                    <Input type="text" placeholder="Suscribete" />
-                    <Button>Enviar</Button>
+                    <Input 
+                        type="email" 
+                        placeholder="Suscribete con tu email"
+                        value={mail}
+                        onChange={(e)=>handleMail(e)}/>
+                    <div>
+                    <Button onClick={handleSubs}>Enviar</Button>
+                    <Msg suscr={suscr}>Suscripción realizada</Msg>
+                    </div>
                 </NewsLetter>
                 <DivDerecha>
                     <Listas>
