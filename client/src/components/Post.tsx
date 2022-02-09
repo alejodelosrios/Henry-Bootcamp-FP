@@ -27,14 +27,14 @@ const ContenedorA = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 15px;
-  width: 612px;
+  border-radius: 1rem;
+  width: 100%;
   height: 140px;
   margin-bottom: 1rem;
   justify-content: space-between;
-  box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
-  -webkit-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
-  -moz-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  -webkit-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.15);
 `;
 const ContenedorB = styled.div`
   display: flex;
@@ -61,7 +61,7 @@ const ContenedorE = styled.div`
   flex-direction: column;
 `;
 const ContenedorF = styled.div`
-  width: 612px;
+  width: 100%;
   height: 35px;
   display: flex;
   justify-content: space-between;

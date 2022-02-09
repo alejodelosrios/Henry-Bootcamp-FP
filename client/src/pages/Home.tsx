@@ -12,17 +12,16 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  margin-bottom: 10vw;
+  height: calc(100vh - 89px);
 `;
 const Content = styled.div`
   width: 100%;
-  height: 100%;
+  height: inherit;
   display: flex;
   align-items: start;
 `;
 const Sidebar = styled.aside`
-  width: 20%;
+  width: 25%;
   height: 100%;
   /* padding: 3.25rem 0; */
 `;
@@ -36,7 +35,7 @@ const RightSidebar = styled.div`
   align-items: center;
 `;
 const SidebarTitle = styled.aside`
-  font-family: ${p => p.theme.colors.typography.poppins};
+  font-family: ${(p) => p.theme.colors.typography.poppins};
   color: grey;
   font-style: normal;
   font-weight: 500;
@@ -48,8 +47,8 @@ const SidebarTitle = styled.aside`
 const PostSection = styled.div`
   width: 80%;
   height: 100%;
-  margin: 0;
-  `;
+  padding: 0 1.5rem;
+`;
 const TopBackground = styled.div`
   position: absolute;
   height: 180px;
@@ -61,7 +60,6 @@ const TopBackground = styled.div`
 `;
 
 const Home = () => {
-
   return (
     <HomeLayout>
       <Container>
@@ -82,10 +80,7 @@ const Home = () => {
             <PostsContainer></PostsContainer>
           </PostSection>
           <RightSidebar>
-            <SidebarTitle>
-              Empresas
-              Destacadas
-            </SidebarTitle>
+            <SidebarTitle>Empresas Destacadas</SidebarTitle>
             <OutstandingCompany />
           </RightSidebar>
         </Content>
