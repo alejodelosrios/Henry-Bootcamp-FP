@@ -1,9 +1,9 @@
-import {FC, useEffect, useRef, useState} from "react";
-import {Logout} from "./Logout";
-import {Link} from "react-router-dom";
-import styled, {css} from "styled-components";
-import {useSelector} from "react-redux";
-import User from '../assets/User.svg';
+import { FC, useEffect, useRef, useState } from "react";
+import { Logout } from "./Logout";
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
+import { useSelector } from "react-redux";
+import User from "../assets/User.svg";
 
 type P = {
     user: any;
@@ -14,7 +14,7 @@ const NotCont = styled.div`
     z-index: 1000;
 `;
 
-const NotBut = styled.button<{modal?: boolean}>`
+const NotBut = styled.button<{ modal?: boolean }>`
     position: relative;
     width: 40px;
     height: 40px;
@@ -61,13 +61,13 @@ const Noti = styled.div`
     margin: 2px 0;
     border-radius: 5px;
     cursor: pointer;
-    color: ${p => p.theme.colors.details.secondary2};
+    color: ${(p) => p.theme.colors.details.secondary2};
     &:hover {
         background-color: #c779ff32;
     }
 `;
 
-const ProfModalButton: FC<P> = ({user}) => {
+const ProfModalButton: FC<P> = ({ user }) => {
     const divRef = useRef<HTMLDivElement>(null);
     const companyId = useSelector((state: any) => state.userReducer.company.id);
     const role = useSelector((state: any) => state.userReducer.role);
@@ -77,9 +77,8 @@ const ProfModalButton: FC<P> = ({user}) => {
         setModal(!modal);
     };
 
-
     useEffect(() => {
-        const checkIfClickedOutside = (e:any) => {
+        const checkIfClickedOutside = (e: any) => {
             // If the menu is open and the clicked target is not within the menu,
             // then close the menu
             if (modal && divRef.current && !divRef.current.contains(e.target)) {
@@ -96,7 +95,7 @@ const ProfModalButton: FC<P> = ({user}) => {
     return (
         <NotCont ref={divRef}>
             <NotBut onClick={handleNotif} modal={modal}>
-                <img src={User} alt='user options' />
+                <img src={User} alt="user options" />
             </NotBut>
 
             {modal && (
@@ -105,33 +104,84 @@ const ProfModalButton: FC<P> = ({user}) => {
                         <>
                             <Link
                                 to={`/edit-company/${companyId}`}
-                                style={{textDecoration: "none"}}
+                                style={{ textDecoration: "none" }}
                                 onClick={handleNotif}
                             >
                                 <Noti>Perfil</Noti>
                             </Link>
-                            <Link to={`/create-post`}
-                                style={{textDecoration: "none"}}
-                                onClick={handleNotif}>
+                            <Link
+                                to={`/create-post`}
+                                style={{ textDecoration: "none" }}
+                                onClick={handleNotif}
+                            >
                                 <Noti>Crear post</Noti>
                             </Link>
-                            <Link to={`/company/posts`}
-                                style={{textDecoration: "none"}}
-                                onClick={handleNotif}>
+                            <Link
+                                to={`/company/posts`}
+                                style={{ textDecoration: "none" }}
+                                onClick={handleNotif}
+                            >
                                 <Noti>Ofertas laborales</Noti>
                             </Link>
                         </>
-                    ) : (
-
+                    ) : role === "applicant" ? (
                         <>
                             <Link
                                 to="/my-applications"
-                                style={{textDecoration: "none", cursor: "default"}}
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
                             >
                                 <Noti>Postulaciones</Noti>
                             </Link>
-                            <Link to={`/profile`} onClick={handleNotif}
-                                style={{textDecoration: "none", cursor: "default"}}
+                            <Link
+                                to={`/profile`}
+                                onClick={handleNotif}
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
+                            >
+                                <Noti>Perfil</Noti>
+                            </Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/admin/news"
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
+                            >
+                                <Noti>Artículos & Noticias</Noti>
+                            </Link>
+                            <Link
+                                to="/admin/categories"
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
+                            >
+                                <Noti>Categorías</Noti>
+                            </Link>
+                            <Link
+                                to="/admin/users"
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
+                            >
+                                <Noti>Usuarios</Noti>
+                            </Link>
+                            <Link
+                                to={`/profile`}
+                                onClick={handleNotif}
+                                style={{
+                                    textDecoration: "none",
+                                    cursor: "default",
+                                }}
                             >
                                 <Noti>Perfil</Noti>
                             </Link>
