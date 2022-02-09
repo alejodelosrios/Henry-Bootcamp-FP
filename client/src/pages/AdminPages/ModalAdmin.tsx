@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useDispatch } from "react-redux";
+import { TextArea } from "../../components/PostCreateForm/styles";
 import {
   convertToadminRole,
   createCategory,
@@ -7,7 +8,7 @@ import {
   deleteUser,
 } from "../../redux/actions/private/adminActions";
 
-import { Modal, Overlay, ModalContent, Flex } from "./styles";
+import { Modal, Overlay, ModalContent, Flex, Flex2 } from "./styles";
 
 interface modal {
   open: boolean;
@@ -155,15 +156,18 @@ const ModalAdmin: FC<Props> = ({
             {properties.map((e, i) => (
               <Flex key={i}>
                 <label htmlFor={`${e}`}>{e} :</label>
-                <input name={e} type="text" />
+                {e === 'description' 
+                  ? <TextArea name={e} cols={60} rows={7} />
+                  : <input name={e} type="text" />}
+                
               </Flex>
             ))}
-            <Flex>
-              <button type="submit">Guardar</button>
-              <button type="button" onClick={() => cancelar()}>
+            <Flex2>
+              <button className="button" type="submit">Guardar</button>
+              <button className="button2" type="button" onClick={() => cancelar()}>
                 Cancelar
               </button>
-            </Flex>
+            </Flex2>
           </form>
         </ModalContent>
       </Modal>
