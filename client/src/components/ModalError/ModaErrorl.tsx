@@ -3,9 +3,9 @@ import { setModal } from "../../redux/actions/public/modalActions";
 import { Modal, Overlay, ModalContent, Flex } from "./styles";
 
 const ModalError = () => {
-  const {
-    modal: { title, message, open },
-  } = useSelector((state: any) => state.modalReducer.state);
+  const { title, message } = useSelector(
+    (state: any) => state.modalReducer.modal
+  );
 
   const dispatch = useDispatch();
 
@@ -23,8 +23,8 @@ const ModalError = () => {
     <Modal>
       <Overlay></Overlay>
       <ModalContent>
-        <h2></h2>
-        <p></p>
+        <h2>{title}</h2>
+        <p>{message}</p>
         <Flex>
           <button onClick={close}>Cerrar</button>
         </Flex>

@@ -8,6 +8,7 @@ export const Modal = styled.div`
   right: 0;
   bottom: 0;
   position: fixed;
+  z-index: 9999;
 `;
 
 export const Overlay = styled.div`
@@ -35,27 +36,46 @@ export const ModalContent = styled.div`
   max-width: 600px;
   min-width: 300px;
   h2 {
-    margin: 0;
+    margin-bottom: 20px;
+    font-size: bold;
   }
   p {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
+
+  label {
+    font-size: 17px;
+  }
+  input {
+    min-width: 300px;
+    padding: 0.2rem 1rem;
+    font-family: "Open Sans", sans-serif;
+    color: #757577;
+    border-radius: 0.5rem;
+    border-radius: 0.5rem;
+    border: 0.5px solid #f0f1f5;
+    padding-right: 0px;
+    margin-bottom: 10px;
+  }
+
   button {
-    border: none;
-    font-weight: 500;
-    background-color: black;
-    border: 1px solid black;
+    font-family: "Poppins", sans-serif;
+    padding: 10px;
+    margin-top: 10px;
     border-radius: 10px;
-    color: white;
+    color: black;
+    border-color: ${(props) => props.theme.colors.details.primary};
+    background-color: transparent;
     cursor: pointer;
-    padding: 8px 10px;
-    transition: background-color 0.2s, color 0.2s, border 0.2s;
-  }
-  button:hover,
-  button:active {
-    /* background-color: var(--secundaryColor); */
+    transition-duration: 0.3s;
+
+    &:hover {
+      background-color: ${(props) => props.theme.colors.details.primary};
+      color: ${(props) => props.theme.colors.typography.lighter};
+    }
   }
 `;
+
 export const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
