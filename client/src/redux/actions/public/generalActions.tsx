@@ -120,3 +120,15 @@ export const resetPassword =
       });
     }
   };
+
+  export const suscrNewsLetter =
+  (email: string) => async (dispatch: Dispatch<Action>) => {
+    try {
+      await axios.post(`/news/subscribe/${email}`);
+      // return dispatch({
+      //   type: ActionType.SUSCR_NEWSLETTER
+      // });
+    } catch (error) {
+      console.log(error);
+    }
+  };

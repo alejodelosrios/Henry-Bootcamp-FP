@@ -371,16 +371,16 @@ const userReducer = (state = initialState, action: Action) => {
       };
 
     case ActionType.SET_NOTIFICATION:
-      return state;
-      // return action.payload.role === 'applicant'
-      //   ? {...state, applicant: {
-      //               ...state.applicant,
-      //               notifications: [action.payload.data]
-      //             }}
-      //   : {...state, company: {
-      //               ...state.company,
-      //               notifications: [action.payload.data]
-      //   }};
+      return action.payload.role === 'applicant'
+        ? {...state, applicant: {
+                    ...state.applicant,
+                    notifications: action.payload.data
+                  }}
+        : {...state, company: {
+                    ...state.company,
+                    notifications: action.payload.data
+        }};
+    
     default:
       return state;
   }

@@ -242,6 +242,10 @@ interface setModal {
   payload: object;
 }
 
+interface suscrNewsLetter {
+  type: ActionType.SUSCR_NEWSLETTER;
+}
+
 export type Action =
   | getPosts
   | set_current_items_by_page
@@ -290,4 +294,5 @@ export type Action =
   | postReview
   | getPremiums
   | setPostStatus
-  | setModal;
+  | setModal
+  | suscrNewsLetter;
