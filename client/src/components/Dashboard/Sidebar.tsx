@@ -1,9 +1,9 @@
-import {FC} from "react";
-import {NavLink} from "react-router-dom";
+import { FC } from "react";
+import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../assets/logo.svg";
-import {useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CustomNavLinkContainer from "./CustomNavLinkContainer";
 
 const Container = styled.div`
@@ -65,6 +65,12 @@ const LinkImg2 = styled.div`
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
     rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 `;
+
+const Img = styled.img`
+width: 60%;
+`
+
+
 const Sidebar: FC = () => {
   const location = useLocation();
   const role = useSelector((state: any) => state.userReducer.role);
@@ -72,11 +78,11 @@ const Sidebar: FC = () => {
   const post = useSelector((state: any) => state.postsReducer.postById);
   return (
     <Container>
-      <NavLink to="/">
-        <img src={logo} alt="logo" />
-      </NavLink>
+        <NavLink to="/">
+          <Img src={logo} alt="logo" />
+        </NavLink>
       <Nav>
-        <NavLink to="/home" style={{textDecoration: "none"}}>
+        <NavLink to="/home" style={{ textDecoration: "none" }}>
           <CustomNavLink>
             <LinkImg>
               <svg
@@ -94,7 +100,7 @@ const Sidebar: FC = () => {
         </NavLink>
         {role === "applicant" ? (
           <>
-            <NavLink to="/profile" style={{textDecoration: "none"}}>
+            <NavLink to="/profile" style={{ textDecoration: "none" }}>
               {location.pathname === "/profile" ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -125,7 +131,7 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/my-applications" style={{textDecoration: "none"}}>
+            <NavLink to="/my-applications" style={{ textDecoration: "none" }}>
               {location.pathname === "/my-applications" ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -161,7 +167,7 @@ const Sidebar: FC = () => {
           <>
             <NavLink
               to={`/edit-company/${companyId}`}
-              style={{textDecoration: "none"}}
+              style={{ textDecoration: "none" }}
             >
               {location.pathname === `/edit-company/${companyId}` ? (
                 <CustomNavLink2>
@@ -193,7 +199,7 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/create-post" style={{textDecoration: "none"}}>
+            <NavLink to="/create-post" style={{ textDecoration: "none" }}>
               {location.pathname === `/create-post` ? (
                 <CustomNavLink2>
                   <LinkImg2>
@@ -224,7 +230,7 @@ const Sidebar: FC = () => {
                 </CustomNavLink>
               )}
             </NavLink>
-            <NavLink to="/company/posts" style={{textDecoration: "none"}}>
+            <NavLink to="/company/posts" style={{ textDecoration: "none" }}>
               {location.pathname === `/company/posts` ||
                 location.pathname === `/company/posts/${post.id}/detail` ? (
                 <CustomNavLink2>
@@ -261,7 +267,7 @@ const Sidebar: FC = () => {
           </>
         ) : role === "admin" ? (
           <>
-            <NavLink to={`/admin`} style={{textDecoration: "none"}}>
+            <NavLink to={`/admin`} style={{ textDecoration: "none" }}>
               {location.pathname === `/admin` ? (
                 <CustomNavLinkContainer
                   select={true}
@@ -276,7 +282,7 @@ const Sidebar: FC = () => {
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/users" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/users" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/users` ? (
                 <CustomNavLinkContainer
                   select={true}
@@ -291,7 +297,7 @@ const Sidebar: FC = () => {
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/categories" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/categories" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/categories` ? (
                 <CustomNavLinkContainer
                   select={true}
@@ -306,7 +312,7 @@ const Sidebar: FC = () => {
                 />
               )}
             </NavLink>
-            <NavLink to="/admin/news" style={{textDecoration: "none"}}>
+            <NavLink to="/admin/news" style={{ textDecoration: "none" }}>
               {location.pathname === `/admin/news` ? (
                 <CustomNavLinkContainer
                   select={true}
