@@ -188,20 +188,41 @@ export const ModalContent = styled.div`
     margin-bottom: 10px;
   }
 
-  button {
-    font-family: "Poppins", sans-serif;
-    padding: 10px;
-    margin-top: 10px;
-    border-radius: 10px;
-    color: black;
-    border-color: ${(props) => props.theme.colors.details.primary};
-    background-color: transparent;
+  .button {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: ${(props) => props.theme.colors.details.primary};
+    border: none;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
     cursor: pointer;
-    transition-duration: 0.3s;
-
+    font-family: ${(props) => props.theme.colors.typography.light};
     &:hover {
-      background-color: ${(props) => props.theme.colors.details.primary};
-      color: ${(props) => props.theme.colors.typography.lighter};
+      background-color: transparent;
+      border: 0.5px solid ${(props) => props.theme.colors.details.primary};
+      color: ${(props) => props.theme.colors.details.primary};
+    }
+  }
+
+  .button2 {
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: ${(props) => props.theme.colors.details.secondary};
+    border: none;
+    color: white;
+    border-radius: 0.5rem;
+    box-shadow: 4px 4px 12px 5px rgba(93, 95, 239, 0.1);
+    cursor: pointer;
+    font-family: ${(props) => props.theme.colors.typography.light};
+    &:hover {
+      background-color: transparent;
+      border: 0.5px solid ${(props) => props.theme.colors.details.secondary};
+      color: ${(props) => props.theme.colors.details.secondary};
     }
   }
 `;

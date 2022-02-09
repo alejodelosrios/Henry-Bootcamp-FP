@@ -7,7 +7,7 @@ import {
   deleteUser,
 } from "../../redux/actions/private/adminActions";
 
-import { Modal, Overlay, ModalContent, Flex } from "./styles";
+import { Modal, Overlay, ModalContent, Flex, TableButton } from "./styles";
 
 interface modal {
   open: boolean;
@@ -159,8 +159,8 @@ const ModalAdmin: FC<Props> = ({
               </Flex>
             ))}
             <Flex>
-              <button type="submit">Guardar</button>
-              <button type="button" onClick={() => cancelar()}>
+              <button className="button" type="submit">Guardar</button>
+              <button className="button2" type="button" onClick={() => cancelar()}>
                 Cancelar
               </button>
             </Flex>
