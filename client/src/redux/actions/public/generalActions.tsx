@@ -7,30 +7,52 @@ import { Action } from "../index";
 let token: any;
 export const getUser =
   (userData?: any) => async (dispatch: Dispatch<Action>) => {
-    try {
-      token = Storage.get("token");
-      let res;
-      if (token) {
+    token = Storage.get("token");
+    let res;
+    if (userData) {
+      try {
+        res = await axios.post(`/user/login`, userData);
+        const { token } = res.data;
+        Storage.set("token", token);
+        let data = res.data;
+        console.log(data);
+
+        return dispatch({
+          type: ActionType.GET_USER,
+          payload: {
+            data: data,
+            modal: false,
+          },
+        });
+      } catch (error) {
+        return dispatch({
+          type: ActionType.SET_MODAL,
+          payload: {
+            title: "Mensaje:",
+            message: "El correo o contraseña ingresado es inválido",
+            open: true,
+          },
+        });
+      }
+    } else {
+      try {
         res = await axios.post(`/user/login`, userData, {
           headers: {
             token: token,
           },
         });
-      } else {
-        res = await axios.post(`/user/login`, userData);
-        const { token } = res.data;
-        Storage.set("token", token);
+        let data = res.data;
+        console.log(data);
+        return dispatch({
+          type: ActionType.GET_USER,
+          payload: {
+            data: data,
+            modal: false,
+          },
+        });
+      } catch (error) {
+        console.log(error);
       }
-      const data = res.data;
-      return dispatch({
-        type: ActionType.GET_USER,
-        payload: {
-          data: data,
-          modal: false,
-        },
-      });
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -121,7 +143,7 @@ export const resetPassword =
     }
   };
 
-  export const suscrNewsLetter =
+export const suscrNewsLetter =
   (email: string) => async (dispatch: Dispatch<Action>) => {
     try {
       await axios.post(`/news/subscribe/${email}`);
