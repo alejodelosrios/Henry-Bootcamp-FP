@@ -27,7 +27,9 @@ const OutstandingCompany = () => {
         (state: any) => state.companyReducer.totalPremiums
     );
     const userRole = useSelector((state: any) => state.userReducer.role);
-    console.log("premiums: ", premiums);
+    const companyId = useSelector((state: any) => state.userReducer.company.id);
+
+    let premium = premiums.find((e: any) => e.id === companyId);
 
     useEffect(() => {
         dispatch(getPremiums());
@@ -35,7 +37,7 @@ const OutstandingCompany = () => {
 
     return (
         <Container>
-            {userRole === "company" || userRole === "" ? <OCPublicity /> : null}
+            {userRole === "company" && !premium ? <OCPublicity /> : null}
             {premiums.length === 0
                 ? null
                 : premiums.map((p: any) => (
