@@ -23,7 +23,7 @@ module.exports = {
       const user = await prisma.user.create({
         data: {
           email: email as string,
-          password: password as string,
+          password: hashedPassword as string,
           role: role as string,
         },
       });
@@ -149,7 +149,7 @@ module.exports = {
           email: email
         },
         data: {
-          password: newPassword
+          password: hashedPassword
         }
       })
       res.send("Contraseña reseteada con exito, se ha enviado un mail a su casilla de correo")
@@ -227,7 +227,7 @@ module.exports = {
       const user = await prisma.user.findFirst({
         where: {
           email: email,
-          password: password
+          password: hashedPassword
         },
         include: {
           applicant: {
@@ -255,7 +255,7 @@ module.exports = {
               payment: true,
             },
           },
-        },
+        }
       });
 
       if(!user) return res.status(403).send("credenciales invalidas")
