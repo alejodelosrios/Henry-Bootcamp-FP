@@ -57,7 +57,6 @@ const Info = styled.div`
 `;
 
 const Name = styled.p`
-    /* text-decoration: ${p => p.theme.colors.backgrounds.cards} underline; */
     color: ${p => p.theme.colors.typography.dark};
     font-size: 1.5rem;
     font-weight: bold;
@@ -65,6 +64,7 @@ const Name = styled.p`
 
 const Skills = styled.div`
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-evenly;
     width: 35%;
@@ -98,7 +98,7 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
             </Link>
             <span>{country}</span>
         </Info>
-        <Skills>{skillTags.map((s: any) => (
+        <Skills>{skillTags?.map((s: any) => (
                 <Sk key={s.id}>{s.name}</Sk>
         ))}</Skills>
 
