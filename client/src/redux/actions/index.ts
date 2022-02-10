@@ -251,6 +251,11 @@ interface updateImg {
   payload: object;
 }
 
+interface deletePost {
+  type: ActionType.DELETE_POST;
+  payload: object[];
+}
+
 
 export type Action =
   | getPosts
@@ -302,4 +307,5 @@ export type Action =
   | setPostStatus
   | setModal
   | suscrNewsLetter
-  | updateImg ;
+  | updateImg 
+  | deletePost;

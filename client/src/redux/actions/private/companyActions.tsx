@@ -185,3 +185,20 @@ export const setPostStatus =
       console.log(error);
     }
   }
+
+  export const deletePost =
+  (postId:number) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      let {data} = await axios.delete(`posts/delete/${postId}`,
+        {
+          headers: {
+            token: token || "",
+          },
+        }
+      );
+      return dispatch({type: ActionType.DELETE_POST, payload: data});
+    } catch (error) {
+      console.log(error);
+    }
+  }
