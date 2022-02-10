@@ -88,6 +88,7 @@ const Card = styled.div`
 
     img{
         width: 90px;
+        border-radius: 50%;
     }
 `
 
