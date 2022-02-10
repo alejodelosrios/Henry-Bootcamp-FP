@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FavouritesButton from "../../../components/FavouritesButton";
 import img from "../../../assets/cocacola-logo.jpg";
@@ -19,6 +19,8 @@ import {
 } from "./styles";
 import PostulationState from "../PostulationState/PostulationState";
 import { StarRating } from "../../../components/StarRating";
+import { getUser } from "../../../redux/actions/public/generalActions";
+import { useDispatch } from "react-redux";
 
 type PostArgs = {
     postId: number;
@@ -47,19 +49,25 @@ const PostCard = ({
     const modalSwitch = (): any => {
         modalFlag === "none" ? setModalFlag("block") : setModalFlag("none");
     };
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getUser());
+    }, []);
     return (
         <>
             <ContenedorA>
                 <ContenedorB>
                     <Box>
-                        <Link to={`/company/${post.companyId}`}>
-                            {" "}
-                            {/* Hay rutas que lleven a una empresa en especifico?? */}
-                            <Img
-                                src={post.company.companyLogo}
-                                alt="img-logo-company"
-                            />
-                        </Link>
+                        {post.company && (
+                            <Link to={`/company/${post.companyId}`}>
+                                {" "}
+                                {/* Hay rutas que lleven a una empresa en especifico?? */}
+                                <Img
+                                    src={post.company.companyLogo}
+                                    alt="img-logo-company"
+                                />
+                            </Link>
+                        )}
                     </Box>
                     <ContenedorC>
                         <div>
