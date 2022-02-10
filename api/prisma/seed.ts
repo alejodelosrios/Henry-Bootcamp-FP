@@ -1,6 +1,6 @@
-import { getMaxListeners } from "process";
 import { prisma } from "../prisma/database"
 const {faker} = require('@faker-js/faker');
+const SHA2 = require("sha2");
 
 const tags = [
     "react",
@@ -581,7 +581,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data:{
                         email: applicantInfo[i].email,
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "applicant"
                     }
                 })
