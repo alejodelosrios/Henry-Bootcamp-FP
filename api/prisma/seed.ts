@@ -81,7 +81,7 @@ async function mainHC(){
             //GOOGLE
                 await prisma.user.create({
                     data: {
-                        email: "google@transformaemailrandom.com",
+                        email: "google@test.com",
                         password: "password",
                         role: "company"
                     }
@@ -153,7 +153,7 @@ async function mainHC(){
             //TESLA
                 await prisma.user.create({
                     data: {
-                        email: "tesla@transformaemailrandom.com",
+                        email: "tesla@test.com",
                         password: "password",
                         role: "company"
                     }
@@ -230,7 +230,7 @@ async function mainHC(){
             //FACEBOOK
                 await prisma.user.create({
                     data: {
-                        email: "facebook@transformaemailrandom.com",
+                        email: "facebook@test.com",
                         password: "password",
                         role: "company"
                     }
@@ -312,7 +312,7 @@ async function mainHC(){
             //NETFLIX
                 await prisma.user.create({
                     data: {
-                        email: "netflix@transformaemailrandom.com",
+                        email: "netflix@test.com",
                         password: "password",
                         role: "company"
                     }
@@ -399,7 +399,7 @@ async function mainHC(){
             //GLOBANT
                 await prisma.user.create({
                     data: {
-                        email: "globant@transformaemailrandom.com",
+                        email: "globant@test.com",
                         password: "password",
                         role: "company"
                     }
