@@ -178,7 +178,15 @@ module.exports = {
                 followed: true,
                 postulations: {
                   include: {
-                    post: true,
+                    post: {
+                      include: {
+                        company: {
+                          select: {
+                            companyLogo:true
+                          }
+                        }
+                      }
+                    },
                   },
                 },
                 favorites: true,
