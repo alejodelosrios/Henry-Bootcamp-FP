@@ -70,6 +70,7 @@ const Modal = styled.div`
 `
 
 const Card = styled.div`
+    padding-top: 1rem;
     background-color: #fff;
     width: 50%;
     height: 35%;
@@ -84,6 +85,11 @@ const Card = styled.div`
     h3{
         color: ${p => p.theme.colors.typography.dark};
     }
+
+    img{
+        width: 90px;
+        border-radius: 50%;
+    }
 `
 
 const YN = styled.div`
@@ -93,19 +99,23 @@ const YN = styled.div`
     width: 100%;
     height: 30%;
 
-    p{
-        width: 100px;
-        height: 50px !important;
-        color: ${p => p.theme.colors.details.secondary2};
-        transition: .4s;
-        cursor: pointer;
-        &:hover{
-            color: ${p => p.theme.colors.backgrounds.white};
-            background-color: ${p => p.theme.colors.details.secondary2};
-        }
-    }
 `
 
+const BYN = styled.button`
+    border: none;
+    background: none;
+    width: 100px;
+    height: 50px !important;
+    margin: 0 5px;
+    border-radius: 10px;
+    color: ${p => p.theme.colors.details.secondary2};
+    transition: .4s;
+    cursor: pointer;
+    &:hover{
+        color: ${p => p.theme.colors.backgrounds.white};
+        background-color: ${p => p.theme.colors.details.secondary2};
+    }
+`
 interface Props {
     postId:number,
     applicantId:number
@@ -173,11 +183,11 @@ const PostStatusButton: FC<Props> = ({postId,applicantId}) => {
                 de selección?
             </h3>
             <YN>
-                <p onClick={()=>{
+                <BYN onClick={()=>{
                         setDisplayModal(!displayModal);
                         dispatch(setPostStatus(postId, applicantId, 'inTouch'));
-                    }}>Continuar</p>
-                <p onClick={()=> setDisplayModal(!displayModal)}>Cancelar</p>
+                    }}>Continuar</BYN>
+                <BYN onClick={()=> setDisplayModal(!displayModal)}>Cancelar</BYN>
             </YN>
         </Card></Modal>}
     </>)

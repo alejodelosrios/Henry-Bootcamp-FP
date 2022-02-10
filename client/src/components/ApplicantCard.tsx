@@ -23,7 +23,6 @@ const divStyle = {
   };
 
 const Card = styled.div`
-    position: relative;
     width: 100%;
     padding: 1rem;
     margin-bottom: 3px;
