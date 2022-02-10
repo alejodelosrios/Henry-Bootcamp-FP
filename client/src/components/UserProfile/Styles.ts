@@ -287,10 +287,22 @@ export const EachLang = styled.div`
 export const NameDiv = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   color: ${headerNameColor};
 `;
+
+export const Img = styled.img`
+width: 100%;
+height: auto;
+border-radius: 1rem;
+`
+
+export const DivImg = styled.div`
+width: 170px;
+heigth: 170px;
+margin: 20px;
+position: relative;
+`
 
 export const NameTag = styled.h1`
   font-family: Poppins;
@@ -300,6 +312,7 @@ export const NameTag = styled.h1`
   line-height: auto;
   letter-spacing: 0em;
   text-align: left;
+  margin-top: 20px;
 `;
 
 export const RolTag = styled.h5`
@@ -406,3 +419,30 @@ export const TagsSelect = styled.select`
   padding: 10px;
   width: 100%;
 `;
+
+export const ButtonSortOcultar = styled.button`
+    cursor: pointer;
+    margin: 1rem 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(239, 93, 168, 0.5);
+    color: #FFF;
+    padding: 10px;
+    font-size: 1.2rem;
+    border:none;
+`
+export const ButtonSortMostrar = styled.button`
+    cursor: pointer;
+    margin: 1rem 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #C879FF;
+    color: #FFF;
+    padding: 10px;
+    font-size: 1.2rem;
+    border:none;
+`

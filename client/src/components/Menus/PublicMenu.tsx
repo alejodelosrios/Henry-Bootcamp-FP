@@ -47,14 +47,23 @@ const PublicMenu: FC = () => {
   return (
     <>
       <NavLinks className="multi-options">
-        <Link to="/home" style={{ textDecoration: "none", cursor:"default" }}>
+        <Link to="/home" style={{ textDecoration: "none", cursor: "default" }}>
           <A About={isAbout}>{"Inicio"}</A>
         </Link>
-        <Link to="/about-us" style={{ textDecoration: "none", cursor:"default"  }}>
+        <Link
+          to="/about-us"
+          style={{ textDecoration: "none", cursor: "default" }}
+        >
           <A About={isAbout}>{"Nosotros"}</A>
         </Link>
-        <Link to="/frequent-questions" style={{ textDecoration: "none", cursor:"default"  }}>
+        <Link
+          to="/frequent-questions"
+          style={{ textDecoration: "none", cursor: "default" }}
+        >
           <A About={isAbout}>{"Preguntas Frecuentes"}</A>
+        </Link>
+        <Link to="/news" style={{ textDecoration: "none", cursor: "default" }}>
+          <A About={isAbout}>{"Blog"}</A>
         </Link>
       </NavLinks>
       <ButtonsContainer>

@@ -102,7 +102,7 @@ const DataTable: FC<props> = ({ data, type, setModal, setUser }) => {
                       type="button"
                       onClick={() => changeRole(row)}
                     >
-                      Made admin
+                      Admin
                     </TableButton>
                   )}
                 </td>

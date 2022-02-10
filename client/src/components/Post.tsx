@@ -70,8 +70,7 @@ const ContenedorF = styled.div`
 `;
 
 const Title = styled.h4`
-  margin-right: 2vw;
-  font-size: 2vw;
+  font-size: 1.5rem;
   font-weight: 30px;
   color: ${(props) => props.theme.colors.typography.darkest};
   text-transform: capitalize;

@@ -195,6 +195,19 @@ module.exports = {
             },
           },
         })
+
+        if(user && user.company && user.company.posts){
+          user.company.posts = user.company.posts.sort(function(a, b) {
+            if(a.title > b.title){
+                return 1
+            }
+            if(b.title > a.title) {
+                return -1
+            }
+            return 0
+          })
+        } 
+
         return res.json(user)
       }
       let { email, password } = req.body;

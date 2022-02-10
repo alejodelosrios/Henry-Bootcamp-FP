@@ -121,6 +121,24 @@ export const updateUser =
     }
   };
 
+export const updateImg =
+  (flagImg:any, userId: any) => async (dispatch: Dispatch<Action>) => {
+    try {
+      token = Storage.get("token");
+      await axios.put(`/applicant/update/${userId}`, flagImg, {
+        headers: {
+          token: token || "",
+        },
+      });
+      return dispatch({
+        type: ActionType.UPDATE_IMG,
+        payload: flagImg,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 export const updateUserExp =
   (userExp: any) => async (dispatch: Dispatch<Action>) => {
     try {

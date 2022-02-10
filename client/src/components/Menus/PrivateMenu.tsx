@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import {FC} from "react";
+import {useSelector} from "react-redux";
+import {Link, useLocation} from "react-router-dom";
 import styled from "styled-components";
 import Favorites from "../Favorites";
 import Notifications from "../Notifications";
@@ -16,7 +16,7 @@ const NavLinks = styled.nav`
   align-items: center;
 `;
 
-const A = styled.button<{ About?: boolean }>`
+const A = styled.button<{About?: boolean}>`
   text-decoration: none;
   border: none;
   background: transparent;
@@ -37,7 +37,7 @@ const ButtonsContainer = styled.div`
   gap: 0.3rem;
 `;
 
-const PrivateMenu: FC<Props> = ({ role }) => {
+const PrivateMenu: FC<Props> = ({role}) => {
   let location = useLocation();
   let isAbout = false;
   if (location.pathname === "/about-us") {
@@ -49,64 +49,27 @@ const PrivateMenu: FC<Props> = ({ role }) => {
   return (
     <>
       <NavLinks className="multi-options">
-        {role === "applicant" ? (
-          <>
-            <Link
-              to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Inicio"}</A>
-            </Link>
-            <Link
-              to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Nosotros"}</A>
-            </Link>
-            <Link
-              to="/frequent-questions"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Preguntas Frecuentes"}</A>
-            </Link>
-          </>
-        ) : role === "company" ? (
-          <>
-            <Link
-              to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Inicio"}</A>
-            </Link>
-            <Link
-              to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Nosotros"}</A>
-            </Link>
-            <Link
-              to="/frequent-questions"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Preguntas Frecuentes"}</A>
-            </Link>
-          </>
-        ) : (
-          <>
-            <Link
-              to="/home"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Inicio"}</A>
-            </Link>
-            <Link
-              to="/about-us"
-              style={{ textDecoration: "none", cursor: "default" }}
-            >
-              <A About={isAbout}>{"Nosotros"}</A>
-            </Link>
-          </>
-        )}
+        <Link
+          to="/home"
+          style={{textDecoration: "none", cursor: "default"}}
+        >
+          <A >{"Inicio"}</A>
+        </Link>
+        <Link
+          to="/about-us"
+          style={{textDecoration: "none", cursor: "default"}}
+        >
+          <A About={isAbout}>{"Nosotros"}</A>
+        </Link>
+        <Link
+          to="/frequent-questions"
+          style={{textDecoration: "none", cursor: "default"}}
+        >
+          <A About={isAbout}>{"Preguntas Frecuentes"}</A>
+        </Link>
+        <Link to="/news" style={{textDecoration: "none", cursor: "default"}}>
+          <A About={isAbout}>{"Blog"}</A>
+        </Link>
       </NavLinks>
       <ButtonsContainer>
         <Notifications role={role} />
