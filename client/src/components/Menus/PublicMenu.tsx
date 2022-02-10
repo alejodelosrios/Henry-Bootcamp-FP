@@ -62,7 +62,7 @@ const PublicMenu: FC = () => {
         >
           <A About={isAbout}>{"Preguntas Frecuentes"}</A>
         </Link>
-        <Link to="/blog" style={{ textDecoration: "none", cursor: "default" }}>
+        <Link to="/news" style={{ textDecoration: "none", cursor: "default" }}>
           <A About={isAbout}>{"Blog"}</A>
         </Link>
       </NavLinks>
