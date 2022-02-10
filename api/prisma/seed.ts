@@ -1,6 +1,6 @@
-import { getMaxListeners } from "process";
 import { prisma } from "../prisma/database"
 const {faker} = require('@faker-js/faker');
+const SHA2 = require("sha2");
 
 const tags = [
     "react",
@@ -60,7 +60,7 @@ async function mainHC(){
             await prisma.user.create({
                 data: {
                     email: "admin@test.com", 
-                    password: "password", 
+                    password: SHA2.SHA_512_t(80, "password").toString("hex"), 
                     role: "admin"
                 }
             })
@@ -82,7 +82,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data: {
                         email: "google@test.com",
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "company"
                     }
                 })
@@ -154,7 +154,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data: {
                         email: "tesla@test.com",
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "company"
                     }
                 })
@@ -231,7 +231,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data: {
                         email: "facebook@test.com",
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "company"
                     }
                 })
@@ -313,7 +313,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data: {
                         email: "netflix@test.com",
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "company"
                     }
                 })
@@ -400,7 +400,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data: {
                         email: "globant@test.com",
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "company"
                     }
                 })
@@ -581,7 +581,7 @@ async function mainHC(){
                 await prisma.user.create({
                     data:{
                         email: applicantInfo[i].email,
-                        password: "password",
+                        password: SHA2.SHA_512_t(80, "password").toString("hex"),
                         role: "applicant"
                     }
                 })
