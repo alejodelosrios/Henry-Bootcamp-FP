@@ -9,7 +9,7 @@ interface Props {
         firstName: string,
         lastName: string,
         country: string,
-        img: string,
+        image: string,
         skillTags: string[]
     }
     applicantId: number,
@@ -87,11 +87,11 @@ const ApplicantCard: FC<Props> = ({ applicant, applicantId, postId, companyId })
 
     const testImg = user;
 
-    const {firstName, lastName, country, img, skillTags } = applicant;
+    const {firstName, lastName, country, image, skillTags } = applicant;
 
   return (
     <Card>
-        <Photo src={img || testImg}/>
+        <Photo src={image || testImg}/>
         <Info>
             <Link to={`/company/posts/${postId}/detail/applicant/${applicantId}`} style={divStyle}>
                 <Name>{`${firstName} ${lastName}`}</Name>

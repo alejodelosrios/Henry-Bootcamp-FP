@@ -246,6 +246,12 @@ interface suscrNewsLetter {
   type: ActionType.SUSCR_NEWSLETTER;
 }
 
+interface updateImg {
+  type: ActionType.UPDATE_IMG;
+  payload: object;
+}
+
+
 export type Action =
   | getPosts
   | set_current_items_by_page
@@ -295,4 +301,5 @@ export type Action =
   | getPremiums
   | setPostStatus
   | setModal
-  | suscrNewsLetter;
+  | suscrNewsLetter
+  | updateImg ;

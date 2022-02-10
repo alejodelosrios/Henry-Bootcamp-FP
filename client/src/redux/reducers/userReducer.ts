@@ -126,6 +126,14 @@ const userReducer = (state = initialState, action: Action) => {
           ...action.payload,
         },
       };
+    case ActionType.UPDATE_IMG:
+      return {
+        ...state,
+        applicant: {
+          ...state.applicant,
+          showImage: action.payload,
+        },
+      };
     case ActionType.UPDATE_MAIL:
       return {
         ...state,
@@ -372,15 +380,19 @@ const userReducer = (state = initialState, action: Action) => {
 
     case ActionType.SET_NOTIFICATION:
       return action.payload.role === 'applicant'
-        ? {...state, applicant: {
-                    ...state.applicant,
-                    notifications: action.payload.data
-                  }}
-        : {...state, company: {
-                    ...state.company,
-                    notifications: action.payload.data
-        }};
-    
+        ? {
+          ...state, applicant: {
+            ...state.applicant,
+            notifications: action.payload.data
+          }
+        }
+        : {
+          ...state, company: {
+            ...state.company,
+            notifications: action.payload.data
+          }
+        };
+
     default:
       return state;
   }

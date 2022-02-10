@@ -1,6 +1,6 @@
-import {FC, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {updateUser} from "../../redux/actions/private/applicantActions";
+import { FC, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateImg, updateUser } from "../../redux/actions/private/applicantActions";
 import {
   ContactInfo,
   Header,
@@ -14,20 +14,28 @@ import {
   NameTag,
   RolTag,
   ParagraphStyle,
+  Img,
+  DivImg,
+  ButtonSortOcultar,
+  ButtonSortMostrar
 } from "./Styles";
 
 type Props = {
   userRole: string;
 };
 
-export const ContactInfoComp: FC<Props> = ({userRole}) => {
+export const ContactInfoComp: FC<Props> = ({ userRole }) => {
   const [flag, setFlag] = useState(false);
+  const [flagImg, setFlagImg] = useState(false);
   const dispatch = useDispatch();
 
   const applicantDetail = useSelector((state: any) => state.companyReducer.applicantDetail);
   let user = useSelector((state: any) => state.userReducer.applicant);
   let mail = useSelector((state: any) => state.userReducer.email);
   let userId = useSelector((state: any) => state.userReducer.applicant.id);
+  const role = useSelector((state: any) => state.userReducer.role);
+
+
   if (userRole === "company") {
     user = applicantDetail;
     mail = applicantDetail.email;
@@ -67,16 +75,34 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
     setUserInfo(obj);
   }
 
+  function SortImage() {
+    flagImg ? setFlagImg(false) : setFlagImg(true);
+    dispatch(
+      updateImg(
+        flagImg,
+        userId
+      )
+    );
+    console.log('Flag img:', flagImg)
+  }
+  console.log('user.showimg:', user.showImage)
+
   if (!flag) {
     return (
       <ContactInfo>
         <NameDiv>
-          <NameTag>
-            {user.firstName} {user.lastName}
-          </NameTag>
-          {user.experience.length > 0 && (
-            <RolTag>{user?.education[0]?.degree}</RolTag>
-          )}
+          {user.showImage && <DivImg><Img src={user.image} /></DivImg>}
+          <div>
+            <NameTag>
+              {user.firstName} {user.lastName}
+            </NameTag>
+            {user.experience.length > 0 && (
+              <RolTag>{user?.education[0]?.degree}</RolTag>
+            )}
+            {role === 'applicant' && user.showImage ?
+              <ButtonSortOcultar onClick={SortImage}>Ocultar Imagen</ButtonSortOcultar> :
+              <ButtonSortMostrar onClick={SortImage}>Mostrar Imagen</ButtonSortMostrar>}
+          </div>
         </NameDiv>
 
         <ContactCard className="contact-card">
@@ -105,10 +131,15 @@ export const ContactInfoComp: FC<Props> = ({userRole}) => {
     return (
       <ContactInfo>
         <NameDiv>
-          <NameTag>
-            {user.firstName} {user.lastName}
-          </NameTag>
-          <RolTag>{user?.education[0]?.degree}</RolTag>
+          {user.showImage && <DivImg><Img src={user.image} /></DivImg>}
+          <div>
+            <NameTag>
+              {user.firstName} {user.lastName}
+            </NameTag>
+            {user.experience.length > 0 && (
+              <RolTag>{user?.education[0]?.degree}</RolTag>
+            )}
+          </div>
         </NameDiv>
 
         <ContactCard className="contact-card">
