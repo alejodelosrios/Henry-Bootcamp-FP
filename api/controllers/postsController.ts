@@ -387,7 +387,7 @@ module.exports = {
               postId: Number(post && post.id),
             },
             data: {
-              status: "complete",
+              status: "completed",
             },
           });
 
