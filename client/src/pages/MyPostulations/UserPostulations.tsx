@@ -28,7 +28,7 @@ const UserPostulations: FC = () => {
     <Dashboard>
       <Container>
         <Title>
-          <PT>Mis</PT> Postulaciones
+          Mis Postulaciones
         </Title>
         <CardContainer>
           {postulations.length > 0

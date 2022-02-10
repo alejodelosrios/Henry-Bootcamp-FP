@@ -83,6 +83,8 @@ const ApplicantByPost: FC<Props> = ({applicants, postId, favorites}) => {
         )
     }
 
+    console.log('esto es aplicants:',applicants)
+
     return (
         <>
             <Container>

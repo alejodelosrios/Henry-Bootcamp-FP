@@ -18,12 +18,10 @@ export const TopBackground = styled.div`
   z-index: 998;
 `;
 export const Title = styled.h1`
-font-size: 5vw;
-line-height: 4vw;
-text-align: center;
-align-items: center;
-margin-top: 0.7vw;
-color: ${props=> props.theme.colors.typography.dark};
+width: 100%;
+    font-size: 2rem;
+    font-weight: bold;
+    color: ${(props) => props.theme.colors.typography.light};
 `
 export const PT = styled.p`
   color: ${props => props.theme.colors.details.primary};
