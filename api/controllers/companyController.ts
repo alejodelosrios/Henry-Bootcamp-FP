@@ -113,6 +113,19 @@ module.exports = {
           payment: true,
         },
       });
+      
+      if(company && company.posts){
+        company.posts = company.posts.sort(function(a, b) {
+          if(a.title > b.title){
+              return 1
+          }
+          if(b.title > a.title) {
+              return -1
+          }
+          return 0
+        })
+      } 
+      
       res.json(company);
     } catch (error) {
       res.status(400).send(error);
@@ -135,8 +148,19 @@ module.exports = {
           },
         },
       });
+
+      const posts = company && company.posts.sort(function(a, b) {
+        if(a.title > b.title){
+            return 1
+        }
+        if(b.title > a.title) {
+            return -1
+        }
+        return 0
+      })
+
       if (company) {
-        res.json(company.posts);
+        res.json(posts);
       } else {
         res.status(400).send("Company doesn't exist");
       }
