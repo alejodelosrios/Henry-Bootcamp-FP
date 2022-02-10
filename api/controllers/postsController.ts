@@ -437,8 +437,6 @@ module.exports = {
         });
         res.json(companyPosts);
       }
-
-      res.send("Post eliminado exitosamente");
     } catch (error) {
       console.log(error);
       res.status(400).send(error);
