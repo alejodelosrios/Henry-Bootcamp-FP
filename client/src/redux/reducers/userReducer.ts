@@ -393,6 +393,14 @@ const userReducer = (state = initialState, action: Action) => {
           }
         };
 
+    case ActionType.DELETE_POST:
+      console.log('REDUCER => ', action.payload);
+      return {
+        ...state, 
+        company: 
+          {...state.company, posts: action.payload}
+      }
+
     default:
       return state;
   }

@@ -1,8 +1,9 @@
-import {FC} from "react"
+import {FC, useEffect} from "react"
 import {useSelector} from "react-redux";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import DeletePostButton from "./DeletePostButton";
 
 const divStyle = {
   textDecoration: "none",
@@ -37,6 +38,13 @@ const JobPosts = styled.div`
     margin-right: 50px;
   }
 
+
+  div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
  /*  &:hover{
     background-color: white;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
@@ -61,6 +69,11 @@ font-family: ${p => p.theme.colors.typography.poppins};
 const CompanyJobPosts: FC = () => {
 
   const {posts} = useSelector((state: any) => state.userReducer.company)
+
+  useEffect(() => {
+    
+  }, [posts])
+  
   
   return (
     <Dashboard>
@@ -71,7 +84,10 @@ const CompanyJobPosts: FC = () => {
               <Link to={`/company/posts/${post.id}/detail`} style={divStyle}>
                 <Title>{post.title}</Title>
               </Link>
-              <P>{post.location}</P>
+              <div>
+                <P>{post.location}</P>
+                <DeletePostButton postId={post.id}/>
+              </div>
             </JobPosts>
           ))
         }
