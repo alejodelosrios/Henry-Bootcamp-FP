@@ -205,6 +205,34 @@ width: 100%;
 margin-top: 2vw;
 `
 
+const ButtonAplicar = styled.button`
+    cursor: pointer;
+    margin: 1rem 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(239, 93, 168, 0.5);
+    color: #FFF;
+    padding: 10px;
+    font-size: 1.2rem;
+    border:none;
+`
+
+const P = styled.p`
+    cursor: pointer;
+    margin: 1rem 0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #C879FF;
+    color: #FFF;
+    padding: 10px;
+    font-size: 1.2rem;
+    border:none;
+`
+
 const PostDetail: FC = ({ }) => {
   const { postId, companyId } = useParams();
   const dispatch = useDispatch();
@@ -275,11 +303,11 @@ const PostDetail: FC = ({ }) => {
             </TitleDiv>
 
             {role === "" ? (
-              <button onClick={() => apply()}>Aplicar</button>
+              < ButtonAplicar onClick={() => apply()}>Aplicar</ ButtonAplicar>
             ) : role === "applicant" && !alreadyApplied ? (
-              <button onClick={() => apply()}>Aplicar</button>
+              < ButtonAplicar onClick={() => apply()}>Aplicar</ ButtonAplicar>
             ) : role === "applicant" && alreadyApplied ? (
-              <p>Aplicado</p>
+              <P>Aplicado</P>
             ) : null}
             {role === "company" && companyId === userCompanyId ? (
               <button
