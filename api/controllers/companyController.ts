@@ -207,7 +207,11 @@ module.exports = {
         include: {
           applicants: {
             include: {
-              applicant: true
+              applicant: {
+                include: {
+                  skillTags: true
+                }  
+              }            
             }
           }
         }
