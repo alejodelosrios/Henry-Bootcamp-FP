@@ -18,22 +18,22 @@ const Container = styled.div`
 `;
 
 const Div = styled.div`
-width: 100%;
-height: 5vw;
+width: 50%;
+height: 50%;
 border-radius: 1vw 1vw 0 0 ;
 margin-bottom: 1vw;
 overflow: hidden;
 `
 
 const Img = styled.img`
-width: 100%;
+width: 50%;
 ` 
 
 const H1 = styled.h1`
 text-transform: capitalize;
 color: rgba(239, 93, 168, 0.7);
 font-family: ${p => p.theme.colors.typography.poppins};
-font-size: 1.5vw;
+font-size: 1.5rem;
 `
 const P = styled.p`
 color: rgba(239, 93, 168, 0.5);

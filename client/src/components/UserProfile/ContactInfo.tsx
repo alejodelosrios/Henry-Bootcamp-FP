@@ -79,19 +79,21 @@ export const ContactInfoComp: FC<Props> = ({ userRole }) => {
     flagImg ? setFlagImg(false) : setFlagImg(true);
     dispatch(
       updateImg(
-        flagImg,
+        {
+          showImage: flagImg
+      },
         userId
       )
     );
-    console.log('Flag img:', flagImg)
+    
   }
-  console.log('user.showimg:', user.showImage)
+ 
 
   if (!flag) {
     return (
       <ContactInfo>
         <NameDiv>
-          {user.showImage && <DivImg><Img src={user.image} /></DivImg>}
+          {user.showImage.showImage && <DivImg><Img src={user.image} /></DivImg>}
           <div>
             <NameTag>
               {user.firstName} {user.lastName}
@@ -99,7 +101,7 @@ export const ContactInfoComp: FC<Props> = ({ userRole }) => {
             {user.experience.length > 0 && (
               <RolTag>{user?.education[0]?.degree}</RolTag>
             )}
-            {role === 'applicant' && user.showImage ?
+            {role !== 'applicant' ? null : user.showImage.showImage ?
               <ButtonSortOcultar onClick={SortImage}>Ocultar Imagen</ButtonSortOcultar> :
               <ButtonSortMostrar onClick={SortImage}>Mostrar Imagen</ButtonSortMostrar>}
           </div>
