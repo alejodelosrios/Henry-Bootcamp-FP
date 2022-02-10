@@ -45,6 +45,7 @@ export const Title = styled.h3<{}>`
 
 export const Search = styled.input`
   width: 400px;
+  height: 2.4rem;
   padding: 0.7rem 1rem;
   font-size: 1rem;
   font-family: "Open Sans", sans-serif;
@@ -186,7 +187,8 @@ export const ModalContent = styled.div`
     font-size: 17px;
   }
 
-  input, textarea {
+  input,
+  textarea {
     width: 100%;
     padding: 0.7rem 1rem;
     margin-bottom: 1rem;
@@ -196,14 +198,14 @@ export const ModalContent = styled.div`
     border-radius: 0.5rem;
     border: 0.5px solid ${(props) => props.theme.colors.backgrounds.cards};
     ::placeholder {
-        color: ${(props) => props.theme.colors.typography.darkest};
+      color: ${(props) => props.theme.colors.typography.darkest};
     }
     :focus {
-    outline: none;
+      outline: none;
     }
   }
 
-  .cancel{
+  .cancel {
     font-family: "Poppins", sans-serif;
     padding: 10px;
     margin-top: 10px;

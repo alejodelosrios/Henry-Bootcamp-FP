@@ -8,17 +8,17 @@ import { getPremiums } from "../redux/actions/private/companyActions";
 
 const divStyle = {
     textDecoration: "none",
-    padding: 0
+    padding: 0,
 };
 
 const Container = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin: 1rem 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1rem 0;
 `;
 
 const OutstandingCompany = () => {
@@ -26,26 +26,28 @@ const OutstandingCompany = () => {
     const premiums = useSelector(
         (state: any) => state.companyReducer.totalPremiums
     );
-    console.log('premiums: ', premiums)
+    const userRole = useSelector((state: any) => state.userReducer.role);
+    console.log("premiums: ", premiums);
 
     useEffect(() => {
         dispatch(getPremiums());
     }, [dispatch]);
 
-
     return (
         <Container>
-            {premiums.length === 0 ?
-                <OCPublicity />
-                : premiums.map((p: any) =>
-                    <Link to={`/company/${p.id}`} key={p.id} style={divStyle}>
-                        <OCCard
-                            id={p.id}
-                            img={p.companyLogo}
-                            name={p.name}
-                            location={p.location} />
-                    </Link>)}
-
+            {userRole === "company" || userRole === "" ? <OCPublicity /> : null}
+            {premiums.length === 0
+                ? null
+                : premiums.map((p: any) => (
+                      <Link to={`/company/${p.id}`} key={p.id} style={divStyle}>
+                          <OCCard
+                              id={p.id}
+                              img={p.companyLogo}
+                              name={p.name}
+                              location={p.location}
+                          />
+                      </Link>
+                  ))}
         </Container>
     );
 };
