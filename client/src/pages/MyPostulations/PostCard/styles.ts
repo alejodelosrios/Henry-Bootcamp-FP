@@ -5,11 +5,10 @@ export const ContenedorA = styled.div`
   flex-direction: column;
   background-color: white;
   border-radius: 15px;
-  width: 70vw;
+  width: 100%;
   height: 11vw;
   margin-bottom: 3vw;
   justify-content: space-between;
-  padding-right: 20px;
   box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
   -webkit-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
   -moz-box-shadow: -6px -2px 15px -7px rgba(0, 0, 0, 0.73);
