@@ -232,6 +232,24 @@ const P = styled.p`
     font-size: 1.2rem;
     border:none;
 `
+const Edit = styled.button`
+  border: none;
+  color:#EF5DA8;
+  cursor: pointer;
+  font-size: 1rem;
+  background: transparent;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 27px;
+  letter-spacing: 0em;
+  text-align: left;
+  padding-right: 50px;
+  :hover {
+    color: #ff0083;
+  }
+`;
 
 const PostDetail: FC = ({ }) => {
   const { postId, companyId } = useParams();
@@ -310,13 +328,13 @@ const PostDetail: FC = ({ }) => {
               <P>Aplicado</P>
             ) : null}
             {role === "company" && companyId === userCompanyId ? (
-              <button
+              <Edit
                 onClick={() =>
                   navigate(`/company/${companyId}/post/${postId}/edit`)
                 }
               >
                 Editar
-              </button>
+              </Edit>
             ) : null}
           </TitleContainer>
           <PostSubtitle>Descripción:</PostSubtitle>
