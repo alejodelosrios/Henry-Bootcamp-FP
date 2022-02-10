@@ -433,7 +433,8 @@ module.exports = {
         const companyPosts = await prisma.post.findMany({
           where: {
             companyId: Number(post.companyId),
-          },
+            active: true
+          }
         });
         res.json(companyPosts);
       }
